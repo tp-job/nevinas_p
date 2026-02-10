@@ -1,0 +1,42 @@
+.animate-marquee {
+    animation: marquee 10s linear infinite;
+}
+
+.animate-marquee:hover {
+    animation-play-state: paused;
+}
+
+.marquee-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.marquee-track {
+    display: inline-flex;
+    white-space: nowrap;
+    gap: 2rem;
+    will-change: transform;
+    animation: marqueeTrack var(--marquee-duration, 15s) linear infinite;
+}
+
+.marquee-text {
+    white-space: nowrap;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes marqueeTrack {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}

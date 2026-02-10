@@ -1,0 +1,31 @@
+html {
+    scroll-behavior: smooth;
+    font-family: "Inter", sans-serif;
+}
+
+body {
+    background: radial-gradient(1200px 600px at -10% -10%, #e0f2fe 0%, rgba(224,242,254,0) 35%),
+                radial-gradient(900px 500px at 110% 0%, #ede9fe 0%, rgba(237,233,254,0) 40%),
+                radial-gradient(1000px 600px at 50% 120%, #dcfce7 0%, rgba(220,252,231,0) 35%),
+                linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+    color: var(--color-light-text);
+}
+
+.dark body {
+    background: radial-gradient(1200px 600px at -10% -10%, rgba(56,189,248,0.10) 0%, rgba(56,189,248,0) 35%),
+                radial-gradient(900px 500px at 110% 0%, rgba(167,139,250,0.12) 0%, rgba(167,139,250,0) 40%),
+                radial-gradient(1000px 600px at 50% 120%, rgba(74,222,128,0.10) 0%, rgba(74,222,128,0) 35%),
+                linear-gradient(180deg, #1e202c 0%, #111318 100%);
+    color: var(--color-dark-text);
+}
+
+/* selection styling */
+::selection {
+    background-color: rgba(39, 104, 244, 0.4);
+    color: #ffffff;
+}
+
+.dark ::selection {
+    background-color: rgba(96, 141, 238, 0.4); 
+    color: #ffffff; 
+}

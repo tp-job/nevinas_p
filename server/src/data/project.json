@@ -1,0 +1,191 @@
+[
+    {
+        "name": "nevinas_ka_i",
+        "description": "Personal developer portfolio and dashboard built with React 19, Tailwind CSS 4, MUI, Recharts, and Express 5 + MongoDB. Features analytics dashboard, gallery, blog, tech stack showcase, and project repository.",
+        "repo_url": "https://github.com/tp-job/nevinas_ka_i",
+        "demo_url": "",
+        "img_url": "",
+        "topics": ["react", "tailwindcss", "mongodb", "express", "portfolio", "dashboard"],
+        "framework": ["react", "tailwindcss", "mui", "recharts"],
+        "language": [
+            { "name": "TypeScript", "percentage": "72.0%" },
+            { "name": "CSS", "percentage": "15.5%" },
+            { "name": "JavaScript", "percentage": "10.3%" },
+            { "name": "HTML", "percentage": "2.2%" }
+        ],
+        "tech_stack": ["react", "tailwindcss", "typescript", "vite", "express", "mongodb", "mongoose", "mui", "recharts", "axios"],
+        "stargazers_count": 2,
+        "forks_count": 0,
+        "category": "fullstack",
+        "status": "in-progress",
+        "created_at": "2025-10-01T00:00:00.000Z",
+        "updated_at": "2026-02-08T00:00:00.000Z"
+    },
+    {
+        "name": "ApexOps",
+        "description": "Full-stack real-time operations platform with Socket.io, Google Gemini AI integration, Puppeteer automation, and PostgreSQL. Features live WebSocket communication, AI-powered tools, and interactive dashboards.",
+        "repo_url": "https://github.com/tp-job/ApexOps",
+        "demo_url": "",
+        "img_url": "",
+        "topics": ["react", "socket.io", "gemini-ai", "puppeteer", "postgresql", "real-time"],
+        "framework": ["react", "tailwindcss", "mui", "recharts", "socket.io"],
+        "language": [
+            { "name": "TypeScript", "percentage": "65.0%" },
+            { "name": "JavaScript", "percentage": "25.0%" },
+            { "name": "CSS", "percentage": "8.0%" },
+            { "name": "HTML", "percentage": "2.0%" }
+        ],
+        "tech_stack": ["react", "tailwindcss", "typescript", "vite", "express", "postgresql", "socket.io", "gemini-ai", "puppeteer", "lucide-react"],
+        "stargazers_count": 1,
+        "forks_count": 0,
+        "category": "fullstack",
+        "status": "in-progress",
+        "created_at": "2025-12-01T00:00:00.000Z",
+        "updated_at": "2026-02-08T00:00:00.000Z"
+    },
+    {
+        "name": "ComTech-Prep",
+        "description": "Interactive Computer Technology learning platform with in-browser Python runtime (Pyodide/WebAssembly), Monaco code editor, ReactFlow flowchart lab, i18n multi-language support (TH/EN), and Zustand state management.",
+        "repo_url": "https://github.com/tp-job/ComTech-Prep",
+        "demo_url": "",
+        "img_url": "",
+        "topics": ["react", "education", "python", "pyodide", "monaco-editor", "reactflow", "i18n"],
+        "framework": ["react", "tailwindcss", "recharts", "reactflow", "monaco-editor"],
+        "language": [
+            { "name": "TypeScript", "percentage": "78.0%" },
+            { "name": "CSS", "percentage": "12.0%" },
+            { "name": "JavaScript", "percentage": "8.0%" },
+            { "name": "Python", "percentage": "2.0%" }
+        ],
+        "tech_stack": ["react", "tailwindcss", "typescript", "vite", "zustand", "pyodide", "monaco-editor", "reactflow", "i18next", "react-icons"],
+        "stargazers_count": 0,
+        "forks_count": 0,
+        "category": "fullstack",
+        "status": "in-progress",
+        "created_at": "2026-01-15T00:00:00.000Z",
+        "updated_at": "2026-02-08T00:00:00.000Z"
+    },
+    {
+        "name": "memonote",
+        "description": "A clean and minimal note-taking web app. Built with React and Tailwind CSS, it features a responsive UI for creating, editing, and organizing notes with an intuitive interface.",
+        "repo_url": "https://github.com/tp-job/memonote",
+        "demo_url": "https://memonotex.onrender.com/",
+        "img_url": "",
+        "topics": ["react", "tailwindcss", "notes"],
+        "framework": ["react", "tailwindcss"],
+        "language": [
+            { "name": "JavaScript", "percentage": "91.7%" },
+            { "name": "HTML", "percentage": "3.2%" },
+            { "name": "CSS", "percentage": "5.1%" }
+        ],
+        "tech_stack": ["react", "tailwindcss"],
+        "stargazers_count": 0,
+        "forks_count": 0,
+        "category": "frontend",
+        "status": "completed",
+        "created_at": "2025-08-18T00:00:00.000Z",
+        "updated_at": "2025-09-01T00:00:00.000Z"
+    },
+    {
+        "name": "project_tailwindcss_i",
+        "description": "First Tailwind CSS practice project exploring utility-first styling fundamentals. A responsive landing page demonstrating grid layouts, flexbox, gradients, and responsive breakpoints.",
+        "repo_url": "https://github.com/tp-job/project_tailwindcss_i",
+        "demo_url": "https://nevinas-project-i.onrender.com/",
+        "img_url": "",
+        "topics": ["react", "tailwindcss", "landing-page"],
+        "framework": ["react", "tailwindcss"],
+        "language": [
+            { "name": "JavaScript", "percentage": "86.0%" },
+            { "name": "HTML", "percentage": "8.2%" },
+            { "name": "CSS", "percentage": "5.8%" }
+        ],
+        "tech_stack": ["react", "tailwindcss"],
+        "stargazers_count": 0,
+        "forks_count": 0,
+        "category": "frontend",
+        "status": "completed",
+        "created_at": "2025-05-15T00:00:00.000Z",
+        "updated_at": "2025-05-16T00:00:00.000Z"
+    },
+    {
+        "name": "project_tailwindcss_ii",
+        "description": "Second Tailwind CSS project building on the fundamentals. Features dark mode toggle, animations, hover effects, and more complex responsive layouts with modern design patterns.",
+        "repo_url": "https://github.com/tp-job/project_tailwindcss_ii",
+        "demo_url": "https://nevinas-project-ii.netlify.app/",
+        "img_url": "",
+        "topics": ["react", "tailwindcss", "dark-mode"],
+        "framework": ["react", "tailwindcss"],
+        "language": [
+            { "name": "JavaScript", "percentage": "89.0%" },
+            { "name": "HTML", "percentage": "7.1%" },
+            { "name": "CSS", "percentage": "3.9%" }
+        ],
+        "tech_stack": ["react", "tailwindcss"],
+        "stargazers_count": 0,
+        "forks_count": 0,
+        "category": "frontend",
+        "status": "completed",
+        "created_at": "2025-05-16T00:00:00.000Z",
+        "updated_at": "2025-05-19T00:00:00.000Z"
+    },
+    {
+        "name": "buildly",
+        "description": "A web application builder concept with drag-and-drop interface. Showcases component composition, dynamic rendering, and a modern UI built with React and Tailwind CSS.",
+        "repo_url": "https://github.com/tp-job/buildly",
+        "demo_url": "https://buildly.onrender.com/",
+        "img_url": "",
+        "topics": ["react", "tailwindcss", "builder"],
+        "framework": ["react", "tailwindcss"],
+        "language": [
+            { "name": "JavaScript", "percentage": "95.0%" },
+            { "name": "HTML", "percentage": "3.3%" },
+            { "name": "CSS", "percentage": "1.7%" }
+        ],
+        "tech_stack": ["react", "tailwindcss"],
+        "stargazers_count": 0,
+        "forks_count": 0,
+        "category": "frontend",
+        "status": "completed",
+        "created_at": "2025-07-15T00:00:00.000Z",
+        "updated_at": "2025-07-15T00:00:00.000Z"
+    },
+    {
+        "name": "my_protfolio_i",
+        "description": "First portfolio website built with pure HTML and Tailwind CSS. A single-page design showcasing personal projects, skills, and contact information with a clean minimal aesthetic.",
+        "repo_url": "https://github.com/tp-job/my_protfolio_i",
+        "demo_url": "https://nevinas-ka.onrender.com/",
+        "img_url": "",
+        "topics": ["tailwindcss", "portfolio", "html"],
+        "framework": ["tailwindcss"],
+        "language": [
+            { "name": "JavaScript", "percentage": "9.9%" },
+            { "name": "HTML", "percentage": "90.1%" }
+        ],
+        "tech_stack": ["html", "tailwindcss"],
+        "stargazers_count": 0,
+        "forks_count": 0,
+        "category": "frontend",
+        "status": "completed",
+        "created_at": "2025-01-08T00:00:00.000Z",
+        "updated_at": "2025-07-18T00:00:00.000Z"
+    },
+    {
+        "name": "chessgame",
+        "description": "A terminal-based chess game built entirely in Python. Features complete chess logic including move validation, check/checkmate detection, and a text-based board display.",
+        "repo_url": "https://github.com/tp-job/chessgame",
+        "demo_url": "",
+        "img_url": "",
+        "topics": ["python", "chess", "game", "cli"],
+        "framework": [],
+        "language": [
+            { "name": "Python", "percentage": "100%" }
+        ],
+        "tech_stack": ["python"],
+        "stargazers_count": 0,
+        "forks_count": 0,
+        "category": "cli",
+        "status": "completed",
+        "created_at": "2025-11-21T00:00:00.000Z",
+        "updated_at": "2025-11-22T00:00:00.000Z"
+    }
+]

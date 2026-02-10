@@ -1,0 +1,74 @@
+[
+    {
+        "title": "The Future of React: Server Components Explained",
+        "excerpt": "Dive deep into how Server Components are reshaping the way we build performant web applications in 2024 and beyond.",
+        "content": "<div class=\"article\"><p>React Server Components (RSC) represent one of the most significant architectural shifts in the React ecosystem since hooks were introduced.</p><h3>Why the Shift?</h3><p>Traditional React applications force the browser to download, parse, and execute large bundles of JavaScript. With RSC, the server handles the heavy lifting.</p><h3>Key Benefits</h3><ul><li><strong>Zero Bundle Size:</strong> Server components aren't included in the client bundle.</li><li><strong>Direct Backend Access:</strong> Access databases directly from your components.</li><li><strong>Automatic Code Splitting:</strong> The framework handles splitting automatically.</li></ul></div>",
+        "author": "Nevinas",
+        "role": "Developer",
+        "date": "Oct 24, 2025",
+        "readTime": "5 min read",
+        "category": "Engineering",
+        "imageUrl": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "authorAvatar": ""
+    },
+    {
+        "title": "Mastering Tailwind CSS: From Zero to Hero",
+        "excerpt": "Stop fighting with CSS files. Learn how utility-first CSS can speed up your development workflow by 200%.",
+        "content": "<p>Tailwind CSS has completely transformed how developers think about styling. Instead of arbitrary class names, we compose styles directly in markup.</p><h3>The Utility-First Workflow</h3><p>The constraints Tailwind provides ensure your design remains consistent while allowing for infinite flexibility.</p><blockquote>\"After building one project with Tailwind, I never want to go back to vanilla CSS.\"</blockquote>",
+        "author": "Nevinas",
+        "role": "Developer",
+        "date": "Nov 02, 2025",
+        "readTime": "8 min read",
+        "category": "Design",
+        "imageUrl": "https://images.unsplash.com/photo-1555099962-4199c345e5dd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80",
+        "authorAvatar": ""
+    },
+    {
+        "title": "The Psychology of Minimalist Web Design",
+        "excerpt": "Why less is often more. Understanding cognitive load and how whitespace improves user retention.",
+        "content": "<p>Minimalism is not just an aesthetic choice; it is a functional one. Clarity is the most valuable asset a website can offer.</p><h3>Key Principles</h3><ul><li><strong>Whitespace is content:</strong> Empty space gives your design room to breathe.</li><li><strong>Typography hierarchy:</strong> Guide the eye with size, weight, and color.</li><li><strong>Reduce choices:</strong> Fewer options lead to faster decisions.</li></ul>",
+        "author": "Nevinas",
+        "role": "Developer",
+        "date": "Nov 15, 2025",
+        "readTime": "4 min read",
+        "category": "Product",
+        "imageUrl": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&auto=format&fit=crop&w=1471&q=80",
+        "authorAvatar": ""
+    },
+    {
+        "title": "Building a MERN Stack Portfolio from Scratch",
+        "excerpt": "A complete walkthrough of creating a developer portfolio with MongoDB, Express, React, and Node.js.",
+        "content": "<p>The MERN stack is one of the most popular full-stack combinations for JavaScript developers.</p><h3>Architecture</h3><p>The frontend is built with React 19 and TypeScript, using Vite for lightning-fast HMR. Tailwind CSS 4 handles styling with a custom theme system.</p><h3>Backend</h3><p>Express 5 serves the REST API with Mongoose as the ODM for MongoDB.</p><h3>Key Takeaways</h3><ul><li>Always start with a clear data model design</li><li>Use TypeScript from day one</li><li>Theme systems save time in the long run</li></ul>",
+        "author": "Nevinas",
+        "role": "Developer",
+        "date": "Dec 10, 2025",
+        "readTime": "10 min read",
+        "category": "Tutorial",
+        "imageUrl": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "authorAvatar": ""
+    },
+    {
+        "title": "Why TypeScript is Worth the Learning Curve",
+        "excerpt": "From skeptic to advocate: how static typing transformed my development workflow and reduced bugs by 60%.",
+        "content": "<p>When I first encountered TypeScript, I thought it was unnecessary overhead. After six months of using it in production, the investment is absolutely worth it.</p><h3>Type Safety Catches Bugs Early</h3><p>The compiler catches errors at build time that would otherwise only appear at runtime.</p><h3>Better Developer Experience</h3><p>IntelliSense provides autocomplete, inline documentation, and refactoring tools that make development significantly faster.</p>",
+        "author": "Nevinas",
+        "role": "Developer",
+        "date": "Jan 05, 2026",
+        "readTime": "6 min read",
+        "category": "Engineering",
+        "imageUrl": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "authorAvatar": ""
+    },
+    {
+        "title": "Running Python in the Browser with Pyodide",
+        "excerpt": "How WebAssembly enables full Python runtime in the browser — and how I used it in ComTech-Prep.",
+        "content": "<p>One of the most exciting features of ComTech-Prep is executing Python code directly in the browser via Pyodide (Python compiled to WebAssembly).</p><h3>How It Works</h3><p>Pyodide loads the CPython interpreter into the browser. You can execute Python, import packages, and interact with JavaScript objects.</p><h3>Integration with Monaco Editor</h3><p>We paired Pyodide with Monaco Editor to create a full code editing experience with syntax highlighting, autocomplete, and execution — all client-side.</p>",
+        "author": "Nevinas",
+        "role": "Developer",
+        "date": "Feb 01, 2026",
+        "readTime": "7 min read",
+        "category": "Tutorial",
+        "imageUrl": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        "authorAvatar": ""
+    }
+]
