@@ -1,5 +1,6 @@
-import type { FC } from 'react'
+import type { FC } from 'react';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const GatewayTimeout: FC = () => {
     const [elapsed, setElapsed] = useState(0);
@@ -8,135 +9,112 @@ const GatewayTimeout: FC = () => {
         const timer = setInterval(() => {
             setElapsed((prev) => prev + 1);
         }, 1000);
-
         return () => clearInterval(timer);
     }, []);
 
-    const reloadPage = () => {
-        window.location.reload();
-    };
-
-    const goHome = () => {
-        window.location.href = '/';
-    };
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">
-            <div className="text-center px-4">
-                {/* 504 Number with Animation */}
-                <div className="relative">
-                    <h1 className="text-9xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-orange-600 animate-pulse">
+        <div className="relative flex items-center justify-center min-h-screen bg-light-bg dark:bg-dark-bg overflow-hidden">
+            {/* Ambient glow blobs */}
+            <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-global-yellow/15 rounded-full blur-[120px] animate-pulse" />
+            <div className="absolute bottom-1/3 left-1/3 w-80 h-80 bg-global-red/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1.5s' }} />
+
+            <div className="relative z-10 text-center px-6 max-w-2xl mx-auto">
+                {/* Error code */}
+                <div className="relative mb-6">
+                    <h1 className="text-[160px] sm:text-[200px] font-bold leading-none tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-global-yellow via-global-red to-global-redpink select-none">
                         504
                     </h1>
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -z-10">
-                        <div className="w-64 h-64 bg-orange-200 rounded-full blur-3xl opacity-50 animate-ping"></div>
-                    </div>
                 </div>
 
-                {/* Error Message */}
-                <div className="mt-8 mb-6">
-                    <h2 className="text-3xl font-semibold text-gray-800 mb-3">
-                        Gateway Timeout
-                    </h2>
-                    <p className="text-gray-600 text-lg max-w-md mx-auto">
-                        The server took too long to respond. This might be due to network issues or server overload.
-                    </p>
+                {/* Icon */}
+                <div className="flex items-center justify-center w-16 h-16 mx-auto mb-6 rounded-2xl bg-global-yellow/10 dark:bg-global-yellow/20 border border-global-yellow/20">
+                    <i className="ri-time-line text-3xl text-global-yellow"></i>
                 </div>
 
-                {/* Illustration */}
-                <div className="my-8">
-                    <svg className="w-48 h-48 mx-auto" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        {/* Clock/Timer Icon */}
-                        <circle cx="100" cy="100" r="60" stroke="#F59E0B" strokeWidth="4" fill="#FEF3C7" />
-                        <circle cx="100" cy="100" r="50" stroke="#F59E0B" strokeWidth="2" strokeDasharray="8 4" />
+                {/* Text */}
+                <h2 className="text-2xl sm:text-3xl font-semibold text-light-text dark:text-dark-text mb-3">
+                    Gateway Timeout
+                </h2>
+                <p className="text-light-text-secondary dark:text-dark-text-secondary mb-2 max-w-md mx-auto">
+                    The server took too long to respond. This might be due to network issues or server overload.
+                </p>
+                <p className="font-zen text-sm text-light-text-secondary/60 dark:text-dark-text-secondary/60 mb-8">
+                    サーバーの応答がタイムアウトしました
+                </p>
 
-                        {/* Clock hands */}
-                        <line x1="100" y1="100" x2="100" y2="65" stroke="#D97706" strokeWidth="4" strokeLinecap="round" className="animate-spin" style={{ transformOrigin: '100px 100px', animationDuration: '2s' }} />
-                        <line x1="100" y1="100" x2="125" y2="100" stroke="#D97706" strokeWidth="3" strokeLinecap="round" />
-
-                        {/* Clock center */}
-                        <circle cx="100" cy="100" r="5" fill="#D97706" />
-
-                        {/* Hour markers */}
-                        <circle cx="100" cy="50" r="3" fill="#F59E0B" />
-                        <circle cx="100" cy="150" r="3" fill="#F59E0B" />
-                        <circle cx="50" cy="100" r="3" fill="#F59E0B" />
-                        <circle cx="150" cy="100" r="3" fill="#F59E0B" />
-
-                        {/* Warning symbol */}
-                        <path d="M100 25 L110 15 L120 25" stroke="#DC2626" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" className="animate-bounce" />
-                    </svg>
-                </div>
-
-                {/* Elapsed Time Counter */}
+                {/* Elapsed timer */}
                 <div className="mb-6">
-                    <div className="inline-block bg-orange-100 border border-orange-300 rounded-lg px-6 py-3">
-                        <p className="text-orange-700 text-sm font-medium mb-1">
-                            Time waited
-                        </p>
-                        <p className="text-orange-900 text-3xl font-bold font-mono">
+                    <div className="inline-flex flex-col items-center px-8 py-4 rounded-2xl bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border">
+                        <p className="text-xs uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary mb-1">Time waited</p>
+                        <p className="text-4xl font-bold font-mono text-global-yellow">
                             {Math.floor(elapsed / 60)}:{(elapsed % 60).toString().padStart(2, '0')}
                         </p>
                     </div>
                 </div>
 
-                {/* Technical Info */}
-                <div className="mb-6">
-                    <div className="inline-block bg-amber-50 border border-amber-200 rounded-lg px-4 py-2">
-                        <p className="text-amber-700 text-sm font-mono">
-                            Error Code: 504 - Gateway Timeout
-                        </p>
-                    </div>
+                {/* SVG clock illustration */}
+                <div className="my-6">
+                    <svg className="w-28 h-28 mx-auto opacity-50 dark:opacity-30" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="100" cy="100" r="55" className="stroke-global-yellow" strokeWidth="3" fill="none" />
+                        <circle cx="100" cy="100" r="48" className="stroke-global-yellow/30" strokeWidth="1.5" strokeDasharray="6 4" />
+                        <line x1="100" y1="100" x2="100" y2="68" className="stroke-global-yellow" strokeWidth="3" strokeLinecap="round" style={{ transformOrigin: '100px 100px', animation: 'spin 3s linear infinite' }} />
+                        <line x1="100" y1="100" x2="125" y2="100" className="stroke-global-yellow/60" strokeWidth="2" strokeLinecap="round" />
+                        <circle cx="100" cy="100" r="4" className="fill-global-yellow" />
+                        <circle cx="100" cy="50" r="3" className="fill-global-yellow/50" />
+                        <circle cx="100" cy="150" r="3" className="fill-global-yellow/50" />
+                        <circle cx="50" cy="100" r="3" className="fill-global-yellow/50" />
+                        <circle cx="150" cy="100" r="3" className="fill-global-yellow/50" />
+                    </svg>
                 </div>
 
-                {/* Possible Causes */}
-                <div className="mb-6 max-w-md mx-auto">
-                    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                        <h3 className="text-sm font-semibold text-gray-700 mb-2">Possible causes:</h3>
-                        <ul className="text-sm text-gray-600 text-left space-y-1">
-                            <li className="flex items-start gap-2">
-                                <span className="text-orange-500 mt-0.5">•</span>
-                                <span>Server is experiencing high load</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="text-orange-500 mt-0.5">•</span>
-                                <span>Network connection is slow or unstable</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="text-orange-500 mt-0.5">•</span>
-                                <span>Upstream server is not responding</span>
-                            </li>
+                {/* Possible causes */}
+                <div className="mb-8 max-w-sm mx-auto">
+                    <div className="rounded-2xl bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border p-5 text-left">
+                        <h3 className="text-sm font-semibold text-light-text dark:text-dark-text mb-3 flex items-center gap-2">
+                            <i className="ri-information-line text-global-yellow"></i>
+                            Possible causes
+                        </h3>
+                        <ul className="space-y-2">
+                            {[
+                                'Server is experiencing high load',
+                                'Network connection is slow or unstable',
+                                'Upstream server is not responding',
+                            ].map((cause) => (
+                                <li key={cause} className="flex items-start gap-2 text-sm text-light-text-secondary dark:text-dark-text-secondary">
+                                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-global-yellow/60 shrink-0" />
+                                    {cause}
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 </div>
 
-                {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <button
-                        onClick={reloadPage}
-                        className="px-8 py-3 bg-gradient-to-r from-amber-600 to-orange-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
-                    >
-                        Retry Request
-                    </button>
-                    <button
-                        onClick={goHome}
-                        className="px-8 py-3 bg-white text-gray-700 font-semibold rounded-lg shadow-md hover:shadow-lg border-2 border-gray-200 transform hover:-translate-y-0.5 transition-all duration-200"
-                    >
-                        Go Home
-                    </button>
+                {/* Error badge */}
+                <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-global-yellow/10 dark:bg-global-yellow/15 border border-global-yellow/20">
+                    <div className="w-2 h-2 rounded-full bg-global-yellow animate-pulse" />
+                    <span className="text-sm font-mono text-global-yellow">Error 504 &middot; Gateway Timeout</span>
                 </div>
 
-                {/* Help Text */}
-                <div className="mt-12">
-                    <p className="text-gray-500 text-sm">
-                        Still having issues?{' '}
-                        <a href="/contact" className="text-orange-600 hover:text-orange-700 underline">
-                            Contact support
-                        </a>
-                    </p>
+                {/* Actions */}
+                <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+                    <button onClick={() => window.location.reload()} className="px-8 py-3 rounded-full bg-gradient-to-r from-global-yellow to-global-red text-white font-medium flex items-center gap-2 hover:opacity-90 transition-opacity shadow-lg shadow-global-yellow/20">
+                        <i className="ri-refresh-line"></i>
+                        Retry Request
+                    </button>
+                    <Link to="/" className="px-8 py-3 rounded-full border border-light-border dark:border-dark-border text-light-text dark:text-dark-text font-medium flex items-center gap-2 hover:bg-light-surface dark:hover:bg-dark-surface transition-colors">
+                        <i className="ri-home-4-line"></i>
+                        Go Home
+                    </Link>
                 </div>
+
+                {/* Footer */}
+                <div className="mt-12 mb-4 h-px w-full max-w-xs mx-auto bg-gradient-to-r from-transparent via-light-border dark:via-dark-border to-transparent" />
+                <p className="text-xs text-light-text-secondary/50 dark:text-dark-text-secondary/50">
+                    Still having issues? <Link to="/#contact" className="text-global-yellow hover:underline">Contact support</Link>
+                </p>
             </div>
         </div>
     );
-}
+};
 
-export default GatewayTimeout
+export default GatewayTimeout;
