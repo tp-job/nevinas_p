@@ -2,6 +2,8 @@ import { useState, useEffect, type FC } from 'react';
 import RepoCard from '@/components/card/RepoCard';
 import { useTheme } from '@/context/ThemeContext';
 import { githubApi, type GitHubRepo } from '@/utils/api';
+import Loading from '@/components/ui/common/Loading';
+import Error from '@/components/ui/common/Error';
 
 const LANG_COLORS: Record<string, string> = {
     'TypeScript': '#3178c6', 'JavaScript': '#f1e05a', 'Python': '#3572A5',
@@ -67,17 +69,6 @@ const Repository: FC = () => {
         url: repo.html_url,
     }));
 
-    const LoadingSkeleton = () => (
-        <div className={`rounded-xl p-6 animate-pulse ${isDark ? 'bg-slate-800/50' : 'bg-slate-200/50'}`}>
-            <div className={`h-6 rounded w-3/4 mb-4 ${isDark ? 'bg-slate-700' : 'bg-slate-300'}`}></div>
-            <div className={`h-4 rounded w-full mb-2 ${isDark ? 'bg-slate-700' : 'bg-slate-300'}`}></div>
-            <div className={`h-4 rounded w-2/3 mb-4 ${isDark ? 'bg-slate-700' : 'bg-slate-300'}`}></div>
-            <div className="flex gap-4">
-                <div className={`h-4 rounded w-16 ${isDark ? 'bg-slate-700' : 'bg-slate-300'}`}></div>
-                <div className={`h-4 rounded w-12 ${isDark ? 'bg-slate-700' : 'bg-slate-300'}`}></div>
-            </div>
-        </div>
-    );
 
     return (
         <div>
@@ -89,15 +80,8 @@ const Repository: FC = () => {
                 </div>
             </div>
 
-            {/* Error State */}
-            {error && (
-                <div className={`rounded-xl p-6 mb-6 ${isDark ? 'bg-red-900/20 border border-red-500/30' : 'bg-red-50 border border-red-200'}`}>
-                    <p className={`text-center ${isDark ? 'text-red-400' : 'text-red-600'}`}>
-                        <i className="ri-error-warning-line mr-2"></i>
-                        {error}
-                    </p>
-                </div>
-            )}
+            {loading && <Loading />}
+            {error && <Error error={error} />}
 
             {/* Stats + Filter */}
             {!loading && !error && (
@@ -125,17 +109,13 @@ const Repository: FC = () => {
             )}
 
             {/* Repository Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {loading ? (
-                    [...Array(6)].map((_, index) => (
-                        <LoadingSkeleton key={index} />
-                    ))
-                ) : (
-                    repositories.map((repo, index) => (
+            {!loading && !error && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {repositories.map((repo, index) => (
                         <RepoCard key={index} {...repo} />
-                    ))
-                )}
-            </div>
+                    ))}
+                </div>
+            )}
 
             {/* Empty State */}
             {!loading && !error && repositories.length === 0 && (

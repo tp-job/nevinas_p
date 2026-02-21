@@ -3,58 +3,117 @@ import { Link } from 'react-router-dom';
 
 const NotFound: FC = () => {
     return (
-        <div className="relative flex items-center justify-center min-h-screen bg-light-bg dark:bg-dark-bg overflow-hidden">
-            {/* Ambient glow blobs */}
-            <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-global-purple/20 rounded-full blur-[120px] animate-pulse" />
-            <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-global-pink/20 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
-
-            <div className="relative z-10 text-center px-6 max-w-2xl mx-auto">
-                {/* Error code */}
-                <div className="relative mb-6">
-                    <h1 className="text-[160px] sm:text-[200px] font-bold leading-none tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-global-purple via-global-blue to-global-pink select-none">
-                        404
-                    </h1>
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <div className="w-40 h-40 border-2 border-dashed border-global-purple/30 dark:border-global-purple/20 rounded-full animate-spin" style={{ animationDuration: '20s' }} />
+        <>
+            <style>
+                {`
+        .dot-intersection {
+            width: 12px;
+            height: 12px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 0 0 15px 2px rgba(255, 255, 255, 0.6);
+        }
+        .grid-line-h {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.4);
+            border-top: 1px dotted rgba(255, 255, 255, 0.8);
+        }
+        .grid-line-v {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: rgba(255, 255, 255, 0.4);
+            border-left: 1px dotted rgba(255, 255, 255, 0.8);
+        }
+                `}
+            </style>
+            <div className="bg-background-light dark:bg-background-dark min-h-screen flex flex-col lg:flex-row overflow-hidden font-display">
+                {/* Left column */}
+                <div className="w-full lg:w-1/2 h-[50vh] lg:h-screen relative bg-gradient-to-b from-blue-400 via-blue-300 to-orange-500 flex items-center justify-center p-8 overflow-hidden">
+                    <div className="absolute inset-0 pointer-events-none">
+                        <div className="grid-line-v left-1/6 lg:left-[15%]" />
+                        <div className="grid-line-v right-1/6 lg:right-[15%]" />
+                        <div className="grid-line-h top-1/4" />
+                        <div className="grid-line-h bottom-1/4" />
+                        <div className="dot-intersection top-[calc(25%-6px)] left-[calc(16.6%-6px)] lg:left-[calc(15%-6px)] ring-4 ring-white/20" />
+                        <div className="dot-intersection top-[calc(25%-6px)] right-[calc(16.6%-6px)] lg:right-[calc(15%-6px)] ring-4 ring-white/20" />
+                        <div className="dot-intersection bottom-[calc(25%-6px)] left-[calc(16.6%-6px)] lg:left-[calc(15%-6px)] ring-4 ring-white/20" />
+                        <div className="dot-intersection bottom-[calc(25%-6px)] right-[calc(16.6%-6px)] lg:right-[calc(15%-6px)] ring-4 ring-white/20" />
+                    </div>
+                    <div className="relative z-10 text-center text-white space-y-2 lg:space-y-6">
+                        <p className="text-sm lg:text-lg font-light tracking-wide opacity-90">
+                            System Connection Lost
+                        </p>
+                        <h1 className="text-7xl lg:text-[10rem] font-bold leading-none tracking-tight">404</h1>
+                        <p className="text-sm lg:text-lg font-light tracking-wide opacity-90">
+                            Resource Not Found
+                        </p>
+                    </div>
+                    <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
+                </div>
+                {/* Right column */}
+                <div className="w-full lg:w-1/2 h-auto lg:h-screen bg-background-light dark:bg-background-dark text-light-text-primary dark:text-dark-text-primary p-8 lg:p-20 flex flex-col justify-center relative">
+                    <div className="absolute top-8 left-8 lg:left-20 flex w-full pr-16 justify-between text-xs lg:text-sm text-light-text-secondary dark:text-dark-text-secondary uppercase tracking-widest font-medium">
+                        <span>SYSTEM ALERT</span>
+                        <span className="mr-8 lg:mr-24">CODE 404</span>
+                    </div>
+                    <div className="mb-16 mt-12 lg:mt-0">
+                        <h2 className="text-4xl lg:text-6xl font-light leading-tight tracking-tight">
+                            Error: Page Missing. <br />
+                            <span className="text-blue-600 font-normal">Growing</span>{' '}
+                            <span className="text-orange-500 font-normal">Network</span> Gap.
+                        </h2>
+                    </div>
+                    <div className="space-y-10 lg:space-y-12">
+                        <div className="flex gap-6 group">
+                            <div className="flex-shrink-0 mt-1">
+                                <i className="ri-error-warning-line text-3xl lg:text-4xl text-light-text-secondary dark:text-dark-text-secondary group-hover:text-brand-green transition-colors"></i>
+                            </div>
+                            <div>
+                                <h3 className="text-xl lg:text-2xl font-normal mb-2">Missing Link</h3>
+                                <p className="text-light-text dark:text-dark-text-secondary text-sm lg:text-base leading-relaxed max-w-md">
+                                    The requested URL path appears to be broken or has been moved to a new sector within our infrastructure.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="flex gap-6 group">
+                            <div className="flex-shrink-0 mt-1">
+                                <i className="ri-briefcase-line text-3xl lg:text-4xl text-light-text-secondary dark:text-dark-text-secondary group-hover:text-brand-blue transition-colors"></i>
+                            </div>
+                            <div>
+                                <h3 className="text-xl lg:text-2xl font-normal mb-2">Suggested Fix</h3>
+                                <p className="text-light-text dark:text-dark-text-secondary text-sm lg:text-base leading-relaxed max-w-md">
+                                    <Link to="/work/dashboard" className="text-brand-blue hover:underline font-medium">
+                                        Return to the dashboard homepage
+                                    </Link>{' '}
+                                    to re-initialize your session and access valid data streams.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="flex gap-6 group">
+                            <div className="flex-shrink-0 mt-1">
+                                <i className="ri-customer-service-line text-3xl lg:text-4xl text-light-text-secondary dark:text-dark-text-secondary group-hover:text-white transition-colors"></i>
+                            </div>
+                            <div>
+                                <h3 className="text-xl lg:text-2xl font-normal mb-2">Support Contact</h3>
+                                <p className="text-light-text dark:text-dark-text-secondary text-sm lg:text-base leading-relaxed max-w-md">
+                                    If this error persists, please{' '}
+                                    <a href="mailto:support@example.com" className="text-brand-blue hover:underline font-medium">
+                                        contact technical support
+                                    </a>{' '}
+                                    for immediate diagnostic assistance.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                {/* Icon */}
-                <div className="flex items-center justify-center w-16 h-16 mx-auto mb-6 rounded-2xl bg-global-purple/10 dark:bg-global-purple/20 border border-global-purple/20">
-                    <i className="ri-compass-discover-line text-3xl text-global-purple"></i>
-                </div>
-
-                {/* Text */}
-                <h2 className="text-2xl sm:text-3xl font-semibold text-light-text dark:text-dark-text mb-3">
-                    Page Not Found
-                </h2>
-                <p className="text-light-text-secondary dark:text-dark-text-secondary mb-2 max-w-md mx-auto">
-                    You've drifted into the unknown. The page you're looking for has been moved, deleted, or never existed.
-                </p>
-                <p className="font-zen text-sm text-light-text-secondary/60 dark:text-dark-text-secondary/60 mb-10">
-                    お探しのページは見つかりませんでした
-                </p>
-
-                {/* Actions */}
-                <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-                    <Link to="/" className="px-8 py-3 rounded-full bg-gradient-to-r from-global-pink to-global-purple text-white font-medium flex items-center gap-2 hover:opacity-90 transition-opacity shadow-lg shadow-global-purple/20">
-                        <i className="ri-home-4-line"></i>
-                        Go Home
-                    </Link>
-                    <button onClick={() => window.history.back()} className="px-8 py-3 rounded-full border border-light-border dark:border-dark-border text-light-text dark:text-dark-text font-medium flex items-center gap-2 hover:bg-light-surface dark:hover:bg-dark-surface transition-colors">
-                        <i className="ri-arrow-left-line"></i>
-                        Go Back
-                    </button>
-                </div>
-
-                {/* Divider */}
-                <div className="mt-12 mb-4 h-px w-full max-w-xs mx-auto bg-gradient-to-r from-transparent via-light-border dark:via-dark-border to-transparent" />
-
-                <p className="text-xs text-light-text-secondary/50 dark:text-dark-text-secondary/50">
-                    Error 404 &middot; Client Error
-                </p>
             </div>
-        </div>
+        </>
     );
 };
 

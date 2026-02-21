@@ -5,6 +5,8 @@ import { useTheme } from '@/context/ThemeContext';
 import { githubApi, type GitHubStats, type GitHubRepo } from '@/utils/api';
 import { techStackData } from '@/data/techData';
 import { toolsData, toolSections } from '@/data/toolsData';
+import Loading from '@/components/ui/common/Loading';
+import Error from '@/components/ui/common/Error';
 import {
     AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip,
     ResponsiveContainer, BarChart, Bar, Cell,
@@ -247,13 +249,7 @@ const Dashboard: FC = () => {
                     <h2 className="mb-1 text-4xl sm:text-5xl text-light-text dark:text-dark-text">Dashboard</h2>
                     <h3 className="text-xl font-zen text-light-text-secondary dark:text-dark-text-secondary">概要</h3>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
-                    {[...Array(4)].map((_, i) => <div key={i} className="rounded-2xl p-6 animate-pulse bg-light-surface dark:bg-dark-bg border border-light-border dark:border-dark-border h-48" />)}
-                </div>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                    <div className="rounded-2xl p-6 animate-pulse bg-light-surface dark:bg-dark-bg border border-light-border dark:border-dark-border h-72" />
-                    <div className="rounded-2xl p-6 animate-pulse bg-light-surface dark:bg-dark-bg border border-light-border dark:border-dark-border h-72" />
-                </div>
+                <Loading />
             </>
         );
     }
@@ -265,10 +261,9 @@ const Dashboard: FC = () => {
                 <div className="w-full mb-4">
                     <h4 className="mb-1 text-lg text-light-text dark:text-dark-text">Developer Analytics</h4>
                     <h2 className="mb-1 text-4xl sm:text-5xl text-light-text dark:text-dark-text">Dashboard</h2>
+                    <h3 className="text-xl font-zen text-light-text-secondary dark:text-dark-text-secondary">概要</h3>
                 </div>
-                <div className="rounded-2xl p-6 bg-global-red/5 border border-global-red/20">
-                    <p className="text-center text-global-red"><i className="ri-error-warning-line mr-2"></i>{error}</p>
-                </div>
+                <Error error={error} />
             </>
         );
     }

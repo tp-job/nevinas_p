@@ -141,6 +141,12 @@ export const architecture = {
     },
 };
 
+// Project Detail by Repo — maps repo name → architecture. Shown when clicking repo card on Docs.
+export const projectDetailByRepo: Record<string, typeof architecture> = {
+    nevinas_p: architecture,
+    nevinas_ka_i: architecture,
+};
+
 // ============================
 // Folder Structure
 // ============================

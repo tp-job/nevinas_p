@@ -33,6 +33,51 @@ router.get('/repos', async (_req: Request, res: Response): Promise<void> => {
     }
 });
 
+// ---------- GET /api/github/repos/:name/readme ----------
+router.get('/repos/:name/readme', async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { name } = req.params;
+        const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+        const GITHUB_USERNAME = process.env.GITHUB_USERNAME || 'tp-job';
+
+        const headers: Record<string, string> = {
+            Accept: 'application/vnd.github.v3+json',
+            'User-Agent': 'nevinas-portfolio',
+            ...(GITHUB_TOKEN ? { Authorization: `Bearer ${GITHUB_TOKEN}` } : {}),
+        };
+
+        const apiRes = await fetch(
+            `https://api.github.com/repos/${GITHUB_USERNAME}/${name}/readme`,
+            { headers }
+        );
+
+        if (!apiRes.ok) {
+            if (apiRes.status === 404) {
+                res.status(404).json({ success: false, message: 'README not found for this repository' });
+                return;
+            }
+            throw new Error(`GitHub API ${apiRes.status}: ${apiRes.statusText}`);
+        }
+
+        const readme = await apiRes.json();
+        const content = readme.content ? Buffer.from(readme.content, 'base64').toString('utf-8') : '';
+        const encoding = readme.encoding || 'base64';
+
+        res.json({
+            success: true,
+            data: {
+                content,
+                encoding,
+                name: readme.name || 'README.md',
+                html_url: readme.html_url || null,
+            },
+        });
+    } catch (err) {
+        console.error('GitHub readme error:', (err as Error).message);
+        res.status(500).json({ success: false, message: (err as Error).message });
+    }
+});
+
 // ---------- GET /api/github/repos/:name/languages ----------
 // Note: This still proxies to GitHub API since per-repo language breakdown
 // is not stored in our sync. Cached at the sync level is not granular enough.

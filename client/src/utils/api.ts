@@ -102,12 +102,20 @@ async function apiFetch<T>(endpoint: string): Promise<T> {
     return json.data;
 }
 
+export interface GitHubReadme {
+    content: string;
+    encoding: string;
+    name: string;
+    html_url: string | null;
+}
+
 export const githubApi = {
     getProfile: () => apiFetch<GitHubProfile>('/api/github/profile'),
     getRepos: () => apiFetch<GitHubRepo[]>('/api/github/repos'),
     getStats: () => apiFetch<GitHubStats>('/api/github/stats'),
     getEvents: () => apiFetch<GitHubEvent[]>('/api/github/events'),
     getRepoLanguages: (name: string) => apiFetch<Record<string, number>>(`/api/github/repos/${name}/languages`),
+    getRepoReadme: (name: string) => apiFetch<GitHubReadme>(`/api/github/repos/${name}/readme`),
 };
 
 // ----------------------------
