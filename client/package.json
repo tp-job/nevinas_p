@@ -14,6 +14,8 @@
     "@emotion/styled": "^11.14.1",
     "@mui/material": "^7.3.6",
     "@mui/x-charts": "^8.21.0",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.0",
     "@specy/liquid-glass-react": "^1.0.2",
     "@tailwindcss/vite": "^4.1.16",
     "axios": "^1.13.1",
@@ -24,7 +26,8 @@
     "recharts": "^3.5.1",
     "remixicon": "^4.7.0",
     "swiper": "^12.1.0",
-    "tailwindcss": "^4.1.16"
+    "tailwindcss": "^4.1.16",
+    "three": "^0.184.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",

@@ -1,0 +1,130 @@
+.neu-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(241, 245, 249, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: var(--shadow-light-neu);
+  border-radius: 1rem;
+  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+
+.neu-card:hover {
+  box-shadow: var(--shadow-light-neu-sm);
+  transform: translateY(-2px);
+}
+
+.dark .neu-card {
+  background: linear-gradient(145deg, rgba(41, 49, 66, 0.88), rgba(25, 30, 42, 0.92));
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow-dark-neu);
+}
+
+.dark .neu-card:hover {
+  box-shadow: var(--shadow-dark-neu-sm);
+}
+
+.neu-form {
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+}
+
+.neu-form-panel {
+  background: linear-gradient(160deg, rgba(250, 252, 255, 0.92), rgba(240, 245, 252, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.95);
+}
+
+.dark .neu-form-panel {
+  background: linear-gradient(160deg, rgba(23, 31, 50, 0.95), rgba(18, 24, 41, 0.94));
+  border-color: rgba(129, 147, 185, 0.28);
+  box-shadow: 14px 14px 28px rgba(4, 9, 19, 0.58), -8px -8px 18px rgba(53, 71, 106, 0.25);
+}
+
+.neu-input {
+  width: 100%;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.7), rgba(241, 245, 249, 0.82));
+  box-shadow: inset 2px 2px 6px rgba(163, 177, 198, 0.25),
+    inset -2px -2px 6px rgba(255, 255, 255, 0.65);
+  color: var(--color-light-text);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.neu-input:focus {
+  border-color: var(--color-global-purple);
+  box-shadow: inset 2px 2px 6px rgba(163, 177, 198, 0.3),
+    inset -2px -2px 6px rgba(255, 255, 255, 0.75),
+    0 0 0 2px rgba(96, 141, 238, 0.18);
+}
+
+.neu-input::placeholder {
+  color: rgba(100, 116, 139, 0.9);
+}
+
+.dark .neu-input {
+  border-color: rgba(129, 147, 185, 0.24);
+  background: linear-gradient(145deg, rgba(19, 27, 44, 0.92), rgba(25, 34, 54, 0.84));
+  box-shadow: inset 2px 2px 7px rgba(6, 10, 22, 0.65),
+    inset -2px -2px 7px rgba(58, 75, 108, 0.32);
+  color: var(--color-dark-text);
+}
+
+.dark .neu-input::placeholder {
+  color: rgba(156, 163, 175, 0.9);
+}
+
+.dark .neu-input:focus {
+  border-color: rgba(96, 141, 238, 0.72);
+  box-shadow: inset 2px 2px 7px rgba(6, 10, 22, 0.7),
+    inset -2px -2px 7px rgba(58, 75, 108, 0.35), 0 0 0 2px rgba(96, 141, 238, 0.28);
+}
+
+.neu-btn {
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.88);
+  background: linear-gradient(145deg, #f1f5f9, #ffffff);
+  color: var(--color-light-text);
+  box-shadow: 4px 4px 10px rgba(163, 177, 198, 0.35),
+    -4px -4px 10px rgba(255, 255, 255, 0.85);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.neu-btn:hover {
+  transform: translateY(-1px);
+}
+
+.neu-btn:active {
+  transform: translateY(0);
+  box-shadow: inset 2px 2px 6px rgba(163, 177, 198, 0.35),
+    inset -2px -2px 6px rgba(255, 255, 255, 0.7);
+}
+
+.dark .neu-btn {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: linear-gradient(145deg, #2b3344, #1f2533);
+  color: var(--color-dark-text);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.45), -4px -4px 10px rgba(55, 65, 85, 0.35);
+}
+
+.neu-panel-dark {
+  background: linear-gradient(165deg, rgba(16, 24, 45, 0.92), rgba(18, 24, 38, 0.88));
+  border: 1px solid rgba(129, 147, 185, 0.25);
+  box-shadow: 16px 16px 30px rgba(4, 8, 18, 0.55),
+    -10px -10px 24px rgba(47, 62, 93, 0.28);
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+}
+
+.neu-panel-dark-soft {
+  background: linear-gradient(155deg, rgba(24, 33, 54, 0.75), rgba(22, 30, 46, 0.65));
+  border: 1px solid rgba(129, 147, 185, 0.2);
+  box-shadow: inset 2px 2px 8px rgba(80, 99, 137, 0.2), inset -2px -2px 8px rgba(7, 10, 18, 0.4);
+}
+
+.neu-nav-link {
+  border-radius: 0.95rem;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.neu-nav-link:hover {
+  transform: translateX(2px);
+}

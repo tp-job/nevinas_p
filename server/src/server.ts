@@ -1,26 +1,29 @@
 import 'dotenv/config';
 import express, { type Request, type Response, type NextFunction } from 'express';
-import mongoose from 'mongoose';
 import cors from 'cors';
 import helmet from 'helmet';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 
-import authRoutes from './routes/auth';
 import githubRoutes from './routes/github';
-import Project from './models/Project';
-import Blog from './models/Blog';
-import Gallery from './models/Gallery';
+import projectsRoutes from './routes/projects';
+import blogsRoutes from './routes/blogs';
+import createGalleryRoutes from './routes/gallery';
 import { startGitHubScheduler } from './services/githubScheduler';
+import { dataStore } from './services/fileManager';
 
 const app = express();
 
 // ----------------------------
 // Environment Variables
 // ----------------------------
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/nevinas';
 const PORT = Number(process.env.PORT) || 3000;
+
+// ----------------------------
+// Initialize Data Store
+// ----------------------------
+dataStore.init();
 
 // ----------------------------
 // Security & Middleware
@@ -36,13 +39,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // ----------------------------
-// Routes
-// ----------------------------
-app.use('/api/auth', authRoutes);
-app.use('/api/github', githubRoutes);
-
-// ----------------------------
-// Multer Config
+// Multer Config (must be before gallery routes)
 // ----------------------------
 const uploadDir = path.join(__dirname, '../uploads/images');
 if (!fs.existsSync(uploadDir)) {
@@ -62,15 +59,21 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // ----------------------------
+// Routes
+// ----------------------------
+app.use('/api/github', githubRoutes);
+app.use('/api/projects', projectsRoutes);
+app.use('/api/blogs', blogsRoutes);
+app.use('/api/gallery', createGalleryRoutes(upload.single('image')));
+
+// ----------------------------
 // Health Check
 // ----------------------------
 app.get('/health', (_req: Request, res: Response) => {
-    const dbStates = ['disconnected', 'connected', 'connecting', 'disconnecting'];
-    const readyState = mongoose.connection.readyState;
     res.json({
         status: 'OK',
-        database: dbStates[readyState] || 'unknown',
-        dbHost: MONGODB_URI.replace(/\/\/.*@/, '//***@'),
+        storage: 'file-based',
+        dataStore: dataStore.isReady() ? 'ready' : 'not initialized',
         uptime: process.uptime(),
         timestamp: new Date().toISOString(),
     });
@@ -82,7 +85,7 @@ app.get('/health', (_req: Request, res: Response) => {
 app.get('/', (_req: Request, res: Response) => {
     res.json({
         message: 'Welcome to Nevinas API',
-        version: '2.0.0',
+        version: '3.0.0',
         status: 'running',
         endpoints: {
             health: 'GET /health',
@@ -100,74 +103,6 @@ app.get('/', (_req: Request, res: Response) => {
 });
 
 // ----------------------------
-// Projects API
-// ----------------------------
-app.get('/api/projects', async (_req: Request, res: Response) => {
-    try {
-        const projects = await Project.find();
-        res.json({ success: true, count: projects.length, data: projects });
-    } catch (err) {
-        res.status(500).json({ success: false, message: 'Server Error', error: (err as Error).message });
-    }
-});
-
-// ----------------------------
-// Blogs API
-// ----------------------------
-app.get('/api/blogs', async (_req: Request, res: Response) => {
-    try {
-        const blogs = await Blog.find().sort({ created_at: -1 });
-        res.json({ success: true, count: blogs.length, data: blogs });
-    } catch (err) {
-        res.status(500).json({ success: false, message: 'Server Error', error: (err as Error).message });
-    }
-});
-
-app.get('/api/blogs/:id', async (req: Request, res: Response) => {
-    try {
-        const blog = await Blog.findById(req.params.id);
-        if (!blog) {
-            res.status(404).json({ success: false, message: 'Blog not found' });
-            return;
-        }
-        res.json({ success: true, data: blog });
-    } catch (err) {
-        res.status(500).json({ success: false, message: 'Server Error', error: (err as Error).message });
-    }
-});
-
-// ----------------------------
-// Gallery API
-// ----------------------------
-app.post('/api/gallery/upload', upload.single('image'), async (req: Request, res: Response) => {
-    try {
-        if (!req.file) {
-            res.status(400).json({ success: false, message: 'No file uploaded' });
-            return;
-        }
-
-        const newImage = new Gallery({
-            name: req.file.filename,
-            img: `/uploads/images/${req.file.filename}`,
-        });
-
-        await newImage.save();
-        res.json({ success: true, message: 'Image uploaded successfully', data: newImage });
-    } catch (err) {
-        res.status(500).json({ success: false, message: 'Upload failed', error: (err as Error).message });
-    }
-});
-
-app.get('/api/gallery', async (_req: Request, res: Response) => {
-    try {
-        const images = await Gallery.find().sort({ created_at: -1 });
-        res.json(images);
-    } catch (err) {
-        res.status(500).json({ success: false, message: 'Server Error', error: (err as Error).message });
-    }
-});
-
-// ----------------------------
 // 404 Handler
 // ----------------------------
 app.all('{*path}', (req: Request, res: Response) => {
@@ -182,40 +117,27 @@ app.all('{*path}', (req: Request, res: Response) => {
 // ----------------------------
 // Error Handler (Express 5 requires 4 parameters)
 // ----------------------------
-app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    console.error('Server Error:', err.message);
-    res.status(err.status || 500).json({
+interface ErrorWithStatus extends Error {
+    status?: number;
+}
+
+app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+    const status = (err as ErrorWithStatus).status ?? 500;
+    const message = err instanceof Error ? err.message : 'Internal server error';
+    console.error('Server Error:', message);
+    res.status(status).json({
         success: false,
         message: 'Internal server error',
-        error: process.env.NODE_ENV === 'development' ? err.message : undefined,
+        ...(process.env.NODE_ENV === 'development' && { error: message }),
     });
 });
 
 // ----------------------------
-// Connect MongoDB & Start Server
+// Start Server
 // ----------------------------
-async function startServer(): Promise<void> {
-    try {
-        console.log(`Connecting to MongoDB: ${MONGODB_URI}`);
-        await mongoose.connect(MONGODB_URI);
-        console.log('MongoDB connected successfully');
-
-        // Start GitHub scheduler after DB is connected
-        startGitHubScheduler();
-
-        mongoose.connection.on('error', (err) => {
-            console.error('MongoDB connection error:', err.message);
-        });
-        mongoose.connection.on('disconnected', () => {
-            console.warn('MongoDB disconnected');
-        });
-        mongoose.connection.on('reconnected', () => {
-            console.log('MongoDB reconnected');
-        });
-    } catch (err) {
-        console.error('Failed to connect to MongoDB:', (err as Error).message);
-        console.log('Server will start without database connection.');
-    }
+function startServer(): void {
+    // Start GitHub scheduler
+    startGitHubScheduler();
 
     app.listen(PORT, () => {
         console.log(`Server running on http://localhost:${PORT}`);
@@ -229,8 +151,7 @@ startServer();
 // ----------------------------
 // Graceful Shutdown
 // ----------------------------
-process.on('SIGINT', async () => {
+process.on('SIGINT', () => {
     console.log('\nShutting down gracefully...');
-    await mongoose.connection.close();
     process.exit(0);
 });

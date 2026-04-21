@@ -76,3 +76,8 @@ server/uploads/images/gallery/
 *.tgz
 coverage/
 .nyc_output/
+
+# =============================================
+# Agent
+# =============================================
+.agent/

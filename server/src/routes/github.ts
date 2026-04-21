@@ -1,160 +1,108 @@
 import { Router, type Request, type Response } from 'express';
-import GitHubProfile from '../models/GitHubProfile';
-import GitHubRepo from '../models/GitHubRepo';
-import GitHubEvent from '../models/GitHubEvent';
-import GitHubStats from '../models/GitHubStats';
+import { dataStore } from '../services/fileManager';
 import { syncGitHub } from '../sync/syncGitHub';
+import { getGitHubHeaders, GITHUB_USERNAME } from '../utils/githubRequest';
+import { send404 } from '../utils/responseHelpers';
+import { asyncHandler } from '../utils/asyncHandler';
 
 const router = Router();
 
 // ---------- GET /api/github/profile ----------
-router.get('/profile', async (_req: Request, res: Response): Promise<void> => {
-    try {
-        const profile = await GitHubProfile.findOne().sort({ synced_at: -1 });
-        if (!profile) {
-            res.status(404).json({ success: false, message: 'No GitHub profile data. Run sync first.' });
-            return;
-        }
-        res.json({ success: true, data: profile });
-    } catch (err) {
-        console.error('GitHub profile error:', (err as Error).message);
-        res.status(500).json({ success: false, message: (err as Error).message });
+router.get('/profile', (_req: Request, res: Response): void => {
+    const github = dataStore.github.readAll();
+    const profile = github.profiles
+        .slice()
+        .sort((a, b) => new Date(b.synced_at).getTime() - new Date(a.synced_at).getTime())[0];
+    if (!profile) {
+        send404(res, 'No GitHub profile data. Run sync first.');
+        return;
     }
+    res.json({ success: true, data: profile });
 });
 
 // ---------- GET /api/github/repos ----------
-router.get('/repos', async (_req: Request, res: Response): Promise<void> => {
-    try {
-        const repos = await GitHubRepo.find().sort({ pushed_at: -1 });
-        res.json({ success: true, count: repos.length, data: repos });
-    } catch (err) {
-        console.error('GitHub repos error:', (err as Error).message);
-        res.status(500).json({ success: false, message: (err as Error).message });
-    }
+router.get('/repos', (_req: Request, res: Response): void => {
+    const github = dataStore.github.readAll();
+    const repos = github.repos
+        .slice()
+        .sort((a, b) => new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime());
+    res.json({ success: true, count: repos.length, data: repos });
 });
 
 // ---------- GET /api/github/repos/:name/readme ----------
-router.get('/repos/:name/readme', async (req: Request, res: Response): Promise<void> => {
-    try {
-        const { name } = req.params;
-        const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-        const GITHUB_USERNAME = process.env.GITHUB_USERNAME || 'tp-job';
+router.get('/repos/:name/readme', asyncHandler(async (req: Request, res: Response): Promise<void> => {
+    const { name } = req.params;
+    const apiRes = await fetch(
+        `https://api.github.com/repos/${GITHUB_USERNAME}/${name}/readme`,
+        { headers: getGitHubHeaders() }
+    );
 
-        const headers: Record<string, string> = {
-            Accept: 'application/vnd.github.v3+json',
-            'User-Agent': 'nevinas-portfolio',
-            ...(GITHUB_TOKEN ? { Authorization: `Bearer ${GITHUB_TOKEN}` } : {}),
-        };
-
-        const apiRes = await fetch(
-            `https://api.github.com/repos/${GITHUB_USERNAME}/${name}/readme`,
-            { headers }
-        );
-
-        if (!apiRes.ok) {
-            if (apiRes.status === 404) {
-                res.status(404).json({ success: false, message: 'README not found for this repository' });
-                return;
-            }
-            throw new Error(`GitHub API ${apiRes.status}: ${apiRes.statusText}`);
-        }
-
-        const readme = await apiRes.json();
-        const content = readme.content ? Buffer.from(readme.content, 'base64').toString('utf-8') : '';
-        const encoding = readme.encoding || 'base64';
-
-        res.json({
-            success: true,
-            data: {
-                content,
-                encoding,
-                name: readme.name || 'README.md',
-                html_url: readme.html_url || null,
-            },
-        });
-    } catch (err) {
-        console.error('GitHub readme error:', (err as Error).message);
-        res.status(500).json({ success: false, message: (err as Error).message });
-    }
-});
-
-// ---------- GET /api/github/repos/:name/languages ----------
-// Note: This still proxies to GitHub API since per-repo language breakdown
-// is not stored in our sync. Cached at the sync level is not granular enough.
-router.get('/repos/:name/languages', async (req: Request, res: Response): Promise<void> => {
-    try {
-        const { name } = req.params;
-        const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-        const GITHUB_USERNAME = process.env.GITHUB_USERNAME || 'tp-job';
-
-        const headers: Record<string, string> = {
-            Accept: 'application/vnd.github.v3+json',
-            'User-Agent': 'nevinas-portfolio',
-            ...(GITHUB_TOKEN ? { Authorization: `Bearer ${GITHUB_TOKEN}` } : {}),
-        };
-
-        const apiRes = await fetch(
-            `https://api.github.com/repos/${GITHUB_USERNAME}/${name}/languages`,
-            { headers }
-        );
-
-        if (!apiRes.ok) {
-            throw new Error(`GitHub API ${apiRes.status}: ${apiRes.statusText}`);
-        }
-
-        const languages = await apiRes.json();
-        res.json({ success: true, data: languages });
-    } catch (err) {
-        console.error('GitHub languages error:', (err as Error).message);
-        res.status(500).json({ success: false, message: (err as Error).message });
-    }
-});
-
-// ---------- GET /api/github/stats ----------
-router.get('/stats', async (_req: Request, res: Response): Promise<void> => {
-    try {
-        const stats = await GitHubStats.findOne().sort({ synced_at: -1 });
-        if (!stats) {
-            res.status(404).json({ success: false, message: 'No GitHub stats data. Run sync first.' });
+    if (!apiRes.ok) {
+        if (apiRes.status === 404) {
+            send404(res, 'README not found for this repository');
             return;
         }
-
-        // Convert Mongoose Map to plain object for JSON response
-        const statsObj = stats.toJSON();
-        if (stats.languageDistribution instanceof Map) {
-            statsObj.languageDistribution = Object.fromEntries(stats.languageDistribution);
-        }
-        if (stats.commitsByMonth instanceof Map) {
-            statsObj.commitsByMonth = Object.fromEntries(stats.commitsByMonth);
-        }
-
-        res.json({ success: true, data: statsObj });
-    } catch (err) {
-        console.error('GitHub stats error:', (err as Error).message);
-        res.status(500).json({ success: false, message: (err as Error).message });
+        throw new Error(`GitHub API ${apiRes.status}: ${apiRes.statusText}`);
     }
+
+    const readme = await apiRes.json();
+    const content = readme.content ? Buffer.from(readme.content, 'base64').toString('utf-8') : '';
+    const encoding = readme.encoding || 'base64';
+
+    res.json({
+        success: true,
+        data: {
+            content,
+            encoding,
+            name: readme.name || 'README.md',
+            html_url: readme.html_url || null,
+        },
+    });
+}));
+
+// ---------- GET /api/github/repos/:name/languages ----------
+router.get('/repos/:name/languages', asyncHandler(async (req: Request, res: Response): Promise<void> => {
+    const { name } = req.params;
+    const apiRes = await fetch(
+        `https://api.github.com/repos/${GITHUB_USERNAME}/${name}/languages`,
+        { headers: getGitHubHeaders() }
+    );
+
+    if (!apiRes.ok) {
+        throw new Error(`GitHub API ${apiRes.status}: ${apiRes.statusText}`);
+    }
+
+    const languages = await apiRes.json();
+    res.json({ success: true, data: languages });
+}));
+
+// ---------- GET /api/github/stats ----------
+router.get('/stats', (_req: Request, res: Response): void => {
+    const github = dataStore.github.readAll();
+    const stats = github.stats
+        .slice()
+        .sort((a, b) => new Date(b.synced_at).getTime() - new Date(a.synced_at).getTime())[0];
+    if (!stats) {
+        send404(res, 'No GitHub stats data. Run sync first.');
+        return;
+    }
+    res.json({ success: true, data: stats });
 });
 
 // ---------- GET /api/github/events ----------
-router.get('/events', async (_req: Request, res: Response): Promise<void> => {
-    try {
-        const events = await GitHubEvent.find().sort({ event_at: -1 }).limit(100);
-        res.json({ success: true, count: events.length, data: events });
-    } catch (err) {
-        console.error('GitHub events error:', (err as Error).message);
-        res.status(500).json({ success: false, message: (err as Error).message });
-    }
+router.get('/events', (_req: Request, res: Response): void => {
+    const github = dataStore.github.readAll();
+    const events = github.events
+        .slice()
+        .sort((a, b) => new Date(b.event_at).getTime() - new Date(a.event_at).getTime())
+        .slice(0, 100);
+    res.json({ success: true, count: events.length, data: events });
 });
 
 // ---------- POST /api/github/sync  (manual trigger) ----------
-router.post('/sync', async (_req: Request, res: Response): Promise<void> => {
-    try {
-        await syncGitHub();
-        res.json({ success: true, message: 'GitHub data synced successfully' });
-    } catch (err) {
-        console.error('GitHub sync error:', (err as Error).message);
-        res.status(500).json({ success: false, message: (err as Error).message });
-    }
-});
+router.post('/sync', asyncHandler(async (_req: Request, res: Response): Promise<void> => {
+    await syncGitHub();
+    res.json({ success: true, message: 'GitHub data synced successfully' });
+}));
 
 export default router;

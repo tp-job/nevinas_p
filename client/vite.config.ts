@@ -6,6 +6,7 @@ import path from 'path/win32'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  assetsInclude: ['**/*.glb', '**/*.gltf'],
   server: {
     host: true,  // เปิดให้เข้าถึงจากเครือข่าย
     port: 10005,  // กำหนดพอร์ตใหม่

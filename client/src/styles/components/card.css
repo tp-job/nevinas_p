@@ -1,17 +1,24 @@
 .card-glass {
-    border-radius: 0.75rem;
-    background: var(--color-light-bg);
-    border: 1px solid rgba(2, 6, 23, 0.06);
-    box-shadow: 0 10px 25px rgba(2, 6, 23, 0.06);
-    backdrop-filter: blur(12px) saturate(140%);
-    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    border-radius: 1.5rem;
+    background: var(--color-light-surface);
+    border: 1px solid var(--color-light-border);
+    box-shadow: var(--shadow-light-neu);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    transition: all 0.3s ease;
 }
-.dark .card-glass {
-    background: var(--color-dark-bg);
-    border-color: rgba(255, 255, 255, 0.08);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 10px 25px rgba(0, 0, 0, 0.45);
+.card-glass:hover {
+    box-shadow: var(--shadow-light-neu-sm);
 }
 
+.dark .card-glass {
+    background: var(--color-dark-surface);
+    border-color: var(--color-dark-border);
+    box-shadow: var(--shadow-dark-neu);
+}
+.dark .card-glass:hover {
+    box-shadow: var(--shadow-dark-neu-sm);
+}
 
 .card-title {
     color: var(--color-light-text);
@@ -19,6 +26,7 @@
 .dark .card-title {
     color: var(--color-dark-text);
 }
+
 .muted-contrast {
     color: var(--color-light-text-secondary);
 }

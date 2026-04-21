@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Suspense } from 'react';
-import type { FC } from 'react';
+import { Suspense } from "react";
+import type { FC } from "react";
 
 // page
 import HomePage from "@/pages/HomePage";
@@ -25,37 +25,37 @@ import ServiceUnavailable from "@/components/common/server-error/ServiceUnavaila
 import GatewayTimeout from "@/components/common/server-error/GatewayTimeout";
 
 const AppRoutes: FC = () => {
-    return (
-        <Router>
-            <Suspense fallback={<LoadingSpinner />}>
-                <Routes>
-                    {/* home */}
-                    <Route path="/" element={<HomePage />} />
-                    {/* work */}
-                    <Route path="/work" element={<WorkLayout />}>
-                        <Route index element={<Dashboard />} />
-                        <Route path="dashboard" element={<Dashboard />} />
-                        <Route path="website" element={<Website />} />
-                        <Route path="react" element={<ReactPage />} />
-                        <Route path="tailwindcss" element={<TailwindPage />} />
-                        <Route path="tech-stack" element={<TechStack />} />
-                        <Route path="performance" element={<Performance />} />
-                        <Route path="repository" element={<Repository />} />
-                        <Route path="tooling" element={<ToolsPage />} />
-                        <Route path="docs" element={<Docs />} />
-                        <Route path="gallery" element={<Gallery />} />
-                        <Route path="blog" element={<BlogPage />} />
-                    </Route>
-                    <Route path="*" element={<NotFound />} />
-                    <Route path="/notfound" element={<NotFound />} />
-                    <Route path="/loading" element={<LoadingSpinner />} />
-                    <Route path="/server-error" element={<ServerError />} />
-                    <Route path="/service-unavailable" element={<ServiceUnavailable />} />
-                    <Route path="/gateway-timeout" element={<GatewayTimeout />} />
-                </Routes>
-            </Suspense>
-        </Router>
-    );
+  return (
+    <Router>
+      <Suspense fallback={<LoadingSpinner />}>
+        <Routes>
+          {/* home */}
+          <Route path="/" element={<HomePage />} />
+          {/* work */}
+          <Route path="/work" element={<WorkLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="website" element={<Website />} />
+            <Route path="react" element={<ReactPage />} />
+            <Route path="tailwindcss" element={<TailwindPage />} />
+            <Route path="tech-stack" element={<TechStack />} />
+            <Route path="performance" element={<Performance />} />
+            <Route path="repository" element={<Repository />} />
+            <Route path="tooling" element={<ToolsPage />} />
+            <Route path="docs" element={<Docs />} />
+            <Route path="gallery" element={<Gallery />} />
+            <Route path="blog" element={<BlogPage />} />
+          </Route>
+          <Route path="*" element={<NotFound />} />
+          <Route path="/notfound" element={<NotFound />} />
+          <Route path="/loading" element={<LoadingSpinner />} />
+          <Route path="/server-error" element={<ServerError />} />
+          <Route path="/service-unavailable" element={<ServiceUnavailable />} />
+          <Route path="/gateway-timeout" element={<GatewayTimeout />} />
+        </Routes>
+      </Suspense>
+    </Router>
+  );
 };
 
 export default AppRoutes;

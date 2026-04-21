@@ -6,6 +6,8 @@
 @import './styles/responsive.css';
 @import './styles/components/animations.css';
 @import './styles/components/card.css';
+@import './styles/components/neumorphism.css';
+@import './styles/components/timeline.css';
 
 @theme {
     /* main theme */
@@ -20,49 +22,56 @@
 
     /* light mode */
     --color-light-bg: #f8fafc;
-    --color-light-surface: #ffffff;
-    --color-light-surface-2: #f1f5f9;
-    --color-light-border: #e2e8f0;
+    --color-light-surface: rgba(255, 255, 255, 0.5);
+    --color-light-surface-2: rgba(255, 255, 255, 0.7);
+    --color-light-border: rgba(255, 255, 255, 0.8);
     --color-light-text: #1e293b;
     --color-light-text-secondary: #64748b;
     --color-light-text-primary: #0f172a;
 
-   /* dark mode */
+    /* dark mode */
     --color-dark-bg: #1e202c;
-    --color-dark-surface: #252d3d;
-    --color-dark-surface-2: #2f3848;
-    --color-dark-border: #3d4759;
+    --color-dark-surface: rgba(37, 45, 61, 0.4);
+    --color-dark-surface-2: rgba(47, 56, 72, 0.6);
+    --color-dark-border: rgba(255, 255, 255, 0.08);
     --color-dark-text: #f1f3f5;
     --color-dark-text-secondary: #9ca3af;
     --color-dark-text-primary: #ffffff;
-    
+
     /* global color */
     --color-global-purple: #608dee;
     --color-global-blue: #4285f4;
     --color-global-pink: #e863fa;
-    --color-global-redpink: #ff4d6d;   
+    --color-global-redpink: #ff4d6d;
     --color-global-red: #db4437;
     --color-global-yellow: #f4b400;
     --color-global-green: #0f9d58;
+
+    /* logo color */
+    --color-javascript: #f1e05a;
+    --color-css: #1572b6;
+    --color-html: #e34c26;
+    --color-python: #3572A5;
+    --color-react: #61dafb;
+    --color-vite: #9B59B6;
+    --color-tailwindcss: #38bdf8;
+    --color-git: #f34f29;
+    --color-github: #24292f;
+    --color-nodejs: #3C873A;
+    --color-vscode: #007ACC;
+
+    /* font */
+    --font-inter: "Inter", sans-serif;
+    --font-zen: "Zen Kaku Gothic New", sans-serif;
+
+    /* shadows */
+    --shadow-black: 4px 4px 0 #000;
+    --shadow-white: 4px 4px 0 #fff;
+
+    /* neumorphic glass shadows */
+    --shadow-light-neu: 8px 8px 16px rgba(163, 177, 198, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.8);
+    --shadow-light-neu-sm: 4px 4px 8px rgba(163, 177, 198, 0.4), -4px -4px 8px rgba(255, 255, 255, 0.8);
     
-    /* logo color */                                                                                                    
-    --color-javascript: #f1e05a;                                                                                        
-    --color-css: #1572b6;                                                                                               
-    --color-html: #e34c26;                                                                                              
-    --color-python: #3572A5;                                                                                            
-    --color-react: #61dafb;                                                                                             
-    --color-vite: #9B59B6;                                                                                              
-    --color-tailwindcss: #38bdf8;                                                                                       
-    --color-git: #f34f29;                                                                                               
-    --color-github: #24292f;                                                                                            
-    --color-nodejs: #3C873A;                                                                                            
-    --color-vscode: #007ACC;                                                                                            
-    
-    /* font */                                                                                                          
-    --font-inter: "Inter", sans-serif;                                                                                  
-    --font-zen: "Zen Kaku Gothic New", sans-serif;                                                                      
-    
-    /* shadows */                                                                                                       
-    --shadow-black: '4px 4px 0 #000';                                                                                   
-    --shadow-white: '4px 4px 0 #fff';                                                                                   
+    --shadow-dark-neu: 8px 8px 16px rgba(0, 0, 0, 0.6), -8px -8px 16px rgba(50, 55, 75, 0.4);
+    --shadow-dark-neu-sm: 4px 4px 8px rgba(0, 0, 0, 0.6), -4px -4px 8px rgba(50, 55, 75, 0.4);
 }

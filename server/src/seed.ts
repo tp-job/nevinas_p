@@ -1,15 +1,14 @@
 import 'dotenv/config';
-import mongoose from 'mongoose';
-import Project from './models/Project';
-import Blog from './models/Blog';
-
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/nevinas';
+import { v4 as uuidv4 } from 'uuid';
+import { dataStore } from './services/fileManager';
+import type { IProject, IBlog } from './types/models';
 
 // ============================
 // Projects Data
 // ============================
-const projects = [
+const projects: IProject[] = [
     {
+        id: uuidv4(),
         name: 'nevinas_ka_i',
         description:
             'Personal developer portfolio and dashboard built with React 19, Tailwind CSS 4, MUI, Recharts, and Express 5 + MongoDB. Features analytics dashboard, gallery, blog, tech stack showcase, and project repository.',
@@ -32,10 +31,11 @@ const projects = [
         forks_count: 0,
         category: 'fullstack',
         status: 'in-progress',
-        created_at: new Date('2025-10-01'),
-        updated_at: new Date('2026-02-08'),
+        created_at: new Date('2025-10-01').toISOString(),
+        updated_at: new Date('2026-02-08').toISOString(),
     },
     {
+        id: uuidv4(),
         name: 'ApexOps',
         description:
             'Full-stack real-time operations platform with Socket.io, Google Gemini AI integration, Puppeteer automation, and PostgreSQL. Features live WebSocket communication, AI-powered tools, and interactive dashboards.',
@@ -58,10 +58,11 @@ const projects = [
         forks_count: 0,
         category: 'fullstack',
         status: 'in-progress',
-        created_at: new Date('2025-12-01'),
-        updated_at: new Date('2026-02-08'),
+        created_at: new Date('2025-12-01').toISOString(),
+        updated_at: new Date('2026-02-08').toISOString(),
     },
     {
+        id: uuidv4(),
         name: 'ComTech-Prep',
         description:
             'Interactive Computer Technology learning platform with in-browser Python runtime (Pyodide/WebAssembly), Monaco code editor, ReactFlow flowchart lab, i18n multi-language support (TH/EN), and Zustand state management.',
@@ -84,10 +85,11 @@ const projects = [
         forks_count: 0,
         category: 'fullstack',
         status: 'in-progress',
-        created_at: new Date('2026-01-15'),
-        updated_at: new Date('2026-02-08'),
+        created_at: new Date('2026-01-15').toISOString(),
+        updated_at: new Date('2026-02-08').toISOString(),
     },
     {
+        id: uuidv4(),
         name: 'memonote',
         description:
             'A clean and minimal note-taking web app. Built with React and Tailwind CSS, it features a responsive UI for creating, editing, and organizing notes with an intuitive interface.',
@@ -106,10 +108,11 @@ const projects = [
         forks_count: 0,
         category: 'frontend',
         status: 'completed',
-        created_at: new Date('2025-08-18'),
-        updated_at: new Date('2025-09-01'),
+        created_at: new Date('2025-08-18').toISOString(),
+        updated_at: new Date('2025-09-01').toISOString(),
     },
     {
+        id: uuidv4(),
         name: 'project_tailwindcss_i',
         description:
             'First Tailwind CSS practice project exploring utility-first styling fundamentals. A responsive landing page demonstrating grid layouts, flexbox, gradients, and responsive breakpoints.',
@@ -128,10 +131,11 @@ const projects = [
         forks_count: 0,
         category: 'frontend',
         status: 'completed',
-        created_at: new Date('2025-05-15'),
-        updated_at: new Date('2025-05-16'),
+        created_at: new Date('2025-05-15').toISOString(),
+        updated_at: new Date('2025-05-16').toISOString(),
     },
     {
+        id: uuidv4(),
         name: 'project_tailwindcss_ii',
         description:
             'Second Tailwind CSS project building on the fundamentals. Features dark mode toggle, animations, hover effects, and more complex responsive layouts with modern design patterns.',
@@ -150,10 +154,11 @@ const projects = [
         forks_count: 0,
         category: 'frontend',
         status: 'completed',
-        created_at: new Date('2025-05-16'),
-        updated_at: new Date('2025-05-19'),
+        created_at: new Date('2025-05-16').toISOString(),
+        updated_at: new Date('2025-05-19').toISOString(),
     },
     {
+        id: uuidv4(),
         name: 'buildly',
         description:
             'A web application builder concept with drag-and-drop interface. Showcases component composition, dynamic rendering, and a modern UI built with React and Tailwind CSS.',
@@ -172,10 +177,11 @@ const projects = [
         forks_count: 0,
         category: 'frontend',
         status: 'completed',
-        created_at: new Date('2025-07-15'),
-        updated_at: new Date('2025-07-15'),
+        created_at: new Date('2025-07-15').toISOString(),
+        updated_at: new Date('2025-07-15').toISOString(),
     },
     {
+        id: uuidv4(),
         name: 'my_protfolio_i',
         description:
             'First portfolio website built with pure HTML and Tailwind CSS. A single-page design showcasing personal projects, skills, and contact information with a clean minimal aesthetic.',
@@ -193,10 +199,11 @@ const projects = [
         forks_count: 0,
         category: 'frontend',
         status: 'completed',
-        created_at: new Date('2025-01-08'),
-        updated_at: new Date('2025-07-18'),
+        created_at: new Date('2025-01-08').toISOString(),
+        updated_at: new Date('2025-07-18').toISOString(),
     },
     {
+        id: uuidv4(),
         name: 'chessgame',
         description:
             'A terminal-based chess game built entirely in Python. Features complete chess logic including move validation, check/checkmate detection, and a text-based board display.',
@@ -211,16 +218,17 @@ const projects = [
         forks_count: 0,
         category: 'cli',
         status: 'completed',
-        created_at: new Date('2025-11-21'),
-        updated_at: new Date('2025-11-22'),
+        created_at: new Date('2025-11-21').toISOString(),
+        updated_at: new Date('2025-11-22').toISOString(),
     },
 ];
 
 // ============================
 // Blog Data
 // ============================
-const blogs = [
+const blogs: IBlog[] = [
     {
+        id: uuidv4(),
         title: 'The Future of React: Server Components Explained',
         excerpt:
             'Dive deep into how Server Components are reshaping the way we build performant web applications in 2024 and beyond.',
@@ -234,8 +242,10 @@ const blogs = [
         imageUrl:
             'https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
         authorAvatar: '',
+        created_at: new Date('2025-10-24').toISOString(),
     },
     {
+        id: uuidv4(),
         title: 'Mastering Tailwind CSS: From Zero to Hero',
         excerpt:
             'Stop fighting with CSS files. Learn how utility-first CSS can speed up your development workflow by 200%.',
@@ -249,8 +259,10 @@ const blogs = [
         imageUrl:
             'https://images.unsplash.com/photo-1555099962-4199c345e5dd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80',
         authorAvatar: '',
+        created_at: new Date('2025-11-02').toISOString(),
     },
     {
+        id: uuidv4(),
         title: 'The Psychology of Minimalist Web Design',
         excerpt:
             'Why less is often more. Understanding cognitive load and how whitespace improves user retention.',
@@ -264,8 +276,10 @@ const blogs = [
         imageUrl:
             'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&auto=format&fit=crop&w=1471&q=80',
         authorAvatar: '',
+        created_at: new Date('2025-11-15').toISOString(),
     },
     {
+        id: uuidv4(),
         title: 'Building a MERN Stack Portfolio from Scratch',
         excerpt:
             'A complete walkthrough of creating a developer portfolio with MongoDB, Express, React, and Node.js.',
@@ -279,8 +293,10 @@ const blogs = [
         imageUrl:
             'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
         authorAvatar: '',
+        created_at: new Date('2025-12-10').toISOString(),
     },
     {
+        id: uuidv4(),
         title: 'Why TypeScript is Worth the Learning Curve',
         excerpt:
             'From skeptic to advocate: how static typing transformed my development workflow and reduced bugs by 60%.',
@@ -294,8 +310,10 @@ const blogs = [
         imageUrl:
             'https://images.unsplash.com/photo-1516116216624-53e697fedbea?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
         authorAvatar: '',
+        created_at: new Date('2026-01-05').toISOString(),
     },
     {
+        id: uuidv4(),
         title: 'Running Python in the Browser with Pyodide',
         excerpt:
             'How WebAssembly enables full Python runtime in the browser — and how I used it in ComTech-Prep.',
@@ -309,39 +327,28 @@ const blogs = [
         imageUrl:
             'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
         authorAvatar: '',
+        created_at: new Date('2026-02-01').toISOString(),
     },
 ];
 
 // ============================
-// Seed Database
+// Seed Data
 // ============================
-async function seed(): Promise<void> {
-    try {
-        await mongoose.connect(MONGODB_URI);
-        console.log('MongoDB connected');
+function seed(): void {
+    dataStore.init();
 
-        // Seed Projects
-        await Project.deleteMany({});
-        console.log('Cleared existing projects');
-        const projectResult = await Project.insertMany(projects);
-        console.log(`Added ${projectResult.length} projects`);
+    // Seed Projects
+    dataStore.projects.writeAll(projects);
+    console.log(`Added ${projects.length} projects`);
 
-        // Seed Blogs
-        await Blog.deleteMany({});
-        console.log('Cleared existing blogs');
-        const blogResult = await Blog.insertMany(blogs);
-        console.log(`Added ${blogResult.length} blogs`);
+    // Seed Blogs
+    dataStore.blogs.writeAll(blogs);
+    console.log(`Added ${blogs.length} blogs`);
 
-        console.log('\nSeed Summary:');
-        console.log(`  Projects: ${projectResult.length}`);
-        console.log(`  Blogs: ${blogResult.length}`);
-        console.log('  Gallery: (use npm run sync:gallery separately)');
-
-        process.exit(0);
-    } catch (err) {
-        console.error('Error seeding database:', err);
-        process.exit(1);
-    }
+    console.log('\nSeed Summary:');
+    console.log(`  Projects: ${projects.length}`);
+    console.log(`  Blogs: ${blogs.length}`);
+    console.log('  Gallery: (use npm run sync:gallery separately)');
 }
 
 seed();

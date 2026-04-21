@@ -1,0 +1,388 @@
+<html class="dark">
+
+<head>
+    <meta charset="utf-8" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#ffb2b9",
+                        "on-secondary-fixed": "#003563",
+                        "primary-container": "#d27dfb",
+                        "on-secondary-fixed-variant": "#005294",
+                        "surface-bright": "#2b2b39",
+                        "secondary-container": "#0060ac",
+                        "on-primary-fixed": "#010003",
+                        "tertiary-fixed": "#ff909e",
+                        "surface-container-lowest": "#000000",
+                        "surface-dim": "#0d0d16",
+                        "outline": "#757480",
+                        "on-surface-variant": "#aca9b6",
+                        "on-tertiary-fixed-variant": "#711229",
+                        "on-primary-fixed-variant": "#4e0070",
+                        "inverse-primary": "#8a38b2",
+                        "background": "#0d0d16",
+                        "primary-dim": "#cf7af8",
+                        "primary": "#db90ff",
+                        "surface-container": "#191923",
+                        "on-primary-container": "#3c0057",
+                        "surface-container-low": "#12121c",
+                        "surface-tint": "#db90ff",
+                        "on-tertiary": "#62041f",
+                        "outline-variant": "#484751",
+                        "tertiary-fixed-dim": "#fa7c8d",
+                        "tertiary-dim": "#f47788",
+                        "secondary": "#68abff",
+                        "primary-fixed-dim": "#c672ef",
+                        "tertiary-container": "#f7798b",
+                        "error-container": "#a70138",
+                        "on-tertiary-fixed": "#39000e",
+                        "surface-variant": "#252532",
+                        "inverse-on-surface": "#55545f",
+                        "surface-container-highest": "#252532",
+                        "surface-container-high": "#1f1e2a",
+                        "primary-fixed": "#d580fe",
+                        "on-secondary-container": "#f6f7ff",
+                        "on-primary": "#4e0070",
+                        "tertiary": "#ff8b9a",
+                        "error": "#ff6e84",
+                        "on-tertiary-container": "#4d0015",
+                        "secondary-fixed": "#b7d3ff",
+                        "on-background": "#e7e4f1",
+                        "on-secondary": "#002b52",
+                        "secondary-dim": "#5ca0f3",
+                        "secondary-fixed-dim": "#9fc6ff",
+                        "surface": "#0d0d16",
+                        "error-dim": "#d73357",
+                        "on-error": "#490013",
+                        "on-surface": "#e7e4f1",
+                        "inverse-surface": "#fcf8ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": [
+                            "Manrope"
+                        ],
+                        "body": [
+                            "Inter"
+                        ],
+                        "label": [
+                            "Inter"
+                        ]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .glass-nav {
+            background: rgba(13, 13, 22, 0.4);
+            backdrop-filter: blur(12px);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #db90ff, #68abff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bg-signature-gradient {
+            background: linear-gradient(135deg, #db90ff 0%, #68abff 100%);
+        }
+
+        .mask-radial {
+            mask-image: radial-gradient(circle, black 50%, transparent 100%);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container">
+    <!-- TopNavBar Navigation Shell -->
+    <nav class="fixed top-0 w-full z-50 bg-slate-950/40 backdrop-blur-xl">
+        <div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
+            <div class="text-xl font-black text-white tracking-tighter">The Astral Gallery</div>
+            <div class="hidden md:flex items-center gap-8">
+                <a class="font-manrope tracking-tight font-bold text-slate-400 hover:text-white transition-colors duration-300"
+                    href="#">Home</a>
+                <a class="font-manrope tracking-tight font-bold text-purple-400 border-b-2 border-purple-500 pb-1"
+                    href="#">About</a>
+                <a class="font-manrope tracking-tight font-bold text-slate-400 hover:text-white transition-colors duration-300"
+                    href="#">Services</a>
+                <a class="font-manrope tracking-tight font-bold text-slate-400 hover:text-white transition-colors duration-300"
+                    href="#">My Work</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button
+                    class="p-2 text-slate-400 hover:text-white transition-colors duration-300 scale-95 active:scale-90 transition-transform">
+                    <span class="material-symbols-outlined" data-icon="dark_mode">dark_mode</span>
+                </button>
+                <button
+                    class="bg-signature-gradient text-on-primary-fixed px-6 py-2 rounded-full font-bold scale-95 active:scale-90 transition-transform">
+                    Contact
+                </button>
+            </div>
+        </div>
+    </nav>
+    <main class="pt-32 pb-24 overflow-x-hidden">
+        <!-- Hero Section / About Intro -->
+        <section class="max-w-7xl mx-auto px-8 mb-32 relative">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7 z-10">
+                    <span
+                        class="font-label tracking-[0.2em] text-primary uppercase text-xs font-semibold mb-4 block">Architect
+                        of Digital Voids</span>
+                    <h1
+                        class="font-headline text-5xl md:text-7xl font-extrabold tracking-tighter text-white mb-8 leading-[1.1]">
+                        Curating ethereal <span class="text-gradient">digital experiences</span> in the astral plane.
+                    </h1>
+                    <p class="text-on-surface-variant text-lg md:text-xl max-w-2xl leading-relaxed mb-10">
+                        I am a multidisciplinary designer and developer focused on crafting immersive interfaces that
+                        bridge the gap between technical precision and atmospheric storytelling. My work lives at the
+                        intersection of high-fidelity aesthetics and seamless user agency.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <div
+                            class="flex items-center gap-2 px-4 py-2 bg-surface-container rounded-full border border-outline-variant/20">
+                            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                            <span class="text-sm font-medium">Available for select projects</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Asymmetrical Image Cluster -->
+                <div class="lg:col-span-5 relative flex justify-center lg:justify-end">
+                    <div class="relative w-80 h-80 md:w-96 md:h-96">
+                        <!-- Main Portrait -->
+                        <div
+                            class="absolute inset-0 rounded-full border-2 border-outline-variant/20 overflow-hidden z-20 bg-surface-container-low p-2">
+                            <img class="w-full h-full object-cover rounded-full grayscale hover:grayscale-0 transition-all duration-700"
+                                data-alt="Modern high-fashion portrait of a creative professional with subtle moody lighting and deep navy background aesthetic"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1i9HEBSTSwi60s3j8sA9HuJtdlt_AcrMylT2K5pGXTNaVgYT8Kqv_1xIFzQiLefa1_6THzshfGNAuoei6kUc9hxIX7zLgxvhCzyoGmPhnttj_B4soYueoLvg6GQMdoWIAIWls-5V-KKvr9eW0D-8CsbPogabUm704QVrMb9YQw11J935ovuUJG24AsD1JkxCcjnc-vF0bGa44eAgVjeSdB7ONJYBMmt8BP9Y8PZN-WKpdD2QgTv75itTGojsVmrO3njVaol1u4Ili" />
+                        </div>
+                        <!-- Accents -->
+                        <div
+                            class="absolute -top-4 -right-4 w-32 h-32 rounded-full border border-outline-variant/30 overflow-hidden z-30 bg-surface-container shadow-2xl">
+                            <img class="w-full h-full object-cover opacity-80"
+                                data-alt="Close up detail of abstract purple and blue smoke or digital nebula with soft grain texture"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-pQ0SR95_tjDmNY_K1rYO7prMdKFMtR6ia0QAnIb6ToygpcVGDruNKKjqDvN6iNPkVWL2sNi13pW1KaV0wb4_XNZIoMu6h7Clpgvt2N7RyG2OG0qHidekzZ3Ry6HbwazUo5EHm08_-wg3ir2q032l5GLipcKFnxHMoBQDvKExu_sfLcBM15YgGRf9I9Ffvz1S8g4_L19PrXh4Q4cOpUYWJumJA7Jno8eKiOeHygo6rcXzrQ9sPsXB83qdwa24w_cqzeBfOv1skaSD" />
+                        </div>
+                        <div
+                            class="absolute -bottom-8 -left-8 w-48 h-48 rounded-full border border-outline-variant/30 overflow-hidden z-10 bg-surface-container-highest flex items-center justify-center p-4">
+                            <img class="w-full h-full object-cover rounded-full"
+                                data-alt="Anime style illustration of a character looking at the stars with a soft aesthetic and purple lighting"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ2Jjiaok96ViBiLhJqEcP7Scdj9nEIudDi6hkXP_jRkbU_VE1o37vpahE3-NwBd9a8W9vMX4EkEVKkZu5aoc-mCj0aKJ14vNCbbxRRYqaStIyFuo_ZBRzoAJnCsOFqYm-1rAdh4owityb5rokYAEYEmhqnGGHWTLS3IGWWwXJqsvq0g50cO4SMnTxLIwW5LQt-J2wRoI0aoJEfVZCa7u-Ib3IwsEoxJ9yrsNNcuVD46dkBjVld3uXXsax82KkjmcHA_Z_bL0fJgjj" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Skills Bento Grid -->
+        <section class="max-w-7xl mx-auto px-8 mb-32">
+            <div class="mb-16">
+                <h2 class="font-headline text-4xl font-extrabold tracking-tight text-white mb-4">The Skill Constellation
+                </h2>
+                <div class="w-20 h-1 bg-signature-gradient rounded-full"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Main Skill Card -->
+                <div
+                    class="md:col-span-2 lg:col-span-2 p-8 rounded-lg bg-surface-container-low border border-outline-variant/10 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <span class="material-symbols-outlined text-8xl" data-icon="terminal">terminal</span>
+                    </div>
+                    <span class="material-symbols-outlined text-primary mb-6"
+                        data-icon="auto_awesome">auto_awesome</span>
+                    <h3 class="font-headline text-2xl font-bold text-white mb-4">Core Philosophy</h3>
+                    <p class="text-on-surface-variant leading-relaxed mb-6">
+                        I believe that code is the medium through which we manifest imagination. My approach centers on
+                        performance-first development paired with editorial-grade design systems.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span
+                            class="px-3 py-1 bg-surface-container-highest rounded-full text-xs font-label tracking-wider border border-outline-variant/20 uppercase">React.js</span>
+                        <span
+                            class="px-3 py-1 bg-surface-container-highest rounded-full text-xs font-label tracking-wider border border-outline-variant/20 uppercase">Next.js</span>
+                        <span
+                            class="px-3 py-1 bg-surface-container-highest rounded-full text-xs font-label tracking-wider border border-outline-variant/20 uppercase">Tailwind</span>
+                        <span
+                            class="px-3 py-1 bg-surface-container-highest rounded-full text-xs font-label tracking-wider border border-outline-variant/20 uppercase">Framer
+                            Motion</span>
+                    </div>
+                </div>
+                <!-- Design Card -->
+                <div
+                    class="p-8 rounded-lg bg-surface-container border border-outline-variant/10 flex flex-col justify-between">
+                    <div>
+                        <span class="material-symbols-outlined text-secondary mb-6" data-icon="draw">draw</span>
+                        <h3 class="font-headline text-xl font-bold text-white mb-2">Visual Identity</h3>
+                        <p class="text-sm text-on-surface-variant leading-relaxed">
+                            Crafting cohesive brand languages that resonate in the digital void through typography and
+                            space.
+                        </p>
+                    </div>
+                    <div class="mt-8 flex -space-x-2">
+                        <div
+                            class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-[10px] text-on-primary-container font-black">
+                            FIG</div>
+                        <div
+                            class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-[10px] text-on-secondary-container font-black">
+                            AI</div>
+                        <div
+                            class="w-8 h-8 rounded-full bg-tertiary-container flex items-center justify-center text-[10px] text-on-tertiary-container font-black">
+                            PS</div>
+                    </div>
+                </div>
+                <!-- Strategy Card -->
+                <div class="p-8 rounded-lg bg-surface-container-high border border-outline-variant/10">
+                    <span class="material-symbols-outlined text-tertiary mb-6" data-icon="insights">insights</span>
+                    <h3 class="font-headline text-xl font-bold text-white mb-2">Product Strategy</h3>
+                    <p class="text-sm text-on-surface-variant leading-relaxed">
+                        Data-driven insights merged with intuitive user journey mapping to ensure purposeful digital
+                        solutions.
+                    </p>
+                </div>
+                <!-- Decorative Illustration Card -->
+                <div class="md:col-span-3 lg:col-span-1 rounded-lg bg-signature-gradient p-[1px] overflow-hidden group">
+                    <div
+                        class="bg-surface-container-low h-full w-full p-8 relative flex flex-col items-center text-center justify-center">
+                        <div class="w-24 h-24 rounded-full mb-6 border-2 border-primary overflow-hidden">
+                            <img class="w-full h-full object-cover"
+                                data-alt="Vibrant abstract gradient background with flowing shapes of purple, blue and magenta with slight grain"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuADe7umbLtkf3UVobl33VD3lPjhU--w_9nZQsLKAv2dEr2gDYOcRWMySCvWTTnRneiBLFdZinLu-EuvJQsFSWQ6CGtMUklqav8vLbC-j1DW7jrOGlAQdlO19vFoYfIwxioJ86JZjYssHEqvI6LX0ty5JYMRYELBZA-ECJ7pElbTmnpJR68eZbqaC8Tl0y_Aw0tUEY7BPqclcEhJNQ3mRzHjFQoJNWZ2ZYiMYbnDwDtu7YCIz42lkxTQnGMeFAuzQTLc2fPDnZmTQWWJ" />
+                        </div>
+                        <h3 class="font-headline text-xl font-bold text-white mb-2">Anime Aesthetics</h3>
+                        <p class="text-xs text-on-surface-variant uppercase tracking-widest">Inspiration Stream</p>
+                    </div>
+                </div>
+                <!-- Tooling Card -->
+                <div
+                    class="lg:col-span-3 p-8 rounded-lg bg-surface-container border border-outline-variant/10 flex flex-col md:flex-row items-center gap-8">
+                    <div class="flex-1">
+                        <h3 class="font-headline text-2xl font-bold text-white mb-2">The Modern Stack</h3>
+                        <p class="text-on-surface-variant">I leverage the latest industrial-grade tools to ensure
+                            scalability and performance in every project I touch.</p>
+                    </div>
+                    <div class="grid grid-cols-4 gap-4 w-full md:w-auto">
+                        <div class="p-4 bg-surface-container-highest rounded-lg flex items-center justify-center">
+                            <span class="material-symbols-outlined text-on-surface-variant" data-icon="hub">hub</span>
+                        </div>
+                        <div class="p-4 bg-surface-container-highest rounded-lg flex items-center justify-center">
+                            <span class="material-symbols-outlined text-on-surface-variant"
+                                data-icon="cloud_done">cloud_done</span>
+                        </div>
+                        <div class="p-4 bg-surface-container-highest rounded-lg flex items-center justify-center">
+                            <span class="material-symbols-outlined text-on-surface-variant"
+                                data-icon="security">security</span>
+                        </div>
+                        <div class="p-4 bg-surface-container-highest rounded-lg flex items-center justify-center">
+                            <span class="material-symbols-outlined text-on-surface-variant"
+                                data-icon="speed">speed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Interests Section -->
+        <section class="max-w-7xl mx-auto px-8">
+            <div class="flex flex-col lg:flex-row gap-16 items-start">
+                <div class="w-full lg:w-1/3">
+                    <h2 class="font-headline text-4xl font-extrabold tracking-tight text-white mb-6">Beyond the <span
+                            class="text-gradient">Screen</span></h2>
+                    <p class="text-on-surface-variant leading-relaxed">
+                        When I'm not pushing pixels or debugging states, you'll find me exploring other dimensions of
+                        creativity and culture.
+                    </p>
+                </div>
+                <div class="w-full lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="flex gap-6 items-start">
+                        <div
+                            class="flex-shrink-0 w-12 h-12 rounded-full bg-surface-container-high border border-outline-variant/20 flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined" data-icon="palette">palette</span>
+                        </div>
+                        <div>
+                            <h4 class="font-headline font-bold text-lg text-white mb-2">Digital Illustration</h4>
+                            <p class="text-sm text-on-surface-variant leading-relaxed">Deeply inspired by 90s cyber-noir
+                                anime and modern lo-fi aesthetics, I spend my evenings illustrating astral landscapes.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 items-start">
+                        <div
+                            class="flex-shrink-0 w-12 h-12 rounded-full bg-surface-container-high border border-outline-variant/20 flex items-center justify-center text-secondary">
+                            <span class="material-symbols-outlined" data-icon="headphones">headphones</span>
+                        </div>
+                        <div>
+                            <h4 class="font-headline font-bold text-lg text-white mb-2">Sound Design</h4>
+                            <p class="text-sm text-on-surface-variant leading-relaxed">Ambient soundscapes and
+                                synth-wave production. I believe the auditory layer is half of the digital experience.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 items-start">
+                        <div
+                            class="flex-shrink-0 w-12 h-12 rounded-full bg-surface-container-high border border-outline-variant/20 flex items-center justify-center text-tertiary">
+                            <span class="material-symbols-outlined" data-icon="coffee">coffee</span>
+                        </div>
+                        <div>
+                            <h4 class="font-headline font-bold text-lg text-white mb-2">Café Culture</h4>
+                            <p class="text-sm text-on-surface-variant leading-relaxed">Hunting for the perfect brew in
+                                urban corners. Many of my best system architectures were sketched on paper napkins.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 items-start">
+                        <div
+                            class="flex-shrink-0 w-12 h-12 rounded-full bg-surface-container-high border border-outline-variant/20 flex items-center justify-center text-on-secondary-fixed">
+                            <span class="material-symbols-outlined" data-icon="public">public</span>
+                        </div>
+                        <div>
+                            <h4 class="font-headline font-bold text-lg text-white mb-2">Urban Exploration</h4>
+                            <p class="text-sm text-on-surface-variant leading-relaxed">Traveling to cities with rich
+                                architectural histories to study the physical equivalent of user flow and spatial
+                                design.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer Navigation Shell -->
+    <footer class="bg-slate-950 w-full py-12 px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center w-full max-w-7xl mx-auto">
+            <div class="mb-8 md:mb-0">
+                <div class="text-lg font-bold text-white mb-2">The Astral Gallery</div>
+                <p class="font-inter text-sm tracking-wide text-slate-500">© 2024 The Astral Gallery. All rights
+                    reserved.</p>
+            </div>
+            <div class="flex gap-8">
+                <a class="font-inter text-sm tracking-wide text-slate-500 hover:text-purple-300 transition-all opacity-80 hover:opacity-100"
+                    href="#">GitHub</a>
+                <a class="font-inter text-sm tracking-wide text-slate-500 hover:text-purple-300 transition-all opacity-80 hover:opacity-100"
+                    href="#">LinkedIn</a>
+                <a class="font-inter text-sm tracking-wide text-slate-500 hover:text-purple-300 transition-all opacity-80 hover:opacity-100"
+                    href="#">Dribbble</a>
+                <a class="font-inter text-sm tracking-wide text-slate-500 hover:text-purple-300 transition-all opacity-80 hover:opacity-100"
+                    href="#">Instagram</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
