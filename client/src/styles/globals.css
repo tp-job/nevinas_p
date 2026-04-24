@@ -34,11 +34,68 @@ body {
 
 /* selection styling */
 ::selection {
-    background-color: #d27dfb;
+    background-color: #f83b64;
     color: #ffffff;
 }
 
 .dark ::selection {
-    background-color: #d27dfb;
+    background-color: #f83b64;
     color: #ffffff;
+}
+
+/* Premium Glass Surface */
+.glass-premium {
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.55) 0%,
+            rgba(255, 255, 255, 0.20) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.80);
+    border-top-color: rgba(255, 255, 255, 0.95);
+    border-left-color: rgba(255, 255, 255, 0.90);
+    box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.06),
+        0 1px 2px rgba(0, 0, 0, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.03);
+    border-radius: 20px;
+}
+
+.dark .glass-premium {
+    background: linear-gradient(135deg,
+            rgba(47, 56, 72, 0.60) 0%,
+            rgba(37, 45, 61, 0.40) 100%);
+    border-color: rgba(255, 255, 255, 0.08);
+    border-top-color: rgba(255, 255, 255, 0.14);
+    border-left-color: rgba(255, 255, 255, 0.10);
+    box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.40),
+        0 1px 2px rgba(0, 0, 0, 0.20),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.10);
+}
+
+/* Neumorphic Glass Variants */
+.neu-light {
+    background: #f0f1f5;
+    box-shadow: var(--shadow-light-neu);
+}
+
+.neu-light:focus,
+.neu-light:active {
+    box-shadow:
+        inset 4px 4px 8px rgba(163, 177, 198, 0.40),
+        inset -4px -4px 8px rgba(255, 255, 255, 0.80);
+}
+
+.neu-dark {
+    background: #1a1e30;
+    box-shadow: var(--shadow-dark-neu);
+}
+
+.neu-dark:focus,
+.neu-dark:active {
+    box-shadow:
+        inset 4px 4px 8px rgba(0, 0, 0, 0.60),
+        inset -4px -4px 8px rgba(50, 55, 75, 0.40);
 }

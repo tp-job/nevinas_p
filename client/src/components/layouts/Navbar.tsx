@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import type { FC } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { Assets, DataSong } from "@/data/HomeData";
+import { TbArrowsExchange } from "react-icons/tb";
 
 const HOME_LINKS = [
   { href: "#top", label: "Home", icon: "ri-home-4-line" },
@@ -113,261 +114,338 @@ const Navbar: FC = () => {
 
   // Nav classes based on scroll state
   const navClass = isScrolled
-    ? "bg-light-bg/50 backdrop-blur-lg shadow-sm dark:bg-dark-bg/50 dark:shadow-light-bg/20"
-    : "";
+    ? "bg-theme-surface/80 backdrop-blur-lg shadow-md border-b border-light-border dark:border-dark-border text-light-text-primary dark:text-dark-text-primary"
+    : "text-light-text-primary dark:text-dark-text-primary";
+    
   const navLinksClass = !isScrolled
-    ? "bg-light-bg/50 shadow-sm dark:border dark:border-light-bg/50 dark:bg-transparent"
+    ? "bg-theme-surface/40 backdrop-blur-md shadow-sm border border-light-border dark:border-white/10"
     : "";
 
   return (
-    <div
-      className={`w-full fixed px-5 lg:px-8 xl:px-[8%] py-3 flex items-center justify-between z-50 transition-all duration-300 ${navClass}`}
-    >
-      {/* logo + music */}
-      <div className="flex items-center gap-4 sm:gap-6 lg:gap-8">
-        <img
-          src={Assets.logo}
-          alt="Nevinas logo"
-          className="w-12 sm:w-14 rounded-full cursor-pointer"
-        />
-        {/* music player */}
-        <div className="hidden sm:flex items-center gap-3 song-group">
-          <i className="ri-voiceprint-fill text-lg"></i>
-          <div className="w-24 marquee-container song-title">
-            <div
-              className="marquee-track"
-              ref={marqueeTrackRef}
-              style={
-                { "--marquee-duration": marqueeDuration } as React.CSSProperties
-              }
-            >
-              <span className="text-sm font-medium marquee-text">
-                {DataSong[songIndex].title}
-              </span>
-              <span
-                className="text-sm font-medium marquee-text"
-                aria-hidden="true"
-              >
-                {DataSong[songIndex].title}
-              </span>
-            </div>
+    <div className="font-inter">
+      {/* ======================== */}
+      {/* Desktop Navbar */}
+      {/* ======================== */}
+      <nav
+        className={`hidden lg:flex w-full fixed px-8 xl:px-[8%] py-3 items-center justify-between z-50 transition-all duration-400 ${navClass}`}
+      >
+        {/* logo + music */}
+        <div className="flex items-center gap-6 lg:gap-8">
+          <div className="flex items-center gap-3">
+            <img
+              src={Assets.logo}
+              alt="Nevinas logo"
+              className="w-10 sm:w-11 rounded-full cursor-pointer bg-black p-1 shadow-lg border border-white/10 hover:scale-105 active:scale-95 transition-all"
+            />
           </div>
-          <audio
-            ref={audioRef}
-            src={DataSong[songIndex].song}
-            onEnded={nextSong}
-            onLoadedData={() => {
-              if (isPlaying) {
-                try {
-                  audioRef.current?.play();
-                } catch (_) {
-                  /* autoplay blocked */
+          {/* music player */}
+          <div className="hidden sm:flex items-center gap-4 group/player">
+            <i className="ri-voiceprint-fill text-[20px] text-global-blue animate-pulse"></i>
+            <div className="w-24 marquee-container">
+              <div
+                className="marquee-track"
+                ref={marqueeTrackRef}
+                style={
+                  { "--marquee-duration": marqueeDuration } as React.CSSProperties
                 }
-              }
-            }}
-            onPlay={() => setIsPlaying(true)}
-            onPause={() => setIsPlaying(false)}
-          ></audio>
-          {/* controls */}
-          <div className="flex items-center gap-1">
-            <button
-              onClick={isPlaying ? pauseMusic : playMusic}
-              className="p-1.5 rounded-md hover:bg-light-bg/20 dark:hover:bg-light-bg/10 transition-colors"
-              aria-label={isPlaying ? "Pause music" : "Play music"}
-            >
-              <i
-                className={`${isPlaying ? "ri-pause-fill" : "ri-play-fill"} text-lg`}
-              ></i>
-            </button>
-            <div className="relative" ref={dropdownRef}>
-              <button
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="p-1.5 rounded-md hover:bg-light-bg/20 dark:hover:bg-light-bg/10 transition-colors"
-                aria-label="Song list"
-                aria-expanded={isDropdownOpen}
               >
-                <i className="ri-playlist-line text-lg"></i>
+                <span className="text-[14px] font-semibold marquee-text">
+                  {DataSong[songIndex].title}
+                </span>
+                <span
+                  className="text-[14px] font-semibold marquee-text"
+                  aria-hidden="true"
+                >
+                  {DataSong[songIndex].title}
+                </span>
+              </div>
+            </div>
+            <audio
+              ref={audioRef}
+              src={DataSong[songIndex].song}
+              onEnded={nextSong}
+              onLoadedData={() => {
+                if (isPlaying) {
+                  try {
+                    audioRef.current?.play();
+                  } catch (_) {
+                    /* autoplay blocked */
+                  }
+                }
+              }}
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
+            ></audio>
+            {/* controls */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={isPlaying ? pauseMusic : playMusic}
+                className="w-9 h-9 flex items-center justify-center rounded-full bg-white dark:bg-[#1f2438] shadow-[4px_4px_10px_rgba(0,0,0,0.05),-4px_-4px_10px_rgba(255,255,255,0.8)] dark:shadow-[6px_6px_12px_rgba(0,0,0,0.4),-4px_-4px_10px_rgba(70,80,120,0.1)] hover:scale-110 active:scale-90 transition-all text-global-blue"
+                aria-label={isPlaying ? "Pause music" : "Play music"}
+              >
+                <i
+                  className={`${isPlaying ? "ri-pause-fill" : "ri-play-fill"} text-[20px]`}
+                ></i>
               </button>
-              {isDropdownOpen && (
-                <div className="absolute top-full right-0 mt-2 w-56 bg-light-bg dark:bg-dark-bg shadow-lg rounded-xl border border-light-border dark:border-dark-border overflow-hidden">
-                  <div className="py-1">
-                    {DataSong.map((item, index) => (
-                      <button
-                        key={item.id ?? item.title}
-                        onClick={() => {
-                          changeSong(index);
-                          setIsDropdownOpen(false);
-                        }}
-                        className={`flex items-center gap-2 w-full px-4 py-2.5 text-sm text-left transition-colors ${index === songIndex ? "bg-global-blue/10 text-global-blue font-medium" : "hover:bg-light-surface dark:hover:bg-dark-surface"}`}
-                      >
-                        {index === songIndex && (
-                          <i className="ri-volume-up-line text-xs"></i>
-                        )}
-                        <span className={index === songIndex ? "" : "pl-5"}>
-                          {item.title}
-                        </span>
-                      </button>
-                    ))}
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="w-9 h-9 flex items-center justify-center rounded-full bg-white dark:bg-[#1f2438] shadow-[4px_4px_10px_rgba(0,0,0,0.05),-4px_-4px_10px_rgba(255,255,255,0.8)] dark:shadow-[6px_6px_12px_rgba(0,0,0,0.4),-4px_-4px_10px_rgba(70,80,120,0.1)] hover:scale-110 active:scale-90 transition-all text-global-blue/60 hover:text-global-blue"
+                  aria-label="Change song"
+                  aria-expanded={isDropdownOpen}
+                >
+                  <TbArrowsExchange className="text-[20px]" />
+                </button>
+                
+                {isDropdownOpen && (
+                  <div className="absolute top-full right-[-60px] mt-4 w-80 bg-theme-surface/95 backdrop-blur-2xl border border-light-border dark:border-white/10 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.3)] overflow-hidden p-8 z-[60] animate-in fade-in zoom-in duration-300">
+                    {/* Top Player Controls */}
+                    <div className="flex items-center justify-between mb-8">
+                      <div className="flex items-center gap-6">
+                        <button 
+                          onClick={() => setSongIndex((prev) => (prev - 1 + DataSong.length) % DataSong.length)}
+                          className="text-light-text-secondary dark:text-dark-text-secondary opacity-40 hover:opacity-100 transition-opacity hover:scale-110 active:scale-90"
+                        >
+                          <i className="ri-skip-back-mini-fill text-[20px]"></i>
+                        </button>
+                        <button
+                          onClick={isPlaying ? pauseMusic : playMusic}
+                          className="w-11 h-11 flex items-center justify-center rounded-full bg-gradient-to-br from-[#5983FC] to-[#964EC2] text-white shadow-[0_8px_20px_rgba(89,131,252,0.4)] hover:scale-110 active:scale-90 transition-all"
+                        >
+                          <i className={`${isPlaying ? "ri-pause-mini-fill" : "ri-play-mini-fill"} text-[22px]`}></i>
+                        </button>
+                        <button 
+                          onClick={nextSong}
+                          className="text-light-text-secondary dark:text-dark-text-secondary opacity-40 hover:opacity-100 transition-opacity hover:scale-110 active:scale-90"
+                        >
+                          <i className="ri-skip-forward-mini-fill text-[20px]"></i>
+                        </button>
+                      </div>
+                      <span className="text-[12px] font-bold opacity-30 tracking-widest">{songIndex + 1} / {DataSong.length}</span>
+                    </div>
+  
+                    {/* Select Song Section */}
+                    <div>
+                      <h5 className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-30 mb-5 pl-1">Playlists</h5>
+                      <div className="space-y-2">
+                        {DataSong.map((song, idx) => (
+                          <button
+                            key={song.id}
+                            onClick={() => {
+                              changeSong(idx);
+                              setIsDropdownOpen(false);
+                            }}
+                            className={`flex items-center justify-between w-full px-5 py-3.5 rounded-[1.25rem] text-left transition-all duration-300 border ${
+                              idx === songIndex 
+                                ? "bg-global-blue/10 text-global-blue border-global-blue/30 font-semibold" 
+                                : "text-light-text-secondary dark:text-dark-text-secondary border-transparent hover:bg-light-bg/5 dark:hover:bg-white/5 font-medium"
+                            } text-[13px]`}
+                          >
+                            <span className="truncate pr-4">{song.title}</span>
+                            {idx === songIndex && <i className="ri-volume-up-fill text-[14px]"></i>}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>
+
+        {/* nav links */}
+        <ul
+          className={`items-center flex gap-6 px-10 py-2.5 rounded-full whitespace-nowrap transition-all duration-300 ${navLinksClass}`}
+        >
+          {HOME_LINKS.map((link) => (
+            <li key={link.href}>
+              <a
+                href={link.href}
+                className="hover:text-global-blue transition-all font-semibold text-[14px] tracking-tight hover:scale-105 active:scale-95 block"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        {/* theme & contact */}
+        <div className="flex items-center gap-4">
+          <button
+            onClick={toggleTheme}
+            className="w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 hover:bg-global-blue/10 transition-all text-light-text-primary dark:text-dark-text-primary hover:scale-110 active:scale-90 shadow-sm"
+            aria-label="Toggle theme"
+          >
+            <i className="text-[22px] ri-moon-line dark:hidden"></i>
+            <i className="hidden text-[22px] ri-sun-line dark:block"></i>
+          </button>
+          <a
+            href="#contact"
+            className="hidden xl:flex items-center gap-2 px-8 py-2.5 bg-gradient-to-br from-[#5983FC] to-[#964EC2] text-white rounded-full shadow-[0_8px_20px_rgba(89,131,252,0.3)] hover:shadow-[0_12px_25px_rgba(89,131,252,0.5)] hover:scale-105 active:scale-95 transition-all font-bold text-[14px] tracking-tight"
+          >
+            Contact
+          </a>
+        </div>
+      </nav>
+
+      {/* ======================== */}
+      {/* Mobile Top Bar */}
+      {/* ======================== */}
+      <div className={`lg:hidden fixed top-0 left-0 right-0 z-40 h-16 flex items-center justify-between px-5 transition-all duration-300 ${isScrolled ? "bg-theme-surface/80 backdrop-blur-lg border-b border-light-border dark:border-dark-border shadow-md" : "bg-transparent"} text-light-text-primary dark:text-dark-text-primary`}>
+        <div className="flex items-center gap-3">
+          <img
+            src={Assets.logo}
+            alt="logo"
+            className="w-9 h-9 rounded-full bg-black p-1 shadow-md border border-white/10"
+          />
+          <h1 className="text-[14px] font-bold tracking-tight">Nevinas Ka</h1>
+        </div>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={toggleTheme}
+            className="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-global-blue/10 transition-all hover:scale-110 active:scale-90"
+            aria-label="Toggle theme"
+          >
+            <i className="text-[20px] ri-moon-line dark:hidden"></i>
+            <i className="hidden text-[20px] ri-sun-line dark:block"></i>
+          </button>
+          <button
+            className="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-global-blue/10 transition-all hover:scale-110 active:scale-90"
+            onClick={openMenu}
+            aria-label="Open menu"
+          >
+            <i className="text-[24px] ri-menu-3-line"></i>
+          </button>
+        </div>
       </div>
-      {/* [FIX #2] nav links - fixed shadow- typo */}
-      <ul
-        className={`items-center hidden lg:flex gap-4 xl:gap-6 px-6 xl:px-10 py-3 rounded-full text-sm xl:text-base whitespace-nowrap transition-all duration-300 ${navLinksClass}`}
-      >
-        {HOME_LINKS.map((link) => (
-          <li key={link.href}>
-            <a
-              href={link.href}
-              className="hover:text-global-blue transition-colors"
-            >
-              {link.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-      {/* theme & contact */}
-      <div className="flex items-center gap-3">
-        {/* [FIX #6] Theme button with aria-label */}
-        <button
-          onClick={toggleTheme}
-          className="p-2 rounded-md hover:bg-light-bg/20 dark:hover:bg-light-bg/10 transition-colors"
-          aria-label="Toggle theme"
-        >
-          <i className="text-2xl ri-moon-line dark:hidden"></i>
-          <i className="hidden text-2xl ri-sun-line dark:block"></i>
-        </button>
-        {/* [FIX #8] Contact button with hover */}
-        <a
-          href="#contact"
-          className="hidden xl:flex items-center gap-2 px-8 py-2.5 border border-dark-border dark:border-light-bg/50 rounded-full ml-2 hover:bg-light-text hover:text-light-bg dark:hover:bg-light-bg dark:hover:text-dark-bg transition-all duration-200"
-        >
-          Contact
-        </a>
-        <button
-          className="block ml-1 lg:hidden p-2 rounded-md hover:bg-light-bg/20 dark:hover:bg-light-bg/10 transition-colors"
-          onClick={openMenu}
-          aria-label="Open menu"
-        >
-          <i className="text-2xl ri-menu-3-line"></i>
-        </button>
-      </div>
-      {/* mobile overlay */}
+
+      {/* ======================== */}
+      {/* Mobile Menu Drawer */}
+      {/* ======================== */}
+      {/* Overlay */}
       <div
-        className={`fixed inset-0 lg:hidden transition-opacity duration-300 bg-black/30 backdrop-blur-sm ${isMenuOpen ? "opacity-100 pointer-events-auto z-40" : "opacity-0 pointer-events-none"}`}
+        className={`fixed inset-0 lg:hidden transition-opacity duration-400 bg-black/60 backdrop-blur-sm z-40 ${isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
         onClick={closeMenu}
         aria-hidden={!isMenuOpen}
       />
-      {/* [FIX #3] mobile menu - fixed text colors */}
-      <ul
+
+      {/* Side Panel */}
+      <div
         id="sideMenu"
         ref={sideMenuRef}
-        className="fixed top-1.5 bottom-1.5 left-1.5 z-50 flex flex-col w-88 max-w-[calc(100vw-0.75rem)] transition-transform duration-500 ease-in-out neu-panel-dark bg-theme-surface rounded-[1.75rem] lg:hidden overflow-y-auto"
-        style={{ transform: isMenuOpen ? "translateX(0)" : "translateX(-110%)" }}
+        className={`fixed top-0 bottom-0 left-0 z-50 flex flex-col w-80 transition-transform duration-500 ease-in-out border-r border-light-border dark:border-white/10 shadow-2xl lg:hidden overflow-hidden backdrop-blur-xl ${isMenuOpen ? "translate-x-0" : "-translate-x-full"} bg-white/70 dark:bg-transparent`}
+        style={{
+          background: "var(--drawer-bg, none)"
+        }}
         role="dialog"
         aria-modal="true"
         aria-hidden={!isMenuOpen}
       >
-        {/* Close Button */}
+        <style dangerouslySetInnerHTML={{ __html: `
+          #sideMenu {
+            --drawer-bg: radial-gradient(600px at 80% 100%, rgba(150,78,194,0.05), transparent), 
+                         radial-gradient(500px at 0% 0%, rgba(89,131,252,0.05), transparent), 
+                         linear-gradient(180deg, rgba(255,255,255,0.8), rgba(244,246,251,0.9));
+          }
+          .dark #sideMenu {
+            --drawer-bg: radial-gradient(600px at 80% 100%, rgba(150,78,194,0.15), transparent), 
+                         radial-gradient(500px at 0% 0%, rgba(89,131,252,0.1), transparent), 
+                         linear-gradient(180deg, rgba(21,24,39,0.7), rgba(26,31,53,0.8));
+          }
+        `}} />
+
         <button
           onClick={closeMenu}
-          className="absolute top-6 right-6 p-2 rounded-full neu-panel-dark-soft hover:bg-white/10 transition-colors z-10"
+          className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-all hover:scale-110 active:scale-90 text-light-text-secondary dark:text-white/40"
           aria-label="Close menu"
         >
-          <i className="ri-close-line text-xl text-dark-text"></i>
+          <i className="ri-close-line text-[24px]"></i>
         </button>
 
-        <div className="flex flex-col p-8 pt-20 gap-8 h-full">
-          {/* Dashboard Music Widget */}
-          <div className="relative p-6 rounded-3xl neu-panel-dark-soft overflow-hidden group">
-            <div className="absolute inset-0 bg-linear-to-br from-white/8 to-transparent pointer-events-none" />
-
-            {/* Header / Player Controls */}
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <button 
-                  onClick={() => setSongIndex((prev) => (prev - 1 + DataSong.length) % DataSong.length)}
-                  className="text-dark-text-secondary hover:text-global-blue transition-colors"
-                >
-                  <i className="ri-skip-back-mini-fill text-xl"></i>
-                </button>
-                <button
-                  onClick={isPlaying ? pauseMusic : playMusic}
-                  className="w-12 h-12 flex items-center justify-center rounded-full neu-btn text-global-blue dark:text-white bg-linear-to-br from-global-blue/85 to-global-purple/75 border-0 hover:scale-105 active:scale-95 transition-all"
-                  aria-label={isPlaying ? "Pause" : "Play"}
-                >
-                  <i className={`${isPlaying ? "ri-pause-mini-fill" : "ri-play-mini-fill"} text-2xl`}></i>
-                </button>
-                <button 
-                  onClick={nextSong}
-                  className="text-dark-text-secondary hover:text-global-blue transition-colors"
-                >
-                  <i className="ri-skip-forward-mini-fill text-xl"></i>
-                </button>
-              </div>
-              
-              <div className="text-right">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-dark-text-secondary opacity-60">Now Playing</p>
-                <p className="text-xs font-semibold text-dark-text mt-1">{DataSong[songIndex].title.split('-')[1]?.trim() || DataSong[songIndex].title}</p>
-              </div>
+        <div className="flex flex-col p-8 gap-10 h-full overflow-y-auto custom-scrollbar">
+          {/* PLAYER CONTROLS */}
+          <div className="flex items-center gap-4 pt-4">
+            <div className="flex items-center justify-center w-11 h-11 rounded-full bg-white dark:bg-[#1f2438] shadow-[4px_4px_10px_rgba(0,0,0,0.05),-4px_-4px_10px_rgba(255,255,255,0.8)] dark:shadow-[6px_6px_12px_rgba(0,0,0,0.6),-4px_-4px_10px_rgba(70,80,120,0.2)] hover:scale-110 active:scale-90 transition-all">
+              <button 
+                onClick={() => setSongIndex((prev) => (prev - 1 + DataSong.length) % DataSong.length)}
+                className="text-light-text-secondary dark:text-white/60 hover:text-global-blue"
+              >
+                <i className="ri-skip-back-mini-fill text-[22px]"></i>
+              </button>
             </div>
 
-            {/* Active Song Highlight */}
-            <div className="mb-4">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <i className="ri-music-2-line text-sm text-light-text-secondary dark:text-dark-text-secondary"></i>
-                  <span className="text-xs font-medium text-dark-text-secondary">Playlist</span>
-                </div>
-                <span className="text-[10px] font-medium text-dark-text-secondary">{songIndex + 1} / {DataSong.length}</span>
-              </div>
-              
-              {/* List of songs */}
-              <div className="space-y-1">
-                {DataSong.map((song, idx) => (
-                  <button
-                    key={song.id}
-                    onClick={() => changeSong(idx)}
-                    className={`flex items-center justify-between w-full p-2.5 rounded-xl text-left transition-all duration-300 ${
-                      idx === songIndex 
-                        ? "bg-global-blue/20 text-global-blue neu-nav-link" 
-                        : "hover:bg-white/10 text-dark-text-secondary neu-nav-link"
-                    }`}
-                  >
-                    <span className="text-xs font-medium truncate pr-2">{song.title}</span>
-                    {idx === songIndex && (
-                      <i className="ri-volume-up-fill text-xs animate-pulse"></i>
-                    )}
-                  </button>
-                ))}
-              </div>
+            <button
+              onClick={isPlaying ? pauseMusic : playMusic}
+              className="w-[56px] h-[56px] flex items-center justify-center rounded-full bg-gradient-to-br from-[#5983FC] to-[#964EC2] text-white shadow-[0_10px_20px_rgba(89,131,252,0.3)] hover:scale-110 active:scale-90 transition-all"
+            >
+              <i className={`${isPlaying ? "ri-pause-fill" : "ri-play-fill"} text-[26px]`}></i>
+            </button>
+
+            <div className="flex items-center justify-center w-11 h-11 rounded-full bg-white dark:bg-[#1f2438] shadow-[4px_4px_10px_rgba(0,0,0,0.05),-4px_-4px_10px_rgba(255,255,255,0.8)] dark:shadow-[6px_6px_12px_rgba(0,0,0,0.6),-4px_-4px_10px_rgba(70,80,120,0.2)] hover:scale-110 active:scale-90 transition-all">
+              <button 
+                onClick={nextSong}
+                className="text-light-text-secondary dark:text-white/60 hover:text-global-blue"
+              >
+                <i className="ri-skip-forward-mini-fill text-[22px]"></i>
+              </button>
             </div>
           </div>
 
-          {/* Navigation Menu */}
-          <div className="flex flex-col grow">
-            <h5 className="text-[10px] font-bold uppercase tracking-[0.2em] text-dark-text-secondary opacity-50 mb-6 pl-2">Menu</h5>
-            
-            <nav className="flex flex-col gap-2">
+          {/* NOW PLAYING TEXT */}
+          <div className="now">
+            <span className="text-[10px] font-bold tracking-[2px] text-light-text-secondary dark:text-[#7b839a] uppercase opacity-60">Now Playing</span>
+            <h4 className="mt-1 text-[14px] font-semibold text-light-text-primary dark:text-white truncate">
+              {DataSong[songIndex].title.split('-')[1]?.trim() || DataSong[songIndex].title}
+            </h4>
+          </div>
+
+          {/* PLAYLIST */}
+          <div className="playlist space-y-2">
+            {DataSong.map((song, idx) => (
+              <button
+                key={song.id}
+                onClick={() => changeSong(idx)}
+                className={`w-full text-left px-5 py-3 rounded-[14px] text-[12px] transition-all duration-300 ${
+                  idx === songIndex 
+                    ? "bg-global-blue/10 text-global-blue dark:text-[#6ea1ff] shadow-[inset_0_0_10px_rgba(89,131,252,0.1)] font-semibold" 
+                    : "text-light-text-secondary dark:text-[#aab0c2] hover:bg-light-text/5 dark:hover:bg-white/5 font-medium"
+                } hover:scale-[1.02] active:scale-[0.98]`}
+              >
+                <span className="truncate block">{song.title}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* MENU */}
+          <div className="flex flex-col">
+            <h5 className="text-[10px] font-bold tracking-[2px] text-light-text-secondary dark:text-[#6c738a] uppercase mb-5 opacity-40">Explorer</h5>
+            <nav className="flex flex-col gap-6">
               {HOME_LINKS.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={closeMenu}
-                  className="neu-nav-link flex items-center gap-4 px-4 py-3.5 rounded-2xl text-dark-text/80 hover:bg-white/10 hover:text-global-blue transition-all duration-300 group"
+                  className="flex items-center gap-4 text-light-text-secondary dark:text-[#cdd2df] hover:text-global-blue dark:hover:text-white transition-all duration-200 group hover:scale-105 active:scale-95"
                 >
-                  <i className={`${link.icon} text-xl transition-transform group-hover:scale-110`}></i>
-                  <span className="text-sm font-semibold tracking-wide">{link.label}</span>
+                  <div className="w-6 h-6 flex items-center justify-center text-[22px] opacity-60 group-hover:opacity-100 transition-all">
+                    <i className={link.icon}></i>
+                  </div>
+                  <span className="text-[14px] font-semibold tracking-tight">{link.label}</span>
                 </a>
               ))}
             </nav>
           </div>
+
+          {/* Footer area */}
+          <div className="mt-auto pt-6 border-t border-light-border dark:border-white/5 flex items-center justify-between">
+             <div className="flex items-center gap-3">
+               <img src={Assets.logo} className="w-8 h-8 rounded-full bg-black p-1 shadow-md" alt="logo" />
+               <span className="text-[10px] font-bold tracking-widest text-light-text-secondary dark:text-white/30 uppercase">NEVINAS.DEV</span>
+             </div>
+          </div>
         </div>
-      </ul>
+      </div>
     </div>
   );
 };

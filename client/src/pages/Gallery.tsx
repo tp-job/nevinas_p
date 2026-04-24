@@ -40,8 +40,8 @@ const Gallery: FC = () => {
       if (!response.ok) {
         throw new Error("Failed to fetch gallery data");
       }
-      const data: GalleryItem[] = await response.json();
-      setGallery(data);
+      const result = await response.json();
+      setGallery(result.data || []);
     } catch (err: any) {
       setError(err.message);
     } finally {

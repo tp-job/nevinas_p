@@ -75,3 +75,12 @@
     --shadow-dark-neu: 8px 8px 16px rgba(0, 0, 0, 0.6), -8px -8px 16px rgba(50, 55, 75, 0.4);
     --shadow-dark-neu-sm: 4px 4px 8px rgba(0, 0, 0, 0.6), -4px -4px 8px rgba(50, 55, 75, 0.4);
 }
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-inter);
+}

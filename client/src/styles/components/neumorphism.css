@@ -1,24 +1,28 @@
 .neu-card {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(241, 245, 249, 0.9));
-  border: 1px solid rgba(255, 255, 255, 0.95);
-  box-shadow: var(--shadow-light-neu);
+  /* design.html: glass-card (light equivalent) */
+  background: rgba(248, 250, 252, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow: 0 12px 28px rgba(148, 163, 184, 0.2), 0 2px 6px rgba(148, 163, 184, 0.18);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 1rem;
   transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
 }
 
 .neu-card:hover {
-  box-shadow: var(--shadow-light-neu-sm);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 18px 34px rgba(148, 163, 184, 0.24), 0 2px 8px rgba(148, 163, 184, 0.2);
 }
 
 .dark .neu-card {
-  background: linear-gradient(145deg, rgba(41, 49, 66, 0.88), rgba(25, 30, 42, 0.92));
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: var(--shadow-dark-neu);
+  /* design.html: glass-card dark */
+  background: rgba(33, 40, 62, 0.4);
+  border-color: rgba(255, 255, 255, 0.055);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.42), 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .dark .neu-card:hover {
-  box-shadow: var(--shadow-dark-neu-sm);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .neu-form {
@@ -27,23 +31,26 @@
 }
 
 .neu-form-panel {
-  background: linear-gradient(160deg, rgba(250, 252, 255, 0.92), rgba(240, 245, 252, 0.9));
-  border: 1px solid rgba(255, 255, 255, 0.95);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.74), rgba(241, 245, 249, 0.88));
+  border: 1px solid rgba(191, 219, 254, 0.35);
+  box-shadow: 14px 14px 28px rgba(148, 163, 184, 0.2), -10px -10px 22px rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
 }
 
 .dark .neu-form-panel {
-  background: linear-gradient(160deg, rgba(23, 31, 50, 0.95), rgba(18, 24, 41, 0.94));
-  border-color: rgba(129, 147, 185, 0.28);
-  box-shadow: 14px 14px 28px rgba(4, 9, 19, 0.58), -8px -8px 18px rgba(53, 71, 106, 0.25);
+  background: linear-gradient(160deg, rgba(20, 29, 49, 0.9), rgba(16, 23, 38, 0.92));
+  border-color: rgba(96, 141, 238, 0.24);
+  box-shadow: 16px 16px 30px rgba(4, 9, 19, 0.58), -8px -8px 18px rgba(68, 87, 126, 0.26);
 }
 
 .neu-input {
   width: 100%;
   border-radius: 0.85rem;
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.7), rgba(241, 245, 249, 0.82));
-  box-shadow: inset 2px 2px 6px rgba(163, 177, 198, 0.25),
-    inset -2px -2px 6px rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(191, 219, 254, 0.45);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.68), rgba(241, 245, 249, 0.8));
+  box-shadow: inset 2px 2px 6px rgba(148, 163, 184, 0.24),
+    inset -2px -2px 6px rgba(255, 255, 255, 0.58);
   color: var(--color-light-text);
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -61,8 +68,8 @@
 }
 
 .dark .neu-input {
-  border-color: rgba(129, 147, 185, 0.24);
-  background: linear-gradient(145deg, rgba(19, 27, 44, 0.92), rgba(25, 34, 54, 0.84));
+  border-color: rgba(96, 141, 238, 0.28);
+  background: linear-gradient(145deg, rgba(18, 27, 44, 0.86), rgba(24, 34, 54, 0.8));
   box-shadow: inset 2px 2px 7px rgba(6, 10, 22, 0.65),
     inset -2px -2px 7px rgba(58, 75, 108, 0.32);
   color: var(--color-dark-text);
@@ -79,30 +86,34 @@
 }
 
 .neu-btn {
+  /* design.html: btn-n (light equivalent) */
   border-radius: 9999px;
   border: 1px solid rgba(255, 255, 255, 0.88);
   background: linear-gradient(145deg, #f1f5f9, #ffffff);
   color: var(--color-light-text);
-  box-shadow: 4px 4px 10px rgba(163, 177, 198, 0.35),
-    -4px -4px 10px rgba(255, 255, 255, 0.85);
+  box-shadow: 4px 4px 10px rgba(163, 177, 198, 0.35), -4px -4px 10px rgba(255, 255, 255, 0.85);
   transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
 .neu-btn:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 .neu-btn:active {
   transform: translateY(0);
-  box-shadow: inset 2px 2px 6px rgba(163, 177, 198, 0.35),
-    inset -2px -2px 6px rgba(255, 255, 255, 0.7);
+  box-shadow: inset 2px 2px 6px rgba(163, 177, 198, 0.35), inset -2px -2px 6px rgba(255, 255, 255, 0.7);
 }
 
 .dark .neu-btn {
-  border-color: rgba(255, 255, 255, 0.12);
-  background: linear-gradient(145deg, #2b3344, #1f2533);
+  /* design.html: btn-n dark */
+  border-color: rgba(255, 255, 255, 0.08);
+  background: #222840;
   color: var(--color-dark-text);
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.45), -4px -4px 10px rgba(55, 65, 85, 0.35);
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6), -4px -4px 8px rgba(48, 55, 78, 0.4);
+}
+
+.dark .neu-btn:hover {
+  box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.55), inset -4px -4px 8px rgba(48, 55, 78, 0.4);
 }
 
 .neu-panel-dark {

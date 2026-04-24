@@ -356,7 +356,7 @@ const Dashboard: FC = () => {
   const tickColor = isDark ? "#9ca3af" : "#64748b";
   const cardBg = isDark ? "#1e202c" : "#ffffff";
   const cardCls =
-    "bg-light-surface dark:bg-dark-bg border border-light-border dark:border-dark-border rounded-2xl relative overflow-hidden transition-all duration-300 hover:shadow-2xl";
+    "bg-light-surface/75 dark:bg-dark-bg/80 backdrop-blur-md border border-light-border/80 dark:border-dark-border rounded-2xl relative overflow-hidden transition-all duration-300 hover:shadow-2xl";
 
   /* ---- Loading ---- */
   if (loading) {
@@ -415,58 +415,66 @@ const Dashboard: FC = () => {
         </div>
       </div>
 
-      {/* ========== 1. STATS CARDS ========== */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
-        <StatsCard
-          title="TOTAL COMMITS"
-          value={stats?.totalCommits || 0}
-          subtitle={`${stats?.repoCount || 0} repos`}
-          description="Recent push events"
-          data={commitActivity}
-          dataKey="commits"
-          color={TH.azure}
-          percentage={commitFrequency}
-        />
-        <StatsCard
-          title="REPOSITORIES"
-          value={stats?.repoCount || 0}
-          subtitle={`${stats?.totalStars || 0} stars`}
-          description="Public repositories"
-          data={commitActivity}
-          dataKey="commits"
-          color={TH.royal}
-          percentage={repoActivity}
-        />
-        <StatsCard
-          title="FOLLOWERS"
-          value={stats?.profile.followers || 0}
-          subtitle={`Following ${stats?.profile.following || 0}`}
-          description="GitHub followers"
-          data={commitActivity}
-          dataKey="commits"
-          color={TH.orchid}
-          percentage={50}
-        />
-        <StatsCard
-          title="TOTAL STARS"
-          value={stats?.totalStars || 0}
-          subtitle={`${stats?.totalForks || 0} forks`}
-          description="Across all repos"
-          data={commitActivity}
-          dataKey="commits"
-          color={TH.flamingo}
-          percentage={Math.min(
-            ((stats?.totalStars || 0) / Math.max(stats?.repoCount || 1, 1)) *
-              50,
-            100,
-          )}
-        />
+      {/* ========== 1. STATS CARDS (BENTO) ========== */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-5 mb-8">
+        <div className="md:col-span-6 xl:col-span-4">
+          <StatsCard
+            title="TOTAL COMMITS"
+            value={stats?.totalCommits || 0}
+            subtitle={`${stats?.repoCount || 0} repos`}
+            description="Recent push events"
+            data={commitActivity}
+            dataKey="commits"
+            color={TH.azure}
+            percentage={commitFrequency}
+          />
+        </div>
+        <div className="md:col-span-6 xl:col-span-3">
+          <StatsCard
+            title="REPOSITORIES"
+            value={stats?.repoCount || 0}
+            subtitle={`${stats?.totalStars || 0} stars`}
+            description="Public repositories"
+            data={commitActivity}
+            dataKey="commits"
+            color={TH.royal}
+            percentage={repoActivity}
+          />
+        </div>
+        <div className="md:col-span-6 xl:col-span-2">
+          <StatsCard
+            title="FOLLOWERS"
+            value={stats?.profile.followers || 0}
+            subtitle={`Following ${stats?.profile.following || 0}`}
+            description="GitHub followers"
+            data={commitActivity}
+            dataKey="commits"
+            color={TH.orchid}
+            percentage={50}
+          />
+        </div>
+        <div className="md:col-span-6 xl:col-span-3">
+          <StatsCard
+            title="TOTAL STARS"
+            value={stats?.totalStars || 0}
+            subtitle={`${stats?.totalForks || 0} forks`}
+            description="Across all repos"
+            data={commitActivity}
+            dataKey="commits"
+            color={TH.flamingo}
+            percentage={Math.min(
+              ((stats?.totalStars || 0) / Math.max(stats?.repoCount || 1, 1)) *
+                50,
+              100,
+            )}
+          />
+        </div>
       </div>
 
       {/* ========== 2. SKILLS + LANGUAGES ========== */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 mb-8">
         {/* Detected Skills */}
-        <div className={`p-6 ${cardCls}`}>
+        <div className={`p-6 xl:col-span-5 ${cardCls}`}>
           <div
             className="absolute top-0 left-0 right-0 h-[2px]"
             style={{
@@ -541,7 +549,7 @@ const Dashboard: FC = () => {
         </div>
 
         {/* Language Distribution */}
-        <div className={`p-6 ${cardCls}`}>
+        <div className={`p-6 xl:col-span-7 ${cardCls}`}>
           <div
             className="absolute top-0 left-0 right-0 h-[2px]"
             style={{
@@ -779,92 +787,93 @@ const Dashboard: FC = () => {
         </div>
       )}
 
-      {/* ========== 4. TECH STACK ========== */}
-      <div className={`p-6 sm:p-8 mb-8 ${cardCls}`}>
-        <div
-          className="absolute top-0 left-0 right-0 h-[2px]"
-          style={{
-            background: `linear-gradient(90deg, transparent, ${TH.royal}80, ${TH.azure}80, transparent)`,
-          }}
-        />
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="text-xl font-bold text-light-text dark:text-dark-text">
-              Tech Stack
-            </h3>
-            <p className="text-sm mt-0.5 text-light-text-secondary dark:text-dark-text-secondary">
-              Frameworks, libraries & tools used in development
-            </p>
-          </div>
-          <a
-            href="/about/tech-stack"
-            className="flex items-center gap-1.5 text-xs font-semibold text-global-blue hover:text-matte-azure transition-colors"
-          >
-            View all <i className="ri-arrow-right-s-line"></i>
-          </a>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {techStackData.slice(0, 9).map((tech) => (
-            <a
-              key={tech.id}
-              href={tech.link}
-              target="_blank"
-              rel="noreferrer"
-              className="group flex items-start gap-3.5 p-4 rounded-xl bg-light-surface-2 dark:bg-dark-surface border border-transparent hover:border-light-border dark:hover:border-dark-border transition-all duration-300 hover:-translate-y-0.5"
-            >
-              <div
-                className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${tech.color} shadow-md`}
-              >
-                <i className={`${tech.icon} text-lg text-white`}></i>
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2 mb-1">
-                  <h4 className="text-sm font-bold text-light-text dark:text-dark-text group-hover:text-global-blue transition-colors truncate">
-                    {tech.name}
-                  </h4>
-                  <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-light-border dark:bg-dark-border text-light-text-secondary dark:text-dark-text-secondary shrink-0">
-                    {tech.category}
-                  </span>
-                </div>
-                <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary line-clamp-1 mb-1.5">
-                  {tech.description}
-                </p>
-                <div className="flex flex-wrap gap-1">
-                  {tech.itemTools.slice(0, 3).map((t, i) => (
-                    <span
-                      key={i}
-                      className="text-[10px] px-1.5 py-0.5 rounded-md bg-light-bg dark:bg-dark-bg text-light-text-secondary dark:text-dark-text-secondary"
-                    >
-                      {t.split(" ")[0]}
-                    </span>
-                  ))}
-                  {tech.itemTools.length > 3 && (
-                    <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-global-blue/10 text-global-blue font-medium">
-                      +{tech.itemTools.length - 3}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </a>
-          ))}
-        </div>
-
-        {techStackData.length > 9 && (
-          <div className="mt-4 text-center">
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 mb-8">
+        {/* ========== 4. TECH STACK ========== */}
+        <div className={`p-6 sm:p-8 xl:col-span-7 ${cardCls}`}>
+          <div
+            className="absolute top-0 left-0 right-0 h-[2px]"
+            style={{
+              background: `linear-gradient(90deg, transparent, ${TH.royal}80, ${TH.azure}80, transparent)`,
+            }}
+          />
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className="text-xl font-bold text-light-text dark:text-dark-text">
+                Tech Stack
+              </h3>
+              <p className="text-sm mt-0.5 text-light-text-secondary dark:text-dark-text-secondary">
+                Frameworks, libraries & tools used in development
+              </p>
+            </div>
             <a
               href="/about/tech-stack"
-              className="text-xs font-semibold text-global-blue hover:text-matte-azure transition-colors"
+              className="flex items-center gap-1.5 text-xs font-semibold text-global-blue hover:text-matte-azure transition-colors"
             >
-              +{techStackData.length - 9} more stacks{" "}
-              <i className="ri-arrow-right-line ml-1"></i>
+              View all <i className="ri-arrow-right-s-line"></i>
             </a>
           </div>
-        )}
-      </div>
 
-      {/* ========== 5. TOOLING ========== */}
-      <div className={`p-6 sm:p-8 mb-8 ${cardCls}`}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {techStackData.slice(0, 9).map((tech) => (
+              <a
+                key={tech.id}
+                href={tech.link}
+                target="_blank"
+                rel="noreferrer"
+                className="group flex items-start gap-3.5 p-4 rounded-xl bg-light-surface-2 dark:bg-dark-surface border border-transparent hover:border-light-border dark:hover:border-dark-border transition-all duration-300 hover:-translate-y-0.5"
+              >
+                <div
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${tech.color} shadow-md`}
+                >
+                  <i className={`${tech.icon} text-lg text-white`}></i>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <h4 className="text-sm font-bold text-light-text dark:text-dark-text group-hover:text-global-blue transition-colors truncate">
+                      {tech.name}
+                    </h4>
+                    <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-light-border dark:bg-dark-border text-light-text-secondary dark:text-dark-text-secondary shrink-0">
+                      {tech.category}
+                    </span>
+                  </div>
+                  <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary line-clamp-1 mb-1.5">
+                    {tech.description}
+                  </p>
+                  <div className="flex flex-wrap gap-1">
+                    {tech.itemTools.slice(0, 3).map((t, i) => (
+                      <span
+                        key={i}
+                        className="text-[10px] px-1.5 py-0.5 rounded-md bg-light-bg dark:bg-dark-bg text-light-text-secondary dark:text-dark-text-secondary"
+                      >
+                        {t.split(" ")[0]}
+                      </span>
+                    ))}
+                    {tech.itemTools.length > 3 && (
+                      <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-global-blue/10 text-global-blue font-medium">
+                        +{tech.itemTools.length - 3}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+
+          {techStackData.length > 9 && (
+            <div className="mt-4 text-center">
+              <a
+                href="/about/tech-stack"
+                className="text-xs font-semibold text-global-blue hover:text-matte-azure transition-colors"
+              >
+                +{techStackData.length - 9} more stacks{" "}
+                <i className="ri-arrow-right-line ml-1"></i>
+              </a>
+            </div>
+          )}
+        </div>
+
+        {/* ========== 5. TOOLING ========== */}
+        <div className={`p-6 sm:p-8 xl:col-span-5 ${cardCls}`}>
         <div
           className="absolute top-0 left-0 right-0 h-[2px]"
           style={{
@@ -939,12 +948,13 @@ const Dashboard: FC = () => {
             );
           })}
         </div>
+        </div>
       </div>
 
       {/* ========== 6. WEEKLY ACTIVITY + HEATMAP ========== */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 mb-8">
         {/* Weekly Activity */}
-        <div className={`p-6 ${cardCls}`}>
+        <div className={`p-6 xl:col-span-5 ${cardCls}`}>
           <div
             className="absolute top-0 left-0 right-0 h-[2px]"
             style={{
@@ -1011,7 +1021,7 @@ const Dashboard: FC = () => {
         </div>
 
         {/* Heatmap */}
-        <div className={`p-6 ${cardCls}`}>
+        <div className={`p-6 xl:col-span-7 ${cardCls}`}>
           <div
             className="absolute top-0 left-0 right-0 h-[2px]"
             style={{
