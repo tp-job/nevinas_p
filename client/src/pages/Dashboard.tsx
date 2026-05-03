@@ -22,6 +22,9 @@ import {
   Pie,
 } from "recharts";
 
+import { StaggerList, StaggerItem } from "@/components/ui/StaggerList";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
+
 const LANG_COLORS: Record<string, string> = {
   TypeScript: "#3178c6",
   JavaScript: "#f1e05a",
@@ -338,8 +341,8 @@ const Dashboard: FC = () => {
 
   const repoActivity = stats
     ? Math.round(
-        (stats.projectStatus.active / Math.max(stats.repoCount, 1)) * 100,
-      )
+      (stats.projectStatus.active / Math.max(stats.repoCount, 1)) * 100,
+    )
     : 0;
   const commitFrequency = stats
     ? Math.min(Math.round((stats.totalCommits / 100) * 100), 100)
@@ -356,7 +359,7 @@ const Dashboard: FC = () => {
   const tickColor = isDark ? "#9ca3af" : "#64748b";
   const cardBg = isDark ? "#1e202c" : "#ffffff";
   const cardCls =
-    "bg-light-surface/75 dark:bg-dark-bg/80 backdrop-blur-md border border-light-border/80 dark:border-dark-border rounded-2xl relative overflow-hidden transition-all duration-300 hover:shadow-2xl";
+    "bg-light-surface dark:bg-dark-bg backdrop-blur-xl border border-light-border dark:border-dark-border rounded-2xl relative overflow-hidden transition-all duration-300 hover:-translate-y-0.5 shadow-[0_4px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)] hover:shadow-[0_8px_40px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_12px_48px_rgba(0,0,0,0.5)]";
 
   /* ---- Loading ---- */
   if (loading) {
@@ -401,23 +404,25 @@ const Dashboard: FC = () => {
   return (
     <>
       {/* Header */}
-      <div className="w-full">
-        <div className="mb-4">
-          <h4 className="mb-1 text-lg text-light-text dark:text-dark-text">
-            Developer Analytics
-          </h4>
-          <h2 className="mb-1 text-4xl sm:text-5xl text-light-text dark:text-dark-text">
-            Dashboard
-          </h2>
-          <h3 className="text-xl font-zen text-light-text-secondary dark:text-dark-text-secondary">
-            概要
-          </h3>
-        </div>
+      <div className="w-full mb-10">
+        <ScrollReveal>
+          <div className="flex flex-col">
+            <h4 className="text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-velvet-orchid mb-1">
+              Developer Analytics
+            </h4>
+            <h1 className="font-[Manrope] text-[2.1rem] font-extrabold tracking-[-0.04em] text-light-text-primary dark:text-dark-text-primary leading-tight">
+              Dashboard
+            </h1>
+            <p className="font-zen text-[0.72rem] font-light tracking-[0.04em] text-light-text-secondary dark:text-dark-text-secondary mt-1">
+              概要 · 開発分析
+            </p>
+          </div>
+        </ScrollReveal>
       </div>
 
       {/* ========== 1. STATS CARDS (BENTO) ========== */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-5 mb-8">
-        <div className="md:col-span-6 xl:col-span-4">
+      <StaggerList className="grid grid-cols-1 md:grid-cols-12 gap-5 mb-10">
+        <StaggerItem className="md:col-span-6 xl:col-span-3">
           <StatsCard
             title="TOTAL COMMITS"
             value={stats?.totalCommits || 0}
@@ -428,8 +433,8 @@ const Dashboard: FC = () => {
             color={TH.azure}
             percentage={commitFrequency}
           />
-        </div>
-        <div className="md:col-span-6 xl:col-span-3">
+        </StaggerItem>
+        <StaggerItem className="md:col-span-6 xl:col-span-3">
           <StatsCard
             title="REPOSITORIES"
             value={stats?.repoCount || 0}
@@ -440,8 +445,8 @@ const Dashboard: FC = () => {
             color={TH.royal}
             percentage={repoActivity}
           />
-        </div>
-        <div className="md:col-span-6 xl:col-span-2">
+        </StaggerItem>
+        <StaggerItem className="md:col-span-6 xl:col-span-3">
           <StatsCard
             title="FOLLOWERS"
             value={stats?.profile.followers || 0}
@@ -452,8 +457,8 @@ const Dashboard: FC = () => {
             color={TH.orchid}
             percentage={50}
           />
-        </div>
-        <div className="md:col-span-6 xl:col-span-3">
+        </StaggerItem>
+        <StaggerItem className="md:col-span-6 xl:col-span-3">
           <StatsCard
             title="TOTAL STARS"
             value={stats?.totalStars || 0}
@@ -468,34 +473,245 @@ const Dashboard: FC = () => {
               100,
             )}
           />
-        </div>
-      </div>
+        </StaggerItem>
+      </StaggerList>
 
-      {/* ========== 2. SKILLS + LANGUAGES ========== */}
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 mb-8">
-        {/* Detected Skills */}
-        <div className={`p-6 xl:col-span-5 ${cardCls}`}>
+      {/* ========== BENTO GRID (ULTRA-MINIMALIST SAAS) ========== */}
+      <StaggerList className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
+        {/* 1. Contribution Activity (Featured Line Graph) */}
+        {monthlyActivity.length > 0 && (
+          <StaggerItem className={`p-8 lg:col-span-8 ${cardCls}`}>
+            <div
+              className="absolute top-0 left-0 right-0 h-[2px]"
+              style={{
+                background: `linear-gradient(90deg, transparent, ${TH.azure}80, ${TH.orchid}80, transparent)`,
+              }}
+            />
+
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-6 gap-4">
+              <div>
+                <h3 className="text-xl font-bold text-light-text dark:text-dark-text">
+                  Contribution Activity
+                </h3>
+                <p className="text-sm mt-0.5 text-light-text-secondary dark:text-dark-text-secondary">
+                  Commits, PRs & Issues from GitHub Events
+                </p>
+              </div>
+              <div className="flex items-center gap-5 text-xs">
+                {[
+                  { label: "Commits", color: TH.green },
+                  { label: "PRs", color: TH.azure },
+                  { label: "Issues", color: TH.orchid },
+                ].map((l) => (
+                  <span
+                    key={l.label}
+                    className="flex items-center gap-1.5 text-light-text-secondary dark:text-dark-text-secondary"
+                  >
+                    <span
+                      className="w-2 h-2 rounded-full"
+                      style={{
+                        backgroundColor: l.color,
+                        boxShadow: `0 0 6px ${l.color}60`,
+                      }}
+                    />
+                    {l.label}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-4 mb-8">
+              <KpiBadge
+                icon="ri-git-commit-line"
+                value={stats?.totalCommits || 0}
+                label="Commits"
+                color={TH.green}
+              />
+              <KpiBadge
+                icon="ri-git-pull-request-line"
+                value={stats?.totalPRs || 0}
+                label="Pull Requests"
+                color={TH.azure}
+              />
+              <KpiBadge
+                icon="ri-error-warning-line"
+                value={stats?.totalIssues || 0}
+                label="Issues"
+                color={TH.orchid}
+              />
+            </div>
+
+            <div className="h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={monthlyActivity}>
+                  <defs>
+                    {[
+                      { id: "gC", c: TH.green },
+                      { id: "gP", c: TH.azure },
+                      { id: "gI", c: TH.orchid },
+                    ].map((g) => (
+                      <linearGradient
+                        key={g.id}
+                        id={g.id}
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="1"
+                      >
+                        <stop offset="0%" stopColor={g.c} stopOpacity={0.4} />
+                        <stop offset="100%" stopColor={g.c} stopOpacity={0.02} />
+                      </linearGradient>
+                    ))}
+                  </defs>
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    stroke={gridColor}
+                    vertical={false}
+                  />
+                  <XAxis
+                    dataKey="month"
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fill: tickColor, fontSize: 12 }}
+                  />
+                  <YAxis
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fill: tickColor, fontSize: 12 }}
+                    width={35}
+                  />
+                  <RTooltip content={<ChartTooltip />} />
+                  <Area
+                    type="monotone"
+                    dataKey="commits"
+                    stroke={TH.green}
+                    fill="url(#gC)"
+                    strokeWidth={2.5}
+                    dot={false}
+                    activeDot={{
+                      r: 5,
+                      stroke: TH.green,
+                      strokeWidth: 2,
+                      fill: cardBg,
+                    }}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="prs"
+                    stroke={TH.azure}
+                    fill="url(#gP)"
+                    strokeWidth={2.5}
+                    dot={false}
+                    activeDot={{
+                      r: 5,
+                      stroke: TH.azure,
+                      strokeWidth: 2,
+                      fill: cardBg,
+                    }}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="issues"
+                    stroke={TH.orchid}
+                    fill="url(#gI)"
+                    strokeWidth={2.5}
+                    dot={false}
+                    activeDot={{
+                      r: 5,
+                      stroke: TH.orchid,
+                      strokeWidth: 2,
+                      fill: cardBg,
+                    }}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </StaggerItem>
+        )}
+
+        {/* 2. Weekly Activity (Minimalist Bar Chart) */}
+        <StaggerItem className={`p-8 lg:col-span-4 ${cardCls}`}>
+          <div
+            className="absolute top-0 left-0 right-0 h-[2px]"
+            style={{
+              background: `linear-gradient(90deg, transparent, ${TH.yellow}60, transparent)`,
+            }}
+          />
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-xl font-bold text-light-text dark:text-dark-text">
+              Weekly
+            </h3>
+            <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-global-yellow/10 text-global-yellow">
+              {dayActivity.reduce((a, b) => a + b, 0)} total
+            </span>
+          </div>
+          <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-6">
+            Activity by day of week
+          </p>
+
+          <div className="h-[360px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={weeklyData} barCategoryGap="20%">
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  stroke={gridColor}
+                  vertical={false}
+                />
+                <XAxis
+                  dataKey="day"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: tickColor, fontSize: 11 }}
+                />
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: tickColor, fontSize: 11 }}
+                  width={30}
+                />
+                <RTooltip content={<ChartTooltip />} />
+                <Bar dataKey="events" name="Events" radius={[4, 4, 0, 0]}>
+                  {weeklyData.map((entry, i) => (
+                    <Cell
+                      key={i}
+                      fill={
+                        entry.isPeak
+                          ? TH.yellow
+                          : isDark
+                            ? "#3d4759"
+                            : "#cbd5e1"
+                      }
+                    />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="mt-6 pt-4 border-t border-light-border dark:border-dark-border/50">
+            <p className="text-xs text-center text-light-text-secondary dark:text-dark-text-secondary">
+              Peak performance on <strong className="text-global-yellow">{dayNames[peakDayIdx]}</strong>
+            </p>
+          </div>
+        </StaggerItem>
+
+        {/* 3. Detected Skills */}
+        <StaggerItem className={`p-8 lg:col-span-4 ${cardCls}`}>
           <div
             className="absolute top-0 left-0 right-0 h-[2px]"
             style={{
               background: `linear-gradient(90deg, transparent, ${TH.orchid}80, ${TH.flamingo}80, transparent)`,
             }}
           />
-          <div className="flex items-center justify-between mb-5">
-            <div>
-              <h3 className="text-lg font-bold text-light-text dark:text-dark-text">
-                Skills Detected
-              </h3>
-              <p className="text-sm mt-0.5 text-light-text-secondary dark:text-dark-text-secondary">
-                From {allRepos.length} GitHub repositories
-              </p>
-            </div>
-            <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-velvet-orchid/10 text-velvet-orchid">
-              {skillData.length} skills
-            </span>
+          <div className="mb-6">
+            <h3 className="text-lg font-bold text-light-text dark:text-dark-text">
+              Skills Matrix
+            </h3>
+            <p className="text-sm mt-0.5 text-light-text-secondary dark:text-dark-text-secondary">
+              Technology distribution
+            </p>
           </div>
           {skillData.length > 0 ? (
-            <div className="space-y-3">
+            <div className="space-y-4">
               {skillData.map(([skill, count]) => {
                 const meta = SKILL_ICONS[skill];
                 const pct = Math.round((count / allRepos.length) * 100);
@@ -516,17 +732,12 @@ const Dashboard: FC = () => {
                           {skill}
                         </span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-[11px] text-light-text-secondary dark:text-dark-text-secondary">
-                          {count} repos
-                        </span>
-                        <span
-                          className="text-xs font-bold min-w-[32px] text-right"
-                          style={{ color: meta.color }}
-                        >
-                          {pct}%
-                        </span>
-                      </div>
+                      <span
+                        className="text-xs font-bold"
+                        style={{ color: meta.color }}
+                      >
+                        {pct}%
+                      </span>
                     </div>
                     <div className="h-1.5 rounded-full overflow-hidden bg-light-surface-2 dark:bg-dark-surface">
                       <div
@@ -546,42 +757,42 @@ const Dashboard: FC = () => {
               No skills data available
             </div>
           )}
-        </div>
+        </StaggerItem>
 
-        {/* Language Distribution */}
-        <div className={`p-6 xl:col-span-7 ${cardCls}`}>
+        {/* 4. Language Distribution */}
+        <StaggerItem className={`p-8 lg:col-span-8 ${cardCls}`}>
           <div
             className="absolute top-0 left-0 right-0 h-[2px]"
             style={{
               background: `linear-gradient(90deg, transparent, ${TH.azure}60, ${TH.orchid}60, transparent)`,
             }}
           />
-          <div className="flex items-center justify-between mb-5">
+          <div className="flex items-center justify-between mb-6">
             <div>
               <h3 className="text-lg font-bold text-light-text dark:text-dark-text">
                 Languages
               </h3>
               <p className="text-sm mt-0.5 text-light-text-secondary dark:text-dark-text-secondary">
-                Distribution across repositories
+                Project composition by language
               </p>
             </div>
             <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-matte-azure/10 text-matte-azure">
-              {langData.length} langs
+              {langData.length} active
             </span>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-6">
+          <div className="flex flex-col sm:flex-row items-center gap-8">
             <div className="shrink-0 relative">
-              <PieChart width={150} height={150}>
+              <PieChart width={160} height={160}>
                 <Pie
                   data={langData}
                   dataKey="count"
                   nameKey="name"
-                  cx={75}
-                  cy={75}
-                  innerRadius={46}
-                  outerRadius={70}
-                  paddingAngle={2}
+                  cx={80}
+                  cy={80}
+                  innerRadius={50}
+                  outerRadius={75}
+                  paddingAngle={3}
                   strokeWidth={0}
                 >
                   {langData.map((entry, i) => (
@@ -591,19 +802,19 @@ const Dashboard: FC = () => {
                 <RTooltip content={<ChartTooltip />} />
               </PieChart>
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                <span className="text-xl font-extrabold text-light-text dark:text-dark-text">
+                <span className="text-2xl font-extrabold text-light-text dark:text-dark-text">
                   {stats?.repoCount || 0}
                 </span>
-                <span className="text-[9px] text-light-text-secondary dark:text-dark-text-secondary">
-                  repos
+                <span className="text-[10px] text-light-text-secondary dark:text-dark-text-secondary uppercase tracking-wider">
+                  Repos
                 </span>
               </div>
             </div>
 
-            <div className="flex-1 w-full space-y-2.5">
+            <div className="flex-1 w-full grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
               {langData.map((lang) => (
                 <div key={lang.name}>
-                  <div className="flex items-center justify-between mb-0.5">
+                  <div className="flex items-center justify-between mb-1">
                     <div className="flex items-center gap-2">
                       <span
                         className="w-2 h-2 rounded-full"
@@ -633,163 +844,33 @@ const Dashboard: FC = () => {
               ))}
             </div>
           </div>
-        </div>
-      </div>
+        </StaggerItem>
 
-      {/* ========== 3. CONTRIBUTION ACTIVITY ========== */}
-      {monthlyActivity.length > 0 && (
-        <div className={`p-6 sm:p-8 mb-8 ${cardCls}`}>
+        {/* 5. Heatmap (Square Activity Heatmap Module) */}
+        <StaggerItem className={`p-8 lg:col-span-5 ${cardCls}`}>
           <div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-[2px]"
+            className="absolute top-0 left-0 right-0 h-[2px]"
             style={{
-              background: `linear-gradient(90deg, transparent, ${TH.azure}80, ${TH.orchid}80, transparent)`,
+              background: `linear-gradient(90deg, transparent, ${TH.azure}60, transparent)`,
             }}
           />
-
-          <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-4 gap-3">
-            <div>
-              <h3 className="text-xl font-bold text-light-text dark:text-dark-text">
-                Contribution Activity
-              </h3>
-              <p className="text-sm mt-0.5 text-light-text-secondary dark:text-dark-text-secondary">
-                Commits, PRs & Issues from GitHub Events
-              </p>
-            </div>
-            <div className="flex items-center gap-5 text-xs">
-              {[
-                { label: "Commits", color: TH.green },
-                { label: "PRs", color: TH.azure },
-                { label: "Issues", color: TH.orchid },
-              ].map((l) => (
-                <span
-                  key={l.label}
-                  className="flex items-center gap-1.5 text-light-text-secondary dark:text-dark-text-secondary"
-                >
-                  <span
-                    className="w-2 h-2 rounded-full"
-                    style={{
-                      backgroundColor: l.color,
-                      boxShadow: `0 0 6px ${l.color}60`,
-                    }}
-                  />
-                  {l.label}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-3 gap-3 mb-6">
-            <KpiBadge
-              icon="ri-git-commit-line"
-              value={stats?.totalCommits || 0}
-              label="Commits"
-              color={TH.green}
-            />
-            <KpiBadge
-              icon="ri-git-pull-request-line"
-              value={stats?.totalPRs || 0}
-              label="Pull Requests"
-              color={TH.azure}
-            />
-            <KpiBadge
-              icon="ri-error-warning-line"
-              value={stats?.totalIssues || 0}
-              label="Issues"
-              color={TH.orchid}
+          <h3 className="text-lg font-bold text-light-text dark:text-dark-text mb-1">
+            Activity Pulse
+          </h3>
+          <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-6">
+            Interaction intensity by time
+          </p>
+          <div className="flex items-center justify-center">
+            <ContributionHeatmap
+              isDark={isDark}
+              dayActivity={dayActivity}
+              hourActivity={hourActivity}
             />
           </div>
+        </StaggerItem>
 
-          <div className="h-[280px] sm:h-[320px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={monthlyActivity}>
-                <defs>
-                  {[
-                    { id: "gC", c: TH.green },
-                    { id: "gP", c: TH.azure },
-                    { id: "gI", c: TH.orchid },
-                  ].map((g) => (
-                    <linearGradient
-                      key={g.id}
-                      id={g.id}
-                      x1="0"
-                      y1="0"
-                      x2="0"
-                      y2="1"
-                    >
-                      <stop offset="0%" stopColor={g.c} stopOpacity={0.4} />
-                      <stop offset="100%" stopColor={g.c} stopOpacity={0.02} />
-                    </linearGradient>
-                  ))}
-                </defs>
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  stroke={gridColor}
-                  vertical={false}
-                />
-                <XAxis
-                  dataKey="month"
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fill: tickColor, fontSize: 12 }}
-                />
-                <YAxis
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fill: tickColor, fontSize: 12 }}
-                  width={35}
-                />
-                <RTooltip content={<ChartTooltip />} />
-                <Area
-                  type="monotone"
-                  dataKey="commits"
-                  stroke={TH.green}
-                  fill="url(#gC)"
-                  strokeWidth={2.5}
-                  dot={false}
-                  activeDot={{
-                    r: 5,
-                    stroke: TH.green,
-                    strokeWidth: 2,
-                    fill: cardBg,
-                  }}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="prs"
-                  stroke={TH.azure}
-                  fill="url(#gP)"
-                  strokeWidth={2.5}
-                  dot={false}
-                  activeDot={{
-                    r: 5,
-                    stroke: TH.azure,
-                    strokeWidth: 2,
-                    fill: cardBg,
-                  }}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="issues"
-                  stroke={TH.orchid}
-                  fill="url(#gI)"
-                  strokeWidth={2.5}
-                  dot={false}
-                  activeDot={{
-                    r: 5,
-                    stroke: TH.orchid,
-                    strokeWidth: 2,
-                    fill: cardBg,
-                  }}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-      )}
-
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 mb-8">
-        {/* ========== 4. TECH STACK ========== */}
-        <div className={`p-6 sm:p-8 xl:col-span-7 ${cardCls}`}>
+        {/* 6. Tech Stack */}
+        <StaggerItem className={`p-8 lg:col-span-7 ${cardCls}`}>
           <div
             className="absolute top-0 left-0 right-0 h-[2px]"
             style={{
@@ -799,22 +880,22 @@ const Dashboard: FC = () => {
           <div className="flex items-center justify-between mb-6">
             <div>
               <h3 className="text-xl font-bold text-light-text dark:text-dark-text">
-                Tech Stack
+                Architecture Stack
               </h3>
               <p className="text-sm mt-0.5 text-light-text-secondary dark:text-dark-text-secondary">
-                Frameworks, libraries & tools used in development
+                Primary frameworks & libraries
               </p>
             </div>
             <a
               href="/about/tech-stack"
-              className="flex items-center gap-1.5 text-xs font-semibold text-global-blue hover:text-matte-azure transition-colors"
+              className="text-xs font-semibold text-global-blue hover:text-matte-azure transition-colors"
             >
-              View all <i className="ri-arrow-right-s-line"></i>
+              All Stack <i className="ri-arrow-right-s-line"></i>
             </a>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {techStackData.slice(0, 9).map((tech) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {techStackData.slice(0, 6).map((tech) => (
               <a
                 key={tech.id}
                 href={tech.link}
@@ -823,7 +904,7 @@ const Dashboard: FC = () => {
                 className="group flex items-start gap-3.5 p-4 rounded-xl bg-light-surface-2 dark:bg-dark-surface border border-transparent hover:border-light-border dark:hover:border-dark-border transition-all duration-300 hover:-translate-y-0.5"
               >
                 <div
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${tech.color} shadow-md`}
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${tech.color} shadow-sm group-hover:shadow-md transition-all`}
                 >
                   <i className={`${tech.icon} text-lg text-white`}></i>
                 </div>
@@ -832,346 +913,222 @@ const Dashboard: FC = () => {
                     <h4 className="text-sm font-bold text-light-text dark:text-dark-text group-hover:text-global-blue transition-colors truncate">
                       {tech.name}
                     </h4>
-                    <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-light-border dark:bg-dark-border text-light-text-secondary dark:text-dark-text-secondary shrink-0">
-                      {tech.category}
-                    </span>
                   </div>
-                  <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary line-clamp-1 mb-1.5">
+                  <p className="text-[11px] text-light-text-secondary dark:text-dark-text-secondary line-clamp-1">
                     {tech.description}
                   </p>
-                  <div className="flex flex-wrap gap-1">
-                    {tech.itemTools.slice(0, 3).map((t, i) => (
-                      <span
-                        key={i}
-                        className="text-[10px] px-1.5 py-0.5 rounded-md bg-light-bg dark:bg-dark-bg text-light-text-secondary dark:text-dark-text-secondary"
-                      >
-                        {t.split(" ")[0]}
-                      </span>
-                    ))}
-                    {tech.itemTools.length > 3 && (
-                      <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-global-blue/10 text-global-blue font-medium">
-                        +{tech.itemTools.length - 3}
-                      </span>
-                    )}
-                  </div>
                 </div>
               </a>
             ))}
           </div>
+        </StaggerItem>
 
-          {techStackData.length > 9 && (
-            <div className="mt-4 text-center">
-              <a
-                href="/about/tech-stack"
-                className="text-xs font-semibold text-global-blue hover:text-matte-azure transition-colors"
-              >
-                +{techStackData.length - 9} more stacks{" "}
-                <i className="ri-arrow-right-line ml-1"></i>
-              </a>
+        {/* 7. Tooling */}
+        <StaggerItem className={`p-8 lg:col-span-12 ${cardCls}`}>
+          <div
+            className="absolute top-0 left-0 right-0 h-[2px]"
+            style={{
+              background: `linear-gradient(90deg, transparent, ${TH.orchid}80, ${TH.flamingo}80, transparent)`,
+            }}
+          />
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h3 className="text-xl font-bold text-light-text dark:text-dark-text">
+                Workflow Tooling
+              </h3>
+              <p className="text-sm mt-0.5 text-light-text-secondary dark:text-dark-text-secondary">
+                Professional development utilities
+              </p>
             </div>
-          )}
-        </div>
-
-        {/* ========== 5. TOOLING ========== */}
-        <div className={`p-6 sm:p-8 xl:col-span-5 ${cardCls}`}>
-        <div
-          className="absolute top-0 left-0 right-0 h-[2px]"
-          style={{
-            background: `linear-gradient(90deg, transparent, ${TH.orchid}80, ${TH.flamingo}80, transparent)`,
-          }}
-        />
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="text-xl font-bold text-light-text dark:text-dark-text">
-              Tooling
-            </h3>
-            <p className="text-sm mt-0.5 text-light-text-secondary dark:text-dark-text-secondary">
-              Development tools & workflow utilities
-            </p>
-          </div>
-          <a
-            href="/about/tools"
-            className="flex items-center gap-1.5 text-xs font-semibold text-global-blue hover:text-matte-azure transition-colors"
-          >
-            View all <i className="ri-arrow-right-s-line"></i>
-          </a>
-        </div>
-
-        {/* Main tools grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
-          {toolsData.map((tool) => (
             <a
-              key={tool.id}
-              href={tool.link}
-              target="_blank"
-              rel="noreferrer"
-              className="group flex flex-col items-center gap-2.5 p-4 rounded-xl bg-light-surface-2 dark:bg-dark-surface border border-transparent hover:border-light-border dark:hover:border-dark-border transition-all duration-300 hover:-translate-y-0.5 text-center"
+              href="/about/tools"
+              className="flex items-center gap-1.5 text-xs font-semibold text-global-blue hover:text-matte-azure transition-colors"
             >
-              <div
-                className={`w-11 h-11 rounded-xl flex items-center justify-center ${tool.color} shadow-md group-hover:scale-110 transition-transform`}
-              >
-                <i className={`${tool.icon} text-xl text-white`}></i>
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-light-text dark:text-dark-text group-hover:text-global-blue transition-colors">
-                  {tool.name}
-                </h4>
-                <p className="text-[10px] text-light-text-secondary dark:text-dark-text-secondary mt-0.5">
-                  {tool.category}
-                </p>
-              </div>
+              Explore Tools <i className="ri-arrow-right-s-line"></i>
             </a>
-          ))}
-        </div>
-
-        {/* Tool sections summary */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {toolSections.slice(0, 8).map((section) => {
-            const toolCount = section.tools.length;
-            return (
-              <div
-                key={section.id}
-                className="flex items-center gap-3 p-3 rounded-xl bg-light-surface-2 dark:bg-dark-surface"
-              >
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-global-blue/10 shrink-0">
-                  <i className={`${section.icon} text-sm text-global-blue`}></i>
-                </div>
-                <div className="min-w-0">
-                  <p className="text-xs font-bold text-light-text dark:text-dark-text truncate">
-                    {section.title}
-                  </p>
-                  <p className="text-[10px] text-light-text-secondary dark:text-dark-text-secondary">
-                    {toolCount} tools
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-        </div>
-      </div>
-
-      {/* ========== 6. WEEKLY ACTIVITY + HEATMAP ========== */}
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 mb-8">
-        {/* Weekly Activity */}
-        <div className={`p-6 xl:col-span-5 ${cardCls}`}>
-          <div
-            className="absolute top-0 left-0 right-0 h-[2px]"
-            style={{
-              background: `linear-gradient(90deg, transparent, ${TH.yellow}60, transparent)`,
-            }}
-          />
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="text-lg font-bold text-light-text dark:text-dark-text">
-              Weekly Activity
-            </h3>
-            <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-global-yellow/10 text-global-yellow">
-              {dayActivity.reduce((a, b) => a + b, 0)} total
-            </span>
           </div>
-          <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-4">
-            GitHub events by day of week
-          </p>
 
-          <div className="h-[220px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={weeklyData} barCategoryGap="25%">
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  stroke={gridColor}
-                  vertical={false}
-                />
-                <XAxis
-                  dataKey="day"
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fill: tickColor, fontSize: 11 }}
-                />
-                <YAxis
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fill: tickColor, fontSize: 11 }}
-                  width={30}
-                />
-                <RTooltip content={<ChartTooltip />} />
-                <Bar dataKey="events" name="Events" radius={[6, 6, 2, 2]}>
-                  {weeklyData.map((entry, i) => (
-                    <Cell
-                      key={i}
-                      fill={
-                        entry.isPeak
-                          ? TH.yellow
-                          : isDark
-                            ? "#3d4759"
-                            : "#cbd5e1"
-                      }
-                    />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-          <p className="text-xs text-center text-light-text-secondary dark:text-dark-text-secondary mt-2">
-            Peak:{" "}
-            <strong className="text-global-yellow">
-              {dayNames[peakDayIdx]}
-            </strong>{" "}
-            ({dayActivity[peakDayIdx]} events)
-          </p>
-        </div>
-
-        {/* Heatmap */}
-        <div className={`p-6 xl:col-span-7 ${cardCls}`}>
-          <div
-            className="absolute top-0 left-0 right-0 h-[2px]"
-            style={{
-              background: `linear-gradient(90deg, transparent, ${TH.azure}60, transparent)`,
-            }}
-          />
-          <h3 className="text-lg font-bold text-light-text dark:text-dark-text mb-1">
-            Coding Activity Heatmap
-          </h3>
-          <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-4">
-            Activity intensity by time & day
-          </p>
-          <ContributionHeatmap
-            isDark={isDark}
-            dayActivity={dayActivity}
-            hourActivity={hourActivity}
-          />
-        </div>
-      </div>
-
-      {/* ========== 7. PROJECT STATUS ========== */}
-      <div className={`p-6 mb-8 ${cardCls}`}>
-        <div
-          className="absolute top-0 left-0 right-0 h-[2px]"
-          style={{
-            background: `linear-gradient(90deg, transparent, ${TH.royal}60, ${TH.flamingo}60, transparent)`,
-          }}
-        />
-        <h3 className="text-lg font-bold text-light-text dark:text-dark-text mb-5">
-          Project Status
-        </h3>
-        <div className="flex flex-col sm:flex-row items-center gap-8">
-          <div className="relative w-36 h-36 shrink-0">
-            <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
-              {
-                projectStatus.reduce(
-                  (acc, item, i) => {
-                    const pct =
-                      totalProjects > 0
-                        ? (item.count / totalProjects) * 100
-                        : 0;
-                    const circ = 2 * Math.PI * 48;
-                    const dash = (pct / 100) * circ;
-                    acc.elements.push(
-                      <circle
-                        key={i}
-                        cx="60"
-                        cy="60"
-                        r="48"
-                        fill="none"
-                        stroke={item.color}
-                        strokeWidth="14"
-                        strokeDasharray={`${dash} ${circ - dash}`}
-                        strokeDashoffset={-acc.offset}
-                        strokeLinecap="round"
-                        className="transition-all duration-700"
-                      />,
-                    );
-                    acc.offset += dash;
-                    return acc;
-                  },
-                  { elements: [] as React.JSX.Element[], offset: 0 },
-                ).elements
-              }
-            </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-3xl font-extrabold text-light-text dark:text-dark-text">
-                {totalProjects}
-              </span>
-              <span className="text-[10px] text-light-text-secondary dark:text-dark-text-secondary">
-                repos
-              </span>
-            </div>
-          </div>
-          <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-3 w-full">
-            {projectStatus.map((item) => (
-              <div
-                key={item.label}
-                className="flex items-center gap-3 p-4 rounded-xl bg-light-surface-2 dark:bg-dark-surface"
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
+            {toolsData.map((tool) => (
+              <a
+                key={tool.id}
+                href={tool.link}
+                target="_blank"
+                rel="noreferrer"
+                className="group flex flex-col items-center gap-3 p-5 rounded-2xl bg-light-surface-2 dark:bg-dark-surface border border-transparent hover:border-light-border dark:hover:border-dark-border transition-all duration-300 hover:-translate-y-1 text-center"
               >
                 <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center"
-                  style={{ backgroundColor: `${item.color}20` }}
+                  className={`w-12 h-12 rounded-2xl flex items-center justify-center ${tool.color} shadow-sm group-hover:shadow-lg group-hover:scale-110 transition-all duration-500`}
                 >
-                  <i
-                    className={`${item.icon}`}
-                    style={{ color: item.color }}
-                  ></i>
+                  <i className={`${tool.icon} text-2xl text-white`}></i>
                 </div>
                 <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-2xl font-bold text-light-text dark:text-dark-text">
-                      {item.count}
-                    </span>
-                    <span
-                      className="text-xs font-bold px-1.5 py-0.5 rounded-full"
-                      style={{
-                        backgroundColor: `${item.color}15`,
-                        color: item.color,
-                      }}
-                    >
-                      {totalProjects > 0
-                        ? Math.round((item.count / totalProjects) * 100)
-                        : 0}
-                      %
-                    </span>
-                  </div>
-                  <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary">
-                    {item.label}
+                  <h4 className="text-sm font-bold text-light-text dark:text-dark-text group-hover:text-global-blue transition-colors">
+                    {tool.name}
+                  </h4>
+                  <p className="text-[10px] text-light-text-secondary dark:text-dark-text-secondary mt-1 uppercase tracking-tighter opacity-70">
+                    {tool.category}
                   </p>
                 </div>
+              </a>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {toolSections.slice(0, 8).map((section) => {
+              const toolCount = section.tools.length;
+              return (
+                <div
+                  key={section.id}
+                  className="flex items-center gap-4 p-4 rounded-xl bg-light-surface-2/50 dark:bg-dark-surface/50 border border-light-border dark:border-dark-border/20"
+                >
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-global-blue/10 shrink-0">
+                    <i className={`${section.icon} text-lg text-global-blue`}></i>
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-xs font-bold text-light-text dark:text-dark-text truncate">
+                      {section.title}
+                    </p>
+                    <p className="text-[10px] text-light-text-secondary dark:text-dark-text-secondary">
+                      {toolCount} resources
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </StaggerItem>
+
+        {/* 8. Project Status */}
+        <StaggerItem className={`p-8 lg:col-span-12 ${cardCls}`}>
+          <div
+            className="absolute top-0 left-0 right-0 h-[2px]"
+            style={{
+              background: `linear-gradient(90deg, transparent, ${TH.royal}60, ${TH.flamingo}60, transparent)`,
+            }}
+          />
+          <h3 className="text-xl font-bold text-light-text dark:text-dark-text mb-8">
+            Project Integrity Status
+          </h3>
+          <div className="flex flex-col md:flex-row items-center gap-12">
+            <div className="relative w-44 h-44 shrink-0">
+              <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
+                {
+                  projectStatus.reduce(
+                    (acc, item, i) => {
+                      const pct =
+                        totalProjects > 0
+                          ? (item.count / totalProjects) * 100
+                          : 0;
+                      const circ = 2 * Math.PI * 48;
+                      const dash = (pct / 100) * circ;
+                      acc.elements.push(
+                        <circle
+                          key={i}
+                          cx="60"
+                          cy="60"
+                          r="48"
+                          fill="none"
+                          stroke={item.color}
+                          strokeWidth="12"
+                          strokeDasharray={`${dash} ${circ - dash}`}
+                          strokeDashoffset={-acc.offset}
+                          strokeLinecap="round"
+                          className="transition-all duration-1000"
+                        />,
+                      );
+                      acc.offset += dash;
+                      return acc;
+                    },
+                    { elements: [] as React.JSX.Element[], offset: 0 },
+                  ).elements
+                }
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-4xl font-extrabold text-light-text dark:text-dark-text">
+                  {totalProjects}
+                </span>
+                <span className="text-[11px] text-light-text-secondary dark:text-dark-text-secondary uppercase font-bold tracking-widest">
+                  Total
+                </span>
               </div>
-            ))}
+            </div>
+            <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-6 w-full">
+              {projectStatus.map((item) => (
+                <div
+                  key={item.label}
+                  className="flex items-center gap-4 p-5 rounded-2xl bg-light-surface-2 dark:bg-dark-surface border border-light-border dark:border-dark-border/30 hover:border-global-blue/30 transition-colors"
+                >
+                  <div
+                    className="w-12 h-12 rounded-xl flex items-center justify-center"
+                    style={{ backgroundColor: `${item.color}20` }}
+                  >
+                    <i
+                      className={`${item.icon} text-xl`}
+                      style={{ color: item.color }}
+                    ></i>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-3xl font-extrabold text-light-text dark:text-dark-text">
+                        {item.count}
+                      </span>
+                      <span
+                        className="text-[11px] font-bold px-2 py-0.5 rounded-full"
+                        style={{
+                          backgroundColor: `${item.color}15`,
+                          color: item.color,
+                        }}
+                      >
+                        {totalProjects > 0
+                          ? Math.round((item.count / totalProjects) * 100)
+                          : 0}%
+                      </span>
+                    </div>
+                    <p className="text-xs font-medium text-light-text-secondary dark:text-dark-text-secondary uppercase tracking-tighter">
+                      {item.label} Repos
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </div>
+        </StaggerItem>
 
-      {/* ========== 8. POPULAR REPOSITORIES ========== */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="text-2xl font-bold text-light-text dark:text-dark-text">
-              Popular Repositories
-            </h3>
-            <p className="text-sm mt-1 text-light-text-secondary dark:text-dark-text-secondary">
-              Top {repositories.length} by stars and activity
-            </p>
+        {/* 9. Popular Repositories */}
+        <StaggerItem className="lg:col-span-12 mb-12">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h3 className="text-2xl font-bold text-light-text dark:text-dark-text">
+                Popular Repositories
+              </h3>
+              <p className="text-sm mt-1 text-light-text-secondary dark:text-dark-text-secondary">
+                Curated selection of high-impact projects
+              </p>
+            </div>
+            <a
+              href="/work/repository"
+              className="flex items-center gap-2 text-sm font-semibold text-global-blue hover:text-matte-azure transition-colors"
+            >
+              Portfolio <i className="ri-arrow-right-line"></i>
+            </a>
           </div>
-          <a
-            href="/work/repository"
-            className="flex items-center gap-2 text-sm font-semibold text-global-blue hover:text-matte-azure transition-colors"
-          >
-            View all <i className="ri-arrow-right-line"></i>
-          </a>
-        </div>
 
-        {repositories.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {repositories.map((repo, i) => (
-              <RepoCard key={i} {...repo} />
-            ))}
-          </div>
-        ) : (
-          <div className="rounded-2xl p-6 bg-light-surface-2 dark:bg-dark-surface text-center">
-            <p className="text-light-text-secondary dark:text-dark-text-secondary">
-              No repositories found
-            </p>
-          </div>
-        )}
-      </div>
+          {repositories.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {repositories.map((repo, i) => (
+                <RepoCard key={i} {...repo} />
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-3xl p-12 bg-light-surface-2 dark:bg-dark-surface text-center border-2 border-dashed border-light-border dark:border-dark-border/20">
+              <p className="text-light-text-secondary dark:text-dark-text-secondary">
+                No repository data available for display
+              </p>
+            </div>
+          )}
+        </StaggerItem>
+      </StaggerList>
     </>
   );
 };

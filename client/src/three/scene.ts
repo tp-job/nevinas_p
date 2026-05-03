@@ -1,6 +1,8 @@
 import * as THREE from "three";
-export const createScene = (color: string | number = 0xfafaf9) => {
+export const createScene = (color: string | number | null = null) => {
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(color);
+  if (color !== null) {
+    scene.background = new THREE.Color(color);
+  }
   return scene;
 };

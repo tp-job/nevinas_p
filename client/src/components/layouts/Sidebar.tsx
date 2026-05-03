@@ -91,7 +91,7 @@ const Sidebar: FC = () => {
     { icon: "ri-inbox-2-fill", label: "Blog", to: "/work/blog" },
   ];
 
-  const baseAsideClass = `neu-card bg-theme-surface px-4 py-6 gap-2 overflow-hidden border-r border-light-border dark:border-dark-border shadow-sm transition-[width] duration-300 ease-out`;
+  const baseAsideClass = `glass-premium px-4 py-6 gap-2 overflow-hidden border-r border-light-border dark:border-dark-border transition-[width] duration-300 ease-out`;
   const widthClass = isCollapsed ? "w-20" : "w-64";
 
   // Shared nav list renderer
@@ -104,7 +104,7 @@ const Sidebar: FC = () => {
               to={item.to}
               end={item.to === "/dashboard"}
               className={({ isActive }) =>
-                `group flex items-center ${collapsed ? "justify-center" : "px-3"} py-2.5 rounded-md transition-all duration-200 cursor-pointer focus:outline-none ${isActive ? `${collapsed ? " bg-light-bg/10" : ""} text-global-blue` : "hover:translate-x-0.5"}`
+                `group flex items-center ${collapsed ? "justify-center" : "px-3"} py-2.5 rounded-xl transition-all duration-200 cursor-pointer focus:outline-none font-medium text-[0.82rem] ${isActive ? `${collapsed ? " bg-matte-azure/12" : "bg-matte-azure/10"} text-matte-azure` : "text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-light-surface/50 dark:hover:bg-dark-surface/50 hover:translate-x-0.5"}`
               }
               title={collapsed ? item.label : undefined}
             >
@@ -115,14 +115,14 @@ const Sidebar: FC = () => {
               href={item.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`group flex items-center ${collapsed ? "justify-center" : "px-3"} py-2.5 rounded-md hover:bg-light-bg/10 hover:translate-x-0.5 transition-all duration-200 focus:outline-none`}
+              className={`group flex items-center ${collapsed ? "justify-center" : "px-3"} py-2.5 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-light-surface/50 dark:hover:bg-dark-surface/50 hover:translate-x-0.5 transition-all duration-200 focus:outline-none font-medium text-[0.82rem]`}
               title={collapsed ? item.label : undefined}
             >
               <ItemContent item={item} isCollapsed={collapsed} />
             </a>
           ) : (
             <button
-              className={`group w-full ${collapsed ? "justify-center" : "text-left px-3"} flex items-center py-2.5 rounded-md hover:bg-light-bg/10 hover:translate-x-0.5 transition-all duration-200 focus:outline-none`}
+              className={`group w-full ${collapsed ? "justify-center" : "text-left px-3"} flex items-center py-2.5 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-light-surface/50 dark:hover:bg-dark-surface/50 hover:translate-x-0.5 transition-all duration-200 focus:outline-none font-medium text-[0.82rem]`}
               title={collapsed ? item.label : undefined}
               type="button"
             >
@@ -138,19 +138,19 @@ const Sidebar: FC = () => {
   const renderSettings = (collapsed: boolean) => (
     <div>
       {!collapsed && (
-        <p className="px-3 text-xs uppercase tracking-wider opacity-60 mb-2">
+        <p className="px-3 text-[0.65rem] font-medium uppercase tracking-widest text-light-text-secondary dark:text-dark-text-secondary opacity-50 mb-2">
           settings
         </p>
       )}
       <div className="mt-auto">
         <div
-          className={`mx-3 mb-3 ${collapsed ? "border-t border-light-bg/10" : ""}`}
+          className={`mx-3 mb-3 ${collapsed ? "border-t border-light-border dark:border-dark-border" : ""}`}
         ></div>
         <ul className="space-y-1 mb-4">
           <li>
             <Link
               to="/"
-              className={`w-full flex items-center gap-3 ${collapsed ? "justify-center" : "px-3"} py-2.5 rounded-md hover:translate-x-0.5 transition-all duration-200 focus:outline-none`}
+              className={`w-full flex items-center gap-3 ${collapsed ? "justify-center" : "px-3"} py-2.5 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-light-surface/50 dark:hover:bg-dark-surface/50 hover:translate-x-0.5 transition-all duration-200 focus:outline-none font-medium text-[0.82rem]`}
             >
               <i className="ri-home-4-line text-lg"></i>
               <span className={`${collapsed ? "hidden" : "flex-1 text-left"}`}>
@@ -161,7 +161,7 @@ const Sidebar: FC = () => {
           <li>
             <button
               onClick={toggleTheme}
-              className={`w-full flex items-center gap-3 ${collapsed ? "justify-center" : "px-3"} py-2.5 rounded-md hover:translate-x-0.5 transition-all duration-200 focus:outline-none`}
+              className={`w-full flex items-center gap-3 ${collapsed ? "justify-center" : "px-3"} py-2.5 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-light-surface/50 dark:hover:bg-dark-surface/50 hover:translate-x-0.5 transition-all duration-200 focus:outline-none font-medium text-[0.82rem]`}
               title={collapsed ? "Dark mode" : undefined}
             >
               <i className="ri-moon-line text-lg dark:hidden"></i>
@@ -171,7 +171,7 @@ const Sidebar: FC = () => {
           </li>
         </ul>
         <div
-          className={`mx-3 p-2 rounded-2xl ${collapsed ? "bg-light-bg/5 border border-light-bg/10" : "backdrop-blur bg-light-bg/5 dark:bg-light-bg/5 border border-light-border dark:border-dark-border p-3"}`}
+          className={`mx-3 p-2 rounded-2xl ${collapsed ? "bg-light-surface/30 dark:bg-dark-surface/30 border border-light-border dark:border-dark-border" : "backdrop-blur-md bg-light-surface/40 dark:bg-dark-surface/40 border border-light-border dark:border-dark-border p-3"}`}
         >
           <a href="https://github.com/tp-job">
             <div
@@ -188,10 +188,10 @@ const Sidebar: FC = () => {
               </div>
               {!collapsed && (
                 <div className="min-w-0 flex-1">
-                  <div className="text-sm font-semibold card-title truncate">
+                  <div className="text-[0.82rem] font-medium text-light-text dark:text-dark-text truncate">
                     Nevinas_ka
                   </div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                  <div className="text-[0.70rem] text-light-text-secondary dark:text-dark-text-secondary truncate">
                     tp-job
                   </div>
                 </div>
@@ -214,11 +214,11 @@ const Sidebar: FC = () => {
         {/* top */}
         <div className="flex items-center justify-between px-1 py-1 mb-2">
           <div className="flex items-center gap-2 px-2 py-2">
-            <i className="ri-code-s-slash-line text-xl"></i>
+            <i className="ri-code-s-slash-line text-xl text-matte-azure"></i>
             {!isCollapsed && (
               <div>
-                <h1 className="text-lg font-semibold">Frontend Developer</h1>
-                <p className="text-sm opacity-70 font-zen">フロントエンド</p>
+                <h1 className="text-lg text-light-text dark:text-dark-text">Frontend Developer</h1>
+                <p className="text-sm opacity-70 font-zen text-light-text-secondary dark:text-dark-text-secondary">フロントエンド</p>
               </div>
             )}
           </div>
@@ -226,7 +226,7 @@ const Sidebar: FC = () => {
             aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
             title={isCollapsed ? "Expand" : "Collapse"}
             onClick={() => setIsCollapsed((v) => !v)}
-            className="text-sm opacity-70 p-2 rounded-md hover:bg-light-bg/10 transition-colors focus:outline-none"
+            className="text-sm opacity-70 p-2 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:bg-light-surface/50 dark:hover:bg-dark-surface/50 transition-colors focus:outline-none"
           >
             <i
               className={`ri-arrow-right-wide-fill transition-transform ${isCollapsed ? "rotate-90" : ""}`}
@@ -235,7 +235,7 @@ const Sidebar: FC = () => {
         </div>
 
         {!isCollapsed && (
-          <p className="px-3 text-xs uppercase tracking-wider opacity-60 mb-2">
+          <p className="px-3 text-[0.65rem] font-medium uppercase tracking-widest text-light-text-secondary dark:text-dark-text-secondary opacity-50 mb-2">
             Main Menu
           </p>
         )}
@@ -248,15 +248,15 @@ const Sidebar: FC = () => {
       {/* ======================== */}
       {/* Mobile Top Bar */}
       {/* ======================== */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 flex items-center justify-between px-4 bg-theme-surface backdrop-blur-lg border-b border-light-border dark:border-dark-border shadow-sm neu-card">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 flex items-center justify-between px-4 bg-light-surface/80 dark:bg-dark-surface/80 backdrop-blur-xl border-b border-light-border dark:border-dark-border shadow-sm">
         <div className="flex items-center gap-2">
-          <i className="ri-code-s-slash-line text-xl"></i>
-          <h1 className="text-base font-semibold">Frontend Developer</h1>
+          <i className="ri-code-s-slash-line text-xl text-matte-azure"></i>
+          <h1 className="text-[0.82rem] font-medium text-light-text dark:text-dark-text">Frontend Developer</h1>
         </div>
         <button
           type="button"
           onClick={() => setIsOpenMobile(true)}
-          className="inline-flex items-center justify-center w-9 h-9 rounded-md hover:bg-light-bg/20 dark:hover:bg-light-bg/10 transition-colors focus:outline-none"
+          className="inline-flex items-center justify-center w-9 h-9 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:bg-light-surface/50 dark:hover:bg-dark-surface/50 transition-colors focus:outline-none"
           aria-label="Open menu"
         >
           <i className="ri-menu-2-line text-xl"></i>
@@ -277,28 +277,28 @@ const Sidebar: FC = () => {
 
         {/* sidebar panel */}
         <div
-          className={`absolute left-0 top-0 h-full w-72 bg-theme-surface px-4 py-6 border-r border-light-border dark:border-dark-border shadow-xl flex flex-col min-h-0 transition-transform duration-300 ease-out neu-card ${isOpenMobile ? "translate-x-0" : "-translate-x-full"}`}
+          className={`absolute left-0 top-0 h-full w-72 glass-premium px-4 py-6 border-r border-light-border dark:border-dark-border shadow-xl flex flex-col min-h-0 transition-transform duration-300 ease-out ${isOpenMobile ? "translate-x-0" : "-translate-x-full"}`}
         >
           {/* header */}
           <div className="flex items-center justify-between px-1 py-1 mb-1">
             <div className="flex items-center gap-2 px-2 py-2">
-              <i className="ri-code-s-slash-line text-xl"></i>
+              <i className="ri-code-s-slash-line text-xl text-matte-azure"></i>
               <div>
-                <h1 className="text-lg font-semibold">Frontend Developer</h1>
-                <p className="text-sm opacity-70 font-zen">フロントエンド</p>
+                <h1 className="text-lg text-light-text dark:text-dark-text">Frontend Developer</h1>
+                <p className="text-sm opacity-70 font-zen text-light-text-secondary dark:text-dark-text-secondary">フロントエンド</p>
               </div>
             </div>
             <button
               aria-label="Close sidebar"
               onClick={() => setIsOpenMobile(false)}
-              className="p-2 rounded-md hover:bg-light-bg/10 transition-colors focus:outline-none"
+              className="p-2 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:bg-light-surface/50 dark:hover:bg-dark-surface/50 transition-colors focus:outline-none"
             >
               <i className="ri-close-line text-xl"></i>
             </button>
           </div>
 
           {/* menu */}
-          <p className="px-3 text-xs uppercase tracking-wider opacity-60 mb-2">
+          <p className="px-3 text-[0.65rem] font-medium uppercase tracking-widest text-light-text-secondary dark:text-dark-text-secondary opacity-50 mb-2">
             Main Menu
           </p>
           <div className="mt-3 flex-1 overflow-y-auto pr-2 min-h-0">

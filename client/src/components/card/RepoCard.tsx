@@ -27,8 +27,8 @@ const RepoCard: FC<RepoCardProps> = ({
   const baseCls = `
         group block p-6 rounded-2xl transition-all duration-300 hover:-translate-y-1
         bg-light-surface dark:bg-dark-bg border border-light-border dark:border-dark-border
-        shadow-[0_2px_16px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)]
-        hover:shadow-xl dark:hover:border-matte-azure/50
+        shadow-[0_4px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)]
+        hover:shadow-[0_8px_40px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_12px_48px_rgba(0,0,0,0.5)]
     `;
 
   const content = (

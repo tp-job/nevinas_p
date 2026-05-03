@@ -46,7 +46,7 @@ const Section3D: React.FC<Section3DProps> = ({
   );
 
   return (
-    <div className={className}>
+    <div className={className} style={{ background: 'transparent' }}>
       <Canvas shadows={shadow} camera={{ position: [0, 0, 4], fov: 45 }}>
         <Suspense fallback={null}>
           <ambientLight intensity={0.5} />

@@ -53,13 +53,18 @@ const Contact: FC = () => {
 
   return (
     <div id="contact" className="w-full px-[12%] py-20 scroll-mt-20">
+      <h4 className="mb-1 text-lg text-center text-light-text dark:text-dark-text">Connect with me</h4>
+      <h2 className="mb-1 text-4xl sm:text-5xl text-center text-light-text dark:text-dark-text">Get in touch</h2>
+      <h3 className="text-xl text-center font-zen text-light-text-secondary dark:text-dark-text-secondary">お問い合わせ</h3>
+      <p className="max-w-2xl mx-auto mt-5 mb-12 text-center text-light-text-secondary dark:text-dark-text-secondary">I'd love to hear from you! If you have any questions, comments, or feedback, please use the form below.</p>
+
       {/* form container */}
-      <div className="max-w-4xl mx-auto glass-premium p-10 sm:p-14 rounded-[2.5rem] bg-white/70 dark:bg-[#232840]/60 backdrop-blur-[20px] shadow-[0_20px_60px_rgba(0,0,0,0.4)] border border-black/5 dark:border-white/5">
+      <div className="max-w-4xl mx-auto glass-premium p-10 sm:p-14 rounded-[2.5rem]">
         <div className="mb-12 text-center">
-          <h1 className="font-manrope text-4xl sm:text-5xl font-bold tracking-tight text-[#1a1c27] dark:text-[#f1f3f5]">
+          <h2 className="text-3xl sm:text-4xl text-light-text dark:text-dark-text">
             Get in touch
-          </h1>
-          <p className="text-sm font-medium text-[#5b6475] dark:text-[#8a94a8] mt-4 opacity-70">
+          </h2>
+          <p className="text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary mt-4 opacity-70">
             Nocturnal Contact System
           </p>
         </div>
@@ -74,7 +79,7 @@ const Contact: FC = () => {
                 name="name"
                 required
                 placeholder="Your name"
-                className="w-full px-5 py-4 rounded-xl border-none outline-none transition-all duration-300 bg-[#ffffff] dark:bg-[#232840] text-[#1a1c27] dark:text-[#f1f3f5] shadow-[6px_6px_14px_rgba(0,0,0,0.1),-6px_-6px_14px_rgba(255,255,255,0.9)] dark:shadow-[6px_6px_14px_rgba(0,0,0,0.6),-6px_-6px_14px_rgba(48,55,78,0.45)] focus:shadow-[inset_4px_4px_8px_rgba(0,0,0,0.1),inset_-4px_-4px_8px_rgba(255,255,255,0.9),0_0_10px_rgba(89,131,252,0.4)] dark:focus:shadow-[inset_4px_4px_8px_rgba(0,0,0,0.6),inset_-4px_-4px_8px_rgba(48,55,78,0.45),0_0_10px_rgba(89,131,252,0.4)]"
+                className="neu-input px-5 py-4 rounded-xl text-sm"
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -83,7 +88,7 @@ const Contact: FC = () => {
                 name="email"
                 required
                 placeholder="Your email"
-                className="w-full px-5 py-4 rounded-xl border-none outline-none transition-all duration-300 bg-[#ffffff] dark:bg-[#232840] text-[#1a1c27] dark:text-[#f1f3f5] shadow-[6px_6px_14px_rgba(0,0,0,0.1),-6px_-6px_14px_rgba(255,255,255,0.9)] dark:shadow-[6px_6px_14px_rgba(0,0,0,0.6),-6px_-6px_14px_rgba(48,55,78,0.45)] focus:shadow-[inset_4px_4px_8px_rgba(0,0,0,0.1),inset_-4px_-4px_8px_rgba(255,255,255,0.9),0_0_10px_rgba(89,131,252,0.4)] dark:focus:shadow-[inset_4px_4px_8px_rgba(0,0,0,0.6),inset_-4px_-4px_8px_rgba(48,55,78,0.45),0_0_10px_rgba(89,131,252,0.4)]"
+                className="neu-input px-5 py-4 rounded-xl text-sm"
               />
             </div>
             <div className="sm:col-span-2">
@@ -92,7 +97,7 @@ const Contact: FC = () => {
                 name="subject"
                 required
                 placeholder="Subject"
-                className="w-full px-5 py-4 rounded-xl border-none outline-none transition-all duration-300 bg-[#ffffff] dark:bg-[#232840] text-[#1a1c27] dark:text-[#f1f3f5] shadow-[6px_6px_14px_rgba(0,0,0,0.1),-6px_-6px_14px_rgba(255,255,255,0.9)] dark:shadow-[6px_6px_14px_rgba(0,0,0,0.6),-6px_-6px_14px_rgba(48,55,78,0.45)] focus:shadow-[inset_4px_4px_8px_rgba(0,0,0,0.1),inset_-4px_-4px_8px_rgba(255,255,255,0.9),0_0_10px_rgba(89,131,252,0.4)] dark:focus:shadow-[inset_4px_4px_8px_rgba(0,0,0,0.6),inset_-4px_-4px_8px_rgba(48,55,78,0.45),0_0_10px_rgba(89,131,252,0.4)]"
+                className="neu-input px-5 py-4 rounded-xl text-sm"
               />
             </div>
             <div className="sm:col-span-2">
@@ -101,7 +106,7 @@ const Contact: FC = () => {
                 required
                 rows={5}
                 placeholder="Message"
-                className="w-full px-5 py-4 rounded-xl border-none outline-none transition-all duration-300 bg-[#ffffff] dark:bg-[#232840] text-[#1a1c27] dark:text-[#f1f3f5] shadow-[6px_6px_14px_rgba(0,0,0,0.1),-6px_-6px_14px_rgba(255,255,255,0.9)] dark:shadow-[6px_6px_14px_rgba(0,0,0,0.6),-6px_-6px_14px_rgba(48,55,78,0.45)] focus:shadow-[inset_4px_4px_8px_rgba(0,0,0,0.1),inset_-4px_-4px_8px_rgba(255,255,255,0.9),0_0_10px_rgba(89,131,252,0.4)] dark:focus:shadow-[inset_4px_4px_8px_rgba(0,0,0,0.6),inset_-4px_-4px_8px_rgba(48,55,78,0.45),0_0_10px_rgba(89,131,252,0.4)] resize-none"
+                className="neu-input px-5 py-4 rounded-xl text-sm resize-none"
               ></textarea>
             </div>
           </div>
@@ -110,7 +115,7 @@ const Contact: FC = () => {
           <div className="mt-10 flex justify-center">
             <button
               type="submit"
-              className="w-full sm:w-max px-12 py-4 rounded-full font-bold text-white transition-all duration-300 bg-gradient-to-r from-[#5983FC] via-[#964EC2] to-[#FF7BBF] shadow-[0_0_20px_rgba(89,131,252,0.4)] hover:shadow-[0_0_30px_rgba(150,78,194,0.6)] hover:-translate-y-1 active:scale-95"
+              className="w-full sm:w-max px-12 py-4 rounded-full font-medium text-white transition-all duration-300 bg-gradient-to-r from-[#c060f5] to-[#7b5aff] shadow-[0_8px_24px_rgba(192,96,245,0.30)] hover:shadow-[0_12px_32px_rgba(192,96,245,0.40)] hover:-translate-y-1 active:scale-95"
             >
               Submit Now
             </button>
@@ -123,18 +128,17 @@ const Contact: FC = () => {
               onClick={() => result !== "Sending...." && setResult("")}
             >
               <div
-                className="glass-premium border border-white/20 rounded-3xl shadow-2xl max-w-md w-full mx-4 p-8 transform transition-all"
+                className="glass-premium rounded-3xl shadow-2xl max-w-md w-full mx-4 p-8 transform transition-all"
                 onClick={handleModalClick}
               >
-                <div className="flex flex-col items-center text-center">
+                <div className="flex flex-col items-center text-center relative z-10">
                   <div
-                    className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 ${
-                      result === "Form Submitted Successfully"
-                        ? "bg-green-500/20 text-green-500"
-                        : result === "Sending...."
-                          ? "bg-blue-500/20 text-blue-500"
-                          : "bg-red-500/20 text-red-500"
-                    }`}
+                    className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 ${result === "Form Submitted Successfully"
+                      ? "bg-green-500/20 text-green-500"
+                      : result === "Sending...."
+                        ? "bg-blue-500/20 text-blue-500"
+                        : "bg-red-500/20 text-red-500"
+                      }`}
                   >
                     {result === "Form Submitted Successfully" && (
                       <i className="ri-check-line text-3xl"></i>
@@ -147,20 +151,20 @@ const Contact: FC = () => {
                         <i className="ri-error-warning-line text-3xl"></i>
                       )}
                   </div>
-                  
-                  <h3 className="text-xl font-bold mb-2">
+
+                  <h3 className="text-xl mb-2 text-light-text dark:text-dark-text">
                     {result === "Form Submitted Successfully" && "Success!"}
                     {result === "Sending...." && "Sending..."}
                     {result !== "Form Submitted Successfully" &&
                       result !== "Sending...." &&
                       "Oops!"}
                   </h3>
-                  <p className="text-sm opacity-70 mb-6">{result}</p>
+                  <p className="text-sm opacity-70 mb-6 text-light-text-secondary dark:text-dark-text-secondary">{result}</p>
 
                   {result !== "Sending...." && (
                     <button
                       onClick={() => setResult("")}
-                      className="w-full py-3 rounded-xl bg-white/10 hover:bg-white/20 transition-colors text-sm font-bold"
+                      className="w-full py-3 rounded-xl bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium text-light-text dark:text-dark-text"
                     >
                       Close
                     </button>

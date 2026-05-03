@@ -59,9 +59,9 @@ const Header: FC = () => {
       </div>
       <h3 className="flex items-end gap-4 mb-1 text-xl md:text-2xl text-light-text dark:text-white">
         Hi I'm Nevinas
-        <i className="ri-check-line text-base text-center text-white bg-global-blue rounded-full px-1"></i>
+        <i className="ri-check-line text-base text-center text-white bg-matte-azure rounded-full px-1"></i>
       </h3>
-      <h1 className="text-3xl sm:text-6xl lg:text-[66px] text-light-text dark:text-dark-text">
+      <h1 className="text-3xl sm:text-5xl lg:text-[56px] text-light-text dark:text-dark-text">
         Frontend web developer based in Isekai
       </h1>
       <h4 className="max-w-2xl mx-auto font-zen text-light-text-secondary dark:text-dark-text-secondary">
@@ -70,14 +70,14 @@ const Header: FC = () => {
       <div className="flex flex-col items-center gap-4 mt-4 sm:flex-row">
         <a
           href="#contact"
-          className="px-10 py-3 border rounded-full bg-gradient-to-r from-global-pink to-global-purple text-white flex items-center gap-2 dark:border-transparent"
+          className="px-10 py-3 border rounded-full bg-gradient-to-r from-[#c060f5] to-[#7b5aff] text-white font-medium flex items-center gap-2 border-transparent shadow-[0_8px_24px_rgba(192,96,245,0.30)] hover:shadow-[0_12px_32px_rgba(192,96,245,0.40)] hover:-translate-y-0.5 transition-all duration-200"
         >
           Contact Me
         </a>
         <a
           href={Assets.resume}
           download
-          className="flex items-center gap-2 px-10 py-3 bg-light-surface border border-dark-surface-2 rounded-full dark:text-black"
+          className="flex items-center gap-2 px-10 py-3 bg-light-surface dark:bg-dark-surface backdrop-blur-xl border border-black/12 dark:border-white/12 rounded-full text-light-text dark:text-dark-text font-medium hover:border-matte-azure/40 hover:-translate-y-0.5 transition-all duration-200"
         >
           My resume
         </a>

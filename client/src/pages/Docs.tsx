@@ -230,7 +230,7 @@ const Docs: FC = () => {
         </h3>
       </div>
       {/* Doc-style content wrapper */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
         {/* Breadcrumb */}
         <Breadcrumb
           items={[{ label: "Work", href: "/work" }, { label: "Docs" }]}
@@ -284,7 +284,7 @@ const Docs: FC = () => {
               }}
             />
             {reposLoading ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {[...Array(6)].map((_, i) => (
                   <div
                     key={i}
@@ -293,7 +293,7 @@ const Docs: FC = () => {
                 ))}
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {repoCardData.map((repo, i) => (
                   <RepoCard
                     key={i}
@@ -340,7 +340,7 @@ const Docs: FC = () => {
                     <i className="ri-arrow-left-line mr-1"></i> Back
                   </button>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                   {[
                     {
                       title: "Frontend",
@@ -523,7 +523,7 @@ const Docs: FC = () => {
               }}
             />
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {[
                 {
                   title: "Frontend",
@@ -778,7 +778,7 @@ const Docs: FC = () => {
             <h4 className="text-xs font-bold uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary mb-3">
               Main Theme (Matte + Velvet)
             </h4>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6">
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 mb-6">
               {designSystem.mainTheme.map((c) => (
                 <ColorSwatch key={c.hex} {...c} />
               ))}
@@ -812,7 +812,7 @@ const Docs: FC = () => {
             <h4 className="text-xs font-bold uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary mb-3">
               Typography
             </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {designSystem.fonts.map((f) => (
                 <div
                   key={f.name}

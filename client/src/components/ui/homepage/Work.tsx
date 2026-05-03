@@ -5,20 +5,20 @@ import type { FC } from "react";
 const Work: FC = () => {
   return (
     <div id="work" className="w-full px-[12%] py-10 scroll-mt-20">
-      <h4 className="mb-2 text-lg text-center text-light-text dark:text-dark-text">
+      <h4 className="mb-1 text-lg text-center text-light-text dark:text-dark-text">
         My portfolio
       </h4>
-      <h2 className="mb-2 text-5xl text-center text-light-text dark:text-dark-text">
+      <h2 className="mb-1 text-4xl sm:text-5xl text-center text-light-text dark:text-dark-text">
         My latest work
       </h2>
-      <h2 className="text-2xl text-center font-zen text-light-text-secondary dark:text-dark-text/80">
+      <h3 className="text-xl text-center font-zen text-light-text-secondary dark:text-dark-text-secondary">
         私の最新の作品
-      </h2>
-      <p className="max-w-2xl mx-auto mt-5 mb-12 text-center">
+      </h3>
+      <p className="max-w-2xl mx-auto mt-5 mb-12 text-center text-light-text-secondary dark:text-dark-text-secondary">
         Welcome to my web development portfolio Explore a collection of projects
         showcasing my expertise in front-end development.
       </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 my-10 auto-rows-[300px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 my-10 auto-rows-[minmax(300px,auto)]">
         {DataWork.map((items, index) => {
           let spanClass = "";
           if (index === 0) spanClass = "lg:col-span-2 lg:row-span-2";
@@ -41,7 +41,7 @@ const Work: FC = () => {
               
               <div className="absolute inset-x-0 bottom-0 p-6 flex items-center justify-between transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
                 <div>
-                  <h3 className="text-xl font-bold text-white mb-2">
+                  <h3 className="text-xl font-medium text-white mb-2">
                     {items.title}
                   </h3>
                   <p className="text-sm text-white/70 font-medium">

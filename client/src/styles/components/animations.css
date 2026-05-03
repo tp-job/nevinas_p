@@ -79,3 +79,9 @@
 .scrollbar-hide::-webkit-scrollbar {
     display: none;
 }
+
+/* Equalizer bars — music player nav pill */
+@keyframes eq {
+    from { height: 3px; }
+    to { height: 11px; }
+}

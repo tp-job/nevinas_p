@@ -18,7 +18,7 @@ const Footer: FC = () => {
           nevinasv@gmail.com
         </div>
       </div>
-      <div className="text-center sm:flex items-center justify-between border-t border-r-gray-400 mx-[10%] mt-12 py-6">
+      <div className="text-center sm:flex items-center justify-between border-t border-light-border dark:border-dark-border mx-[10%] mt-12 py-6">
         <p>{currentYear} | Nevinas</p>
         <ul className="flex items-center justify-center gap-10 mt-4 sm:mt-0 wrapper">
           <li className="icon contact">

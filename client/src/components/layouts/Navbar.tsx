@@ -16,7 +16,7 @@ const Navbar: FC = () => {
   const { toggleTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
-  const sideMenuRef = useRef<HTMLUListElement | null>(null);
+  const sideMenuRef = useRef<HTMLDivElement | null>(null);
   const [songIndex, setSongIndex] = useState<number>(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const marqueeTrackRef = useRef<HTMLDivElement | null>(null);
@@ -114,11 +114,11 @@ const Navbar: FC = () => {
 
   // Nav classes based on scroll state
   const navClass = isScrolled
-    ? "bg-theme-surface/80 backdrop-blur-lg shadow-md border-b border-light-border dark:border-dark-border text-light-text-primary dark:text-dark-text-primary"
-    : "text-light-text-primary dark:text-dark-text-primary";
+    ? "bg-light-surface/80 dark:bg-dark-surface/80 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)] border-b border-light-border dark:border-dark-border text-light-text dark:text-dark-text"
+    : "text-light-text dark:text-dark-text";
     
   const navLinksClass = !isScrolled
-    ? "bg-theme-surface/40 backdrop-blur-md shadow-sm border border-light-border dark:border-white/10"
+    ? "bg-white/90 dark:bg-white/7 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.40)] border border-black/10 dark:border-white/11"
     : "";
 
   return (
@@ -138,9 +138,29 @@ const Navbar: FC = () => {
               className="w-10 sm:w-11 rounded-full cursor-pointer bg-black p-1 shadow-lg border border-white/10 hover:scale-105 active:scale-95 transition-all"
             />
           </div>
-          {/* music player */}
-          <div className="hidden sm:flex items-center gap-4 group/player">
-            <i className="ri-voiceprint-fill text-[20px] text-global-blue animate-pulse"></i>
+
+          {/* ── Premium Music Player Pill ── */}
+          <div className="hidden sm:flex items-center gap-3 bg-[#0d0d0d] rounded-full px-3.5 py-1.5 pl-2">
+            {/* Velvet glow dot */}
+            <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#c060f5] to-[#7b5aff] shrink-0 shadow-[0_0_12px_rgba(192,96,245,0.4)]" />
+            
+            {/* Equalizer bars */}
+            <div className="flex items-end gap-[2px] h-3.5">
+              {[0, 0.05, 0.10, 0.12, 0.18].map((d, i) => (
+                <span
+                  key={i}
+                  className="w-[2px] rounded-full bg-white/80"
+                  style={{
+                    animation: isPlaying
+                      ? `eq .7s ease-in-out ${d}s infinite alternate`
+                      : "none",
+                    height: isPlaying ? undefined : "3px",
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* Song title marquee */}
             <div className="w-24 marquee-container">
               <div
                 className="marquee-track"
@@ -149,17 +169,18 @@ const Navbar: FC = () => {
                   { "--marquee-duration": marqueeDuration } as React.CSSProperties
                 }
               >
-                <span className="text-[14px] font-semibold marquee-text">
+                <span className="text-[0.68rem] font-medium text-white/70 marquee-text">
                   {DataSong[songIndex].title}
                 </span>
                 <span
-                  className="text-[14px] font-semibold marquee-text"
+                  className="text-[0.68rem] font-medium text-white/70 marquee-text"
                   aria-hidden="true"
                 >
                   {DataSong[songIndex].title}
                 </span>
               </div>
             </div>
+
             <audio
               ref={audioRef}
               src={DataSong[songIndex].song}
@@ -176,41 +197,44 @@ const Navbar: FC = () => {
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
             ></audio>
-            {/* controls */}
-            <div className="flex items-center gap-2">
+
+            {/* Play/Pause */}
+            <button
+              onClick={isPlaying ? pauseMusic : playMusic}
+              className="text-white/60 hover:text-white transition-colors ml-1"
+              aria-label={isPlaying ? "Pause music" : "Play music"}
+            >
+              <i
+                className={`${isPlaying ? "ri-pause-fill" : "ri-play-fill"} text-[14px]`}
+              ></i>
+            </button>
+
+            {/* Song Switcher */}
+            <div className="relative" ref={dropdownRef}>
               <button
-                onClick={isPlaying ? pauseMusic : playMusic}
-                className="w-9 h-9 flex items-center justify-center rounded-full bg-white dark:bg-[#1f2438] shadow-[4px_4px_10px_rgba(0,0,0,0.05),-4px_-4px_10px_rgba(255,255,255,0.8)] dark:shadow-[6px_6px_12px_rgba(0,0,0,0.4),-4px_-4px_10px_rgba(70,80,120,0.1)] hover:scale-110 active:scale-90 transition-all text-global-blue"
-                aria-label={isPlaying ? "Pause music" : "Play music"}
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="text-white/40 hover:text-white transition-colors"
+                aria-label="Change song"
+                aria-expanded={isDropdownOpen}
               >
-                <i
-                  className={`${isPlaying ? "ri-pause-fill" : "ri-play-fill"} text-[20px]`}
-                ></i>
+                <TbArrowsExchange className="text-[14px]" />
               </button>
-              <div className="relative" ref={dropdownRef}>
-                <button
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="w-9 h-9 flex items-center justify-center rounded-full bg-white dark:bg-[#1f2438] shadow-[4px_4px_10px_rgba(0,0,0,0.05),-4px_-4px_10px_rgba(255,255,255,0.8)] dark:shadow-[6px_6px_12px_rgba(0,0,0,0.4),-4px_-4px_10px_rgba(70,80,120,0.1)] hover:scale-110 active:scale-90 transition-all text-global-blue/60 hover:text-global-blue"
-                  aria-label="Change song"
-                  aria-expanded={isDropdownOpen}
-                >
-                  <TbArrowsExchange className="text-[20px]" />
-                </button>
-                
-                {isDropdownOpen && (
-                  <div className="absolute top-full right-[-60px] mt-4 w-80 bg-theme-surface/95 backdrop-blur-2xl border border-light-border dark:border-white/10 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.3)] overflow-hidden p-8 z-[60] animate-in fade-in zoom-in duration-300">
+              
+              {isDropdownOpen && (
+                <div className="absolute top-full right-[-60px] mt-4 w-80 glass-premium rounded-[2rem] p-7 z-[60]">
+                  <div className="relative z-10">
                     {/* Top Player Controls */}
-                    <div className="flex items-center justify-between mb-8">
-                      <div className="flex items-center gap-6">
+                    <div className="flex items-center justify-between mb-7">
+                      <div className="flex items-center gap-5">
                         <button 
                           onClick={() => setSongIndex((prev) => (prev - 1 + DataSong.length) % DataSong.length)}
                           className="text-light-text-secondary dark:text-dark-text-secondary opacity-40 hover:opacity-100 transition-opacity hover:scale-110 active:scale-90"
                         >
-                          <i className="ri-skip-back-mini-fill text-[20px]"></i>
+                          <i className="ri-skip-back-mini-fill text-[18px]"></i>
                         </button>
                         <button
                           onClick={isPlaying ? pauseMusic : playMusic}
-                          className="w-11 h-11 flex items-center justify-center rounded-full bg-gradient-to-br from-[#5983FC] to-[#964EC2] text-white shadow-[0_8px_20px_rgba(89,131,252,0.4)] hover:scale-110 active:scale-90 transition-all"
+                          className="w-11 h-11 flex items-center justify-center rounded-full bg-gradient-to-br from-[#c060f5] to-[#7b5aff] text-white shadow-[0_8px_20px_rgba(192,96,245,0.35)] hover:scale-110 active:scale-90 transition-all"
                         >
                           <i className={`${isPlaying ? "ri-pause-mini-fill" : "ri-play-mini-fill"} text-[22px]`}></i>
                         </button>
@@ -218,16 +242,16 @@ const Navbar: FC = () => {
                           onClick={nextSong}
                           className="text-light-text-secondary dark:text-dark-text-secondary opacity-40 hover:opacity-100 transition-opacity hover:scale-110 active:scale-90"
                         >
-                          <i className="ri-skip-forward-mini-fill text-[20px]"></i>
+                          <i className="ri-skip-forward-mini-fill text-[18px]"></i>
                         </button>
                       </div>
-                      <span className="text-[12px] font-bold opacity-30 tracking-widest">{songIndex + 1} / {DataSong.length}</span>
+                      <span className="text-[0.65rem] font-medium opacity-30 tracking-widest text-light-text-secondary dark:text-dark-text-secondary">{songIndex + 1} / {DataSong.length}</span>
                     </div>
   
                     {/* Select Song Section */}
                     <div>
-                      <h5 className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-30 mb-5 pl-1">Playlists</h5>
-                      <div className="space-y-2">
+                      <h5 className="text-[0.60rem] font-medium uppercase tracking-[0.2em] text-light-text-secondary dark:text-dark-text-secondary opacity-40 mb-4 pl-1">Playlists</h5>
+                      <div className="space-y-1.5">
                         {DataSong.map((song, idx) => (
                           <button
                             key={song.id}
@@ -235,34 +259,34 @@ const Navbar: FC = () => {
                               changeSong(idx);
                               setIsDropdownOpen(false);
                             }}
-                            className={`flex items-center justify-between w-full px-5 py-3.5 rounded-[1.25rem] text-left transition-all duration-300 border ${
+                            className={`flex items-center justify-between w-full px-4 py-3 rounded-[1rem] text-left transition-all duration-300 border ${
                               idx === songIndex 
-                                ? "bg-global-blue/10 text-global-blue border-global-blue/30 font-semibold" 
-                                : "text-light-text-secondary dark:text-dark-text-secondary border-transparent hover:bg-light-bg/5 dark:hover:bg-white/5 font-medium"
-                            } text-[13px]`}
+                                ? "bg-[rgba(192,96,245,0.12)] text-[#c060f5] dark:text-[#d08eff] border-[rgba(192,96,245,0.25)] font-medium" 
+                                : "text-light-text-secondary dark:text-dark-text-secondary border-transparent hover:bg-light-surface/50 dark:hover:bg-dark-surface/50 font-normal"
+                            } text-[0.78rem]`}
                           >
                             <span className="truncate pr-4">{song.title}</span>
-                            {idx === songIndex && <i className="ri-volume-up-fill text-[14px]"></i>}
+                            {idx === songIndex && <i className="ri-volume-up-fill text-[13px]"></i>}
                           </button>
                         ))}
                       </div>
                     </div>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
         {/* nav links */}
         <ul
-          className={`items-center flex gap-6 px-10 py-2.5 rounded-full whitespace-nowrap transition-all duration-300 ${navLinksClass}`}
+          className={`items-center flex gap-1 px-2 py-1.5 rounded-full whitespace-nowrap transition-all duration-300 ${navLinksClass}`}
         >
           {HOME_LINKS.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
-                className="hover:text-global-blue transition-all font-semibold text-[14px] tracking-tight hover:scale-105 active:scale-95 block"
+                className="px-3.5 py-1.5 rounded-full text-[0.75rem] font-medium text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-matte-azure/14 transition-all duration-200 block"
               >
                 {link.label}
               </a>
@@ -271,19 +295,20 @@ const Navbar: FC = () => {
         </ul>
 
         {/* theme & contact */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <button
             onClick={toggleTheme}
-            className="w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 hover:bg-global-blue/10 transition-all text-light-text-primary dark:text-dark-text-primary hover:scale-110 active:scale-90 shadow-sm"
+            className="w-8 h-8 flex items-center justify-center rounded-full text-light-text-secondary dark:text-dark-text-secondary hover:bg-black/6 dark:hover:bg-white/8 transition-all duration-200"
             aria-label="Toggle theme"
           >
-            <i className="text-[22px] ri-moon-line dark:hidden"></i>
-            <i className="hidden text-[22px] ri-sun-line dark:block"></i>
+            <i className="text-[15px] ri-moon-line dark:hidden"></i>
+            <i className="hidden text-[15px] ri-sun-line dark:block"></i>
           </button>
           <a
             href="#contact"
-            className="hidden xl:flex items-center gap-2 px-8 py-2.5 bg-gradient-to-br from-[#5983FC] to-[#964EC2] text-white rounded-full shadow-[0_8px_20px_rgba(89,131,252,0.3)] hover:shadow-[0_12px_25px_rgba(89,131,252,0.5)] hover:scale-105 active:scale-95 transition-all font-bold text-[14px] tracking-tight"
+            className="hidden xl:flex items-center gap-1.5 text-[0.75rem] font-medium border border-black/12 dark:border-white/12 rounded-full px-3.5 py-1.5 text-light-text dark:text-dark-text hover:border-matte-azure/40 hover:bg-matte-azure/8 transition-all duration-200"
           >
+            <i className="ri-mail-send-line text-[13px]"></i>
             Contact
           </a>
         </div>
@@ -292,30 +317,30 @@ const Navbar: FC = () => {
       {/* ======================== */}
       {/* Mobile Top Bar */}
       {/* ======================== */}
-      <div className={`lg:hidden fixed top-0 left-0 right-0 z-40 h-16 flex items-center justify-between px-5 transition-all duration-300 ${isScrolled ? "bg-theme-surface/80 backdrop-blur-lg border-b border-light-border dark:border-dark-border shadow-md" : "bg-transparent"} text-light-text-primary dark:text-dark-text-primary`}>
+      <div className={`lg:hidden fixed top-0 left-0 right-0 z-40 h-16 flex items-center justify-between px-5 transition-all duration-300 ${isScrolled ? "bg-light-surface/80 dark:bg-dark-surface/80 backdrop-blur-xl border-b border-light-border dark:border-dark-border shadow-[0_4px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)]" : "bg-transparent"} text-light-text dark:text-dark-text`}>
         <div className="flex items-center gap-3">
           <img
             src={Assets.logo}
             alt="logo"
             className="w-9 h-9 rounded-full bg-black p-1 shadow-md border border-white/10"
           />
-          <h1 className="text-[14px] font-bold tracking-tight">Nevinas Ka</h1>
+          <h1 className="text-[0.82rem] font-medium">Nevinas Ka</h1>
         </div>
         <div className="flex items-center gap-3">
           <button
             onClick={toggleTheme}
-            className="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-global-blue/10 transition-all hover:scale-110 active:scale-90"
+            className="w-8 h-8 flex items-center justify-center rounded-full text-light-text-secondary dark:text-dark-text-secondary hover:bg-black/6 dark:hover:bg-white/8 transition-all duration-200"
             aria-label="Toggle theme"
           >
-            <i className="text-[20px] ri-moon-line dark:hidden"></i>
-            <i className="hidden text-[20px] ri-sun-line dark:block"></i>
+            <i className="text-[15px] ri-moon-line dark:hidden"></i>
+            <i className="hidden text-[15px] ri-sun-line dark:block"></i>
           </button>
           <button
-            className="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-global-blue/10 transition-all hover:scale-110 active:scale-90"
+            className="w-8 h-8 flex items-center justify-center rounded-full text-light-text-secondary dark:text-dark-text-secondary hover:bg-black/6 dark:hover:bg-white/8 transition-all duration-200"
             onClick={openMenu}
             aria-label="Open menu"
           >
-            <i className="text-[24px] ri-menu-3-line"></i>
+            <i className="text-[20px] ri-menu-3-line"></i>
           </button>
         </div>
       </div>
@@ -344,104 +369,106 @@ const Navbar: FC = () => {
       >
         <style dangerouslySetInnerHTML={{ __html: `
           #sideMenu {
-            --drawer-bg: radial-gradient(600px at 80% 100%, rgba(150,78,194,0.05), transparent), 
-                         radial-gradient(500px at 0% 0%, rgba(89,131,252,0.05), transparent), 
-                         linear-gradient(180deg, rgba(255,255,255,0.8), rgba(244,246,251,0.9));
+            --drawer-bg: radial-gradient(600px at 80% 100%, rgba(192,96,245,0.06), transparent), 
+                         radial-gradient(500px at 0% 0%, rgba(123,90,255,0.05), transparent), 
+                         linear-gradient(180deg, rgba(255,255,255,0.85), rgba(244,246,251,0.92));
           }
           .dark #sideMenu {
-            --drawer-bg: radial-gradient(600px at 80% 100%, rgba(150,78,194,0.15), transparent), 
-                         radial-gradient(500px at 0% 0%, rgba(89,131,252,0.1), transparent), 
-                         linear-gradient(180deg, rgba(21,24,39,0.7), rgba(26,31,53,0.8));
+            --drawer-bg: radial-gradient(600px at 80% 100%, rgba(192,96,245,0.12), transparent), 
+                         radial-gradient(500px at 0% 0%, rgba(123,90,255,0.08), transparent), 
+                         linear-gradient(180deg, rgba(21,24,39,0.85), rgba(26,31,53,0.92));
           }
         `}} />
 
         <button
           onClick={closeMenu}
-          className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-all hover:scale-110 active:scale-90 text-light-text-secondary dark:text-white/40"
+          className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-all hover:scale-110 active:scale-90 text-light-text-secondary dark:text-dark-text-secondary"
           aria-label="Close menu"
         >
           <i className="ri-close-line text-[24px]"></i>
         </button>
 
-        <div className="flex flex-col p-8 gap-10 h-full overflow-y-auto custom-scrollbar">
-          {/* PLAYER CONTROLS */}
-          <div className="flex items-center gap-4 pt-4">
-            <div className="flex items-center justify-center w-11 h-11 rounded-full bg-white dark:bg-[#1f2438] shadow-[4px_4px_10px_rgba(0,0,0,0.05),-4px_-4px_10px_rgba(255,255,255,0.8)] dark:shadow-[6px_6px_12px_rgba(0,0,0,0.6),-4px_-4px_10px_rgba(70,80,120,0.2)] hover:scale-110 active:scale-90 transition-all">
-              <button 
-                onClick={() => setSongIndex((prev) => (prev - 1 + DataSong.length) % DataSong.length)}
-                className="text-light-text-secondary dark:text-white/60 hover:text-global-blue"
-              >
-                <i className="ri-skip-back-mini-fill text-[22px]"></i>
-              </button>
+        <div className="flex flex-col p-8 gap-8 h-full overflow-y-auto custom-scrollbar">
+          {/* ── Premium Music Player Card ── */}
+          <div className="glass-premium rounded-[1.5rem] p-5 relative overflow-hidden">
+            <div className="relative z-10">
+              {/* Now Playing Label */}
+              <span className="text-[0.60rem] font-medium tracking-[0.2em] text-light-text-secondary dark:text-dark-text-secondary uppercase opacity-50">Now Playing</span>
+              <h4 className="mt-1.5 text-[0.82rem] font-medium text-light-text dark:text-dark-text truncate mb-4">
+                {DataSong[songIndex].title.split('-')[1]?.trim() || DataSong[songIndex].title}
+              </h4>
+
+              {/* Player Controls */}
+              <div className="flex items-center justify-center gap-4">
+                <button 
+                  onClick={() => setSongIndex((prev) => (prev - 1 + DataSong.length) % DataSong.length)}
+                  className="w-9 h-9 flex items-center justify-center rounded-full bg-light-surface/50 dark:bg-dark-surface/50 text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text transition-all hover:scale-110 active:scale-90"
+                >
+                  <i className="ri-skip-back-mini-fill text-[18px]"></i>
+                </button>
+
+                <button
+                  onClick={isPlaying ? pauseMusic : playMusic}
+                  className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-[#c060f5] to-[#7b5aff] text-white shadow-[0_8px_24px_rgba(192,96,245,0.35)] hover:scale-110 active:scale-90 transition-all"
+                >
+                  <i className={`${isPlaying ? "ri-pause-fill" : "ri-play-fill"} text-[22px]`}></i>
+                </button>
+
+                <button 
+                  onClick={nextSong}
+                  className="w-9 h-9 flex items-center justify-center rounded-full bg-light-surface/50 dark:bg-dark-surface/50 text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text transition-all hover:scale-110 active:scale-90"
+                >
+                  <i className="ri-skip-forward-mini-fill text-[18px]"></i>
+                </button>
+              </div>
             </div>
+          </div>
 
-            <button
-              onClick={isPlaying ? pauseMusic : playMusic}
-              className="w-[56px] h-[56px] flex items-center justify-center rounded-full bg-gradient-to-br from-[#5983FC] to-[#964EC2] text-white shadow-[0_10px_20px_rgba(89,131,252,0.3)] hover:scale-110 active:scale-90 transition-all"
-            >
-              <i className={`${isPlaying ? "ri-pause-fill" : "ri-play-fill"} text-[26px]`}></i>
-            </button>
-
-            <div className="flex items-center justify-center w-11 h-11 rounded-full bg-white dark:bg-[#1f2438] shadow-[4px_4px_10px_rgba(0,0,0,0.05),-4px_-4px_10px_rgba(255,255,255,0.8)] dark:shadow-[6px_6px_12px_rgba(0,0,0,0.6),-4px_-4px_10px_rgba(70,80,120,0.2)] hover:scale-110 active:scale-90 transition-all">
-              <button 
-                onClick={nextSong}
-                className="text-light-text-secondary dark:text-white/60 hover:text-global-blue"
-              >
-                <i className="ri-skip-forward-mini-fill text-[22px]"></i>
-              </button>
+          {/* ── Playlist ── */}
+          <div>
+            <h5 className="text-[0.60rem] font-medium tracking-[0.2em] text-light-text-secondary dark:text-dark-text-secondary uppercase mb-3 opacity-40">Playlist</h5>
+            <div className="space-y-1">
+              {DataSong.map((song, idx) => (
+                <button
+                  key={song.id}
+                  onClick={() => changeSong(idx)}
+                  className={`w-full text-left px-4 py-2.5 rounded-xl text-[0.78rem] transition-all duration-300 ${
+                    idx === songIndex 
+                      ? "bg-[rgba(192,96,245,0.12)] text-[#c060f5] dark:text-[#d08eff] font-medium" 
+                      : "text-light-text-secondary dark:text-dark-text-secondary hover:bg-light-surface/40 dark:hover:bg-dark-surface/40 font-normal"
+                  } hover:scale-[1.02] active:scale-[0.98]`}
+                >
+                  <span className="truncate block">{song.title}</span>
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* NOW PLAYING TEXT */}
-          <div className="now">
-            <span className="text-[10px] font-bold tracking-[2px] text-light-text-secondary dark:text-[#7b839a] uppercase opacity-60">Now Playing</span>
-            <h4 className="mt-1 text-[14px] font-semibold text-light-text-primary dark:text-white truncate">
-              {DataSong[songIndex].title.split('-')[1]?.trim() || DataSong[songIndex].title}
-            </h4>
-          </div>
-
-          {/* PLAYLIST */}
-          <div className="playlist space-y-2">
-            {DataSong.map((song, idx) => (
-              <button
-                key={song.id}
-                onClick={() => changeSong(idx)}
-                className={`w-full text-left px-5 py-3 rounded-[14px] text-[12px] transition-all duration-300 ${
-                  idx === songIndex 
-                    ? "bg-global-blue/10 text-global-blue dark:text-[#6ea1ff] shadow-[inset_0_0_10px_rgba(89,131,252,0.1)] font-semibold" 
-                    : "text-light-text-secondary dark:text-[#aab0c2] hover:bg-light-text/5 dark:hover:bg-white/5 font-medium"
-                } hover:scale-[1.02] active:scale-[0.98]`}
-              >
-                <span className="truncate block">{song.title}</span>
-              </button>
-            ))}
-          </div>
-
-          {/* MENU */}
+          {/* ── Navigation Menu ── */}
           <div className="flex flex-col">
-            <h5 className="text-[10px] font-bold tracking-[2px] text-light-text-secondary dark:text-[#6c738a] uppercase mb-5 opacity-40">Explorer</h5>
-            <nav className="flex flex-col gap-6">
+            <h5 className="text-[0.60rem] font-medium tracking-[0.2em] text-light-text-secondary dark:text-dark-text-secondary uppercase mb-4 opacity-40">Explorer</h5>
+            <nav className="flex flex-col gap-1">
               {HOME_LINKS.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={closeMenu}
-                  className="flex items-center gap-4 text-light-text-secondary dark:text-[#cdd2df] hover:text-global-blue dark:hover:text-white transition-all duration-200 group hover:scale-105 active:scale-95"
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-light-surface/40 dark:hover:bg-dark-surface/40 transition-all duration-200 group"
                 >
-                  <div className="w-6 h-6 flex items-center justify-center text-[22px] opacity-60 group-hover:opacity-100 transition-all">
+                  <div className="w-5 h-5 flex items-center justify-center text-[18px] opacity-60 group-hover:opacity-100 transition-all">
                     <i className={link.icon}></i>
                   </div>
-                  <span className="text-[14px] font-semibold tracking-tight">{link.label}</span>
+                  <span className="text-[0.82rem] font-medium">{link.label}</span>
                 </a>
               ))}
             </nav>
           </div>
 
           {/* Footer area */}
-          <div className="mt-auto pt-6 border-t border-light-border dark:border-white/5 flex items-center justify-between">
+          <div className="mt-auto pt-5 border-t border-light-border dark:border-dark-border flex items-center justify-between">
              <div className="flex items-center gap-3">
-               <img src={Assets.logo} className="w-8 h-8 rounded-full bg-black p-1 shadow-md" alt="logo" />
-               <span className="text-[10px] font-bold tracking-widest text-light-text-secondary dark:text-white/30 uppercase">NEVINAS.DEV</span>
+               <img src={Assets.logo} className="w-7 h-7 rounded-full bg-black p-0.5 shadow-md" alt="logo" />
+               <span className="text-[0.60rem] font-medium tracking-widest text-light-text-secondary dark:text-dark-text-secondary uppercase opacity-40">NEVINAS.DEV</span>
              </div>
           </div>
         </div>
