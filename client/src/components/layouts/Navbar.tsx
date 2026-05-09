@@ -104,13 +104,23 @@ const Navbar: FC = () => {
     setIsPlaying(false);
   };
   const changeSong = (index: number) => {
+    if (index === songIndex) {
+      if (!isPlaying) playMusic();
+      return;
+    }
     setSongIndex(index);
     setIsPlaying(true);
+    // Force play on next tick if needed, though onLoadedData usually handles it
+    setTimeout(() => {
+      audioRef.current?.play().catch(() => {
+        /* autoplay blocked */
+      });
+    }, 50);
   };
-  const nextSong = () => {
+  const nextSong = useCallback(() => {
     setSongIndex((prev) => (prev + 1) % DataSong.length);
     setIsPlaying(true);
-  };
+  }, []);
 
   // Nav classes based on scroll state
   const navClass = isScrolled
@@ -170,13 +180,13 @@ const Navbar: FC = () => {
                 }
               >
                 <span className="text-[0.68rem] font-medium text-white/70 marquee-text">
-                  {DataSong[songIndex].title}
+                  {DataSong[songIndex].title.split(' - ')[0]}
                 </span>
                 <span
                   className="text-[0.68rem] font-medium text-white/70 marquee-text"
                   aria-hidden="true"
                 >
-                  {DataSong[songIndex].title}
+                  {DataSong[songIndex].title.split(' - ')[0]}
                 </span>
               </div>
             </div>
@@ -395,7 +405,7 @@ const Navbar: FC = () => {
               {/* Now Playing Label */}
               <span className="text-[0.60rem] font-medium tracking-[0.2em] text-light-text-secondary dark:text-dark-text-secondary uppercase opacity-50">Now Playing</span>
               <h4 className="mt-1.5 text-[0.82rem] font-medium text-light-text dark:text-dark-text truncate mb-4">
-                {DataSong[songIndex].title.split('-')[1]?.trim() || DataSong[songIndex].title}
+                {DataSong[songIndex].title.split(' - ')[0]}
               </h4>
 
               {/* Player Controls */}

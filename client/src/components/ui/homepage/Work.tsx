@@ -26,19 +26,19 @@ const Work: FC = () => {
           else spanClass = "lg:col-span-1";
 
           return (
-            <Link 
-              key={items.id} 
-              to="/work/dashboard" 
+            <Link
+              key={items.id}
+              to="/work/dashboard"
               className={`${spanClass} block group card-glass overflow-hidden relative cursor-pointer transition-all duration-500 hover:-translate-y-2`}
             >
               <div
                 style={{ backgroundImage: `url(${items.img})` }}
                 className="absolute inset-0 bg-no-repeat bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
               />
-              
+
               {/* Overlay */}
               <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-60 transition-opacity group-hover:opacity-80" />
-              
+
               <div className="absolute inset-x-0 bottom-0 p-6 flex items-center justify-between transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
                 <div>
                   <h3 className="text-xl font-medium text-white mb-2">

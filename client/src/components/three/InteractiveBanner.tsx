@@ -12,15 +12,15 @@ const InteractiveBanner = () => {
   return (
     <section
       id="3d-viewer"
-      className="relative px-6 sm:px-14 py-32 overflow-hidden"
+      className="relative px-6 sm:px-14 py-24 overflow-hidden"
       style={{
-        background: "linear-gradient(180deg, var(--color-light-bg) 0%, rgba(248,250,252,0.95) 50%, var(--color-light-bg) 100%)",
+        background: "radial-gradient(circle at 50% 50%, rgba(192,96,245,0.03), transparent 70%), var(--color-light-bg)",
       }}
     >
       {/* Dark mode override */}
       <style dangerouslySetInnerHTML={{ __html: `
         .dark #\\33d-viewer {
-          background: linear-gradient(180deg, var(--color-dark-bg) 0%, rgba(30,32,44,0.95) 50%, var(--color-dark-bg) 100%) !important;
+          background: radial-gradient(circle at 50% 50%, rgba(192,96,245,0.08), transparent 70%), var(--color-dark-bg) !important;
         }
       `}} />
 
@@ -48,10 +48,14 @@ const InteractiveBanner = () => {
 
       <div className="max-w-[1400px] mx-auto">
         {/* Header */}
-        <div className="mb-10">
-          <div className="tracking-[0.25em] text-[0.65rem] font-medium uppercase text-[#c060f5]">
+        <div className="flex flex-col items-center mb-16">
+          <h4 className="text-[0.65rem] font-bold uppercase tracking-[0.25em] text-[#c060f5] mb-2">
+            3D Experience
+          </h4>
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-light-text dark:text-dark-text">
             Interactive Specimen
-          </div>
+          </h2>
+          <div className="w-10 h-1 bg-gradient-to-r from-[#c060f5] to-[#7b5aff] rounded-full mt-5 opacity-40" />
         </div>
 
         {/* ───────── Main Interactive Area ───────── */}

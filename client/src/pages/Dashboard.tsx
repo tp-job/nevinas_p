@@ -407,12 +407,12 @@ const Dashboard: FC = () => {
       <div className="w-full mb-10">
         <ScrollReveal>
           <div className="flex flex-col">
-            <h4 className="text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-velvet-orchid mb-1">
+            <h4 className="mb-1 text-lg text-light-text dark:text-dark-text">
               Developer Analytics
             </h4>
-            <h1 className="font-[Manrope] text-[2.1rem] font-extrabold tracking-[-0.04em] text-light-text-primary dark:text-dark-text-primary leading-tight">
+            <h2 className="mb-1 text-4xl sm:text-5xl text-light-text dark:text-dark-text">
               Dashboard
-            </h1>
+            </h2>
             <p className="font-zen text-[0.72rem] font-light tracking-[0.04em] text-light-text-secondary dark:text-dark-text-secondary mt-1">
               概要 · 開発分析
             </p>
@@ -469,7 +469,7 @@ const Dashboard: FC = () => {
             color={TH.flamingo}
             percentage={Math.min(
               ((stats?.totalStars || 0) / Math.max(stats?.repoCount || 1, 1)) *
-                50,
+              50,
               100,
             )}
           />

@@ -6,23 +6,32 @@ const useActiveIndex = (sectionRefs: React.MutableRefObject<HTMLDivElement[]>) =
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.45) {
-            const idx = Number(entry.target.getAttribute("data-index"));
-            if (!Number.isNaN(idx)) setActiveIndex(idx);
-          }
-        });
-      },
-      { threshold: [0.2, 0.45, 0.7], rootMargin: "-10% 0px -10% 0px" },
-    );
+    const handleScroll = () => {
+      if (!sectionRefs.current.length) return;
 
-    sectionRefs.current.forEach((section) => {
-      if (section) observer.observe(section);
-    });
+      const viewportCenter = window.innerHeight / 2;
+      let closestIndex = 0;
+      let minDistance = Infinity;
 
-    return () => observer.disconnect();
+      sectionRefs.current.forEach((section, index) => {
+        if (!section) return;
+        const rect = section.getBoundingClientRect();
+        const sectionCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(sectionCenter - viewportCenter);
+
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      setActiveIndex(closestIndex);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Initial check
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [sectionRefs]);
 
   return activeIndex;
@@ -78,7 +87,21 @@ const TimelineSection = () => {
   const activeIndex = useActiveIndex(sectionRefs);
 
   return (
-    <section id="timeline" className="tl-root transition-colors duration-500">
+    <section id="timeline" className="tl-root transition-colors duration-500 py-20">
+      {/* Header Block — Canonical style */}
+      <div className="mb-16 flex flex-col items-center text-center px-[8%]">
+        <p className="text-xs font-medium tracking-widest uppercase mb-2 text-light-text-secondary dark:text-dark-text-secondary">
+          Experience
+        </p>
+        <h2 className="text-4xl sm:text-5xl font-normal tracking-tight text-light-text dark:text-dark-text mb-1">
+          My Journey
+        </h2>
+        <h3 className="font-zen text-xl font-light tracking-wide text-light-text-secondary dark:text-dark-text-secondary">
+          私の歩み
+        </h3>
+        <div className="w-12 h-1 bg-gradient-to-r from-[#c060f5] to-[#7b5aff] rounded-full mt-6 opacity-60" />
+      </div>
+
       <div className="tl-wrapper" ref={containerRef}>
         <div className="tl-line" />
         <TimelineDot
@@ -120,3 +143,4 @@ const TimelineSection = () => {
 };
 
 export default TimelineSection;
+

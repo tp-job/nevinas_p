@@ -83,60 +83,62 @@
   overflow: hidden;
   max-width: 32rem;
   border-radius: 1.25rem;
-  padding: 2rem;
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  background: var(--color-light-surface);
-  border: 1px solid var(--color-light-border);
+  padding: 2.25rem;
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  background: rgba(255, 255, 255, 0.70);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow:
-    0 4px 24px rgba(0, 0, 0, 0.06),
-    0 0 0 1px rgba(0, 0, 0, 0.04);
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04);
   opacity: 0.25;
   transform: translateY(20px) scale(0.97);
-  transition: transform 0.5s ease, opacity 0.5s ease, box-shadow 0.3s ease;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .dark .tl-card {
-  background: var(--color-dark-surface);
-  border-color: var(--color-dark-border);
+  background: rgba(15, 17, 26, 0.60);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow:
-    0 4px 24px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(255, 255, 255, 0.06);
+    0 8px 32px rgba(0, 0, 0, 0.40),
+    0 2px 8px rgba(0, 0, 0, 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.20);
 }
 
 .tl-card.active {
   opacity: 1;
   transform: translateY(0) scale(1);
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.10),
-    0 0 0 1px rgba(192, 96, 245, 0.15);
+  border-color: rgba(192, 96, 245, 0.30);
 }
 
 .dark .tl-card.active {
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.50),
-    0 0 0 1px rgba(192, 96, 245, 0.20);
+  border-color: rgba(192, 96, 245, 0.40);
 }
 
 .tl-badge {
   display: inline-block;
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
-  font-size: 0.65rem;
+  font-size: 0.60rem;
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: #c060f5;
-  background: rgba(192, 96, 245, 0.12);
-  border: 1px solid rgba(192, 96, 245, 0.25);
-  margin-bottom: 0.8rem;
+  background: rgba(192, 96, 245, 0.10);
+  border: 1px solid rgba(192, 96, 245, 0.20);
+  margin-bottom: 1rem;
 }
 
 .tl-meta {
-  font-size: 0.75rem;
-  font-weight: 400;
-  letter-spacing: 0.12em;
+  font-size: 0.70rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--color-light-text-secondary);
+  opacity: 0.6;
 }
 
 .dark .tl-meta {
@@ -144,9 +146,10 @@
 }
 
 .tl-title {
-  margin-top: 0.4rem;
+  margin-top: 0.5rem;
   font-size: 1.5rem;
   font-weight: 400;
+  letter-spacing: -0.01em;
   color: var(--color-light-text);
 }
 
@@ -156,9 +159,10 @@
 
 .tl-desc {
   margin-top: 0.8rem;
-  font-size: 0.875rem;
-  line-height: 1.75;
+  font-size: 0.85rem;
+  line-height: 1.65;
   color: var(--color-light-text-secondary);
+  opacity: 0.8;
 }
 
 .dark .tl-desc {

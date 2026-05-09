@@ -91,7 +91,7 @@ const Sidebar: FC = () => {
     { icon: "ri-inbox-2-fill", label: "Blog", to: "/work/blog" },
   ];
 
-  const baseAsideClass = `glass-premium px-4 py-6 gap-2 overflow-hidden border-r border-light-border dark:border-dark-border transition-[width] duration-300 ease-out`;
+  const baseAsideClass = `glass-premium px-4 py-6 gap-2 overflow-hidden border-r border-l-0 border-light-border dark:border-dark-border transition-[width] duration-300 ease-out`;
   const widthClass = isCollapsed ? "w-20" : "w-64";
 
   // Shared nav list renderer
@@ -277,7 +277,7 @@ const Sidebar: FC = () => {
 
         {/* sidebar panel */}
         <div
-          className={`absolute left-0 top-0 h-full w-72 glass-premium px-4 py-6 border-r border-light-border dark:border-dark-border shadow-xl flex flex-col min-h-0 transition-transform duration-300 ease-out ${isOpenMobile ? "translate-x-0" : "-translate-x-full"}`}
+          className={`absolute left-0 top-0 h-full w-72 glass-premium px-4 py-6 border-r border-l-0 border-light-border dark:border-dark-border shadow-xl flex flex-col min-h-0 transition-transform duration-300 ease-out ${isOpenMobile ? "translate-x-0" : "-translate-x-full"}`}
         >
           {/* header */}
           <div className="flex items-center justify-between px-1 py-1 mb-1">

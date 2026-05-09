@@ -97,26 +97,26 @@ export const DataServices: typeDataServices[] = [
   {
     id: 1,
     icon: "ri-global-line",
-    title: "Web design",
-    detail: "Web development is the process of building, programming...",
+    title: "Web Design",
+    detail: "Crafting simple yet powerful web experiences using modern technologies like React 19 and Hono for peak performance.",
   },
   {
     id: 2,
     icon: "ri-device-line",
-    title: "Mobile app",
-    detail: "Web development is the process of building, programming...",
+    title: "Mobile App",
+    detail: "Designing intuitive mobile interfaces that seamlessly adapt to modern user behaviors and needs.",
   },
   {
     id: 3,
     icon: "ri-palette-fill",
-    title: "UI/ UX design",
-    detail: "Web development is the process of building, programming...",
+    title: "UI/UX Design",
+    detail: "Focusing on deep research and detailed wireframing to build robust and user-centric digital structures.",
   },
   {
     id: 4,
     icon: "ri-image-fill",
-    title: "Graphics design",
-    detail: "Web development is the process of building, programming...",
+    title: "Graphics",
+    detail: "Creating compelling visual identities that clearly communicate and reflect your brand's unique personality.",
   },
 ];
 

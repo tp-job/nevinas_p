@@ -21,6 +21,8 @@ const HomePage: FC = () => {
                     <About />
                 </ScrollReveal>
                 
+                <InteractiveBanner />
+                
                 <ScrollReveal>
                     <TimelineSection />
                 </ScrollReveal>
@@ -28,8 +30,6 @@ const HomePage: FC = () => {
                 <ScrollReveal>
                     <Services />
                 </ScrollReveal>
-                
-                <InteractiveBanner />
                 
                 <ScrollReveal>
                     <Work />
