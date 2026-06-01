@@ -19,18 +19,20 @@
 .marquee-container {
     position: relative;
     overflow: hidden;
+    mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
 }
 
 .marquee-track {
     display: inline-flex;
     white-space: nowrap;
-    gap: 2rem;
     will-change: transform;
     animation: marqueeTrack var(--marquee-duration, 15s) linear infinite;
 }
 
 .marquee-text {
     white-space: nowrap;
+    padding-right: 2rem;
 }
 
 @keyframes marquee {

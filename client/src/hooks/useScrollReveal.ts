@@ -1,5 +1,5 @@
 import { useInView } from 'framer-motion'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 interface Options {
   once?:      boolean  // animate once only (default: true)
@@ -13,6 +13,17 @@ export function useScrollReveal({
   margin = '0px 0px -60px 0px',
 }: Options = {}) {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once, amount, margin } as any)
+  const scrollRoot = useRef<HTMLElement | null>(null)
+
+  useEffect(() => {
+    scrollRoot.current = document.getElementById('homepage-scroll')
+  }, [])
+
+  const isInView = useInView(ref, {
+    once,
+    amount,
+    margin,
+    root: scrollRoot,
+  })
   return { ref, isInView }
 }

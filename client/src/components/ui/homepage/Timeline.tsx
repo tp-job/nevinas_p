@@ -2,10 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import { DataTimeline } from "@/data/HomeData";
 import "@/styles/components/timeline.css";
 
-const useActiveIndex = (sectionRefs: React.MutableRefObject<HTMLDivElement[]>) => {
+const useActiveIndex = (
+  sectionRefs: React.MutableRefObject<HTMLDivElement[]>,
+  containerRef: React.RefObject<HTMLDivElement | null>
+) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
+    const scrollContainer = containerRef.current?.closest('.overflow-y-auto') || document.getElementById("homepage-scroll") || window;
+    
     const handleScroll = () => {
       if (!sectionRefs.current.length) return;
 
@@ -28,11 +33,11 @@ const useActiveIndex = (sectionRefs: React.MutableRefObject<HTMLDivElement[]>) =
       setActiveIndex(closestIndex);
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    scrollContainer.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll(); // Initial check
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [sectionRefs]);
+    return () => scrollContainer.removeEventListener("scroll", handleScroll);
+  }, [sectionRefs, containerRef]);
 
   return activeIndex;
 };
@@ -49,6 +54,8 @@ const TimelineDot = ({
   const [top, setTop] = useState(0);
 
   useEffect(() => {
+    const scrollContainer = containerRef.current?.closest('.overflow-y-auto') || document.getElementById("homepage-scroll") || window;
+    
     let rafId = 0;
 
     const updatePosition = () => {
@@ -68,12 +75,12 @@ const TimelineDot = ({
     };
 
     scheduleUpdate();
-    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    scrollContainer.addEventListener("scroll", scheduleUpdate, { passive: true });
     window.addEventListener("resize", scheduleUpdate);
 
     return () => {
       cancelAnimationFrame(rafId);
-      window.removeEventListener("scroll", scheduleUpdate);
+      scrollContainer.removeEventListener("scroll", scheduleUpdate);
       window.removeEventListener("resize", scheduleUpdate);
     };
   }, [activeIndex, containerRef, sectionRefs]);
@@ -84,7 +91,7 @@ const TimelineDot = ({
 const TimelineSection = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const sectionRefs = useRef<HTMLDivElement[]>([]);
-  const activeIndex = useActiveIndex(sectionRefs);
+  const activeIndex = useActiveIndex(sectionRefs, containerRef);
 
   return (
     <section id="timeline" className="tl-root transition-colors duration-500 py-20">

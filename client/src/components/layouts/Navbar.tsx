@@ -3,6 +3,12 @@ import type { FC } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { Assets, DataSong } from "@/data/HomeData";
 import { TbArrowsExchange } from "react-icons/tb";
+import GlassSurface from "@/effect/GlassSurface";
+
+interface NavbarProps {
+  scrollContainerId?: string;
+  onGoto?: (index: number) => void;
+}
 
 const HOME_LINKS = [
   { href: "#top", label: "Home", icon: "ri-home-4-line" },
@@ -12,7 +18,7 @@ const HOME_LINKS = [
   { href: "#contact", label: "Contact Me", icon: "ri-mail-send-line" },
 ];
 
-const Navbar: FC = () => {
+const Navbar: FC<NavbarProps> = ({ scrollContainerId = "homepage-scroll", onGoto }) => {
   const { toggleTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -25,16 +31,46 @@ const Navbar: FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-  // [FIX #1] Scroll effect via React state instead of DOM manipulation
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", onScroll);
+    const scrollRoot =
+      document.getElementById(scrollContainerId) ?? document.documentElement;
+    const onScroll = () => {
+      const y =
+        scrollRoot === document.documentElement
+          ? window.scrollY
+          : scrollRoot.scrollTop;
+      setIsScrolled(y > 50);
+    };
+    scrollRoot.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    return () => scrollRoot.removeEventListener("scroll", onScroll);
+  }, [scrollContainerId]);
 
   const openMenu = () => setIsMenuOpen(true);
   const closeMenu = useCallback(() => setIsMenuOpen(false), []);
+
+  const scrollToHash = useCallback(
+    (href: string) => {
+      if (onGoto) {
+        if (href === "#top") onGoto(0);
+        else if (href === "#about") onGoto(5);
+        else if (href === "#services") onGoto(9);
+        else if (href === "#work") onGoto(10);
+        else if (href === "#contact") onGoto(13);
+        closeMenu();
+        return;
+      }
+      const id = href.replace(/^#/, "");
+      if (!id) return;
+      const root = document.getElementById(scrollContainerId);
+      const target =
+        root?.querySelector<HTMLElement>(`#${CSS.escape(id)}`) ??
+        document.getElementById(id);
+      target?.scrollIntoView({ behavior: "smooth", block: "start" });
+      closeMenu();
+    },
+    [scrollContainerId, closeMenu, onGoto],
+  );
 
   // Lock body scroll + Escape key + focus trap
   useEffect(() => {
@@ -122,22 +158,37 @@ const Navbar: FC = () => {
     setIsPlaying(true);
   }, []);
 
-  // Nav classes based on scroll state
   const navClass = isScrolled
-    ? "bg-light-surface/80 dark:bg-dark-surface/80 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)] border-b border-light-border dark:border-dark-border text-light-text dark:text-dark-text"
+    ? "text-light-text dark:text-dark-text border-b border-light-border/60 dark:border-dark-border/60"
     : "text-light-text dark:text-dark-text";
-    
+
   const navLinksClass = !isScrolled
     ? "bg-white/90 dark:bg-white/7 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.40)] border border-black/10 dark:border-white/11"
     : "";
 
+  const glassShellClass = isScrolled
+    ? "shadow-[0_4px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)]"
+    : "";
+
   return (
     <div className="font-inter">
-      {/* ======================== */}
-      {/* Desktop Navbar */}
-      {/* ======================== */}
+      <header
+        className={`pointer-events-none fixed top-0 left-0 right-0 z-50 w-full transition-shadow duration-400 ${glassShellClass}`}
+      >
+        <GlassSurface
+          borderRadius={0}
+          borderWidth={0.03}
+          brightness={78}
+          opacity={0.9}
+          blur={24}
+          backgroundOpacity={0.06}
+          saturation={2.2}
+          className={`pointer-events-auto w-full ${glassShellClass}`}
+          style={{ width: "100%", height: "auto", borderRadius: 0 }}
+        >
+      {/* Desktop */}
       <nav
-        className={`hidden lg:flex w-full fixed px-8 xl:px-[8%] py-3 items-center justify-between z-50 transition-all duration-400 ${navClass}`}
+        className={`hidden lg:flex w-full px-8 xl:px-[8%] py-3 items-center justify-between transition-all duration-400 ${navClass}`}
       >
         {/* logo + music */}
         <div className="flex items-center gap-6 lg:gap-8">
@@ -171,7 +222,7 @@ const Navbar: FC = () => {
             </div>
 
             {/* Song title marquee */}
-            <div className="w-24 marquee-container">
+            <div className="w-32 marquee-container">
               <div
                 className="marquee-track"
                 ref={marqueeTrackRef}
@@ -296,6 +347,10 @@ const Navbar: FC = () => {
             <li key={link.href}>
               <a
                 href={link.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToHash(link.href);
+                }}
                 className="px-3.5 py-1.5 rounded-full text-[0.75rem] font-medium text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-matte-azure/14 transition-all duration-200 block"
               >
                 {link.label}
@@ -316,6 +371,10 @@ const Navbar: FC = () => {
           </button>
           <a
             href="#contact"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToHash("#contact");
+            }}
             className="hidden xl:flex items-center gap-1.5 text-[0.75rem] font-medium border border-black/12 dark:border-white/12 rounded-full px-3.5 py-1.5 text-light-text dark:text-dark-text hover:border-matte-azure/40 hover:bg-matte-azure/8 transition-all duration-200"
           >
             <i className="ri-mail-send-line text-[13px]"></i>
@@ -324,10 +383,8 @@ const Navbar: FC = () => {
         </div>
       </nav>
 
-      {/* ======================== */}
-      {/* Mobile Top Bar */}
-      {/* ======================== */}
-      <div className={`lg:hidden fixed top-0 left-0 right-0 z-40 h-16 flex items-center justify-between px-5 transition-all duration-300 ${isScrolled ? "bg-light-surface/80 dark:bg-dark-surface/80 backdrop-blur-xl border-b border-light-border dark:border-dark-border shadow-[0_4px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)]" : "bg-transparent"} text-light-text dark:text-dark-text`}>
+      {/* Mobile top bar */}
+      <div className="flex lg:hidden min-h-16 w-full items-center justify-between px-5 py-3 text-light-text dark:text-dark-text">
         <div className="flex items-center gap-3">
           <img
             src={Assets.logo}
@@ -354,6 +411,8 @@ const Navbar: FC = () => {
           </button>
         </div>
       </div>
+        </GlassSurface>
+      </header>
 
       {/* ======================== */}
       {/* Mobile Menu Drawer */}
@@ -462,7 +521,10 @@ const Navbar: FC = () => {
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={closeMenu}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToHash(link.href);
+                  }}
                   className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-light-surface/40 dark:hover:bg-dark-surface/40 transition-all duration-200 group"
                 >
                   <div className="w-5 h-5 flex items-center justify-center text-[18px] opacity-60 group-hover:opacity-100 transition-all">

@@ -1,0 +1,109 @@
+/* CodeWithClarity Styles - CSS Module with Theme Tokens */
+
+/* Main slide container */
+.codeWithClarity {
+  background: var(--homepage-bg-light);
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  align-items: stretch;
+  justify-content: stretch;
+  overflow: hidden;
+  text-align: left;
+}
+
+/* Top inner container */
+.topInner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--homepage-space-3xl) 3vw 0;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Top row layout */
+.topRow {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3vw;
+  flex-shrink: 0;
+  align-items: start;
+}
+
+/* Giant word styling */
+.word {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(5rem, 18vw, 17rem);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 1;
+  color: var(--homepage-text-primary);
+  text-align: center;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Columns grid */
+.cols {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--homepage-border-light);
+  height: 100%;
+}
+
+/* Individual column styling */
+.col {
+  padding: var(--homepage-space-xl) 2.5vw;
+  border-right: 1px solid var(--homepage-border-light);
+  display: flex;
+  flex-direction: column;
+  gap: var(--homepage-space-md);
+  transition: background var(--homepage-transition-fast);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.col:last-child {
+  border-right: none;
+}
+
+.col:hover {
+  background: var(--homepage-bg-surface-2);
+}
+
+/* Column number styling */
+.num {
+  font-family: var(--fm, "DM Mono", monospace);
+  font-size: var(--homepage-font-size-sm);
+  color: var(--homepage-text-muted);
+  letter-spacing: 0.06em;
+}
+
+/* Column text styling */
+.colTxt {
+  font-size: clamp(0.88rem, 1.4vw, 1.05rem);
+  font-weight: 300;
+  letter-spacing: -0.015em;
+  line-height: 1.5;
+  color: var(--homepage-text-primary);
+}
+
+/* Dim columns 2-4 by default */
+.col:nth-child(2) .colTxt,
+.col:nth-child(3) .colTxt,
+.col:nth-child(4) .colTxt {
+  color: var(--homepage-text-muted);
+}
+
+.col:hover .colTxt {
+  color: var(--homepage-text-primary) !important;
+}
+
+/* Accent color styling */
+.acc {
+  color: var(--homepage-color-matte-azure, #5983FC);
+}

@@ -2,10 +2,18 @@ import { Link } from "react-router-dom";
 import { DataWork } from "@/data/HomeData.ts";
 import type { FC } from "react";
 
+import folderIcon from "@/assets/image/noubackground/folder-icon.png";
+
 const Work: FC = () => {
   return (
-    <div id="work" className="w-full px-[12%] py-10 scroll-mt-20">
-      <h4 className="mb-1 text-lg text-center text-light-text dark:text-dark-text">
+    <div id="work" className="relative w-full px-[12%] py-10 scroll-mt-20 overflow-hidden z-10">
+      {/* Background folder icon */}
+      <div 
+        className="absolute left-[-20px] top-[10%] w-[150px] h-[150px] opacity-[0.06] dark:opacity-[0.03] pointer-events-none select-none z-0 bg-contain bg-no-repeat"
+        style={{ backgroundImage: `url(${folderIcon})` }}
+      />
+
+      <h4 className="relative z-10 mb-1 text-lg text-center text-light-text dark:text-dark-text">
         My portfolio
       </h4>
       <h2 className="mb-1 text-4xl sm:text-5xl text-center text-light-text dark:text-dark-text">
