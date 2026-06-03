@@ -7,12 +7,12 @@ const Header: FC = () => {
   const { avatar, setAvatar, avatarUrl } = useProfile();
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+    <div className="relative w-full h-full flex items-center justify-center overflow-hidden" style={{ WebkitFontSmoothing: 'antialiased', MozOsxFontSmoothing: 'grayscale' }}>
       {/* Dynamic & Immersive Liquid Glass background */}
       <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden>
         <LiquidEther
           className="h-full w-full"
-          style={{ width: "100%", height: "100%" }}
+          style={{ width: "100%", height: "100%", WebkitFontSmoothing: 'antialiased' }}
           colors={["#5227FF", "#FF9FFC", "#B497CF"]}
           resolution={0.5}
           mouseForce={5.5}
@@ -27,7 +27,7 @@ const Header: FC = () => {
       </div>
 
       {/* Glass overlay to ensure absolute text readability and premium glassmorphic depth */}
-      <div className="absolute inset-0 z-1 pointer-events-none bg-gradient-to-b from-transparent via-light-bg/30 to-light-bg/70 dark:via-dark-bg/40 dark:to-dark-bg/80 backdrop-blur-[1px]" />
+      <div className="absolute inset-0 z-1 pointer-events-none bg-gradient-to-b from-transparent via-light-bg/30 to-light-bg/70 dark:via-dark-bg/40 dark:to-dark-bg/80 backdrop-blur-[1px]" style={{ WebkitFontSmoothing: 'antialiased' }} />
 
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center justify-center w-11/12 h-full min-h-0 max-w-3xl gap-4 mx-auto text-center py-6 select-none">

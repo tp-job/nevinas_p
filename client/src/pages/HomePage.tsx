@@ -91,15 +91,15 @@ const HomePage: FC = () => {
   // const etherColors removed - not used
 
   return (
-    <div className="relative isolate h-svh min-h-svh overflow-hidden bg-transparent">
+    <div className="relative isolate h-svh min-h-svh overflow-hidden bg-transparent" style={{ WebkitFontSmoothing: 'antialiased', MozOsxFontSmoothing: 'grayscale' }}>
 
       <Navbar scrollContainerId="homepage-scroll" />
 
       <main
         ref={scrollRef}
         id="homepage-scroll"
-        className="relative z-[var(--homepage-z-sticky)] h-full overflow-y-auto overflow-x-hidden scroll-smooth"
-        style={{ scrollSnapType: 'y mandatory' }}
+        className="relative z-[var(--homepage-z-sticky)] h-full overflow-y-auto overflow-x-hidden scroll-smooth" 
+        style={{ scrollSnapType: 'y mandatory', WebkitFontSmoothing: 'antialiased', MozOsxFontSmoothing: 'grayscale' }}
       >
         {/* SENTINELS for Scroll Snapping */}
         <div className="absolute top-0 left-0 w-full z-[var(--homepage-z-base)] pointer-events-none">

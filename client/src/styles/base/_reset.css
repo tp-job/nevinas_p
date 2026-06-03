@@ -1,0 +1,57 @@
+@layer reset {
+  /* Selection styling */
+  ::selection {
+      background-color: #f83b64;
+      color: #ffffff;
+  }
+
+  .dark ::selection {
+      background-color: #f83b64;
+      color: #ffffff;
+  }
+
+  /* Optimized motion slide rendering */
+  [data-slide-index] {
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      -webkit-perspective: 1000;
+      perspective: 1000;
+      transform: translateZ(0);
+      will-change: opacity, transform;
+  }
+
+  [data-slide-index] > div {
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+  }
+
+  /* Webkit Scrollbar */
+  ::-webkit-scrollbar {
+      width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+      background: var(--color-light-bg, #f8fafc);
+  }
+
+  ::-webkit-scrollbar-thumb {
+      background: rgba(89, 131, 252, 0.25);
+      border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+      background: rgba(89, 131, 252, 0.45);
+  }
+
+  .dark ::-webkit-scrollbar-track {
+      background: var(--color-dark-bg, #1e202c);
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+      background: rgba(89, 131, 252, 0.30);
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+      background: rgba(150, 78, 194, 0.50);
+  }
+}

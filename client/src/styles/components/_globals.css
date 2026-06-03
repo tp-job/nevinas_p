@@ -1,0 +1,39 @@
+@layer components {
+  :root {
+      --bg-theme-light: radial-gradient(1200px 600px at -10% -10%, #e0f2fe 0%, rgba(224, 242, 254, 0) 35%),
+          radial-gradient(900px 500px at 110% 0%, #ede9fe 0%, rgba(237, 233, 254, 0) 40%),
+          radial-gradient(1000px 600px at 50% 120%, #dcfce7 0%, rgba(220, 252, 231, 0) 35%),
+          linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+      --bg-theme-dark: radial-gradient(1200px 600px at -10% -10%, rgba(56, 189, 248, 0.10) 0%, rgba(56, 189, 248, 0) 35%),
+          radial-gradient(900px 500px at 110% 0%, rgba(167, 139, 250, 0.12) 0%, rgba(167, 139, 250, 0) 40%),
+          radial-gradient(1000px 600px at 50% 120%, rgba(74, 222, 128, 0.10) 0%, rgba(74, 222, 128, 0) 35%),
+          linear-gradient(180deg, #1e202c 0%, #111318 100%);
+  }
+
+  /* ═══ Homepage Slide Mode Rendering Optimization ═══ */
+  .homepage-slide-mode {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+  }
+
+  .homepage-slide-mode main {
+      transform: translate3d(0, 0, 0);
+      will-change: scroll-position;
+  }
+
+  /* Optimize motion.section rendering for smooth edges */
+  [data-slide-index] {
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      -webkit-perspective: 1000;
+      perspective: 1000;
+      transform: translateZ(0);
+      will-change: opacity, transform;
+  }
+
+  /* Prevent edge artifacts on slide transitions */
+  [data-slide-index] > div {
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+  }
+}

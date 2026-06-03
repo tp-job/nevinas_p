@@ -1,0 +1,118 @@
+/* Keyframes from animations.css */
+@keyframes marquee-loop {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes marqueeTrack {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes infinite-scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-33.333%);
+    }
+}
+
+@keyframes eq {
+    from { height: 3px; }
+    to { height: 11px; }
+}
+
+/* Keyframes from portfolio-interactive.css */
+@keyframes nebulaShift {
+  0% {
+    filter: hue-rotate(0deg) brightness(1);
+  }
+  100% {
+    filter: hue-rotate(15deg) brightness(1.08);
+  }
+}
+
+@keyframes kjDrift {
+  0%,
+  100% {
+    opacity: 0.1;
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    opacity: 0.22;
+    transform: translateY(-14px) rotate(1deg);
+  }
+}
+
+@keyframes kjFloat {
+  0%,
+  100% {
+    opacity: 0.12;
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    opacity: 0.28;
+    transform: translateY(-12px) scale(1.05);
+  }
+}
+
+@keyframes moodSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes moodPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+}
+
+@keyframes arrowBob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(7px);
+  }
+}
+
+@keyframes spinGear {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes mq {
+  0% {
+    transform: translateX(30%);
+  }
+  100% {
+    transform: translateX(-30%);
+  }
+}

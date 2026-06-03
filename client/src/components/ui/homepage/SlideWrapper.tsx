@@ -18,8 +18,8 @@ export interface SlideWrapperProps {
 
 const innerVariantClass: Record<SlideVariant, string> = {
   fill: 'w-full h-full [&>*]:w-full',
-  center: 'flex w-full h-full flex-col items-center justify-center px-4 pb-8',
-  content: 'flex w-full h-full flex-col items-stretch justify-center px-0 pb-8',
+  center: 'flex w-full h-full flex-col items-center justify-center px-0 pb-0',
+  content: 'flex w-full h-full flex-col items-stretch justify-center px-0 pb-0',
 };
 
 const SlideWrapper: FC<SlideWrapperProps> = ({
@@ -122,12 +122,8 @@ const SlideWrapper: FC<SlideWrapperProps> = ({
     [20, -20]
   );
 
-  // Scale effect for active slide
-  const scaleTransform = useTransform(
-    scrollYProgress,
-    [0.3, 0.5, 0.7, 1],
-    [0.98, 1, 1, 0.98]
-  );
+  // Removed scale effect - it was causing visible border artifacts
+  // Keeping slides at scale 1 eliminates edge rendering issues
 
   return (
     <SlideScrollContext.Provider value={scrollYProgress}>
@@ -137,20 +133,18 @@ const SlideWrapper: FC<SlideWrapperProps> = ({
           opacity,
           pointerEvents,
           y: yTransform,
-          scale: scaleTransform,
         }}
-        className={`relative z-[var(--homepage-z-overlay)] w-full h-full overflow-hidden ${className}`}
+        className={`relative z-[var(--homepage-z-overlay)] w-full h-full ${className}`}
         transition={{
           opacity: { duration: 0.6, ease: "easeOut" },
-          y: { duration: 0.8, ease: "easeOut" },
-          scale: { duration: 0.4, ease: "easeOut" }
+          y: { duration: 0.8, ease: "easeOut" }
         }}
       >
-        <div className={innerVariantClass[variant]}>
+        <div className={`${innerVariantClass[variant]} w-full h-full`}>
           {/* If the slide has internal scrolling, allow it locally */}
           <div
             ref={scrollRef}
-            className={`w-full h-full ${scrollable ? 'overflow-y-auto' : ''}`}
+            className={`w-full h-full ${scrollable ? 'overflow-y-auto overflow-x-hidden' : 'overflow-hidden'}`}
           >
             {children}
           </div>

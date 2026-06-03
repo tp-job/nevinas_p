@@ -16,12 +16,14 @@ html {
 
 body {
     background: var(--bg-theme-light);
-    color: var(--color-light-text);
+    color: var(--color-text-primary);
+    transition: color var(--duration-base) var(--ease-smooth),
+                background-color var(--duration-base) var(--ease-smooth);
 }
 
 .dark body {
     background: var(--bg-theme-dark);
-    color: var(--color-dark-text);
+    color: var(--color-text-primary);
 }
 
 .bg-theme-surface {
@@ -41,6 +43,33 @@ body {
 .dark ::selection {
     background-color: #f83b64;
     color: #ffffff;
+}
+
+/* ═══ Homepage Slide Mode Rendering Optimization ═══ */
+.homepage-slide-mode {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.homepage-slide-mode main {
+    transform: translate3d(0, 0, 0);
+    will-change: scroll-position;
+}
+
+/* Optimize motion.section rendering for smooth edges */
+[data-slide-index] {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+    transform: translateZ(0);
+    will-change: opacity, transform;
+}
+
+/* Prevent edge artifacts on slide transitions */
+[data-slide-index] > div {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 /* ═══ Premium Glass Surface — v2.1 Hyper-Engineered ═══ */

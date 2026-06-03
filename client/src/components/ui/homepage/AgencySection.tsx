@@ -45,10 +45,10 @@ const AgencySection: React.FC = () => {
         </div>
 
         {/* ROW 2: Desc 3-col */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 border-t border-black/10 pt-10">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 border-t border-[var(--homepage-border-light)] pt-10 text-[var(--homepage-text-secondary)]">
           <motion.div className="text-[0.95rem] leading-relaxed font-medium" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}}>
             Frontend-Led Engineering Portfolio<br/>
-            — Operating from <span className="font-[var(--fj)] text-[#5983FC]">異世界</span> (Isekai).
+            — Operating from <span className="font-[var(--fj)] text-[var(--homepage-color-matte-royal)]">異世界</span> (Isekai).
           </motion.div>
           <motion.div className="text-[0.95rem] leading-relaxed font-medium" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{delay:0.1}}>
             Place where well-crafted web<br/>
@@ -61,19 +61,19 @@ const AgencySection: React.FC = () => {
         </div>
 
         {/* ROW 3: Year */}
-        <div className={styles.year}>
+        <div className="font-[var(--fm)] text-[0.62rem] tracking-[0.14em] text-[var(--homepage-text-muted)] uppercase border-t border-b border-[var(--homepage-border-light)] py-4">
           ©2024–2026
         </div>
 
         {/* ROW 4: Statement + Mood Ring */}
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center justify-between">
           <motion.div 
-            className="flex-1 max-w-4xl text-[clamp(1.65rem,3.8vw,3.55rem)] font-light tracking-[-0.03em] leading-[1.1]"
+            className="flex-1 max-w-4xl text-[clamp(1.65rem,3.8vw,3.55rem)] font-light tracking-[-0.03em] leading-[1.1] text-[var(--homepage-text-primary)]"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            A <span className="px-2">fun<sup className="text-[0.32em] text-black/40 align-super ml-1 font-normal not-italic tracking-normal">(5+)</sup></span> frontend developer committed to 
+            A <span className="px-2">fun<sup className="text-[0.32em] text-[var(--homepage-text-muted)] align-super ml-1 font-normal not-italic tracking-normal">(5+)</sup></span> frontend developer committed to 
             <span className="inline-flex items-center gap-1 mx-2 align-middle">
               <svg width="0.72em" height="0.72em" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             </span>
@@ -85,7 +85,7 @@ const AgencySection: React.FC = () => {
             <span className="inline-block text-[0.45em] ml-2 opacity-45 animate-[arrowBob_2.2s_ease-in-out_infinite] align-middle">↓</span>
             
             <div className="mt-8">
-              <button className="text-[0.65rem] font-[var(--fm)] tracking-[0.2em] uppercase border border-black/20 rounded-full px-6 py-3 hover:bg-black hover:text-white transition-colors flex items-center gap-2 group">
+              <button className="text-[0.65rem] font-[var(--fm)] tracking-[0.2em] uppercase border border-[var(--homepage-border-medium)] bg-[var(--homepage-bg-surface-2)] text-[var(--homepage-text-primary)] rounded-full px-6 py-3 hover:bg-[var(--homepage-text-primary)] hover:text-[var(--homepage-bg-light)] transition-colors flex items-center gap-2 group">
                 Get in touch <span className="group-hover:translate-x-1 transition-transform">→</span>
               </button>
             </div>
@@ -98,13 +98,13 @@ const AgencySection: React.FC = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#3E60C1] to-[#5983FC]" />
-            <div className="text-[0.6rem] tracking-[0.2em] text-black/40">異世界 / ISEKAI</div>
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[var(--homepage-color-matte-royal)] to-[var(--homepage-color-matte-azure)]" />
+            <div className="text-[0.6rem] tracking-[0.2em] text-[var(--homepage-text-secondary)]">異世界 / ISEKAI</div>
           </motion.div>
         </div>
 
         {/* ROW 5: Awards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 border-t border-black/10 pt-10">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 border-t border-[var(--homepage-border-light)] pt-10">
           {[
             { title: "Best Frontend Experience\nof the Year", year: "2026", src: "AWWWARDS", logo: "W." },
             { title: "'Developer of the Year'\nNominee", year: "2025", src: "CSS DESIGN AWARDS", logo: "◈" },
@@ -112,19 +112,19 @@ const AgencySection: React.FC = () => {
           ].map((award, i) => (
             <motion.div 
               key={i} 
-              className="flex flex-col justify-between p-6 border border-black/5 bg-white/40 hover:bg-white/80 transition-colors rounded-xl min-h-[160px] cursor-pointer"
+              className="flex flex-col justify-between p-6 border border-[var(--homepage-border-light)] bg-[var(--homepage-bg-surface)] hover:bg-[var(--homepage-bg-surface-2)] transition-colors rounded-xl min-h-[160px] cursor-pointer group"
               initial={{opacity:0, y:20}} 
               whileInView={{opacity:1, y:0}} 
               viewport={{once:true}} 
               transition={{delay: i * 0.1}}
             >
               <div className="flex justify-between items-start mb-4">
-                <div className="text-[0.85rem] font-medium leading-snug whitespace-pre-line group-hover:text-[#5983FC] transition-colors">{award.title}</div>
-                <div className="text-[0.55rem] font-[var(--fm)] text-black/30 border border-black/10 px-2 py-0.5 rounded-full">{award.year}</div>
+                <div className="text-[0.85rem] font-medium leading-snug whitespace-pre-line text-[var(--homepage-text-primary)] group-hover:text-[var(--homepage-color-matte-royal)] transition-colors">{award.title}</div>
+                <div className="text-[0.55rem] font-[var(--fm)] text-[var(--homepage-text-secondary)] border border-[var(--homepage-border-medium)] px-2 py-0.5 rounded-full bg-[var(--homepage-bg-surface-2)]">{award.year}</div>
               </div>
               <div className="flex justify-between items-end">
-                <div className="text-[0.5rem] font-[var(--fm)] tracking-[0.15em] text-black/40 uppercase">{award.src}</div>
-                <div className="text-xl font-light text-black/20 group-hover:text-black/60 transition-colors" style={{fontFamily: award.logoFont || 'inherit'}}>{award.logo}</div>
+                <div className="text-[0.5rem] font-[var(--fm)] tracking-[0.15em] text-[var(--homepage-text-muted)] uppercase">{award.src}</div>
+                <div className="text-xl font-light text-[var(--homepage-text-muted)] group-hover:text-[var(--homepage-text-secondary)] transition-colors" style={{fontFamily: award.logoFont || 'inherit'}}>{award.logo}</div>
               </div>
             </motion.div>
           ))}

@@ -45,34 +45,34 @@ const BentoGrid: React.FC = () => {
 
   if (!slideProgress) {
     return (
-      <div className="bg-[#e8e6e3] w-full py-16 px-5 sm:px-10 flex justify-center items-center overflow-hidden">
+      <div className="bg-[var(--homepage-bg-light)] w-full py-16 px-5 sm:px-10 flex justify-center items-center overflow-hidden">
         <div className="max-w-[1400px] w-full mx-auto bento">
           {/* 1: scroll smoothly card */}
           <motion.div className="bc pb-9" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}}>
-            <div className="text-[0.45rem] tracking-[0.2em] mb-4 text-gray-500 font-bold uppercase">SCROLL SMOOTHLY</div>
-            <div className="w-7 h-7 bg-white shadow-sm flex items-center justify-center rounded-md mb-3">
+            <div className="text-[0.45rem] tracking-[0.2em] mb-4 text-[var(--homepage-text-secondary)] font-bold uppercase">SCROLL SMOOTHLY</div>
+            <div className="w-7 h-7 bg-[var(--homepage-bg-surface-2)] border border-[var(--homepage-border-light)] shadow-sm flex items-center justify-center rounded-md mb-3">
               <svg viewBox="0 0 14 14" fill="none" className="w-[13px] h-[13px]">
-                <rect x="1" y="1" width="5" height="5" fill="#1e202c"/>
-                <rect x="7.5" y="7.5" width="5" height="5" fill="#1e202c"/>
-                <rect x="7.5" y="1" width="5" height="5" fill="rgba(30,32,44,0.28)"/>
+                <rect x="1" y="1" width="5" height="5" fill="var(--homepage-text-primary)"/>
+                <rect x="7.5" y="7.5" width="5" height="5" fill="var(--homepage-text-primary)"/>
+                <rect x="7.5" y="1" width="5" height="5" fill="var(--homepage-text-muted)"/>
               </svg>
             </div>
-            <div className="text-[0.5rem] text-gray-500 uppercase tracking-widest mb-1">Performance</div>
-            <div className="text-xl font-medium tracking-tight">Supervision</div>
+            <div className="text-[0.5rem] text-[var(--homepage-text-secondary)] uppercase tracking-widest mb-1">Performance</div>
+            <div className="text-xl font-medium tracking-tight text-[var(--homepage-text-primary)]">Supervision</div>
           </motion.div>
 
           {/* 2: Japanese card */}
-          <motion.div className="bc bg-white/85" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{delay: 0.1}}>
-            <div className="text-[0.5rem] text-gray-500 uppercase tracking-widest mb-1">Identity</div>
-            <div className="text-xl font-medium tracking-tight mb-2">About Nevinas</div>
-            <div className="font-[var(--fj)] text-lg mb-1">ネヴィナス</div>
-            <div className="text-xs text-gray-400 mt-1">異世界 — Isekai</div>
+          <motion.div className="bc" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{delay: 0.1}}>
+            <div className="text-[0.5rem] text-[var(--homepage-text-secondary)] uppercase tracking-widest mb-1">Identity</div>
+            <div className="text-xl font-medium tracking-tight mb-2 text-[var(--homepage-text-primary)]">About Nevinas</div>
+            <div className="font-[var(--fj)] text-lg mb-1 text-[var(--homepage-text-primary)]">ネヴィナス</div>
+            <div className="text-xs text-[var(--homepage-text-secondary)] mt-1">異世界 — Isekai</div>
           </motion.div>
 
           {/* 3: center card (dark gradient) */}
           <motion.div className="bc relative overflow-hidden flex flex-col justify-end p-6" initial={{opacity:0, scale:0.95}} whileInView={{opacity:1, scale:1}} viewport={{once:true}} transition={{delay: 0.2}}>
-            <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a2e] to-[#16213e] z-0" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(89,131,252,0.15),transparent_50%)] z-0" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-sub-ev1,#524E68)] to-[var(--color-sub-ev2,#44405A)] z-0" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(200,205,235,0.15),transparent_50%)] z-0" />
             <div 
               className="absolute inset-0 z-0 opacity-[0.14] pointer-events-none select-none bg-cover bg-center"
               style={{ backgroundImage: `url(${glassAbstract})` }}
@@ -90,17 +90,17 @@ const BentoGrid: React.FC = () => {
           </motion.div>
 
           {/* 4: Use Scroll card */}
-          <motion.div className="bc bg-white/75" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{delay: 0.1}}>
-            <div className="text-[0.5rem] text-gray-500 uppercase tracking-widest mb-1">Navigation</div>
-            <div className="text-xl font-medium tracking-tight mb-2">Use Scroll.<br/>Control all.</div>
-            <div className="text-xs text-gray-500 mt-2">Wheel up / down drives every transition.</div>
+          <motion.div className="bc" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{delay: 0.1}}>
+            <div className="text-[0.5rem] text-[var(--homepage-text-secondary)] uppercase tracking-widest mb-1">Navigation</div>
+            <div className="text-xl font-medium tracking-tight mb-2 text-[var(--homepage-text-primary)]">Use Scroll.<br/>Control all.</div>
+            <div className="text-xs text-[var(--homepage-text-secondary)] mt-2">Wheel up / down drives every transition.</div>
           </motion.div>
 
           {/* 5: Safe kerning card */}
-          <motion.div className="bc bg-white/75" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{delay: 0.2}}>
-            <div className="text-[0.5rem] text-gray-500 uppercase tracking-widest mb-1">Typography</div>
-            <div className="text-[0.92rem] font-medium tracking-tight mb-2">Safe natural kerning when splitting</div>
-            <div className="text-[2.2rem] font-light text-[#5983FC] tracking-[-0.03em] leading-none mt-2">Tu</div>
+          <motion.div className="bc" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{delay: 0.2}}>
+            <div className="text-[0.5rem] text-[var(--homepage-text-secondary)] uppercase tracking-widest mb-1">Typography</div>
+            <div className="text-[0.92rem] font-medium tracking-tight mb-2 text-[var(--homepage-text-primary)]">Safe natural kerning when splitting</div>
+            <div className="text-[2.2rem] font-light text-[var(--homepage-color-matte-royal,#878CB4)] tracking-[-0.03em] leading-none mt-2">Tu</div>
           </motion.div>
 
           {/* 6: Ultra Optimized */}
@@ -124,15 +124,15 @@ const BentoGrid: React.FC = () => {
           <motion.div className="bc navy" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{delay: 0.1}}>
             <div className="text-[0.5rem] text-white/40 uppercase tracking-widest mb-1">Projects</div>
             <div className="text-xl font-medium tracking-tight mb-3">Smart Learning Hub</div>
-            <div className="mt-2 p-2 bg-[#5983fc]/15 rounded-md border border-[#5983fc]/20">
+            <div className="mt-2 p-2 bg-[var(--homepage-color-matte-azure)]/10 rounded-md border border-[var(--homepage-color-matte-azure)]/20">
               <div className="text-[0.5rem] text-white/40 uppercase tracking-[0.12em]">LMS SYSTEM</div>
               <div className="text-[0.85rem] text-white/70 font-light mt-1">Project Alpha</div>
             </div>
           </motion.div>
 
           {/* 8: Marquee "FOR DEVELOPERS & DESIGNERS" */}
-          <motion.div className="bc bg-white/50 overflow-hidden py-4 flex items-center" initial={{opacity:0, scale:0.95}} whileInView={{opacity:1, scale:1}} viewport={{once:true}} transition={{delay: 0.2}}>
-            <div className="whitespace-nowrap text-sm font-bold tracking-[0.2em] text-gray-700 w-[200%] animate-[mq_10s_linear_infinite] flex">
+          <motion.div className="bc overflow-hidden py-4 flex items-center" initial={{opacity:0, scale:0.95}} whileInView={{opacity:1, scale:1}} viewport={{once:true}} transition={{delay: 0.2}}>
+            <div className="whitespace-nowrap text-sm font-bold tracking-[0.2em] text-[var(--homepage-text-secondary)] w-[200%] animate-[mq_10s_linear_infinite] flex">
               <span>FOR &nbsp;&nbsp;&nbsp; DEVELOPERS &nbsp;&nbsp;&nbsp; &amp; &nbsp;&nbsp;&nbsp; DESIGNERS &nbsp;&nbsp;&nbsp; · &nbsp;&nbsp;&nbsp; </span>
               <span>FOR &nbsp;&nbsp;&nbsp; DEVELOPERS &nbsp;&nbsp;&nbsp; &amp; &nbsp;&nbsp;&nbsp; DESIGNERS &nbsp;&nbsp;&nbsp; · &nbsp;&nbsp;&nbsp; </span>
               <span>FOR &nbsp;&nbsp;&nbsp; DEVELOPERS &nbsp;&nbsp;&nbsp; &amp; &nbsp;&nbsp;&nbsp; DESIGNERS &nbsp;&nbsp;&nbsp; · &nbsp;&nbsp;&nbsp; </span>
@@ -140,27 +140,27 @@ const BentoGrid: React.FC = () => {
           </motion.div>
 
           {/* 9: Cursor tracking */}
-          <motion.div className="bc bg-white/70" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}}>
-            <div className="text-xl mb-2 text-gray-800">▶</div>
-            <div className="text-[0.55rem] font-bold tracking-widest text-gray-800 border border-gray-200 inline-block px-2 py-0.5 bg-white shadow-sm rounded-sm">CURSOR CONTENT</div>
-            <div className="text-xs text-gray-500 mt-2">Cursor Tracking of any kind</div>
+          <motion.div className="bc" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}}>
+            <div className="text-xl mb-2 text-[var(--homepage-text-primary)]">▶</div>
+            <div className="text-[0.55rem] font-bold tracking-widest text-[var(--homepage-text-primary)] border border-[var(--homepage-border-medium)] inline-block px-2 py-0.5 bg-[var(--homepage-bg-surface-2)] shadow-sm rounded-sm">CURSOR CONTENT</div>
+            <div className="text-xs text-[var(--homepage-text-secondary)] mt-2">Cursor Tracking of any kind</div>
           </motion.div>
 
           {/* 10: Progress Easing */}
-          <motion.div className="bc bg-white/60" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{delay: 0.1}}>
+          <motion.div className="bc" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{delay: 0.1}}>
             <svg className="w-full h-12 mb-2" viewBox="0 0 120 80">
-              <line x1="10" y1="70" x2="110" y2="10" stroke="rgba(20,18,16,0.08)" strokeWidth="0.5" strokeDasharray="3,3"/>
-              <path d="M10 70 C 30 70, 85 10, 110 10" stroke="var(--color-matte-azure, #5983FC)" strokeWidth="1.5" fill="none"/>
-              <line x1="10" y1="10" x2="10" y2="70" stroke="rgba(20,18,16,0.12)" strokeWidth="0.5"/>
-              <line x1="10" y1="70" x2="110" y2="70" stroke="rgba(20,18,16,0.12)" strokeWidth="0.5"/>
+              <line x1="10" y1="70" x2="110" y2="10" stroke="var(--homepage-border-light)" strokeWidth="0.5" strokeDasharray="3,3"/>
+              <path d="M10 70 C 30 70, 85 10, 110 10" stroke="var(--homepage-color-matte-azure, #C8CDEB)" strokeWidth="1.5" fill="none"/>
+              <line x1="10" y1="10" x2="10" y2="70" stroke="var(--homepage-border-light)" strokeWidth="0.5"/>
+              <line x1="10" y1="70" x2="110" y2="70" stroke="var(--homepage-border-light)" strokeWidth="0.5"/>
             </svg>
-            <div className="text-xs text-gray-500 text-center">Progress Easing</div>
+            <div className="text-xs text-[var(--homepage-text-secondary)] text-center">Progress Easing</div>
           </motion.div>
 
           {/* 11: Position Sticky */}
-          <motion.div className="bc bg-white/90 flex flex-col justify-center items-center text-center" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{delay: 0.2}}>
-            <div className="text-base font-medium tracking-tight">Position Sticky?</div>
-            <div className="text-xs text-gray-500 mt-1">Of course</div>
+          <motion.div className="bc flex flex-col justify-center items-center text-center" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{delay: 0.2}}>
+            <div className="text-base font-medium tracking-tight text-[var(--homepage-text-primary)]">Position Sticky?</div>
+            <div className="text-xs text-[var(--homepage-text-secondary)] mt-1">Of course</div>
           </motion.div>
         </div>
       </div>
@@ -168,34 +168,34 @@ const BentoGrid: React.FC = () => {
   }
 
   return (
-    <div className="bg-[#e8e6e3] w-full py-16 px-5 sm:px-10 flex justify-center items-center overflow-hidden">
+    <div className="bg-[var(--homepage-bg-light)] w-full py-16 px-5 sm:px-10 flex justify-center items-center overflow-hidden">
       <div className="max-w-[1400px] w-full mx-auto bento">
         {/* 1: scroll smoothly card */}
         <motion.div style={{ opacity: c1_opacity, y: c1_y }} className="bc pb-9">
-          <div className="text-[0.45rem] tracking-[0.2em] mb-4 text-gray-500 font-bold uppercase">SCROLL SMOOTHLY</div>
-          <div className="w-7 h-7 bg-white shadow-sm flex items-center justify-center rounded-md mb-3">
+          <div className="text-[0.45rem] tracking-[0.2em] mb-4 text-[var(--homepage-text-secondary)] font-bold uppercase">SCROLL SMOOTHLY</div>
+          <div className="w-7 h-7 bg-[var(--homepage-bg-surface-2)] border border-[var(--homepage-border-light)] shadow-sm flex items-center justify-center rounded-md mb-3">
             <svg viewBox="0 0 14 14" fill="none" className="w-[13px] h-[13px]">
-              <rect x="1" y="1" width="5" height="5" fill="#1e202c"/>
-              <rect x="7.5" y="7.5" width="5" height="5" fill="#1e202c"/>
-              <rect x="7.5" y="1" width="5" height="5" fill="rgba(30,32,44,0.28)"/>
+              <rect x="1" y="1" width="5" height="5" fill="var(--homepage-text-primary)"/>
+              <rect x="7.5" y="7.5" width="5" height="5" fill="var(--homepage-text-primary)"/>
+              <rect x="7.5" y="1" width="5" height="5" fill="var(--homepage-text-muted)"/>
             </svg>
           </div>
-          <div className="text-[0.5rem] text-gray-500 uppercase tracking-widest mb-1">Performance</div>
-          <div className="text-xl font-medium tracking-tight">Supervision</div>
+          <div className="text-[0.5rem] text-[var(--homepage-text-secondary)] uppercase tracking-widest mb-1">Performance</div>
+          <div className="text-xl font-medium tracking-tight text-[var(--homepage-text-primary)]">Supervision</div>
         </motion.div>
 
         {/* 2: Japanese card */}
-        <motion.div style={{ opacity: c2_opacity, y: c2_y }} className="bc bg-white/85">
-          <div className="text-[0.5rem] text-gray-500 uppercase tracking-widest mb-1">Identity</div>
-          <div className="text-xl font-medium tracking-tight mb-2">About Nevinas</div>
-          <div className="font-[var(--fj)] text-lg mb-1">ネヴィナス</div>
-          <div className="text-xs text-gray-400 mt-1">異世界 — Isekai</div>
+        <motion.div style={{ opacity: c2_opacity, y: c2_y }} className="bc">
+          <div className="text-[0.5rem] text-[var(--homepage-text-secondary)] uppercase tracking-widest mb-1">Identity</div>
+          <div className="text-xl font-medium tracking-tight mb-2 text-[var(--homepage-text-primary)]">About Nevinas</div>
+          <div className="font-[var(--fj)] text-lg mb-1 text-[var(--homepage-text-primary)]">ネヴィナス</div>
+          <div className="text-xs text-[var(--homepage-text-secondary)] mt-1">異세계 — Isekai</div>
         </motion.div>
 
         {/* 3: center card (dark gradient) */}
         <motion.div style={{ opacity: c3_opacity, scale: c3_scale, y: c3_y }} className="bc relative overflow-hidden flex flex-col justify-end p-6">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a2e] to-[#16213e] z-0" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(89,131,252,0.15),transparent_50%)] z-0" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-sub-ev1,#524E68)] to-[var(--color-sub-ev2,#44405A)] z-0" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(200,205,235,0.15),transparent_50%)] z-0" />
           <div 
             className="absolute inset-0 z-0 opacity-[0.14] pointer-events-none select-none bg-cover bg-center"
             style={{ backgroundImage: `url(${glassAbstract})` }}
@@ -213,17 +213,17 @@ const BentoGrid: React.FC = () => {
         </motion.div>
 
         {/* 4: Use Scroll card */}
-        <motion.div style={{ opacity: c4_opacity, y: c4_y }} className="bc bg-white/75">
-          <div className="text-[0.5rem] text-gray-500 uppercase tracking-widest mb-1">Navigation</div>
-          <div className="text-xl font-medium tracking-tight mb-2">Use Scroll.<br/>Control all.</div>
-          <div className="text-xs text-gray-500 mt-2">Wheel up / down drives every transition.</div>
+        <motion.div style={{ opacity: c4_opacity, y: c4_y }} className="bc">
+          <div className="text-[0.5rem] text-[var(--homepage-text-secondary)] uppercase tracking-widest mb-1">Navigation</div>
+          <div className="text-xl font-medium tracking-tight mb-2 text-[var(--homepage-text-primary)]">Use Scroll.<br/>Control all.</div>
+          <div className="text-xs text-[var(--homepage-text-secondary)] mt-2">Wheel up / down drives every transition.</div>
         </motion.div>
 
         {/* 5: Safe kerning card */}
-        <motion.div style={{ opacity: c5_opacity, y: c5_y }} className="bc bg-white/75">
-          <div className="text-[0.5rem] text-gray-500 uppercase tracking-widest mb-1">Typography</div>
-          <div className="text-[0.92rem] font-medium tracking-tight mb-2">Safe natural kerning when splitting</div>
-          <div className="text-[2.2rem] font-light text-[#5983FC] tracking-[-0.03em] leading-none mt-2">Tu</div>
+        <motion.div style={{ opacity: c5_opacity, y: c5_y }} className="bc">
+          <div className="text-[0.5rem] text-[var(--homepage-text-secondary)] uppercase tracking-widest mb-1">Typography</div>
+          <div className="text-[0.92rem] font-medium tracking-tight mb-2 text-[var(--homepage-text-primary)]">Safe natural kerning when splitting</div>
+          <div className="text-[2.2rem] font-light text-[var(--homepage-color-matte-royal,#878CB4)] tracking-[-0.03em] leading-none mt-2">Tu</div>
         </motion.div>
 
         {/* 6: Ultra Optimized */}
@@ -247,15 +247,15 @@ const BentoGrid: React.FC = () => {
         <motion.div style={{ opacity: c7_opacity, y: c7_y }} className="bc navy">
           <div className="text-[0.5rem] text-white/40 uppercase tracking-widest mb-1">Projects</div>
           <div className="text-xl font-medium tracking-tight mb-3">Smart Learning Hub</div>
-          <div className="mt-2 p-2 bg-[#5983fc]/15 rounded-md border border-[#5983fc]/20">
+          <div className="mt-2 p-2 bg-[var(--homepage-color-matte-azure)]/10 rounded-md border border-[var(--homepage-color-matte-azure)]/20">
             <div className="text-[0.5rem] text-white/40 uppercase tracking-[0.12em]">LMS SYSTEM</div>
             <div className="text-[0.85rem] text-white/70 font-light mt-1">Project Alpha</div>
           </div>
         </motion.div>
 
         {/* 8: Marquee "FOR DEVELOPERS & DESIGNERS" */}
-        <motion.div style={{ opacity: c8_opacity, scale: c8_scale }} className="bc bg-white/50 overflow-hidden py-4 flex items-center">
-          <div className="whitespace-nowrap text-sm font-bold tracking-[0.2em] text-gray-700 w-[200%] animate-[mq_10s_linear_infinite] flex">
+        <motion.div style={{ opacity: c8_opacity, scale: c8_scale }} className="bc overflow-hidden py-4 flex items-center">
+          <div className="whitespace-nowrap text-sm font-bold tracking-[0.2em] text-[var(--homepage-text-secondary)] w-[200%] animate-[mq_10s_linear_infinite] flex">
             <span>FOR &nbsp;&nbsp;&nbsp; DEVELOPERS &nbsp;&nbsp;&nbsp; &amp; &nbsp;&nbsp;&nbsp; DESIGNERS &nbsp;&nbsp;&nbsp; · &nbsp;&nbsp;&nbsp; </span>
             <span>FOR &nbsp;&nbsp;&nbsp; DEVELOPERS &nbsp;&nbsp;&nbsp; &amp; &nbsp;&nbsp;&nbsp; DESIGNERS &nbsp;&nbsp;&nbsp; · &nbsp;&nbsp;&nbsp; </span>
             <span>FOR &nbsp;&nbsp;&nbsp; DEVELOPERS &nbsp;&nbsp;&nbsp; &amp; &nbsp;&nbsp;&nbsp; DESIGNERS &nbsp;&nbsp;&nbsp; · &nbsp;&nbsp;&nbsp; </span>
@@ -263,27 +263,27 @@ const BentoGrid: React.FC = () => {
         </motion.div>
 
         {/* 9: Cursor tracking */}
-        <motion.div style={{ opacity: c9_opacity, y: c9_y }} className="bc bg-white/70">
-          <div className="text-xl mb-2 text-gray-800">▶</div>
-          <div className="text-[0.55rem] font-bold tracking-widest text-gray-800 border border-gray-200 inline-block px-2 py-0.5 bg-white shadow-sm rounded-sm">CURSOR CONTENT</div>
-          <div className="text-xs text-gray-500 mt-2">Cursor Tracking of any kind</div>
+        <motion.div style={{ opacity: c9_opacity, y: c9_y }} className="bc">
+          <div className="text-xl mb-2 text-[var(--homepage-text-primary)]">▶</div>
+          <div className="text-[0.55rem] font-bold tracking-widest text-[var(--homepage-text-primary)] border border-[var(--homepage-border-medium)] inline-block px-2 py-0.5 bg-[var(--homepage-bg-surface-2)] shadow-sm rounded-sm">CURSOR CONTENT</div>
+          <div className="text-xs text-[var(--homepage-text-secondary)] mt-2">Cursor Tracking of any kind</div>
         </motion.div>
 
         {/* 10: Progress Easing */}
-        <motion.div style={{ opacity: c10_opacity, y: c10_y }} className="bc bg-white/60">
+        <motion.div style={{ opacity: c10_opacity, y: c10_y }} className="bc">
           <svg className="w-full h-12 mb-2" viewBox="0 0 120 80">
-            <line x1="10" y1="70" x2="110" y2="10" stroke="rgba(20,18,16,0.08)" strokeWidth="0.5" strokeDasharray="3,3"/>
-            <path d="M10 70 C 30 70, 85 10, 110 10" stroke="var(--color-matte-azure, #5983FC)" strokeWidth="1.5" fill="none"/>
-            <line x1="10" y1="10" x2="10" y2="70" stroke="rgba(20,18,16,0.12)" strokeWidth="0.5"/>
-            <line x1="10" y1="70" x2="110" y2="70" stroke="rgba(20,18,16,0.12)" strokeWidth="0.5"/>
+            <line x1="10" y1="70" x2="110" y2="10" stroke="var(--homepage-border-light)" strokeWidth="0.5" strokeDasharray="3,3"/>
+            <path d="M10 70 C 30 70, 85 10, 110 10" stroke="var(--homepage-color-matte-azure, #C8CDEB)" strokeWidth="1.5" fill="none"/>
+            <line x1="10" y1="10" x2="10" y2="70" stroke="var(--homepage-border-light)" strokeWidth="0.5"/>
+            <line x1="10" y1="70" x2="110" y2="70" stroke="var(--homepage-border-light)" strokeWidth="0.5"/>
           </svg>
-          <div className="text-xs text-gray-500 text-center">Progress Easing</div>
+          <div className="text-xs text-[var(--homepage-text-secondary)] text-center">Progress Easing</div>
         </motion.div>
 
         {/* 11: Position Sticky */}
-        <motion.div style={{ opacity: c11_opacity, y: c11_y }} className="bc bg-white/90 flex flex-col justify-center items-center text-center">
-          <div className="text-base font-medium tracking-tight">Position Sticky?</div>
-          <div className="text-xs text-gray-500 mt-1">Of course</div>
+        <motion.div style={{ opacity: c11_opacity, y: c11_y }} className="bc flex flex-col justify-center items-center text-center">
+          <div className="text-base font-medium tracking-tight text-[var(--homepage-text-primary)]">Position Sticky?</div>
+          <div className="text-xs text-[var(--homepage-text-secondary)] mt-1">Of course</div>
         </motion.div>
       </div>
     </div>

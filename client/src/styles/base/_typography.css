@@ -1,0 +1,25 @@
+@layer base {
+  html {
+      scroll-behavior: smooth;
+      font-family: "Inter", sans-serif;
+  }
+
+  body {
+      background: var(--bg-theme-light);
+      color: var(--color-light-text);
+  }
+
+  .dark body {
+      background: var(--bg-theme-dark);
+      color: var(--color-dark-text);
+  }
+
+  /* Theme Surfaces */
+  .bg-theme-surface {
+      background: var(--bg-theme-light);
+  }
+
+  .dark .bg-theme-surface {
+      background: var(--bg-theme-dark);
+  }
+}

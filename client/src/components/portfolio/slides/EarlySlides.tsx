@@ -15,7 +15,7 @@ export function HeroSlide({ style, heroActive }: Pick<SlideProps, "style" | "her
       id="s0"
       style={{
         ...style,
-        backgroundImage: `linear-gradient(to bottom,rgba(19,20,30,.75) 0%,rgba(30,32,44,.55) 45%,rgba(19,20,30,.9) 100%), url(${Assets.bgpage})`,
+        backgroundImage: `linear-gradient(to bottom,rgba(19,20,30,.75) 0%,rgba(30,32,44,.55) 45%,rgba(19,20,30,.9) 101%), url(${Assets.bgpage})`,
         backgroundSize: "cover",
         backgroundPosition: "center 38%",
         backgroundRepeat: "no-repeat",
@@ -258,7 +258,7 @@ export function BentoSlide({ style }: Pick<SlideProps, "style">) {
       id="s-bento"
       style={{
         ...style,
-        padding: "4rem 1.2rem 1rem",
+        padding: "4rem 1.2rem 0",
         alignItems: "stretch",
         justifyContent: "stretch",
         display: "flex",
