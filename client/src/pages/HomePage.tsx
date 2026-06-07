@@ -1,19 +1,22 @@
 import { useEffect, useRef, useState, createRef, type FC } from 'react';
 import Navbar from '@/components/layouts/Navbar';
 import Header from '@/components/layouts/Header';
-import About from '@/components/ui/homepage/About';
-import Services from '@/components/ui/homepage/Services';
-import Work from '@/components/ui/homepage/Work';
-import TimelineSection from '@/components/ui/homepage/Timeline';
+import About from '@/components/homepage/About';
+import Work from '@/components/homepage/Work';
+import TimelineSection from '@/components/homepage/Timeline';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
-import { StatementSlide, statements } from '@/components/ui/homepage/StatementSlides';
-import TimelineScattered from '@/components/ui/homepage/TimelineScattered';
-import BentoGrid from '@/components/ui/homepage/BentoGrid';
-import CodeWithClarity from '@/components/ui/homepage/CodeWithClarity';
-import AgencySection from '@/components/ui/homepage/AgencySection';
-import FaqNewsFooter from '@/components/ui/homepage/FaqNewsFooter';
-import ContactSplit from '@/components/ui/homepage/ContactSplit';
-import SlideWrapper from '@/components/ui/homepage/SlideWrapper';
+import { StatementSlide, statements } from '@/components/homepage/StatementSlides';
+import TimelineScattered from '@/components/homepage/TimelineScattered';
+import BentoGrid from '@/components/homepage/BentoGrid';
+import CodeWithClarity from '@/components/homepage/CodeWithClarity';
+import AgencySection from '@/components/homepage/AgencySection';
+import FaqNewsFooter from '@/components/homepage/FaqNewsFooter';
+import ContactSplit from '@/components/homepage/ContactSplit';
+import SlideWrapper from '@/components/homepage/SlideWrapper';
+import Footer from '@/components/layouts/Footer';
+import NodeMap from '@/components/homepage/Nodemap';
+import Testimonials from '@/components/homepage/Testimonials';
+import HorizontalServices from '@/components/homepage/HorizontalServices';
 // import LiquidEther removed - effect now isolated in Header
 // Removed external CSS import - now using CSS Modules
 
@@ -22,18 +25,20 @@ import SlideWrapper from '@/components/ui/homepage/SlideWrapper';
 // Define slides configuration for mapping
 const getSlidesList = () => {
   const list = [
-    { id: 'top', content: <Header />, variant: 'center' as const, scrollable: false },
-    ...statements.map((_, i) => ({ id: `statement-${i}`, content: <StatementSlide index={i} />, variant: 'center' as const, scrollable: false })),
+    { id: 'top', content: <Header />, variant: 'center' as const, scrollable: false }, ...statements.map((_, i) => ({ id: `statement-${i}`, content: <StatementSlide index={i} />, variant: 'center' as const, scrollable: false })),
     { id: 'about', content: <ScrollReveal><About /></ScrollReveal>, variant: 'content' as const, scrollable: true },
     { id: 'timeline-sc', content: <TimelineScattered />, variant: 'fill' as const, scrollable: false },
-    { id: 'bento', content: <BentoGrid />, variant: 'fill' as const, scrollable: true },
     { id: 'timeline', content: <ScrollReveal><TimelineSection /></ScrollReveal>, variant: 'content' as const, scrollable: true },
-    { id: 'services', content: <ScrollReveal><Services /></ScrollReveal>, variant: 'content' as const, scrollable: true },
+    { id: 'bento', content: <BentoGrid />, variant: 'fill' as const, scrollable: true },
+    { id: 'nodemap', content: <NodeMap />, variant: 'fill' as const, scrollable: false },
+    { id: 'services', content: <HorizontalServices />, variant: 'fill' as const, scrollable: true },
     { id: 'work', content: <ScrollReveal><Work /></ScrollReveal>, variant: 'content' as const, scrollable: true },
     { id: 'clarity', content: <CodeWithClarity />, variant: 'fill' as const, scrollable: true },
     { id: 'agency', content: <AgencySection />, variant: 'fill' as const, scrollable: true },
     { id: 'faq', content: <FaqNewsFooter />, variant: 'fill' as const, scrollable: true },
-    { id: 'contact', content: <ContactSplit />, variant: 'fill' as const, scrollable: false }
+    { id: 'testimonial', content: <Testimonials />, variant: 'fill' as const, scrollable: false },
+    { id: 'contact', content: <ContactSplit />, variant: 'fill' as const, scrollable: true },
+    { id: 'footer', content: <footer><Footer /></footer>, variant: 'fill' as const, scrollable: false },
   ];
   return list;
 };
@@ -93,7 +98,10 @@ const HomePage: FC = () => {
   return (
     <div className="relative isolate h-svh min-h-svh overflow-hidden bg-transparent" style={{ WebkitFontSmoothing: 'antialiased', MozOsxFontSmoothing: 'grayscale' }}>
 
-      <Navbar scrollContainerId="homepage-scroll" />
+      <header className="site-header">
+        <a href="#homepage-scroll" className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:bg-black focus:text-white focus:p-2">Skip to content</a>
+        <Navbar scrollContainerId="homepage-scroll" />
+      </header>
 
       <main
         ref={scrollRef}

@@ -1,0 +1,185 @@
+/* TimelineScattered.module.css
+   Matches interactive-v2.html #s-tl exactly
+   ─────────────────────────────────────────── */
+
+/* ── SLIDE CONTAINER */
+.slide {
+  position: relative;
+  min-height: 100svh;
+  /* blueprint: padding:0 — NO py-20 px padding */
+  padding: 0;
+  overflow: hidden;
+  background: var(--color-bg-secondary);
+}
+
+/* ── FEATURE BLOCKS — absolute positioned corners */
+.feat {
+  position: absolute;
+  max-width: 280px;
+  pointer-events: auto;
+}
+
+/* exact blueprint positions */
+.featTl { top: 13%;    left: 5%;  text-align: left;  }
+.featTr { top: 13%;    right: 5%; text-align: right; }
+.featBl { bottom: 11%; left: 5%;  text-align: left;  }
+.featBr { bottom: 11%; right: 5%; text-align: right; }
+
+/* ── ARROW — blueprint: .feat-arr */
+.featArr {
+  font-family: var(--fm, 'DM Mono', monospace);
+  /* blueprint: .58rem — NOT text-xl */
+  font-size: .58rem;
+  color: var(--color-text-muted);
+  letter-spacing: .1em;
+  margin-bottom: .55rem;
+  display: block;
+}
+
+/* right-aligned arrow */
+.featArrRight {
+  text-align: right;
+}
+
+/* ── ICON WRAPPER — blueprint: .feat-ico */
+.featIco {
+  margin-bottom: .8rem;
+}
+
+/* right-align icon for TR + BR */
+.featIcoRight {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ── NUMBER — blueprint: .feat-num
+   CRITICAL: clamp(3rem,6vw,5.5rem) weight 200
+   Old TSX had text-[0.65rem] font-bold — completely wrong */
+.featNum {
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 200;
+  letter-spacing: -.04em;
+  line-height: 1;
+  color: var(--color-text-primary);
+  margin-bottom: .15rem;
+}
+
+/* ── TITLE — blueprint: .feat-title
+   clamp(1rem,2.2vw,1.55rem) — NOT text-2xl sm:text-3xl */
+.featTitle {
+  font-size: clamp(1rem, 2.2vw, 1.55rem);
+  font-weight: 300;
+  letter-spacing: -.02em;
+  line-height: 1.12;
+  color: var(--color-text-primary);
+  margin-bottom: .5rem;
+}
+
+/* ── LEAD (subtitle) — blueprint: .feat-lead */
+.featLead {
+  font-size: clamp(.88rem, 1.4vw, 1.05rem);
+  font-weight: 300;
+  color: var(--color-text-primary);
+  margin-bottom: .35rem;
+}
+
+/* feat 3 lead override — blueprint inline style */
+.featLeadMuted {
+  font-size: .75rem;
+  color: var(--color-text-secondary);
+}
+
+/* ── BODY TEXT — blueprint: .feat-sub
+   DM Mono monospace + clamp(.58rem,1vw,.72rem) — NOT text-sm */
+.featSub {
+  font-family: var(--fm, 'DM Mono', monospace);
+  font-size: clamp(.58rem, 1vw, .72rem);
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  max-width: 240px;
+}
+
+/* push sub text to right for TR + BR */
+.featSubRight {
+  margin-left: auto;
+}
+
+/* ── CENTER LABEL — blueprint: .tl-label
+   bottom:5% NOT top-1/2 (old TSX was vertically centered) */
+.tlLabel {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--fm, 'DM Mono', monospace);
+  font-size: .52rem;
+  color: var(--color-text-secondary);
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ── MOBILE STACK VIEW */
+.mobileStack {
+  display: none;
+  flex-direction: column;
+  gap: 3rem;
+  width: 100%;
+  max-width: 28rem;
+  padding: 5rem 1.5rem;
+  margin: 0 auto;
+}
+
+/* ── RESPONSIVE */
+@media (max-width: 767px) {
+  .feat       { display: none; } /* hide absolute positioned feats on mobile */
+  .tlLabel    { display: none; }
+  .mobileStack { display: flex; }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .feat     { max-width: 200px; }
+  .featNum  { font-size: clamp(2rem, 6vw, 3.5rem); }
+}
+
+@media (min-width: 1025px) {
+  .feat { max-width: 40vw; max-width: min(280px, 40vw); }
+}
+
+/* mobile item alignment */
+.mobileItem {
+  width: 100%;
+}
+
+.mobileItemRight {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.mobileNum {
+  font-size: clamp(2rem, 8vw, 3rem);
+  font-weight: 200;
+  letter-spacing: -.04em;
+  line-height: 1;
+  color: var(--color-text-primary);
+  margin-bottom: .1rem;
+}
+
+.mobileTitle {
+  font-size: clamp(1.1rem, 5vw, 1.4rem);
+  font-weight: 300;
+  letter-spacing: -.02em;
+  line-height: 1.12;
+  color: var(--color-text-primary);
+  margin-bottom: .4rem;
+}
+
+.mobileSub {
+  font-family: var(--fm, 'DM Mono', monospace);
+  font-size: clamp(.62rem, 3vw, .72rem);
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  max-width: 280px;
+}

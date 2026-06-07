@@ -3,8 +3,8 @@ import BlogPostPage from "@/components/common/BlogPostPage";
 import BlogCard from "@/components/card/BlogCard";
 import { blogsApi } from "@/utils/api";
 import type { BlogPost } from "@/types/blog";
-import Loading from "@/components/ui/common/Loading";
-import Error from "@/components/ui/common/Error";
+import Loading from "@/components/common/loading/Loading";
+import Error from "@/components/common/server-error/Error";
 
 const BlogPage: FC = () => {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);

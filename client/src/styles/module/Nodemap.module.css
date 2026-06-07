@@ -1,0 +1,146 @@
+/* ── NODEMAP BG ── */
+.nodemapBg {
+  background: var(--color-bg-secondary);
+  background-image: radial-gradient(circle, var(--color-border-primary) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+/* ── ORB FLOAT ── */
+.orbFloat {
+  animation: orbFloat 12s ease-in-out infinite;
+}
+@keyframes orbFloat {
+  0%,100% { transform: translate(-50%,-50%) translate(0,0); }
+  33%     { transform: translate(-50%,-50%) translate(30px,-20px); }
+  66%     { transform: translate(-50%,-50%) translate(-20px,15px); }
+}
+
+/* ── LINE DRAW ── */
+.lineDraw {
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  animation: lineDraw 2s ease forwards;
+}
+.lineD1 { animation-delay: .3s; }
+.lineD2 { animation-delay: .6s; }
+.lineD3 { animation-delay: .9s; }
+@keyframes lineDraw {
+  from { stroke-dashoffset: 500; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* ── HUB IDLE ── */
+.hubIdle {
+  animation: hubIdle 8s ease-in-out infinite;
+}
+@keyframes hubIdle {
+  0%,100% { transform: translate(-50%,-50%) rotate(0deg) scale(1); }
+  50%     { transform: translate(-50%,-50%) rotate(3deg) scale(1.02); }
+}
+
+/* ── NEU ── */
+.neu {
+  background: var(--color-bg-secondary);
+  box-shadow: 8px 8px 20px var(--color-shadow-md), -8px -8px 20px var(--color-glass-border);
+  border-radius: 1rem;
+}
+.neuInset {
+  background: var(--color-bg-secondary);
+  box-shadow: inset 6px 6px 14px var(--color-shadow-sm), inset -6px -6px 14px var(--color-glass-border);
+  border-radius: 1rem;
+}
+.neuBtn {
+  background: var(--color-bg-secondary);
+  box-shadow: 6px 6px 14px var(--color-shadow-sm), -6px -6px 14px var(--color-glass-border);
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: box-shadow .2s ease, transform .15s ease;
+}
+.neuBtn:hover {
+  box-shadow: 4px 4px 10px var(--color-shadow-md), -4px -4px 10px var(--color-glass-border);
+  transform: translateY(-1px);
+}
+.neuBtn:active {
+  box-shadow: inset 4px 4px 10px var(--color-shadow-sm), inset -4px -4px 10px var(--color-glass-border);
+  transform: translateY(0);
+}
+
+/* ── GLASS ── */
+.glass {
+  background: var(--color-glass-bg);
+  backdrop-filter: blur(28px) saturate(200%);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  border: 1px solid var(--color-glass-border);
+  box-shadow: 0 8px 32px var(--color-shadow-sm);
+}
+.pillGlass {
+  background: var(--color-surface-variant);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--color-border-primary);
+}
+
+/* ── DOT TEXT ── */
+.dotText {
+  font-size: clamp(22px, 3.2vw, 46px);
+  font-weight: 700;
+  letter-spacing: .04em;
+  color: var(--color-text-primary);
+  position: relative;
+}
+.dotText::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent, transparent 3px,
+    var(--color-bg-secondary) 3px, var(--color-bg-secondary) 4px
+  );
+  pointer-events: none;
+}
+
+/* ── 3D ICON ── */
+.icon3dWrap {
+  perspective: 600px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon3d {
+  transform-style: preserve-3d;
+  transform: rotateX(12deg) rotateY(-14deg) rotateZ(2deg);
+  transition: transform .45s cubic-bezier(.34,1.56,.64,1), filter .3s ease;
+  filter: drop-shadow(0 12px 24px var(--color-shadow-md));
+}
+.icon3dWrap:hover .icon3d {
+  transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1.08);
+  filter: drop-shadow(0 20px 40px var(--color-shadow-xl));
+}
+.icon3dSm {
+  transform: rotateX(10deg) rotateY(-10deg) rotateZ(1deg);
+}
+
+/* ── SHIMMER ── */
+.shimmerHover {
+  position: relative;
+  overflow: hidden;
+}
+.shimmerHover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.18) 50%, transparent 60%);
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity .3s;
+}
+.shimmerHover:hover::before {
+  opacity: 1;
+  animation: shimmer 1.2s linear;
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}

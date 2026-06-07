@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { githubApi, type GitHubRepo } from "@/utils/api";
 import ProjectCard from "@/components/card/ProjectCard";
-import Loading from "@/components/ui/common/Loading";
-import Error from "@/components/ui/common/Error";
+import Loading from "@/components/common/loading/Loading";
+import Error from "@/components/common/server-error/Error";
 
 const Website = () => {
   const [projects, setProjects] = useState<GitHubRepo[]>([]);

@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import type { FC, MouseEvent, KeyboardEvent } from "react";
-import Loading from "@/components/ui/common/Loading";
-import Error from "@/components/ui/common/Error";
+import Loading from "@/components/common/loading/Loading";
+import Error from "@/components/common/server-error/Error";
 
 const API_BASE_URL = "http://localhost:3000";
 

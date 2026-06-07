@@ -1,0 +1,91 @@
+/* ── SECTION BG ── */
+/* DS v3.2 — Periwinkle (#C8CDEB) base, Cool Gray (#878CB4) midtone */
+.testimonialsBg {
+  background: linear-gradient(145deg, #DDDFF0 0%, #C8CDEB 45%, #B8BEE0 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── BLOB MORPH ── */
+.blob {
+  animation: blobMorph 10s ease-in-out infinite;
+}
+@keyframes blobMorph {
+  0%,100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25%     { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50%     { border-radius: 50% 60% 50% 40% / 30% 40% 60% 50%; }
+  75%     { border-radius: 70% 30% 50% 60% / 40% 70% 30% 50%; }
+}
+
+/* ── TESTI BODY TRANSITION ── */
+.testiBody {
+  transition: opacity .4s ease, transform .4s ease;
+}
+.testiBodyOut {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+/* ── NEU — DS v3.2 surface-secondary (#f1f5f9 light / #2f3848 dark) ── */
+.neuBtn {
+  background: var(--color-surface-secondary, #f0f1f8);
+  box-shadow: 6px 6px 14px rgba(30,35,60,.10), -6px -6px 14px rgba(255,255,255,.80);
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: box-shadow .2s ease, transform .15s ease;
+  font-family: 'Inter', sans-serif;
+}
+.neuBtn:hover {
+  box-shadow: 4px 4px 10px rgba(30,35,60,.12), -4px -4px 10px rgba(255,255,255,.84);
+  transform: translateY(-1px);
+  color: var(--color-text-primary) !important;
+}
+.neuBtn:active {
+  box-shadow: inset 4px 4px 10px rgba(30,35,60,.08), inset -4px -4px 10px rgba(255,255,255,.75);
+  transform: translateY(0);
+}
+.neuCircle {
+  background: var(--color-surface-secondary, #f0f1f8);
+  box-shadow: 10px 10px 24px rgba(30,35,60,.11), -10px -10px 24px rgba(255,255,255,.82);
+  border-radius: 50%;
+}
+
+/* ── GLASS CARD ── */
+.glassCard {
+  background: rgba(255,255,255,.28);
+  backdrop-filter: blur(28px) saturate(200%);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  border: 1px solid rgba(255,255,255,.45);
+  box-shadow: 0 8px 32px rgba(30,35,60,.10), inset 0 1px 0 rgba(255,255,255,.55);
+}
+
+/* ── SHIMMER ── */
+.shimmerHover {
+  position: relative;
+  overflow: hidden;
+}
+.shimmerHover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.18) 50%, transparent 60%);
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity .3s;
+}
+.shimmerHover:hover::before {
+  opacity: 1;
+  animation: shimmer 1.2s linear;
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+/* ── DOT BUTTON ── */
+.dotBtn {
+  border: none;
+  cursor: pointer;
+  transition: all .3s ease;
+}

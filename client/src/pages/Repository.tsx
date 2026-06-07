@@ -2,8 +2,8 @@ import { useState, useEffect, type FC } from "react";
 import RepoCard from "@/components/card/RepoCard";
 import { useTheme } from "@/context/ThemeContext";
 import { githubApi, type GitHubRepo } from "@/utils/api";
-import Loading from "@/components/ui/common/Loading";
-import Error from "@/components/ui/common/Error";
+import Loading from "@/components/common/loading/Loading";
+import Error from "@/components/common/server-error/Error";
 
 const LANG_COLORS: Record<string, string> = {
   TypeScript: "#3178c6",

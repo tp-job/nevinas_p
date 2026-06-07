@@ -16,7 +16,7 @@
       125deg,
       #0d1220 0%,
       #162040 35%,
-      #1a3060 65%,
+      #1E233C 65%,
       #080c18 100%
     );
   }
@@ -156,38 +156,38 @@
   }
 
   .bc {
-    background: var(--homepage-bg-surface);
+    background: var(--color-surface-primary);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--homepage-border-light);
+    border: 1px solid var(--color-border-primary);
     border-radius: 20px;
     padding: 1.2rem 1.25rem;
     overflow: hidden;
     position: relative;
     transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
     min-height: 0;
-    box-shadow: var(--homepage-shadow-sm);
+    box-shadow: 0 1px 3px var(--color-shadow-sm);
   }
 
   .bc:hover {
-    background: var(--homepage-bg-surface-2);
-    box-shadow: var(--homepage-shadow-md);
+    background: var(--color-surface-secondary);
+    box-shadow: 0 4px 6px var(--color-shadow-md);
     transform: translateY(-1px);
   }
 
   .bc.dark {
-    background: var(--homepage-bg-surface-2);
-    border: 1px solid var(--homepage-border-medium);
-    color: var(--homepage-text-primary);
-    box-shadow: var(--homepage-shadow-md);
+    background: var(--color-surface-secondary);
+    border: 1px solid var(--color-border-secondary);
+    color: var(--color-text-primary);
+    box-shadow: 0 4px 6px var(--color-shadow-md);
   }
 
   .bc.dark:hover {
-    background: rgba(46, 53, 88, 0.85);
+    background: var(--color-surface-tertiary);
   }
 
   .bc.navy {
-    background: linear-gradient(135deg, var(--color-sub-ev1, #524E68) 0%, var(--color-sub-ev2, #44405A) 100%);
+    background: linear-gradient(135deg, var(--color-velvet-indigo) 0%, var(--color-velvet-night) 100%);
     border: 1px solid rgba(200, 205, 235, 0.15);
     color: #fff;
   }

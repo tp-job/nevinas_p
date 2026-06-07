@@ -5,8 +5,8 @@ import { useTheme } from "@/context/ThemeContext";
 import { githubApi, type GitHubStats, type GitHubRepo } from "@/utils/api";
 import { techStackData } from "@/data/techData";
 import { toolsData, toolSections } from "@/data/toolsData";
-import Loading from "@/components/ui/common/Loading";
-import Error from "@/components/ui/common/Error";
+import Loading from "@/components/common/loading/Loading";
+import Error from "@/components/common/server-error/Error";
 import {
   AreaChart,
   Area,

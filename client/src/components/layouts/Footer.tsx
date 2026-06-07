@@ -1,12 +1,17 @@
 import type { FC } from "react";
 import { Assets } from "@/data/HomeData";
 import "@/styles/components/socalmedia.css";
+import GradualBlur from "@/components/effect/GradualBlur"; // ✅ [Frontend] import GradualBlur
 
 const Footer: FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div className="mt-20">
+    // ✅ [Frontend] เพิ่ม `relative` เพื่อให้ GradualBlur (position: absolute) หา anchor ถูกต้อง
+    // ✅ [Frontend] เพิ่ม `overflow-hidden` กันไม่ให้ blur ล้น viewport
+    <div className="mt-20 relative overflow-hidden">
+
+      {/* ── Logo & Email ── */}
       <div className="text-center">
         <img
           src={Assets.logo}
@@ -18,6 +23,8 @@ const Footer: FC = () => {
           nevinasv@gmail.com
         </div>
       </div>
+
+      {/* ── Copyright & Social Icons ── */}
       <div className="text-center sm:flex items-center justify-between border-t border-light-border dark:border-dark-border mx-[10%] mt-12 py-6">
         <p>{currentYear} | Nevinas</p>
         <ul className="flex items-center justify-center gap-10 mt-4 sm:mt-0 wrapper">
@@ -50,6 +57,14 @@ const Footer: FC = () => {
           </li>
         </ul>
       </div>
+
+      <GradualBlur
+        preset="footer"
+        strength={1.5}
+        opacity={0.55}
+        zIndex={10}
+        animated="scroll"
+      />
     </div>
   );
 };

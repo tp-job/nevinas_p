@@ -1,0 +1,137 @@
+/* CodeWithClarity.module.css — corrected to match interactive-v2.html #s-clarity */
+
+/* ── SLIDE CONTAINER */
+.codeWithClarity {
+  /* blueprint: var(--color-bg-secondary) */
+  background: var(--color-bg-secondary);
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  align-items: stretch;
+  justify-content: stretch;
+  overflow: hidden;
+  text-align: left;
+}
+
+/* ── TOP HALF */
+.topInner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  /* nav-overlap fix: 4rem top */
+  padding: 4rem 3vw 0;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* grid: left=auto (headline), right=1fr (tagline) */
+.topRow {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3vw;
+  flex-shrink: 0;
+  align-items: start;
+}
+
+/* ── LEFT: "Code / With / Clarity" section headline */
+.headline {
+  font-size: clamp(1.5rem, 2.8vw, 2.4rem);
+  font-weight: 300;
+  letter-spacing: -.035em;
+  line-height: 1.05;
+  color: var(--color-text-primary);
+}
+
+/* ── RIGHT: tagline description */
+.taglineWrap {
+  display: flex;
+  align-items: flex-start;
+  padding-top: .15rem;
+}
+
+.tagline {
+  font-family: var(--fm, 'DM Mono', monospace);
+  font-size: .78rem;
+  line-height: 1.9;
+  font-weight: 300;
+  color: var(--color-text-secondary);
+  max-width: 280px;
+}
+
+/* ── GIANT WORD — fills remaining height */
+.word {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* blueprint: clamp(5rem, 18vw, 17rem) — significantly larger than original module */
+  font-size: clamp(5rem, 18vw, 17rem);
+  font-weight: 400;
+  letter-spacing: -.055em;
+  line-height: 1;
+  color: var(--color-text-primary);
+  text-align: center;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ── BOTTOM HALF: 4 columns */
+.cols {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--color-border-primary);
+  height: 100%;
+}
+
+.col {
+  padding: 1.6rem 2.5vw;
+  border-right: 1px solid var(--color-border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: .7rem;
+  transition: background .25s;
+  cursor: none;
+  overflow: hidden;
+}
+
+.col:last-child {
+  border-right: none;
+}
+
+.col:hover {
+  background: var(--color-surface-variant);
+}
+
+/* column number */
+.num {
+  font-family: var(--fm, 'DM Mono', monospace);
+  font-size: .62rem;
+  color: var(--color-text-tertiary);
+  letter-spacing: .06em;
+}
+
+/* column body text */
+.colTxt {
+  font-size: clamp(.88rem, 1.4vw, 1.05rem);
+  font-weight: 300;
+  letter-spacing: -.015em;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+}
+
+/* cols 2-4 dimmer by default */
+.col:nth-child(2) .colTxt,
+.col:nth-child(3) .colTxt,
+.col:nth-child(4) .colTxt {
+  color: var(--color-text-muted);
+}
+
+/* hover restores full opacity */
+.col:hover .colTxt {
+  color: var(--color-text-primary) !important;
+}
+
+/* azure accent in col 1 */
+.acc {
+  color: var(--color-matte-azure);
+}

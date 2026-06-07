@@ -9,6 +9,7 @@
     overflow: hidden;
   }
 
+  /* DS v3.2 — Haze (#465078) → Periwinkle (#C8CDEB) gradient line */
   .tl-line {
     position: absolute;
     left: 3rem;
@@ -18,9 +19,9 @@
     background: linear-gradient(
       to bottom,
       transparent 0%,
-      rgba(192, 96, 245, 0.15) 15%,
-      rgba(123, 90, 255, 0.20) 50%,
-      rgba(192, 96, 245, 0.15) 85%,
+      rgba(135, 140, 180, 0.15) 15%,
+      rgba(70, 80, 120, 0.22) 50%,
+      rgba(135, 140, 180, 0.15) 85%,
       transparent 100%
     );
     z-index: 10;
@@ -30,32 +31,33 @@
     background: linear-gradient(
       to bottom,
       transparent 0%,
-      rgba(192, 96, 245, 0.12) 15%,
-      rgba(123, 90, 255, 0.18) 50%,
-      rgba(192, 96, 245, 0.12) 85%,
+      rgba(200, 205, 235, 0.10) 15%,
+      rgba(135, 140, 180, 0.18) 50%,
+      rgba(200, 205, 235, 0.10) 85%,
       transparent 100%
     );
   }
 
+  /* DS v3.2 — Cool Gray (#878CB4) → Haze (#465078) dot */
   .tl-dot {
     position: absolute;
     left: 3rem;
     width: 0.9rem;
     height: 0.9rem;
     border-radius: 9999px;
-    background: linear-gradient(135deg, #c060f5, #7b5aff);
+    background: linear-gradient(135deg, #878CB4, #465078);
     transform: translate(-50%, -50%);
     transition: top 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow:
-      0 0 0 4px var(--color-light-bg),
-      0 0 12px rgba(192, 96, 245, 0.40);
+      0 0 0 4px var(--color-bg-primary),
+      0 0 12px rgba(135, 140, 180, 0.40);
     z-index: 20;
   }
 
   .dark .tl-dot {
     box-shadow:
-      0 0 0 4px var(--color-dark-bg),
-      0 0 16px rgba(192, 96, 245, 0.50);
+      0 0 0 4px var(--color-bg-primary),
+      0 0 16px rgba(200, 205, 235, 0.30);
   }
 
   .tl-section {
@@ -109,16 +111,18 @@
       inset 0 -1px 0 rgba(0, 0, 0, 0.20);
   }
 
+  /* DS v3.2 — Periwinkle (#C8CDEB) active border */
   .tl-card.active {
     opacity: 1;
     transform: translateY(0) scale(1);
-    border-color: rgba(192, 96, 245, 0.30);
+    border-color: rgba(135, 140, 180, 0.35);
   }
 
   .dark .tl-card.active {
-    border-color: rgba(192, 96, 245, 0.40);
+    border-color: rgba(200, 205, 235, 0.30);
   }
 
+  /* DS v3.2 — Cool Gray (#878CB4) badge */
   .tl-badge {
     display: inline-block;
     padding: 0.25rem 0.75rem;
@@ -127,10 +131,16 @@
     font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #c060f5;
-    background: rgba(192, 96, 245, 0.10);
-    border: 1px solid rgba(192, 96, 245, 0.20);
+    color: #465078;
+    background: rgba(135, 140, 180, 0.12);
+    border: 1px solid rgba(135, 140, 180, 0.25);
     margin-bottom: 1rem;
+  }
+
+  .dark .tl-badge {
+    color: #C8CDEB;
+    background: rgba(200, 205, 235, 0.10);
+    border-color: rgba(200, 205, 235, 0.18);
   }
 
   .tl-meta {
@@ -138,12 +148,12 @@
     font-weight: 500;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--color-light-text-secondary);
+    color: var(--color-text-secondary);
     opacity: 0.6;
   }
 
   .dark .tl-meta {
-    color: var(--color-dark-text-secondary);
+    color: var(--color-text-secondary);
   }
 
   .tl-title {
@@ -151,23 +161,23 @@
     font-size: 1.5rem;
     font-weight: 400;
     letter-spacing: -0.01em;
-    color: var(--color-light-text);
+    color: var(--color-text-primary);
   }
 
   .dark .tl-title {
-    color: var(--color-dark-text);
+    color: var(--color-text-primary);
   }
 
   .tl-desc {
     margin-top: 0.8rem;
     font-size: 0.85rem;
     line-height: 1.65;
-    color: var(--color-light-text-secondary);
+    color: var(--color-text-secondary);
     opacity: 0.8;
   }
 
   .dark .tl-desc {
-    color: var(--color-dark-text-secondary);
+    color: var(--color-text-secondary);
   }
 
   @media (min-width: 900px) {
