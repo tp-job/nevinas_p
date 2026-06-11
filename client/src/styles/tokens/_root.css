@@ -33,20 +33,5 @@
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-smooth: ease-in-out;
 
-    /* === DEPRECATED - USE COLORS.CSS INSTEAD === */
-    /* These are kept for backward compatibility */
-    --color-light-bg: #f8fafc;
-    --color-light-surface: #ffffff;
-    --color-light-surface-2: #f1f5f9;
-    --color-light-border: #e2e8f0;
-    --color-light-text: #1e293b;
-    --color-light-text-secondary: #64748b;
-
-    --color-dark-bg: #1e202c;
-    --color-dark-surface: #252d3d;
-    --color-dark-surface-2: #2f3848;
-    --color-dark-border: #3d4759;
-    --color-dark-text: #f1f3f5;
-    --color-dark-text-secondary: #9ca3af;
   }
 }

@@ -45,7 +45,7 @@
     width: 0.9rem;
     height: 0.9rem;
     border-radius: 9999px;
-    background: linear-gradient(135deg, #878CB4, #465078);
+    background: linear-gradient(135deg, var(--color-cool), var(--color-haze));
     transform: translate(-50%, -50%);
     transition: top 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow:
@@ -131,14 +131,14 @@
     font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #465078;
+    color: var(--color-light-text-secondary);
     background: rgba(135, 140, 180, 0.12);
     border: 1px solid rgba(135, 140, 180, 0.25);
     margin-bottom: 1rem;
   }
 
   .dark .tl-badge {
-    color: #C8CDEB;
+    color: var(--color-periwinkle);
     background: rgba(200, 205, 235, 0.10);
     border-color: rgba(200, 205, 235, 0.18);
   }

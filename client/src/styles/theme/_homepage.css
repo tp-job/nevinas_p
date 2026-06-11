@@ -3,31 +3,30 @@
 @layer theme {
   /* ── Homepage-Specific Theme Variables ── */
   .homepage-theme {
-    /* Color Palette - consistent with global theme */
-    /* Color Palette - consistent with design system v3.2 theme */
-    --homepage-color-matte-midnight: #1E233C; /* Midnight Purple */
-    --homepage-color-matte-navy: #465078;     /* Haze Purple */
-    --homepage-color-matte-royal: #878CB4;    /* Cool Gray */
-    --homepage-color-matte-azure: #C8CDEB;    /* Periwinkle Gray */
-    --homepage-color-velvet-night: #13172B;   /* Midnight Deep */
-    --homepage-color-velvet-indigo: #44405A;  /* English Violet 2 */
-    --homepage-color-velvet-orchid: #524E68;  /* English Violet 1 */
-    --homepage-color-velvet-flamingo: #85758F;/* Mountbatten Pink */
+    /* Color Palette — aliases to index.css @theme */
+    --homepage-color-matte-midnight: var(--color-midnight);
+    --homepage-color-matte-navy:     var(--color-haze);
+    --homepage-color-matte-royal:    var(--color-cool);
+    --homepage-color-matte-azure:    var(--color-periwinkle);
+    --homepage-color-velvet-night:   var(--color-midnight-deep);
+    --homepage-color-velvet-indigo:  var(--color-sub-ev2);
+    --homepage-color-velvet-orchid:  var(--color-sub-ev1);
+    --homepage-color-velvet-flamingo: var(--color-sub-mount);
 
     /* Background Colors */
-    --homepage-bg-light: #F0F1F8;             /* Light Mode Page base */
-    --homepage-bg-agency: #ECEEF6;            /* Light Mode secondary base */
-    --homepage-bg-surface: rgba(255, 255, 255, 0.55); /* Light Mode Surface */
-    --homepage-bg-surface-2: rgba(255, 255, 255, 0.82); /* Light Mode Surface-2 */
+    --homepage-bg-light:     var(--color-light-bg);
+    --homepage-bg-agency:    var(--color-periwinkle-pale);
+    --homepage-bg-surface:   var(--color-light-surface);
+    --homepage-bg-surface-2: var(--color-light-surface-2);
 
     /* Text Colors */
-    --homepage-text-primary: #1E233C;
-    --homepage-text-secondary: #465078;
-    --homepage-text-tertiary: #878CB4;
-    --homepage-text-muted: #A8B0D9;
+    --homepage-text-primary:   var(--color-light-text);
+    --homepage-text-secondary: var(--color-light-text-secondary);
+    --homepage-text-tertiary:  var(--color-cool);
+    --homepage-text-muted:     var(--color-periwinkle-mid);
 
     /* Border Colors */
-    --homepage-border-light: rgba(30, 35, 60, 0.10);
+    --homepage-border-light: var(--color-light-border);
     --homepage-border-medium: rgba(30, 35, 60, 0.18);
     --homepage-border-heavy: rgba(30, 35, 60, 0.25);
 
@@ -92,15 +91,15 @@
 
   /* ── Dark Mode Support ── */
   .homepage-theme.dark {
-    --homepage-bg-light: #0A0F19;             /* Dark Mode Page base (#0A0F19) */
-    --homepage-bg-agency: #05080F;            /* Dark Mode secondary base */
-    --homepage-bg-surface: rgba(30, 35, 60, 0.50); /* Dark Mode Surface */
-    --homepage-bg-surface-2: rgba(46, 53, 88, 0.65); /* Dark Mode Surface-2 */
-    --homepage-text-primary: #E8EAF5;
-    --homepage-text-secondary: #878CB4;
-    --homepage-text-tertiary: #465078;
-    --homepage-text-muted: #2E3558;
-    --homepage-border-light: rgba(200, 205, 235, 0.10);
+    --homepage-bg-light:     var(--color-dark-bg);
+    --homepage-bg-agency:    var(--color-charcoal-deep);
+    --homepage-bg-surface:   var(--color-dark-surface);
+    --homepage-bg-surface-2: var(--color-dark-surface-2);
+    --homepage-text-primary:   var(--color-dark-text);
+    --homepage-text-secondary: var(--color-dark-text-secondary);
+    --homepage-text-tertiary:  var(--color-haze);
+    --homepage-text-muted:     var(--color-haze-deep);
+    --homepage-border-light: var(--color-dark-border);
     --homepage-border-medium: rgba(200, 205, 235, 0.15);
     --homepage-border-heavy: rgba(200, 205, 235, 0.25);
   }

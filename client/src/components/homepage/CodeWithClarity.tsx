@@ -82,14 +82,12 @@ const CodeWithClarity: React.FC = () => {
               onMouseLeave={() => setHoveredCol(null)}
             >
               <div
-                className={styles.num}
-                style={isActive ? { color: 'var(--color-matte-azure)' } : undefined}
+                className={`${styles.num}${isActive ? ' text-matte-azure' : ''}`}
               >
                 {col.num}
               </div>
               <div
-                className={styles.colTxt}
-                style={isActive ? { color: 'var(--color-text-primary)' } : undefined}
+                className={`${styles.colTxt}${isActive ? ' text-light-text dark:text-dark-text' : ''}`}
               >
                 {col.text}
               </div>

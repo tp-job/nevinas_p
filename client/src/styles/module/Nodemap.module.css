@@ -1,18 +1,32 @@
+/* Nodemap.module.css
+   ─────────────────────────────────────────────────────────────
+   All tokens sourced from colors.css (via index.css @import).
+   No local overrides required — clean per design-system audit.
+   ───────────────────────────────────────────────────────────── */
+
 /* ── NODEMAP BG ── */
 .nodemapBg {
-  background: var(--color-bg-secondary);
-  background-image: radial-gradient(circle, var(--color-border-primary) 1px, transparent 1px);
+  background-color: var(--color-light-bg);
+  color: var(--color-light-text);
+  background-image: radial-gradient(circle, var(--color-light-border) 1px, transparent 1px);
   background-size: 26px 26px;
+}
+
+:global(.dark) .nodemapBg {
+  background-color: var(--color-dark-bg);
+  color: var(--color-dark-text);
+  background-image: radial-gradient(circle, var(--color-dark-border) 1px, transparent 1px);
 }
 
 /* ── ORB FLOAT ── */
 .orbFloat {
   animation: orbFloat 12s ease-in-out infinite;
 }
+
 @keyframes orbFloat {
-  0%,100% { transform: translate(-50%,-50%) translate(0,0); }
-  33%     { transform: translate(-50%,-50%) translate(30px,-20px); }
-  66%     { transform: translate(-50%,-50%) translate(-20px,15px); }
+  0%, 100% { transform: translate(-50%, -50%) translate(0, 0); }
+  33%       { transform: translate(-50%, -50%) translate(30px, -20px); }
+  66%       { transform: translate(-50%, -50%) translate(-20px, 15px); }
 }
 
 /* ── LINE DRAW ── */
@@ -21,9 +35,11 @@
   stroke-dashoffset: 500;
   animation: lineDraw 2s ease forwards;
 }
+
 .lineD1 { animation-delay: .3s; }
 .lineD2 { animation-delay: .6s; }
 .lineD3 { animation-delay: .9s; }
+
 @keyframes lineDraw {
   from { stroke-dashoffset: 500; }
   to   { stroke-dashoffset: 0; }
@@ -33,34 +49,41 @@
 .hubIdle {
   animation: hubIdle 8s ease-in-out infinite;
 }
+
 @keyframes hubIdle {
-  0%,100% { transform: translate(-50%,-50%) rotate(0deg) scale(1); }
-  50%     { transform: translate(-50%,-50%) rotate(3deg) scale(1.02); }
+  0%, 100% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+  50%       { transform: translate(-50%, -50%) rotate(3deg) scale(1.02); }
 }
 
-/* ── NEU ── */
+/* ── NEUMORPHIC SURFACES ──
+   Uses --color-shadow-* (rgba color values from colors.css) and
+   --color-glass-border as the highlight value. ── */
 .neu {
-  background: var(--color-bg-secondary);
+  background: var(--color-light-surface-2);
   box-shadow: 8px 8px 20px var(--color-shadow-md), -8px -8px 20px var(--color-glass-border);
   border-radius: 1rem;
 }
+
 .neuInset {
-  background: var(--color-bg-secondary);
+  background: var(--color-light-surface-2);
   box-shadow: inset 6px 6px 14px var(--color-shadow-sm), inset -6px -6px 14px var(--color-glass-border);
   border-radius: 1rem;
 }
+
 .neuBtn {
-  background: var(--color-bg-secondary);
+  background: var(--color-light-surface-2);
   box-shadow: 6px 6px 14px var(--color-shadow-sm), -6px -6px 14px var(--color-glass-border);
   border-radius: 9999px;
   border: none;
   cursor: pointer;
   transition: box-shadow .2s ease, transform .15s ease;
 }
+
 .neuBtn:hover {
   box-shadow: 4px 4px 10px var(--color-shadow-md), -4px -4px 10px var(--color-glass-border);
   transform: translateY(-1px);
 }
+
 .neuBtn:active {
   box-shadow: inset 4px 4px 10px var(--color-shadow-sm), inset -4px -4px 10px var(--color-glass-border);
   transform: translateY(0);
@@ -74,6 +97,7 @@
   border: 1px solid var(--color-glass-border);
   box-shadow: 0 8px 32px var(--color-shadow-sm);
 }
+
 .pillGlass {
   background: var(--color-surface-variant);
   backdrop-filter: blur(10px);
@@ -89,6 +113,7 @@
   color: var(--color-text-primary);
   position: relative;
 }
+
 .dotText::after {
   content: attr(data-text);
   position: absolute;
@@ -108,16 +133,19 @@
   align-items: center;
   justify-content: center;
 }
+
 .icon3d {
   transform-style: preserve-3d;
   transform: rotateX(12deg) rotateY(-14deg) rotateZ(2deg);
-  transition: transform .45s cubic-bezier(.34,1.56,.64,1), filter .3s ease;
+  transition: transform .45s cubic-bezier(.34, 1.56, .64, 1), filter .3s ease;
   filter: drop-shadow(0 12px 24px var(--color-shadow-md));
 }
+
 .icon3dWrap:hover .icon3d {
   transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1.08);
   filter: drop-shadow(0 20px 40px var(--color-shadow-xl));
 }
+
 .icon3dSm {
   transform: rotateX(10deg) rotateY(-10deg) rotateZ(1deg);
 }
@@ -127,19 +155,28 @@
   position: relative;
   overflow: hidden;
 }
+
 .shimmerHover::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.18) 50%, transparent 60%);
+  background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, .18) 50%, transparent 60%);
   background-size: 200% 100%;
   opacity: 0;
   transition: opacity .3s;
 }
+
 .shimmerHover:hover::before {
   opacity: 1;
   animation: shimmer 1.2s linear;
 }
+
+:global(.dark) .neu,
+:global(.dark) .neuInset,
+:global(.dark) .neuBtn {
+  background: var(--color-dark-surface);
+}
+
 @keyframes shimmer {
   0%   { background-position: -200% center; }
   100% { background-position:  200% center; }

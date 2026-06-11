@@ -1,8 +1,18 @@
-/* AgencySection.module.css — corrected to match interactive-v2.html #s-agency */
+/* AgencySection.module.css — corrected to match interactive-v2.html #s-agency
+   ─────────────────────────────────────────────────────────────────────────────
+   FONT TOKEN MAP (index.css → local aliases)
+     --font-zen   = "Zen Kaku Gothic New", sans-serif   (replaces --fj)
+     --font-inter = "Inter", system-ui, sans-serif      (replaces --fm body)
+     --font-mono  = 'DM Mono', monospace                (local — not in index.css)
+   ───────────────────────────────────────────────────────────────────────────── */
 
 /* ── SLIDE CONTAINER — 5-row grid (direct children, no wrapper div) */
 .agencySlide {
-  background: var(--color-bg-secondary);
+  /* ── Scoped font token: DM Mono is not in index.css @theme, defined here ── */
+  --font-mono: 'DM Mono', 'Fira Code', monospace;
+
+  background: var(--color-light-bg);
+  color: var(--color-light-text);
   min-height: 100svh;
   text-align: left;
   display: grid;
@@ -13,6 +23,11 @@
     31vh   /* row 4: statement + cta */
     24vh;  /* row 5: awards */
   overflow: hidden;
+}
+
+:global(.dark) .agencySlide {
+  background: var(--color-dark-bg);
+  color: var(--color-dark-text);
 }
 
 /* ── ROW 1: arrow + nebula */
@@ -36,17 +51,19 @@
   display: block;
 }
 
+/* ── Uses var(--font-zen) per index.css @theme ── */
 .arrowKanji {
-  font-family: var(--fj, 'Noto Serif JP', serif);
+  font-family: var(--font-zen);
   font-size: clamp(0.7rem, 1.4vw, 1rem);
-  /* blueprint: rgba(20,18,16,.16) — very subtle */
   color: var(--color-text-muted);
   opacity: 0.5;
   letter-spacing: .15em;
   margin-top: .4rem;
 }
 
-/* ── NEBULA HERO PANEL */
+/* ── NEBULA HERO PANEL ── */
+/* Note: hardcoded gradient is intentional art direction — nebula requires
+   absolute colour values that cannot be tokenised without destroying the effect */
 .heroImg {
   position: relative;
   border-radius: var(--radius-md);
@@ -96,7 +113,7 @@
   position: absolute;
   bottom: .6rem;
   right: .7rem;
-  font-family: var(--fm, 'DM Mono', monospace);
+  font-family: var(--font-mono);
   font-size: .44rem;
   letter-spacing: .22em;
   text-transform: uppercase;
@@ -117,9 +134,10 @@
   z-index: 1;
 }
 
+/* ── Uses var(--font-zen) per index.css @theme ── */
 .kj {
   position: absolute;
-  font-family: var(--fj, 'Noto Serif JP', serif);
+  font-family: var(--font-zen);
   font-size: clamp(1.2rem, 3vw, 2.2rem);
   font-weight: 300;
   color: rgba(255, 255, 255, .2);
@@ -146,9 +164,9 @@
   overflow: hidden;
 }
 
+/* ── Uses var(--font-mono) scoped above ── */
 .descItem {
-  /* blueprint: DM Mono monospace, not sans-serif */
-  font-family: var(--fm, 'DM Mono', monospace);
+  font-family: var(--font-mono);
   font-size: clamp(.58rem, .95vw, .72rem);
   color: var(--color-text-secondary);
   line-height: 1.6;
@@ -165,7 +183,7 @@
   display: flex;
   align-items: center;
   padding: 0 var(--space-12);
-  font-family: var(--fm, 'DM Mono', monospace);
+  font-family: var(--font-mono);
   font-size: .54rem;
   color: var(--color-text-muted);
   letter-spacing: .14em;
@@ -261,7 +279,7 @@
   align-items: center;
   gap: var(--space-2);
   margin-top: 1rem;
-  font-family: var(--fm, 'DM Mono', monospace);
+  font-family: var(--font-mono);
   font-size: .7rem;
   color: var(--color-text-primary);
   letter-spacing: .06em;
@@ -278,7 +296,7 @@
 .cta:hover {
   background: var(--color-matte-azure);
   border-color: var(--color-matte-azure);
-  color: #fff;
+  color: var(--color-text-inverse);
   box-shadow: 0 4px 18px var(--color-shadow-md);
   transform: translateY(-1px);
 }
@@ -340,12 +358,13 @@
   50%       { transform: scale(1.06); opacity: 1; }
 }
 
+/* ── Uses var(--font-zen) per index.css @theme ── */
 .moodLabel {
   position: absolute;
   bottom: -1.5rem;
   left: 50%;
   transform: translateX(-50%);
-  font-family: var(--fj, 'Noto Serif JP', serif);
+  font-family: var(--font-zen);
   font-size: .72rem;
   color: var(--color-text-tertiary);
   opacity: 0.5;
@@ -403,7 +422,7 @@
 }
 
 .awardTitle {
-  font-family: var(--fm, 'DM Mono', monospace);
+  font-family: var(--font-mono);
   font-size: clamp(.56rem, .9vw, .7rem);
   color: var(--color-text-secondary);
   letter-spacing: .04em;
@@ -419,7 +438,7 @@
 }
 
 .awardSrc {
-  font-family: var(--fm, 'DM Mono', monospace);
+  font-family: var(--font-mono);
   font-size: .42rem;
   color: var(--color-text-tertiary);
   letter-spacing: .2em;

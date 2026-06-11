@@ -17,7 +17,7 @@ export const StatementSlide: React.FC<{ index: number }> = ({ index }) => {
   if (!stmt) return null;
 
   return (
-    <div className="relative w-full h-full flex flex-col items-center justify-center text-center px-[10vw] overflow-hidden">
+    <div className="relative w-full h-full flex flex-col items-center justify-center text-center px-[10vw] overflow-hidden bg-light-bg dark:bg-dark-bg">
       {/* Background Illusts */}
       {index === 0 && (
         <div
@@ -46,14 +46,14 @@ export const StatementSlide: React.FC<{ index: number }> = ({ index }) => {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
         <div
-          className="font-light leading-[0.95] tracking-[-0.04em] text-white"
+          className="font-light leading-[0.95] tracking-[-0.04em] text-light-text dark:text-dark-text-primary"
           style={{
             fontSize: 'clamp(4.5rem, 13vw, 12rem)',
             fontFamily: 'var(--fd, "Inter", sans-serif)'
           }}
         >
           {stmt === "And listen..." ? (
-            <>And<br />listen<span style={{ color: 'var(--color-matte-azure)' }}>...</span></>
+            <>And<br />listen<span className="text-matte-azure">...</span></>
           ) : (
             stmt
           )}

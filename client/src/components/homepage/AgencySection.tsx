@@ -49,17 +49,17 @@ const AgencySection: React.FC = () => {
 
         {/* Arrow column */}
         <div className={styles.arrow}>
-          <svg viewBox="0 0 200 200" fill="none">
+          <svg viewBox="0 0 200 200" fill="none" className="stroke-light-text dark:stroke-dark-text">
             <path
               d="M20 20 L180 20 L180 180"
-              stroke="var(--color-text-primary)"
+              stroke="currentColor"
               strokeWidth="26"
               strokeLinecap="square"
               strokeLinejoin="miter"
             />
             <path
               d="M20 20 L180 180"
-              stroke="var(--color-text-primary)"
+              stroke="currentColor"
               strokeWidth="26"
               strokeLinecap="square"
             />

@@ -53,6 +53,21 @@
   --color-dark-text-secondary:   #878CB4;
   --color-dark-text-primary:     #FFFFFF;
 
+  /* ── Focus & Selection (DS §16 / §18) ── */
+  --color-focus-ring:            rgba(200, 205, 235, 0.70);
+  --color-selection-bg:          #C8CDEB;
+  --color-selection-text:        #1E233C;
+  --color-selection-bg-dark:     #465078;
+  --color-selection-text-dark:   #E8EAF5;
+
+  /* ── Semantic Runtime Aliases (bridge → colors.css light defaults) ── */
+  --color-text-primary:    var(--color-light-text);
+  --color-text-secondary:  var(--color-light-text-secondary);
+  --color-bg-primary:      var(--color-light-bg);
+  --color-bg-secondary:    var(--color-periwinkle-pale);
+  --color-border-primary:  var(--color-light-border);
+  --color-border-focus:    var(--color-focus-ring);
+
   /* ── Status ── */
   --color-success:   #2E7D32;
   --color-error:     #C62828;

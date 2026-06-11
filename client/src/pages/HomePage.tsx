@@ -17,6 +17,7 @@ import Footer from '@/components/layouts/Footer';
 import NodeMap from '@/components/homepage/Nodemap';
 import Testimonials from '@/components/homepage/Testimonials';
 import HorizontalServices from '@/components/homepage/HorizontalServices';
+import Hero from '@/components/homepage/Hero';
 // import LiquidEther removed - effect now isolated in Header
 // Removed external CSS import - now using CSS Modules
 
@@ -30,6 +31,7 @@ const getSlidesList = () => {
     { id: 'timeline-sc', content: <TimelineScattered />, variant: 'fill' as const, scrollable: false },
     { id: 'timeline', content: <ScrollReveal><TimelineSection /></ScrollReveal>, variant: 'content' as const, scrollable: true },
     { id: 'bento', content: <BentoGrid />, variant: 'fill' as const, scrollable: true },
+    { id: 'hero', content: <Hero />, variant: 'fill' as const, scrollable: true },
     { id: 'nodemap', content: <NodeMap />, variant: 'fill' as const, scrollable: false },
     { id: 'services', content: <HorizontalServices />, variant: 'fill' as const, scrollable: true },
     { id: 'work', content: <ScrollReveal><Work /></ScrollReveal>, variant: 'content' as const, scrollable: true },
@@ -96,10 +98,10 @@ const HomePage: FC = () => {
   // const etherColors removed - not used
 
   return (
-    <div className="relative isolate h-svh min-h-svh overflow-hidden bg-transparent" style={{ WebkitFontSmoothing: 'antialiased', MozOsxFontSmoothing: 'grayscale' }}>
+    <div className="relative isolate h-svh min-h-svh overflow-hidden bg-transparent homepage-root">
 
       <header className="site-header">
-        <a href="#homepage-scroll" className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:bg-black focus:text-white focus:p-2">Skip to content</a>
+        <a href="#homepage-scroll" className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:bg-charcoal focus:text-dark-text-primary focus:p-2">Skip to content</a>
         <Navbar scrollContainerId="homepage-scroll" />
       </header>
 

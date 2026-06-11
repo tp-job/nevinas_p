@@ -104,80 +104,50 @@ const Testimonials: React.FC = () => {
 
       {/* Decorative blob */}
       <div
-        className={styles.blob}
-        style={{
-          position: 'absolute', width: 500, height: 500,
-          top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
-          background: 'radial-gradient(circle,rgba(255,255,255,.12),rgba(166,165,196,.08),transparent)',
-          pointerEvents: 'none',
-        }}
+        className={`${styles.blob} absolute w-[500px] h-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none bg-[radial-gradient(circle,theme(--color-light-surface/.12),theme(--color-sub-cool/.08),transparent)]`}
       />
 
       {/* Decorative large quote mark */}
       <div
         aria-hidden="true"
-        style={{
-          position: 'absolute', top: '-2rem', left: '1.5rem',
-          fontSize: 260, fontWeight: 700, lineHeight: 1,
-          color: 'var(--color-shadow-sm)', pointerEvents: 'none', userSelect: 'none',
-        }}
+        className="absolute -top-8 left-6 text-[260px] font-bold leading-none text-shadow-sm pointer-events-none select-none"
       >
         "
       </div>
 
       {/* ── HEADER ── */}
-      <div style={{
-        padding: '5rem 4rem 2.5rem',
-        display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem',
-      }}>
-        <h2 style={{
-          fontSize: 'clamp(26px,3.8vw,50px)', fontWeight: 300,
-          lineHeight: 1.15, letterSpacing: '-.02em', color: 'var(--color-text-primary)',
-        }}>
+      <div className="py-20 px-16 pb-10 grid grid-cols-2 gap-16">
+        <h2 className="text-[clamp(26px,3.8vw,50px)] font-light leading-[1.15] tracking-[-0.02em] text-light-text dark:text-dark-text">
           Gather&apos;round —<br />client tales<br />incoming.
         </h2>
-        <p style={{
-          fontSize: 15, fontWeight: 400, lineHeight: 1.8,
-          color: 'var(--color-text-secondary)', alignSelf: 'end',
-        }}>
+        <p className="text-[15px] font-normal leading-[1.8] text-haze dark:text-cool self-end">
           Stories travel — about the ideas, the flow, the small magic moments
           that happen while building something together.
         </p>
       </div>
 
       {/* Divider */}
-      <div style={{ margin: '0 4rem', height: 1, background: 'var(--color-border-secondary)' }} />
+      <div className="mx-16 h-px bg-cool-pale dark:bg-haze-deep" />
 
       {/* ── STAGE ── */}
-      <div style={{ padding: '2.5rem 4rem 2rem' }}>
+      <div className="py-10 px-16 pb-8">
 
         {/* Controls row */}
-        <div style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          marginBottom: '2.5rem',
-        }}>
+        <div className="flex items-center justify-between mb-10">
           <button
-            className={styles.neuBtn}
-            style={{
-              fontSize: 12, fontWeight: 700, letterSpacing: '.16em',
-              textTransform: 'uppercase', color: 'var(--color-text-secondary)', padding: '10px 20px',
-            }}
+            className={`${styles.neuBtn} text-xs font-bold tracking-[0.16em] uppercase text-haze dark:text-cool py-2.5 px-5`}
             onClick={() => handleNav(-1)}
             aria-label="Previous testimonial"
           >
             PREV
           </button>
 
-          <span style={{ fontSize: 13, fontWeight: 500, letterSpacing: '.08em', color: 'var(--color-text-tertiary)' }}>
+          <span className="text-[13px] font-medium tracking-[0.08em] text-cool dark:text-haze-light">
             {pad(current + 1)} / {pad(TESTIMONIALS.length)}
           </span>
 
           <button
-            className={styles.neuBtn}
-            style={{
-              fontSize: 12, fontWeight: 700, letterSpacing: '.16em',
-              textTransform: 'uppercase', color: 'var(--color-text-secondary)', padding: '10px 20px',
-            }}
+            className={`${styles.neuBtn} text-xs font-bold tracking-[0.16em] uppercase text-haze dark:text-cool py-2.5 px-5`}
             onClick={() => handleNav(1)}
             aria-label="Next testimonial"
           >
@@ -187,84 +157,58 @@ const Testimonials: React.FC = () => {
 
         {/* Quote body */}
         <div
-          className={`${styles.testiBody}${isOut ? ` ${styles.testiBodyOut}` : ''}`}
-          style={{ textAlign: 'center' }}
+          className={`${styles.testiBody}${isOut ? ` ${styles.testiBodyOut}` : ''} text-center`}
         >
           {/* Open quote */}
-          <div style={{ fontSize: 48, fontWeight: 300, color: 'var(--color-text-secondary)', lineHeight: 1, marginBottom: 10 }}>
+          <div className="text-5xl font-light text-haze dark:text-cool leading-none mb-2.5">
             "
           </div>
 
           {/* Quote text */}
-          <p style={{
-            fontSize: 'clamp(17px,2.4vw,28px)', fontWeight: 300, fontStyle: 'italic',
-            lineHeight: 1.55, letterSpacing: '-.01em', color: 'var(--color-text-primary)',
-            maxWidth: 700, margin: '0 auto 10px',
-          }}>
+          <p className="text-[clamp(17px,2.4vw,28px)] font-light italic leading-[1.55] tracking-[-0.01em] text-light-text dark:text-dark-text max-w-[700px] mx-auto mb-2.5">
             {t.quote}
           </p>
 
           {/* Close quote (rotated) */}
-          <div style={{
-            fontSize: 48, fontWeight: 300, color: 'var(--color-text-secondary)', lineHeight: 1,
-            marginBottom: '2rem', transform: 'rotate(180deg)', display: 'inline-block',
-          }}>
+          <div className="text-5xl font-light text-haze dark:text-cool leading-none mb-8 rotate-180 inline-block">
             "
           </div>
 
           {/* Author glass card */}
           <div
-            className={styles.glassCard}
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: 14,
-              borderRadius: 9999, padding: '10px 22px 10px 10px',
-            }}
+            className={`${styles.glassCard} inline-flex items-center gap-3.5 rounded-full py-2.5 pl-2.5 pr-5.5`}
           >
             <div
-              className={styles.neuCircle}
-              style={{
-                width: 44, height: 44,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 13, fontWeight: 700, color: 'var(--color-text-primary)', flexShrink: 0,
-              }}
+              className={`${styles.neuCircle} w-11 h-11 flex items-center justify-center text-[13px] font-bold text-light-text dark:text-dark-text shrink-0`}
             >
               {t.initials}
             </div>
-            <div style={{ textAlign: 'left' }}>
-              <p style={{ fontSize: 15, fontWeight: 500, color: 'var(--color-text-primary)' }}>{t.name}</p>
-              <p style={{ fontSize: 13, fontWeight: 400, color: 'var(--color-text-secondary)', marginTop: 1 }}>{t.role}</p>
+            <div className="text-left">
+              <p className="text-[15px] font-medium text-light-text dark:text-dark-text">{t.name}</p>
+              <p className="text-[13px] font-normal text-haze dark:text-cool mt-px">{t.role}</p>
             </div>
           </div>
         </div>
 
         {/* Source row */}
-        <div style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'flex-end',
-          gap: 12, marginTop: '2rem', paddingTop: '1.5rem',
-          borderTop: '1px solid var(--color-border-secondary)',
-        }}>
-          <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--color-text-tertiary)' }}>
+        <div className="flex items-center justify-end gap-3 mt-8 pt-6 border-t border-cool-pale dark:border-haze-deep">
+          <span className="text-[10px] font-bold tracking-[0.16em] uppercase text-cool dark:text-haze-light">
             Source
           </span>
-          <span style={{ fontSize: 22, fontWeight: 700, color: 'var(--color-text-secondary)' }}>{t.source}</span>
+          <span className="text-[22px] font-bold text-haze dark:text-cool">{t.source}</span>
         </div>
 
         {/* Dot indicators */}
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: '1.5rem' }}>
+        <div className="flex justify-center gap-2 mt-6">
           {TESTIMONIALS.map((_, i) => (
             <button
               key={i}
-              className={styles.dotBtn}
+              className={`${styles.dotBtn} w-2 h-2 rounded-full ${i === current ? 'bg-light-text dark:bg-dark-text scale-[1.4]' : 'bg-cool-pale dark:bg-haze-deep scale-100'}`}
               aria-label={`Go to testimonial ${i + 1}`}
               onClick={() => {
                 if (autoRef.current) clearInterval(autoRef.current);
                 goTo(i);
                 autoRef.current = setInterval(() => goTo(current + 1), AUTO_INTERVAL_MS);
-              }}
-              style={{
-                width: 8, height: 8, borderRadius: '50%',
-                background: i === current ? 'var(--color-text-primary)' : 'var(--color-border-secondary)',
-                transform: i === current ? 'scale(1.4)' : 'scale(1)',
               }}
             />
           ))}
@@ -272,42 +216,29 @@ const Testimonials: React.FC = () => {
       </div>
 
       {/* Divider */}
-      <div style={{ margin: '0 4rem', height: 1, background: 'var(--color-border-secondary)' }} />
+      <div className="mx-16 h-px bg-cool-pale dark:bg-haze-deep" />
 
       {/* ── TIME TO CONNECT ── */}
       <div
         id="connect"
-        style={{ padding: '5rem 4rem', textAlign: 'center' }}
+        className="py-20 px-16 text-center"
       >
-        <h2 style={{
-          fontSize: 'clamp(44px,7.5vw,108px)', fontWeight: 300,
-          lineHeight: .95, letterSpacing: '-.04em', color: 'var(--color-text-primary)', marginBottom: 12,
-        }}>
+        <h2 className="text-[clamp(44px,7.5vw,108px)] font-light leading-[0.95] tracking-[-0.04em] text-light-text dark:text-dark-text mb-3">
           Time to connect
         </h2>
-        <p style={{ fontSize: 15, fontWeight: 400, color: 'var(--color-text-secondary)', marginBottom: '2.5rem' }}>
+        <p className="text-[15px] font-normal text-haze dark:text-cool mb-10">
           Ready to build something extraordinary together?
         </p>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
+        <div className="flex items-center justify-center gap-3">
           <a
             href="#"
-            className={styles.shimmerHover}
-            style={{
-              fontSize: 13, fontWeight: 500, padding: '14px 36px',
-              borderRadius: 9999, background: 'var(--color-text-primary)', color: 'var(--color-text-inverse)',
-              textDecoration: 'none', boxShadow: '0 6px 24px var(--color-shadow-md)',
-              position: 'relative', overflow: 'hidden',
-            }}
+            className={`${styles.shimmerHover} text-[13px] font-medium py-3.5 px-9 rounded-full bg-light-text dark:bg-dark-text text-dark-text-primary dark:text-midnight no-underline shadow-md relative overflow-hidden`}
           >
             Get in Touch →
           </a>
           <a
             href="#"
-            className={styles.neuBtn}
-            style={{
-              fontSize: 13, fontWeight: 500, padding: '14px 36px',
-              color: 'var(--color-text-primary)', textDecoration: 'none', display: 'inline-block',
-            }}
+            className={`${styles.neuBtn} text-[13px] font-medium py-3.5 px-9 text-light-text dark:text-dark-text no-underline inline-block`}
           >
             View All Work
           </a>

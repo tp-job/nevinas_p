@@ -1,15 +1,28 @@
 /* TimelineScattered.module.css
    Matches interactive-v2.html #s-tl exactly
-   ─────────────────────────────────────────── */
+   ─────────────────────────────────────────────────────────────
+   FONT TOKEN MAP (index.css → local aliases)
+     --font-inter = "Inter", system-ui, sans-serif  (from index.css @theme)
+     --font-mono  = 'DM Mono', monospace            (local — not in index.css)
+   ───────────────────────────────────────────────────────────── */
 
 /* ── SLIDE CONTAINER */
 .slide {
+  /* ── Scoped font token: DM Mono is not in index.css @theme, defined here ── */
+  --font-mono: 'DM Mono', 'Fira Code', monospace;
+
   position: relative;
   min-height: 100svh;
   /* blueprint: padding:0 — NO py-20 px padding */
   padding: 0;
   overflow: hidden;
-  background: var(--color-bg-secondary);
+  background: var(--color-light-bg);
+  color: var(--color-light-text);
+}
+
+:global(.dark) .slide {
+  background: var(--color-dark-bg);
+  color: var(--color-dark-text);
 }
 
 /* ── FEATURE BLOCKS — absolute positioned corners */
@@ -26,8 +39,9 @@
 .featBr { bottom: 11%; right: 5%; text-align: right; }
 
 /* ── ARROW — blueprint: .feat-arr */
+/* ── Uses var(--font-mono) scoped above ── */
 .featArr {
-  font-family: var(--fm, 'DM Mono', monospace);
+  font-family: var(--font-mono);
   /* blueprint: .58rem — NOT text-xl */
   font-size: .58rem;
   color: var(--color-text-muted);
@@ -91,8 +105,9 @@
 
 /* ── BODY TEXT — blueprint: .feat-sub
    DM Mono monospace + clamp(.58rem,1vw,.72rem) — NOT text-sm */
+/* ── Uses var(--font-mono) scoped above ── */
 .featSub {
-  font-family: var(--fm, 'DM Mono', monospace);
+  font-family: var(--font-mono);
   font-size: clamp(.58rem, 1vw, .72rem);
   color: var(--color-text-secondary);
   line-height: 1.8;
@@ -106,12 +121,13 @@
 
 /* ── CENTER LABEL — blueprint: .tl-label
    bottom:5% NOT top-1/2 (old TSX was vertically centered) */
+/* ── Uses var(--font-mono) scoped above ── */
 .tlLabel {
   position: absolute;
   bottom: 5%;
   left: 50%;
   transform: translateX(-50%);
-  font-family: var(--fm, 'DM Mono', monospace);
+  font-family: var(--font-mono);
   font-size: .52rem;
   color: var(--color-text-secondary);
   letter-spacing: .22em;
@@ -132,21 +148,21 @@
 
 /* ── RESPONSIVE */
 @media (max-width: 767px) {
-  .feat       { display: none; } /* hide absolute positioned feats on mobile */
-  .tlLabel    { display: none; }
+  .feat        { display: none; } /* hide absolute positioned feats on mobile */
+  .tlLabel     { display: none; }
   .mobileStack { display: flex; }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-  .feat     { max-width: 200px; }
-  .featNum  { font-size: clamp(2rem, 6vw, 3.5rem); }
+  .feat    { max-width: 200px; }
+  .featNum { font-size: clamp(2rem, 6vw, 3.5rem); }
 }
 
 @media (min-width: 1025px) {
-  .feat { max-width: 40vw; max-width: min(280px, 40vw); }
+  .feat { max-width: min(280px, 40vw); }
 }
 
-/* mobile item alignment */
+/* ── MOBILE ITEM STYLES ── */
 .mobileItem {
   width: 100%;
 }
@@ -176,8 +192,9 @@
   margin-bottom: .4rem;
 }
 
+/* ── Uses var(--font-mono) scoped above ── */
 .mobileSub {
-  font-family: var(--fm, 'DM Mono', monospace);
+  font-family: var(--font-mono);
   font-size: clamp(.62rem, 3vw, .72rem);
   color: var(--color-text-secondary);
   line-height: 1.8;

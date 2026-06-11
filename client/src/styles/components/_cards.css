@@ -275,8 +275,8 @@
   }
 
   .neu-light {
-      background: #f0f1f5;
-      box-shadow: var(--shadow-light-neu);
+      background: var(--color-light-bg);
+      box-shadow: var(--shadow-neu-light);
   }
 
   .neu-light:focus,
@@ -287,8 +287,8 @@
   }
 
   .neu-dark {
-      background: #1a1e30;
-      box-shadow: var(--shadow-dark-neu);
+      background: var(--color-dark-bg);
+      box-shadow: var(--shadow-neu-dark);
   }
 
   .neu-dark:focus,

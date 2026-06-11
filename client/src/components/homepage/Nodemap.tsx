@@ -113,12 +113,7 @@ interface PillNodeProps {
 const PillNode: React.FC<PillNodeProps> = ({ label, style }) => (
   <div style={style}>
     <span
-      className={styles.pillGlass}
-      style={{
-        display: 'inline-flex', alignItems: 'center', height: 28,
-        padding: '0 14px', borderRadius: 9999,
-        fontSize: 12, fontWeight: 500, color: 'var(--color-text-primary)', whiteSpace: 'nowrap',
-      }}
+      className={`${styles.pillGlass} inline-flex items-center h-7 px-3.5 rounded-full text-xs font-medium text-light-text dark:text-dark-text whitespace-nowrap`}
     >
       {label}
     </span>
@@ -128,10 +123,9 @@ const PillNode: React.FC<PillNodeProps> = ({ label, style }) => (
 interface DotNodeProps { style?: React.CSSProperties; faded?: boolean; }
 const DotNode: React.FC<DotNodeProps> = ({ style, faded }) => (
   <div style={style}>
-    <span style={{
-      width: 9, height: 9, borderRadius: '50%', background: 'var(--color-text-primary)',
-      display: 'inline-block', opacity: faded ? 0.4 : 1,
-    }} />
+    <span
+      className={`inline-block w-[9px] h-[9px] rounded-full bg-light-text dark:bg-dark-text ${faded ? 'opacity-40' : 'opacity-100'}`}
+    />
   </div>
 );
 
@@ -144,13 +138,7 @@ const NodeMap: React.FC = () => {
 
       {/* Floating orb */}
       <div
-        className={styles.orbFloat}
-        style={{
-          position: 'absolute', width: 400, height: 400, borderRadius: '50%',
-          background: 'radial-gradient(circle, var(--color-border-secondary) 15%, transparent 70%)',
-          top: '50%', left: '50%',
-          pointerEvents: 'none',
-        }}
+        className={`${styles.orbFloat} absolute w-[400px] h-[400px] rounded-full top-1/2 left-1/2 pointer-events-none bg-[radial-gradient(circle,theme(--color-cool-pale/.15),transparent_70%)]`}
       />
 
       <div style={{ padding: '7rem 4rem 5rem', position: 'relative' }}>
@@ -165,19 +153,19 @@ const NodeMap: React.FC = () => {
             preserveAspectRatio="xMidYMid meet"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <line x1="40"  y1="92"  x2="860" y2="92"  stroke="var(--color-border-primary)" strokeWidth="1" />
-            <line x1="40"  y1="210" x2="860" y2="210" stroke="var(--color-border-primary)" strokeWidth="1" />
-            <path className={styles.lineDraw}                    d="M450,118 C400,92 290,92 190,92"   stroke="var(--color-matte-azure)" strokeWidth="1.5" fill="none" />
-            <path className={`${styles.lineDraw} ${styles.lineD1}`} d="M450,118 C510,92 630,92 695,92"   stroke="var(--color-matte-azure)" strokeWidth="1.5" fill="none" />
-            <path className={`${styles.lineDraw} ${styles.lineD2}`} d="M450,182 C390,210 260,210 138,210" stroke="var(--color-matte-azure)" strokeWidth="1.5" fill="none" />
-            <path className={`${styles.lineDraw} ${styles.lineD2}`} d="M450,182 C400,210 270,210 198,210" stroke="var(--color-matte-azure)" strokeWidth="1.5" fill="none" opacity=".5" />
-            <path className={`${styles.lineDraw} ${styles.lineD3}`} d="M450,182 C515,210 645,210 716,210" stroke="var(--color-matte-azure)" strokeWidth="1.5" fill="none" />
-            <path className={`${styles.lineDraw} ${styles.lineD3}`} d="M450,182 C530,210 700,210 790,210" stroke="var(--color-matte-azure)" strokeWidth="1.5" fill="none" opacity=".5" />
-            <circle cx="138" cy="210" r="4" fill="var(--color-text-primary)" />
-            <circle cx="695" cy="92"  r="4" fill="var(--color-text-primary)" />
-            <circle cx="790" cy="210" r="4" fill="var(--color-text-primary)" />
-            <circle cx="36"  cy="92"  r="4" fill="var(--color-text-primary)" />
-            <circle cx="843" cy="92"  r="4" fill="var(--color-text-primary)" />
+            <line x1="40"  y1="92"  x2="860" y2="92"  className="stroke-light-border dark:stroke-dark-border" stroke="currentColor" strokeWidth="1" />
+            <line x1="40"  y1="210" x2="860" y2="210" className="stroke-light-border dark:stroke-dark-border" stroke="currentColor" strokeWidth="1" />
+            <path className={`${styles.lineDraw} stroke-matte-azure`}                    d="M450,118 C400,92 290,92 190,92"   stroke="currentColor" strokeWidth="1.5" fill="none" />
+            <path className={`${styles.lineDraw} ${styles.lineD1} stroke-matte-azure`} d="M450,118 C510,92 630,92 695,92"   stroke="currentColor" strokeWidth="1.5" fill="none" />
+            <path className={`${styles.lineDraw} ${styles.lineD2} stroke-matte-azure`} d="M450,182 C390,210 260,210 138,210" stroke="currentColor" strokeWidth="1.5" fill="none" />
+            <path className={`${styles.lineDraw} ${styles.lineD2} stroke-matte-azure`} d="M450,182 C400,210 270,210 198,210" stroke="currentColor" strokeWidth="1.5" fill="none" opacity=".5" />
+            <path className={`${styles.lineDraw} ${styles.lineD3} stroke-matte-azure`} d="M450,182 C515,210 645,210 716,210" stroke="currentColor" strokeWidth="1.5" fill="none" />
+            <path className={`${styles.lineDraw} ${styles.lineD3} stroke-matte-azure`} d="M450,182 C530,210 700,210 790,210" stroke="currentColor" strokeWidth="1.5" fill="none" opacity=".5" />
+            <circle cx="138" cy="210" r="4" className="fill-light-text dark:fill-dark-text" />
+            <circle cx="695" cy="92"  r="4" className="fill-light-text dark:fill-dark-text" />
+            <circle cx="790" cy="210" r="4" className="fill-light-text dark:fill-dark-text" />
+            <circle cx="36"  cy="92"  r="4" className="fill-light-text dark:fill-dark-text" />
+            <circle cx="843" cy="92"  r="4" className="fill-light-text dark:fill-dark-text" />
           </svg>
 
           {/* Top row nodes */}
@@ -224,21 +212,14 @@ const NodeMap: React.FC = () => {
 
         {/* ── CTA BELOW MAP ── */}
         <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-          <p style={{
-            fontSize: 15, fontWeight: 400, lineHeight: 1.8, color: 'var(--color-text-secondary)',
-            maxWidth: 360, margin: '0 auto 1.75rem',
-          }}>
+          <p className="text-[15px] font-normal leading-[1.8] text-haze dark:text-cool max-w-[360px] mx-auto mb-7">
             KYBR brings AI to a new era of hardware engineering beyond the production floor.
           </p>
           <a
             href="#"
-            className={styles.shimmerHover}
+            className={`${styles.shimmerHover} inline-flex items-center gap-2.5 text-[13px] font-medium py-3.5 px-8 rounded-full text-dark-text-primary no-underline shadow-md relative overflow-hidden`}
             style={{
-              display: 'inline-flex', alignItems: 'center', gap: 10,
-              fontSize: 13, fontWeight: 500, padding: '14px 32px',
-              borderRadius: 9999, background: 'var(--color-button-primary-bg)', color: 'var(--color-button-primary-text)',
-              textDecoration: 'none', boxShadow: '0 6px 24px var(--color-shadow-md)',
-              position: 'relative', overflow: 'hidden',
+              background: 'var(--color-button-primary-bg)',
             }}
           >
             <MiniHubIcon />
@@ -260,18 +241,18 @@ const NodeMap: React.FC = () => {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
               <BarIcon />
-              <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--color-text-primary)' }}>
+              <span className="text-xs font-bold tracking-[0.1em] uppercase text-light-text dark:text-dark-text">
                 KEYDATA™
               </span>
             </div>
-            <p style={{ fontSize: 28, fontWeight: 300, letterSpacing: '-.02em', color: 'var(--color-text-primary)', marginBottom: 4 }}>↑ 3.2×</p>
-            <p style={{ fontSize: 12, fontWeight: 500, color: 'var(--color-text-secondary)' }}>Faster ticket resolution time</p>
+            <p className="text-[28px] font-light tracking-[-0.02em] text-light-text dark:text-dark-text mb-1">↑ 3.2×</p>
+            <p className="text-xs font-medium text-haze dark:text-cool">Faster ticket resolution time</p>
           </div>
 
           {/* Quote */}
           <div>
-            <p style={{ fontSize: 20, fontWeight: 700, letterSpacing: '-.02em', color: 'var(--color-text-primary)', marginBottom: 10 }}>zuora</p>
-            <p style={{ fontSize: 13, fontWeight: 400, lineHeight: 1.7, color: 'var(--color-text-secondary)' }}>
+            <p className="text-xl font-bold tracking-[-0.02em] text-light-text dark:text-dark-text mb-2.5">zuora</p>
+            <p className="text-[13px] font-normal leading-[1.7] text-haze dark:text-cool">
               "We can now predict, with much higher confidence, how code changes might impact customers{' '}
               <em>before</em> deployment." — <em>Mu Yang, SVP</em>
             </p>
@@ -281,26 +262,20 @@ const NodeMap: React.FC = () => {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
               <EyeIcon />
-              <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '.04em', color: 'var(--color-text-primary)' }}>cayuse</span>
+              <span className="text-[13px] font-bold tracking-[0.04em] text-light-text dark:text-dark-text">cayuse</span>
             </div>
-            <p style={{ fontSize: 28, fontWeight: 300, letterSpacing: '-.02em', color: 'var(--color-text-primary)', marginBottom: 4 }}>↓ 87%</p>
-            <p style={{ fontSize: 12, fontWeight: 500, color: 'var(--color-text-secondary)' }}>Defects found before release</p>
+            <p className="text-[28px] font-light tracking-[-0.02em] text-light-text dark:text-dark-text mb-1">↓ 87%</p>
+            <p className="text-xs font-medium text-haze dark:text-cool">Defects found before release</p>
           </div>
 
           {/* CTA card */}
           <div className={styles.neuInset} style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <p style={{ fontSize: 13, fontWeight: 400, lineHeight: 1.7, color: 'var(--color-text-secondary)' }}>
+            <p className="text-[13px] font-normal leading-[1.7] text-haze dark:text-cool">
               Connect your codebase. Our models fix, understand, and simulate across large codebases in any language.
             </p>
             <a
               href="#"
-              className={`${styles.neuBtn} ${styles.shimmerHover}`}
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: 8,
-                fontSize: 12, fontWeight: 600, padding: '10px 20px',
-                color: 'var(--color-text-primary)', textDecoration: 'none',
-                width: 'fit-content', position: 'relative', overflow: 'hidden',
-              }}
+              className={`${styles.neuBtn} ${styles.shimmerHover} inline-flex items-center gap-2 text-xs font-semibold py-2.5 px-5 text-light-text dark:text-dark-text no-underline w-fit relative overflow-hidden`}
             >
               <SignUpIcon />
               Sign up
@@ -310,32 +285,22 @@ const NodeMap: React.FC = () => {
       </div>
 
       {/* ── SIM-1 ── */}
-      <div style={{
-        position: 'relative', padding: '6rem 4rem',
-        display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem',
-        alignItems: 'center', borderTop: '1px solid var(--color-border-subtle)',
-      }}>
+      <div className="relative py-24 px-16 grid grid-cols-2 gap-12 items-center border-t border-midnight/10 dark:border-periwinkle/10">
         <div style={{ position: 'relative', zIndex: 2 }}>
-          <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '.2em', textTransform: 'uppercase', color: 'var(--color-text-secondary)', marginBottom: '1.5rem' }}>
+          <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-haze dark:text-cool mb-6">
             Introducing
           </p>
-          <h2 style={{ fontSize: 'clamp(26px,4vw,50px)', fontWeight: 300, lineHeight: 1.1, letterSpacing: '-.025em', color: 'var(--color-text-primary)' }}>
+          <h2 className="text-[clamp(26px,4vw,50px)] font-light leading-[1.1] tracking-[-0.025em] text-light-text dark:text-dark-text">
             Sim-1<br />
-            <span style={{ color: 'var(--color-text-secondary)' }}>Our smartest models capable of</span><br />
-            <em style={{ fontStyle: 'italic', fontWeight: 400 }}>simulating how code runs</em>
+            <span className="text-haze dark:text-cool">Our smartest models capable of</span><br />
+            <em className="italic font-normal">simulating how code runs</em>
           </h2>
-          <p style={{ fontSize: 15, fontWeight: 400, lineHeight: 1.8, color: 'var(--color-text-secondary)', maxWidth: 300, marginTop: '2rem', marginBottom: '2rem' }}>
+          <p className="text-[15px] font-normal leading-[1.8] text-haze dark:text-cool max-w-[300px] mt-8 mb-8">
             A new category of models built to understand and predict how large codebases behave in complex scenarios.
           </p>
           <a
             href="#"
-            className={`${styles.neuBtn} ${styles.shimmerHover}`}
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: 10,
-              fontSize: 13, fontWeight: 500, padding: '13px 28px',
-              color: 'var(--color-text-primary)', textDecoration: 'none',
-              position: 'relative', overflow: 'hidden',
-            }}
+            className={`${styles.neuBtn} ${styles.shimmerHover} inline-flex items-center gap-2.5 text-[13px] font-medium py-3.5 px-7 text-light-text dark:text-dark-text no-underline relative overflow-hidden`}
           >
             Read More
           </a>
@@ -343,29 +308,21 @@ const NodeMap: React.FC = () => {
       </div>
 
       {/* ── DEBUG EDITORIAL ── */}
-      <div style={{
-        padding: '5rem 4rem 6rem',
-        display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem',
-        alignItems: 'end', borderTop: '1px solid var(--color-border-subtle)',
-      }}>
-        <h2 style={{ fontSize: 'clamp(30px,4.5vw,58px)', fontWeight: 300, lineHeight: 1.08, letterSpacing: '-.03em', color: 'var(--color-text-primary)' }}>
+      <div className="py-20 px-16 pb-24 grid grid-cols-2 gap-16 items-end border-t border-midnight/10 dark:border-periwinkle/10">
+        <h2 className="text-[clamp(30px,4.5vw,58px)] font-light leading-[1.08] tracking-[-0.03em] text-light-text dark:text-dark-text">
           Debug any problem down to<br />
-          <span style={{ color: 'var(--color-text-muted)' }}>a line of code, and make sure</span><br />
+          <span className="text-periwinkle-mid dark:text-haze-light">a line of code, and make sure</span><br />
           it never happens again
         </h2>
-        <div style={{ borderLeft: '2px solid var(--color-border-primary)', paddingLeft: '1.5rem' }}>
-          <p style={{ fontSize: 15, fontWeight: 400, lineHeight: 1.8, color: 'var(--color-text-secondary)', marginBottom: '1.5rem' }}>
+        <div className="border-l-2 border-light-border dark:border-dark-border pl-6">
+          <p className="text-[15px] font-normal leading-[1.8] text-haze dark:text-cool mb-6">
             The first-of-its-kind agentic system that can understand and predict state in large distributed codebases.
           </p>
           <a
             href="#"
-            className={styles.shimmerHover}
+            className={`${styles.shimmerHover} inline-flex items-center gap-2 text-[13px] font-medium py-3.5 px-7 rounded-full text-dark-text-primary no-underline shadow-md relative overflow-hidden`}
             style={{
-              display: 'inline-flex', alignItems: 'center', gap: 8,
-              fontSize: 13, fontWeight: 500, padding: '13px 28px',
-              borderRadius: 9999, background: 'var(--color-button-primary-bg)', color: 'var(--color-button-primary-text)',
-              textDecoration: 'none', boxShadow: '0 6px 20px var(--color-shadow-md)',
-              position: 'relative', overflow: 'hidden',
+              background: 'var(--color-button-primary-bg)',
             }}
           >
             Get Started ↗

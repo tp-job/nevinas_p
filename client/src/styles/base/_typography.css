@@ -6,12 +6,12 @@
 
   body {
       background: var(--bg-theme-light);
-      color: var(--color-light-text);
+      color: var(--color-text-primary);
   }
 
   .dark body {
       background: var(--bg-theme-dark);
-      color: var(--color-dark-text);
+      color: var(--color-text-primary);
   }
 
   /* Theme Surfaces */

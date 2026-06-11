@@ -20,18 +20,20 @@ const About: FC = () => {
       <img
         src={fullBody}
         alt="nevinas-isekai"
+        loading="lazy"
+        decoding="async"
         className="absolute right-[2%] bottom-0 h-[65%] w-auto pointer-events-none select-none z-0 opacity-80 hidden xl:block animate-float-y"
         style={{ animationDuration: '8s' }}
       />
 
       <div className="relative z-10">
-        <h4 className="mb-1 text-lg text-center text-[var(--color-text-secondary)]">
+        <h4 className="mb-1 text-lg text-center text-haze dark:text-cool">
           Introduction
         </h4>
-        <h2 className="mb-1 text-4xl sm:text-5xl text-center text-[var(--color-text-primary)]">
+        <h2 className="mb-1 text-4xl sm:text-5xl text-center text-light-text dark:text-dark-text">
           About Me
         </h2>
-        <h3 className="text-xl text-center font-zen text-[var(--color-text-secondary)]">
+        <h3 className="text-xl text-center font-zen text-haze dark:text-cool">
           私について
         </h3>
         <div className="flex flex-col items-center w-full gap-20 my-20 lg:flex-row">
@@ -39,11 +41,13 @@ const About: FC = () => {
             <img
               src={avatarUrl}
               alt="user"
-              className="w-64 sm:w-80 rounded-3xl max-w-none"
+              loading="lazy"
+              decoding="async"
+              className="w-64 sm:w-80 rounded-3xl max-w-none object-cover"
             />
           </div>
           <div className="flex-1">
-            <p className="max-w-2xl mb-10 text-[var(--color-text-primary)]">
+            <p className="max-w-2xl mb-10 text-light-text dark:text-dark-text">
               I am passionate about exploring the world of web development, with a
               focus on HTML, CSS, and JavaScript to craft visually appealing and
               interactive user interfaces.
@@ -53,27 +57,28 @@ const About: FC = () => {
                 <li
                   key={items.id}
                   className="border-[.5px] card-glass p-6 cursor-pointer hover:-translate-y-1 duration-500"
+                  tabIndex={0}
                 >
                   <i
-                    className={`${items.icon} text-5xl text-[var(--color-text-primary)]`}
+                    className={`${items.icon} text-5xl text-light-text dark:text-dark-text`}
                   ></i>
-                  <h3 className="my-4 font-medium text-[var(--color-text-primary)]">
+                  <h3 className="my-4 font-medium text-light-text dark:text-dark-text">
                     {items.title}
                   </h3>
-                  <p className="text-sm text-[var(--color-text-secondary)]">
+                  <p className="text-sm text-haze dark:text-cool">
                     {items.detail}
                   </p>
                 </li>
               ))}
             </ul>
-            <h4 className="my-6 text-[var(--color-text-secondary)]">
+            <h4 className="my-6 text-haze dark:text-cool">
               Tools i use
             </h4>
             <ul className="flex items-center gap-3 sm:gap-5">
               {DataTools.map((items) => (
                 <li
                   key={items.id}
-                  className="flex items-center justify-center w-12 duration-500 border border-[var(--color-border-primary)] rounded-lg cursor-pointer sm:w-14 aspect-square hover:-translate-y-1 bg-[var(--color-surface-secondary)]/50 backdrop-blur-sm"
+                  className="flex items-center justify-center w-12 duration-500 border border-light-border dark:border-dark-border rounded-lg cursor-pointer sm:w-14 aspect-square hover:-translate-y-1 bg-light-surface-2/50 dark:bg-dark-surface-2/50 backdrop-blur-sm"
                 >
                   <i
                     className={`${items.icon} text-2xl`}

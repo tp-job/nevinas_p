@@ -56,44 +56,44 @@ const labelVariant = {
 
 /* ── SVG Icons — exact from blueprint HTML */
 const IconCrosshair = () => (
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-    <circle cx="16" cy="16" r="10" stroke="var(--color-text-primary)" strokeWidth="1" />
-    <circle cx="16" cy="16" r="3"  fill="var(--color-text-primary)" />
-    <line x1="16" y1="2"  x2="16" y2="8"  stroke="var(--color-text-primary)" strokeWidth="1" />
-    <line x1="16" y1="24" x2="16" y2="30" stroke="var(--color-text-primary)" strokeWidth="1" />
-    <line x1="2"  y1="16" x2="8"  y2="16" stroke="var(--color-text-primary)" strokeWidth="1" />
-    <line x1="24" y1="16" x2="30" y2="16" stroke="var(--color-text-primary)" strokeWidth="1" />
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" className="text-light-text dark:text-dark-text">
+    <circle cx="16" cy="16" r="10" stroke="currentColor" strokeWidth="1" />
+    <circle cx="16" cy="16" r="3"  fill="currentColor" />
+    <line x1="16" y1="2"  x2="16" y2="8"  stroke="currentColor" strokeWidth="1" />
+    <line x1="16" y1="24" x2="16" y2="30" stroke="currentColor" strokeWidth="1" />
+    <line x1="2"  y1="16" x2="8"  y2="16" stroke="currentColor" strokeWidth="1" />
+    <line x1="24" y1="16" x2="30" y2="16" stroke="currentColor" strokeWidth="1" />
   </svg>
 );
 
 const IconHalfCircle = () => (
-  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-    <circle cx="14" cy="14" r="12" stroke="var(--color-text-primary)" strokeWidth="1" />
-    <path   d="M14 2 A12 12 0 0 1 14 26 Z" fill="var(--color-text-primary)" />
-    <circle cx="14" cy="14" r="3" fill="var(--color-bg-primary)" />
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" className="text-light-text dark:text-dark-text">
+    <circle cx="14" cy="14" r="12" stroke="currentColor" strokeWidth="1" />
+    <path   d="M14 2 A12 12 0 0 1 14 26 Z" fill="currentColor" />
+    <circle cx="14" cy="14" r="3" className="fill-light-bg dark:fill-dark-bg" />
   </svg>
 );
 
 const IconDotGrid = () => (
   /* diagonal azure accent — matches blueprint exactly */
-  <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-    <rect x="2"  y="2"  width="6" height="6" rx="1" fill="var(--color-matte-azure)" />
-    <rect x="10" y="2"  width="6" height="6" rx="1" fill="var(--color-text-primary)" />
-    <rect x="18" y="2"  width="6" height="6" rx="1" fill="var(--color-text-primary)" />
-    <rect x="2"  y="10" width="6" height="6" rx="1" fill="var(--color-text-primary)" />
-    <rect x="10" y="10" width="6" height="6" rx="1" fill="var(--color-matte-azure)" />
-    <rect x="18" y="10" width="6" height="6" rx="1" fill="var(--color-text-primary)" />
-    <rect x="2"  y="18" width="6" height="6" rx="1" fill="var(--color-text-primary)" />
-    <rect x="10" y="18" width="6" height="6" rx="1" fill="var(--color-text-primary)" />
-    <rect x="18" y="18" width="6" height="6" rx="1" fill="var(--color-matte-azure)" />
+  <svg width="36" height="36" viewBox="0 0 36 36" fill="none" className="text-light-text dark:text-dark-text">
+    <rect x="2"  y="2"  width="6" height="6" rx="1" className="fill-matte-azure" />
+    <rect x="10" y="2"  width="6" height="6" rx="1" fill="currentColor" />
+    <rect x="18" y="2"  width="6" height="6" rx="1" fill="currentColor" />
+    <rect x="2"  y="10" width="6" height="6" rx="1" fill="currentColor" />
+    <rect x="10" y="10" width="6" height="6" rx="1" className="fill-matte-azure" />
+    <rect x="18" y="10" width="6" height="6" rx="1" fill="currentColor" />
+    <rect x="2"  y="18" width="6" height="6" rx="1" fill="currentColor" />
+    <rect x="10" y="18" width="6" height="6" rx="1" fill="currentColor" />
+    <rect x="18" y="18" width="6" height="6" rx="1" className="fill-matte-azure" />
   </svg>
 );
 
 const IconRings = () => (
-  <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-    <circle cx="13" cy="13" r="9" stroke="var(--color-text-primary)" strokeWidth="2" />
-    <circle cx="23" cy="13" r="9" stroke="var(--color-matte-azure)" strokeWidth="2" />
-    <circle cx="13" cy="22" r="9" stroke="var(--color-matte-azure)" strokeWidth="2" fill="none" />
+  <svg width="36" height="36" viewBox="0 0 36 36" fill="none" className="text-light-text dark:text-dark-text">
+    <circle cx="13" cy="13" r="9" stroke="currentColor" strokeWidth="2" />
+    <circle cx="23" cy="13" r="9" className="stroke-matte-azure" strokeWidth="2" />
+    <circle cx="13" cy="22" r="9" className="stroke-matte-azure" strokeWidth="2" fill="none" />
   </svg>
 );
 

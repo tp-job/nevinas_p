@@ -1,13 +1,36 @@
 @layer reset {
-  /* Selection styling */
+  /* Selection styling — Design System v3.2 Section 18 */
   ::selection {
-      background-color: #f83b64;
-      color: #ffffff;
+      background-color: var(--color-selection-bg);
+      color: var(--color-selection-text);
   }
 
   .dark ::selection {
-      background-color: #f83b64;
-      color: #ffffff;
+      background-color: var(--color-selection-bg-dark);
+      color: var(--color-selection-text-dark);
+  }
+
+  /* Focus accessibility — Design System v3.2 Section 16 */
+  *:focus {
+      outline: none;
+  }
+
+  *:focus-visible {
+      outline: 2px solid var(--color-border-focus);
+      outline-offset: 3px;
+      border-radius: 6px;
+  }
+
+  .rounded-full:focus-visible,
+  [class*="rounded-full"]:focus-visible,
+  button:focus-visible,
+  a:focus-visible {
+      /* Preserve pill shapes on focus and let outline round correctly */
+      border-radius: 9999px;
+  }
+
+  :focus:not(:focus-visible) {
+      outline: none;
   }
 
   /* Optimized motion slide rendering */
@@ -31,27 +54,27 @@
   }
 
   ::-webkit-scrollbar-track {
-      background: var(--color-light-bg, #f8fafc);
+      background: var(--color-light-bg);
   }
 
   ::-webkit-scrollbar-thumb {
-      background: rgba(89, 131, 252, 0.25);
+      background: var(--color-sub-french-50);
       border-radius: 3px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-      background: rgba(89, 131, 252, 0.45);
+      background: var(--color-cool);
   }
 
   .dark ::-webkit-scrollbar-track {
-      background: var(--color-dark-bg, #1e202c);
+      background: var(--color-dark-bg);
   }
 
   .dark ::-webkit-scrollbar-thumb {
-      background: rgba(89, 131, 252, 0.30);
+      background: var(--color-sub-french-25);
   }
 
   .dark ::-webkit-scrollbar-thumb:hover {
-      background: rgba(150, 78, 194, 0.50);
+      background: var(--color-sub-mount-35);
   }
 }

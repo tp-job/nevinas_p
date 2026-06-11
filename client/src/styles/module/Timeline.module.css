@@ -1,0 +1,484 @@
+/* ═══════════════════════════════════════════════════════════════════
+   Timeline — Nocturnal Atelier DS v3.2
+   ─────────────────────────────────────────────────────────────────
+   Main palette  : Periwinkle #C8CDEB · Cool #878CB4 · Haze #465078
+                   Midnight #1E233C   · Charcoal #0A0F19
+   Sub-palette   : French Gray #B8BED7 · Cool Gray Sub #AFAECC
+                   (effects & atmosphere only — never text/borders/btns)
+   Shadow tokens : --shadow-sm / --shadow-md / --shadow-glow (DS §3)
+   Glass recipe  : DS §5.2 — exact specular values
+   Typography    : Inter 300–600 only. Headings ≤ font-normal (400).
+                   Labels font-semibold (600) — sole exception.
+═══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Root section ──────────────────────────────────────────── */
+.tl-root {
+  font-family: var(--font-inter, "Inter", system-ui, sans-serif);
+}
+
+/* ── 2. Outer wrapper ─────────────────────────────────────────── */
+.tl-wrapper {
+  position: relative;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 8%;
+}
+
+/* ── 3. Vertical spine ────────────────────────────────────────── */
+/*
+   Sub-palette atmospheric gradient — French Gray → Cool Gray Sub.
+   Per DS §1.10 decision matrix: "Background radial glow → Mix freely".
+   The spine is atmospheric decoration, not a structural UI border.
+*/
+.tl-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    180deg,
+    transparent                      0%,
+    rgba(184, 190, 215, 0.00)        2%,
+    rgba(184, 190, 215, 0.50)        8%,   /* French Gray — sub-palette */
+    rgba(175, 174, 204, 0.35)       50%,   /* Cool Gray Sub — sub-palette */
+    rgba(184, 190, 215, 0.50)       92%,
+    rgba(184, 190, 215, 0.00)       98%,
+    transparent                     100%
+  );
+}
+
+.dark .tl-line {
+  background: linear-gradient(
+    180deg,
+    transparent                     0%,
+    rgba(200, 205, 235, 0.00)       2%,
+    rgba(200, 205, 235, 0.12)       8%,   /* DS --dark-border */
+    rgba(200, 205, 235, 0.09)      50%,
+    rgba(200, 205, 235, 0.12)      92%,
+    rgba(200, 205, 235, 0.00)      98%,
+    transparent                    100%
+  );
+}
+
+/* ── 4. Active tracking dot ───────────────────────────────────── */
+/*
+   Main palette: Periwinkle #C8CDEB (light) / Cool Gray #878CB4 (dark).
+   Three-ring glow: solid core → rgba ring → diffuse halo.
+   transition: DS §17 hover lift 0.20–0.30s + [.22,1,.36,1] ease.
+*/
+.tl-dot {
+  position: absolute;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--color-periwinkle);
+  box-shadow:
+    0 0 0 3px  rgba(200, 205, 235, 0.22),
+    0 0 0 7px  rgba(200, 205, 235, 0.09),
+    0 0 18px 2px rgba(200, 205, 235, 0.40);
+  transition: top 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 2;
+}
+
+.dark .tl-dot {
+  background: var(--color-cool);
+  box-shadow:
+    0 0 0 3px  rgba(135, 140, 180, 0.22),
+    0 0 0 7px  rgba(135, 140, 180, 0.09),
+    0 0 18px 2px rgba(135, 140, 180, 0.35);
+}
+
+/* Pulse ring — sub-palette French Gray as atmospheric glow */
+.tl-dot::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid rgba(184, 190, 215, 0.30);  /* French Gray — sub-palette effect */
+  animation: tlDotPulse 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.dark .tl-dot::after {
+  border-color: rgba(175, 174, 204, 0.18);       /* Cool Gray Sub — sub-palette */
+}
+
+@keyframes tlDotPulse {
+  0%   { transform: scale(1);   opacity: 0.75; }
+  60%  { transform: scale(1.7); opacity: 0.00; }
+  100% { transform: scale(1.7); opacity: 0.00; }
+}
+
+/* ── 5. Section row ───────────────────────────────────────────── */
+.tl-section {
+  margin-bottom: 4.5rem;
+}
+
+/* ── 6. Two-column grid ───────────────────────────────────────── */
+.tl-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+}
+
+/* ── 7. Card wrap (positions card left / right of spine) ─────── */
+.tl-card-wrap {
+  display: flex;
+  padding: 0 2rem;            /* creates the gap between card edge and spine */
+}
+
+/* ── 8. Card surface — DS §5.2 glass recipe ──────────────────── */
+/*
+   Light: Surface layer rgba(255,255,255,0.55) + blur(12px)  (DS §5.1)
+   Dark:  Surface layer rgba(30,35,60,0.50)    + blur(12px)  (DS §5.1)
+   Shadow: DS shadow-sm token exact values
+   Hover: DS rule — translateY only, never scale(); max −2px
+*/
+.tl-card {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  padding: 1.5rem 1.75rem;
+  border-radius: 1.25rem;                             /* DS lg — 20px */
+
+  /* Glass surface — light */
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.65) 0%,
+    rgba(255, 255, 255, 0.28) 40%,
+    rgba(255, 255, 255, 0.12) 100%
+  );
+  backdrop-filter: blur(20px) saturate(160%) brightness(1.04);
+  -webkit-backdrop-filter: blur(20px) saturate(160%) brightness(1.04);
+
+  /* DS §5.2 exact border values */
+  border-top:    1px solid rgba(255, 255, 255, 0.90);
+  border-left:   1px solid rgba(255, 255, 255, 0.75);
+  border-right:  1px solid rgba(200, 205, 235, 0.20);
+  border-bottom: 1px solid rgba(200, 205, 235, 0.15);
+
+  /* DS shadow-sm token */
+  box-shadow:
+    0  2px  8px rgba(30, 35, 60, 0.08),
+    0  0    0 1px rgba(30, 35, 60, 0.05),
+    inset 0  1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(30,  35, 60, 0.04);
+
+  transition:
+    background   0.30s ease,
+    border-color 0.30s ease,
+    box-shadow   0.30s ease,
+    transform    0.30s cubic-bezier(0.22, 1, 0.36, 1);
+
+  overflow: visible;            /* allow ::after connector to escape */
+}
+
+/* Hover — translateY only (DS §20 do/don't) */
+.tl-card:hover {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.80) 0%,
+    rgba(255, 255, 255, 0.50) 40%,
+    rgba(255, 255, 255, 0.25) 100%
+  );
+  box-shadow:
+    0  8px 24px rgba(30, 35, 60, 0.12),
+    0  0    0 1px rgba(30, 35, 60, 0.06),
+    inset 0  1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(30, 35, 60, 0.04);
+  transform: translateY(-2px);
+}
+
+/* Dark mode base — DS §5.2 dark glass */
+.dark .tl-card {
+  background: linear-gradient(
+    145deg,
+    rgba(30, 35, 60, 0.60) 0%,
+    rgba(46, 53, 88, 0.40) 40%,
+    rgba(10, 15, 25, 0.25) 100%
+  );
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(200, 205, 235, 0.10);    /* DS --dark-border */
+  box-shadow:
+    0  8px 32px rgba(0, 0, 0, 0.50),
+    0  2px  8px rgba(0, 0, 0, 0.28),
+    inset 0  1px 0 rgba(200, 205, 235, 0.10),
+    inset 0 -1px 0 rgba(0,   0,   0, 0.18);
+}
+
+.dark .tl-card:hover {
+  background: linear-gradient(
+    145deg,
+    rgba(46, 53, 88, 0.70) 0%,
+    rgba(46, 53, 88, 0.50) 40%,
+    rgba(10, 15, 25, 0.35) 100%
+  );
+  border-color: rgba(200, 205, 235, 0.18);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.55),
+    0  2px  8px rgba(0, 0, 0, 0.28),
+    inset 0  1px 0 rgba(200, 205, 235, 0.12),
+    inset 0 -1px 0 rgba(0,   0,   0, 0.18);
+  transform: translateY(-2px);
+}
+
+/* ── 9. Active card — Surface-2 elevation (DS §5.1) ──────────── */
+.tl-card.active {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.88) 0%,
+    rgba(255, 255, 255, 0.65) 40%,
+    rgba(255, 255, 255, 0.40) 100%
+  );
+  border-top:    1px solid rgba(255, 255, 255, 0.95);
+  border-left:   1px solid rgba(255, 255, 255, 0.85);
+  border-right:  1px solid rgba(200, 205, 235, 0.35);
+  border-bottom: 1px solid rgba(200, 205, 235, 0.28);
+
+  /* DS shadow-md token */
+  box-shadow:
+    0  8px 24px rgba(30, 35, 60, 0.12),
+    0  0    0 1px rgba(200, 205, 235, 0.20),
+    inset 0  1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(30, 35, 60, 0.04);
+}
+
+.dark .tl-card.active {
+  background: linear-gradient(
+    145deg,
+    rgba(46, 53, 88, 0.72) 0%,
+    rgba(46, 53, 88, 0.55) 40%,
+    rgba(30, 35, 60, 0.35) 100%
+  );
+  border-color: rgba(200, 205, 235, 0.18);
+  box-shadow:
+    0  8px 32px rgba(0, 0, 0, 0.55),
+    0  0    0 1px rgba(200, 205, 235, 0.14),
+    inset 0  1px 0 rgba(200, 205, 235, 0.14),
+    inset 0 -1px 0 rgba(0,   0,   0, 0.22);
+}
+
+/* ── 10. Glass specular — sub-palette French Gray ────────────── */
+/*
+   DS §5.2: ".glass::before — French Gray specular (warmer than pure white)"
+   DS §20 do: "Glass specular light: rgba(184,190,215,.45) French Gray"
+   DS §20 do: ".dark .glass::before Cool Gray Sub specular"
+   Sub-palette use is CORRECT here — effects only, not UI structure.
+*/
+.tl-card.active::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 55%;
+  height: 55%;
+  background: radial-gradient(
+    ellipse at top left,
+    rgba(184, 190, 215, 0.45) 0%,   /* French Gray — DS glass specular value */
+    rgba(255, 255, 255, 0.00) 65%
+  );
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.dark .tl-card.active::before {
+  background: radial-gradient(
+    ellipse at top left,
+    rgba(175, 174, 204, 0.12) 0%,   /* Cool Gray Sub — DS dark specular value */
+    rgba(175, 174, 204, 0.00) 65%
+  );
+}
+
+/* ── 11. Connector nubs — card edge → spine ──────────────────── */
+/*
+   Sub-palette French Gray rgba(.40) — atmospheric connector.
+   Per DS §1.10: decorative overlay → sub-palette preferred.
+   Selector reads the inline style React renders to DOM:
+     gridColumn "1" → "justify-content: flex-start"  (left card)
+     gridColumn "2" → "justify-content: flex-end"    (right card)
+*/
+
+/* Left-side cards: connector exits right edge toward spine */
+.tl-card-wrap[style*="flex-start"] .tl-card::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -2rem;
+  width: 2rem;
+  height: 1px;
+  transform: translateY(-50%);
+  background: linear-gradient(
+    90deg,
+    rgba(184, 190, 215, 0.45),      /* French Gray — sub-palette */
+    rgba(184, 190, 215, 0.00)
+  );
+}
+
+/* Right-side cards: connector exits left edge toward spine */
+.tl-card-wrap[style*="flex-end"] .tl-card::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -2rem;
+  width: 2rem;
+  height: 1px;
+  transform: translateY(-50%);
+  background: linear-gradient(
+    270deg,
+    rgba(184, 190, 215, 0.45),
+    rgba(184, 190, 215, 0.00)
+  );
+}
+
+.dark .tl-card-wrap[style*="flex-start"] .tl-card::after,
+.dark .tl-card-wrap[style*="flex-end"] .tl-card::after {
+  background: linear-gradient(
+    90deg,
+    rgba(200, 205, 235, 0.14),      /* DS --dark-border value */
+    rgba(200, 205, 235, 0.00)
+  );
+}
+
+/* ── 12. Badge — DS §13.2 chip "primary" recipe ──────────────── */
+/*
+   DS chipStyles.primary:
+     bg   rgba(200,205,235,0.20)  border rgba(200,205,235,0.40)
+     text #1E233C light            #C8CDEB dark
+   DS §2.2: labels → font-semibold (600) sole exception.
+   DS §2.3: label token → text-xs, font-semibold, tracking-widest, uppercase.
+*/
+.tl-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.22rem 0.70rem;
+  margin-bottom: 0.875rem;
+  border-radius: 9999px;                      /* DS full pill */
+
+  background: rgba(200, 205, 235, 0.20);      /* DS chip primary bg */
+  border: 1px solid rgba(200, 205, 235, 0.40);
+
+  color: var(--color-light-text);
+  font-size: 0.62rem;
+  font-weight: 600;                           /* font-semibold — label exception DS §2.2 */
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.dark .tl-badge {
+  background: rgba(200, 205, 235, 0.10);
+  border-color: rgba(200, 205, 235, 0.22);
+  color: var(--color-periwinkle);
+}
+
+/* ── 13. Meta (date / caption) ────────────────────────────────── */
+/*
+   DS §2.3 caption token: 0.65rem, font-medium (500).
+   Color: Cool Gray #878CB4 — "placeholder, muted text" (DS §1.1).
+*/
+.tl-meta {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--color-cool);
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+/* ── 14. Card title ───────────────────────────────────────────── */
+/*
+   DS §2.3 headline-sm: clamp(.95rem,1.7vw,1.25rem), font-normal (400).
+   DS §2.2: h4/card title → font-normal (400). NEVER font-medium or above.
+   Light: Midnight #1E233C. Dark: dark-text #E8EAF5 (DS §1.11).
+*/
+.tl-title {
+  font-size: clamp(0.95rem, 1.7vw, 1.15rem);
+  font-weight: 400;                           /* font-normal — DS §2.2 h4/card title */
+  color: var(--color-light-text);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.625rem;
+}
+
+.dark .tl-title {
+  color: var(--color-dark-text);
+}
+
+/* ── 15. Description ──────────────────────────────────────────── */
+/*
+   DS §2.3 body-sm: text-sm, font-normal (400). Light → Haze emphasis text.
+   DS §13.4 FeatCard desc pattern: text-[.75rem] font-light text-[#878CB4].
+   DS §1.11: dark-text-secondary #878CB4.
+*/
+.tl-desc {
+  font-size: 0.78rem;
+  font-weight: 300;                           /* font-light */
+  color: var(--color-light-text-secondary);
+  line-height: 1.80;
+}
+
+.dark .tl-desc {
+  color: var(--color-dark-text-secondary);
+}
+
+/* ── 16. Focus accessibility — DS §16 ────────────────────────── */
+.tl-card:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 3px;
+}
+
+/* ── 17. Mobile — spine left, single column ──────────────────── */
+@media (max-width: 640px) {
+  .tl-wrapper {
+    padding: 0 1.25rem 0 3rem;
+  }
+
+  .tl-line {
+    left: 1.25rem;
+    transform: none;
+  }
+
+  .tl-dot {
+    left: 1.25rem;
+  }
+
+  .tl-container {
+    grid-template-columns: 1fr;
+  }
+
+  .tl-card-wrap {
+    grid-column: 1 !important;
+    justify-content: flex-start !important;
+    padding: 0;
+  }
+
+  .tl-card {
+    max-width: 100%;
+  }
+
+  /* Hide connectors — no spine gap on mobile */
+  .tl-card-wrap[style*="flex-start"] .tl-card::after,
+  .tl-card-wrap[style*="flex-end"] .tl-card::after {
+    display: none;
+  }
+}
+
+/* ── 18. Reduced motion ───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .tl-dot,
+  .tl-card,
+  .tl-card:hover {
+    transition: none;
+    transform: none;
+  }
+
+  .tl-dot::after {
+    animation: none;
+  }
+}

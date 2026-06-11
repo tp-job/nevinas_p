@@ -290,9 +290,8 @@ const GlassSurface: React.FC<GlassSurfaceProps> = ({
   const glassSurfaceClasses =
     'relative overflow-hidden transition-opacity duration-[260ms] ease-out';
 
-  const focusVisibleClasses = isDarkMode
-    ? 'focus-visible:outline-2 focus-visible:outline-[#0A84FF] focus-visible:outline-offset-2'
-    : 'focus-visible:outline-2 focus-visible:outline-[#007AFF] focus-visible:outline-offset-2';
+  const focusVisibleClasses =
+    'focus-visible:outline-2 focus-visible:outline-[rgba(200,205,235,0.70)] focus-visible:outline-offset-[3px]';
 
   return (
     <div

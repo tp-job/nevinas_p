@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import type { FC, MouseEvent, KeyboardEvent } from "react";
+import { motion } from "framer-motion";
 import Loading from "@/components/common/loading/Loading";
 import Error from "@/components/common/server-error/Error";
 
@@ -154,44 +155,114 @@ const Gallery: FC = () => {
         </h3>
       </div>
 
-      {/* Category Menu */}
+      {/* ── Category Menu — Modern Japanese editorial ─────────────────────────
+           Design language: ma (間) breathing room · ink-stroke tab underline
+           · mixed script EN + JP · thin rule separators · no heavy boxes
+      ─────────────────────────────────────────────────────────────────────── */}
       <div className="mb-8">
-        <div className="relative h-20 flex items-center overflow-hidden border-t border-b border-light-border dark:border-dark-border">
-          {/* ALBUM Label Section */}
-          <div className="absolute left-0 top-0 bottom-0 px-8 bg-background-light dark:bg-background-dark z-50 flex items-center gap-4 border-r border-light-border dark:border-dark-border">
-            <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
-              <i className="ri-image-line text-xl"></i>
-            </div>
-            <span className="text-sm font-black text-light-text-primary dark:text-dark-text-primary tracking-wider uppercase">
+
+        {/* Eyebrow row — label + item count */}
+        <div className="flex items-center justify-between mb-3 px-0.5">
+          <div className="flex items-center gap-2.5">
+            {/* EN label — DS §2.3 label token */}
+            <span className="text-[10px] font-semibold tracking-[.28em] uppercase text-[#878CB4]">
               CATEGORY
+            </span>
+            {/* thin vertical rule */}
+            <span
+              className="inline-block w-px h-[10px] rounded-full
+                         bg-[rgba(30,35,60,0.20)] dark:bg-[rgba(200,205,235,0.20)]"
+            />
+            {/* JP label — Zen Kaku Gothic New, DS §2.1 JP font */}
+            <span className="font-zen text-[11px] font-light tracking-wide
+                             text-[#878CB4]/50 dark:text-[#878CB4]/40">
+              カテゴリ
             </span>
           </div>
 
-          {/* Category Menu Items */}
-          <div className="flex-1 ml-[200px] flex items-center gap-4 overflow-x-auto scrollbar-hide px-4">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => {
-                  setActiveCategory(category.id);
-                  setSelectedIndex(null);
-                }}
-                className={`
-                                    flex items-center gap-2 px-6 py-3 whitespace-nowrap
-                                    transition-all duration-300 ease-out shrink-0
-                                    ${
-                                      activeCategory === category.id
-                                        ? "text-light-text-primary dark:text-dark-text-primary font-semibold"
-                                        : "text-light-text-secondary dark:text-dark-text-secondary font-medium hover:text-light-text-primary dark:hover:text-dark-text-primary"
-                                    }
-                                `}
-              >
-                <i className={`${category.icon} text-lg`}></i>
-                <span>{category.label}</span>
-              </button>
-            ))}
-          </div>
+          {/* Filtered count — right-aligned, tabular nums */}
+          <span className="text-[10px] font-medium tabular-nums text-[#878CB4]/60 select-none">
+            {filteredGallery.length}
+            <span className="font-light ml-1 opacity-70">items</span>
+          </span>
         </div>
+
+        {/* Aurora top rule — §1.8 AURORA_BAND gradient */}
+        <div
+          className="w-full h-px mb-0"
+          style={{
+            background:
+              "linear-gradient(90deg, #C8CDEB 0%, #85758F 50%, #1E233C 100%)",
+          }}
+        />
+
+        {/* Tab strip — horizontally scrollable, ink-stroke active indicator */}
+        <div className="relative">
+          <div className="flex items-stretch overflow-x-auto scrollbar-hide">
+            {categories.map((category) => {
+              const isActive = activeCategory === category.id;
+              return (
+                <button
+                  key={category.id}
+                  onClick={() => {
+                    setActiveCategory(category.id);
+                    setSelectedIndex(null);
+                  }}
+                  className={`
+                    relative flex items-center gap-2 px-5 py-4
+                    whitespace-nowrap shrink-0
+                    text-[13px] font-medium
+                    transition-colors duration-200
+                    focus:outline-none focus-visible:ring-2
+                    focus-visible:ring-[rgba(200,205,235,0.50)]
+                    ${
+                      isActive
+                        ? "text-[#1E233C] dark:text-[#E8EAF5]"
+                        : "text-[#878CB4] hover:text-[#465078] dark:hover:text-[#C8CDEB]"
+                    }
+                  `}
+                >
+                  {/* Icon — slightly muted when inactive */}
+                  <i
+                    className={`
+                      ${category.icon} text-[14px] shrink-0 transition-opacity duration-200
+                      ${isActive ? "opacity-100" : "opacity-60"}
+                    `}
+                    aria-hidden="true"
+                  />
+                  <span>{category.label}</span>
+
+                  {/* Ink-stroke underline — aurora gradient slides between tabs
+                      DS §1.8 AURORA_BAND · Framer Motion layoutId spring §14 */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="gallery-ink-stroke"
+                      className="absolute bottom-0 left-3 right-3 h-[2px] rounded-full"
+                      style={{
+                        background:
+                          "linear-gradient(90deg, #C8CDEB 0%, #85758F 50%, #465078 100%)",
+                      }}
+                      transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Right-edge scroll-hint fade — signals more items to the right */}
+          <div
+            className="absolute top-0 right-0 bottom-0 w-12 pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(to left, var(--tw-gradient-from, #F0F1F8), transparent)",
+            }}
+          />
+        </div>
+
+        {/* Bottom rule — subtle mono border §1.11 */}
+        <div className="w-full h-px bg-[rgba(30,35,60,0.08)] dark:bg-[rgba(200,205,235,0.08)]" />
+
       </div>
 
       {isLoading && <Loading />}

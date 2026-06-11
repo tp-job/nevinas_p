@@ -50,7 +50,7 @@ const EQBars: FC<{ isPlaying: boolean }> = ({ isPlaying }) => {
           key={i}
           className="w-[2.5px] rounded-full"
           style={{
-            background: "linear-gradient(180deg,#C8CDEB 0%,#878CB4 100%)",
+            background: "linear-gradient(180deg, var(--color-periwinkle) 0%, var(--color-cool) 100%)",
             height: isPlaying ? undefined : "3px",
             animation: isPlaying
               ? `eq .7s ease-in-out ${d}s infinite alternate`
@@ -152,7 +152,7 @@ const dropdownTransition = {
 const SectionLabel: FC<{ children: string }> = ({ children }) => (
   <p
     className="text-[0.58rem] font-semibold tracking-[0.22em] uppercase
-               text-[#878CB4] opacity-60 mb-3"
+               text-cool opacity-60 mb-3"
   >
     {children}
   </p>
@@ -336,12 +336,12 @@ const Navbar: FC<NavbarProps> = ({
   // ── Computed nav classes ──────────────────────────────────────────────────
   // DS §1.11 semantic surfaces
   const navClass = isScrolled
-    ? "text-[#1E233C] dark:text-[#E8EAF5] border-b border-[rgba(30,35,60,0.08)] dark:border-[rgba(200,205,235,0.08)]"
-    : "text-[#1E233C] dark:text-[#E8EAF5]";
+    ? "text-light-text dark:text-dark-text border-b border-light-border dark:border-dark-border"
+    : "text-light-text dark:text-dark-text";
 
   // Nav links pill — glass surface when not scrolled (DS §5.1 Float layer)
   const navLinksClass = !isScrolled
-    ? "bg-white/90 dark:bg-[rgba(30,35,60,0.60)] backdrop-blur-2xl shadow-[0_8px_32px_rgba(30,35,60,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.40)] border border-[rgba(30,35,60,0.08)] dark:border-[rgba(200,205,235,0.12)]"
+    ? "bg-light-surface-2/90 dark:bg-dark-bg/75 backdrop-blur-2xl shadow-sm dark:shadow-lg border border-light-border dark:border-dark-border"
     : "";
 
   // ── Glass style for current theme ────────────────────────────────────────
@@ -364,15 +364,15 @@ const Navbar: FC<NavbarProps> = ({
 
   // ── Play button — DS §13.1 Primary (grad-primary) ────────────────────────
   const playBtnStyle = {
-    background: "linear-gradient(135deg,#1E233C 0%,#465078 100%)",
+    background: "linear-gradient(135deg, var(--color-midnight) 0%, var(--color-haze) 100%)",
     boxShadow: "0 6px 20px rgba(70,80,120,0.35)",
   };
 
   // ── Common icon button classes ────────────────────────────────────────────
   // DS §20: hover:-translate-y-0.5, never scale()
   const iconBtnCls =
-    "flex items-center justify-center rounded-full text-[#878CB4] " +
-    "hover:text-[#C8CDEB] hover:bg-[rgba(200,205,235,0.10)] " +
+    "flex items-center justify-center rounded-full text-cool " +
+    "hover:text-periwinkle hover:bg-periwinkle/10 " +
     "hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200";
 
   return (
@@ -409,7 +409,7 @@ const Navbar: FC<NavbarProps> = ({
               <img
                 src={Assets.logo}
                 alt="Nevinas"
-                className="w-10 sm:w-11 rounded-full cursor-pointer bg-[#0A0F19] p-1
+                className="w-10 sm:w-11 rounded-full cursor-pointer bg-charcoal p-1
                            shadow-lg border border-[rgba(200,205,235,0.12)]
                            hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
               />
@@ -419,7 +419,7 @@ const Navbar: FC<NavbarProps> = ({
                 className="hidden sm:flex items-center gap-3 rounded-full
                            px-3.5 py-1.5 pl-2"
                 style={{
-                  background: "#0A0F19",
+                  background: "var(--color-charcoal)",
                   border: "1px solid rgba(200,205,235,0.10)",
                   boxShadow: "0 4px 16px rgba(0,0,0,0.45), inset 0 1px 0 rgba(200,205,235,0.06)",
                 }}
@@ -441,11 +441,11 @@ const Navbar: FC<NavbarProps> = ({
                       } as React.CSSProperties
                     }
                   >
-                    <span className="text-[0.68rem] font-medium text-[#C8CDEB]/70 marquee-text">
+                    <span className="text-[0.68rem] font-medium text-periwinkle/70 marquee-text">
                       {currentTitle}
                     </span>
                     <span
-                      className="text-[0.68rem] font-medium text-[#C8CDEB]/70 marquee-text"
+                      className="text-[0.68rem] font-medium text-periwinkle/70 marquee-text"
                       aria-hidden="true"
                     >
                       {currentTitle}
@@ -471,7 +471,7 @@ const Navbar: FC<NavbarProps> = ({
                 {/* Play / Pause */}
                 <button
                   onClick={isPlaying ? pauseMusic : playMusic}
-                  className="text-[#878CB4] hover:text-[#C8CDEB] hover:-translate-y-0.5
+                  className="text-cool hover:text-periwinkle hover:-translate-y-0.5
                              active:translate-y-0 transition-all duration-200 ml-1"
                   aria-label={isPlaying ? "Pause music" : "Play music"}
                 >
@@ -485,7 +485,7 @@ const Navbar: FC<NavbarProps> = ({
                 <div className="relative" ref={dropdownRef}>
                   <button
                     onClick={() => setIsDropdownOpen((p) => !p)}
-                    className="text-[#878CB4]/60 hover:text-[#C8CDEB] hover:-translate-y-0.5
+                    className="text-cool/60 hover:text-periwinkle hover:-translate-y-0.5
                                active:translate-y-0 transition-all duration-200"
                     aria-label="Toggle playlist"
                     aria-expanded={isDropdownOpen}
@@ -523,12 +523,12 @@ const Navbar: FC<NavbarProps> = ({
                             <SectionLabel>Now Playing</SectionLabel>
                             <h4
                               className="text-[0.92rem] font-normal leading-snug
-                                         text-[#1E233C] dark:text-[#E8EAF5] truncate"
+                                         text-light-text dark:text-dark-text truncate"
                             >
                               {currentTitle}
                             </h4>
                             {currentArtist && (
-                              <p className="text-[0.72rem] text-[#878CB4] mt-0.5 truncate">
+                              <p className="text-[0.72rem] text-cool mt-0.5 truncate">
                                 {currentArtist}
                               </p>
                             )}
@@ -538,7 +538,7 @@ const Navbar: FC<NavbarProps> = ({
                           <div className="flex items-center gap-4 mb-5">
                             <button
                               onClick={prevSong}
-                              className="text-[#878CB4] hover:text-[#465078] dark:hover:text-[#C8CDEB]
+                              className="text-cool hover:text-haze dark:hover:text-periwinkle
                                          hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
                               aria-label="Previous song"
                             >
@@ -548,7 +548,7 @@ const Navbar: FC<NavbarProps> = ({
                             <button
                               onClick={isPlaying ? pauseMusic : playMusic}
                               className="w-11 h-11 flex items-center justify-center rounded-full
-                                         text-[#E8EAF5] hover:-translate-y-0.5 active:translate-y-0
+                                         text-dark-text hover:-translate-y-0.5 active:translate-y-0
                                          transition-all duration-200"
                               style={playBtnStyle}
                               aria-label={isPlaying ? "Pause" : "Play"}
@@ -561,7 +561,7 @@ const Navbar: FC<NavbarProps> = ({
 
                             <button
                               onClick={nextSong}
-                              className="text-[#878CB4] hover:text-[#465078] dark:hover:text-[#C8CDEB]
+                              className="text-cool hover:text-haze dark:hover:text-periwinkle
                                          hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
                               aria-label="Next song"
                             >
@@ -569,7 +569,7 @@ const Navbar: FC<NavbarProps> = ({
                             </button>
 
                             <span className="ml-auto text-[0.60rem] font-medium tracking-widest
-                                            text-[#878CB4] opacity-40">
+                                            text-cool opacity-40">
                               {songIndex + 1} / {DataSong.length}
                             </span>
                           </div>
@@ -597,16 +597,16 @@ const Navbar: FC<NavbarProps> = ({
                                             rounded-xl text-left text-[0.75rem] transition-all
                                             duration-200 hover:-translate-y-px ${idx === songIndex
                                     /* DS §13.2 Chip primary — active song */
-                                    ? "bg-[rgba(200,205,235,0.20)] border border-[rgba(200,205,235,0.40)] text-[#465078] dark:text-[#C8CDEB] font-medium"
+                                    ? "bg-[rgba(200,205,235,0.20)] border border-[rgba(200,205,235,0.40)] text-haze dark:text-periwinkle font-medium"
                                     /* DS §13.2 Chip muted — inactive */
-                                    : "text-[#878CB4] border border-transparent hover:bg-[rgba(200,205,235,0.10)] hover:border-[rgba(200,205,235,0.18)] font-normal"
+                                    : "text-cool border border-transparent hover:bg-[rgba(200,205,235,0.10)] hover:border-[rgba(200,205,235,0.18)] font-normal"
                                   }`}
                               >
                                 <span className="truncate pr-3">
                                   {song.title}
                                 </span>
                                 {idx === songIndex && (
-                                  <i className="ri-volume-up-fill text-[12px] shrink-0 text-[#878CB4]" />
+                                  <i className="ri-volume-up-fill text-[12px] shrink-0 text-cool" />
                                 )}
                               </button>
                             ))}
@@ -634,8 +634,8 @@ const Navbar: FC<NavbarProps> = ({
                       scrollToHash(link.href);
                     }}
                     className="px-3.5 py-1.5 rounded-full text-[0.75rem] font-medium
-                               text-[#878CB4] dark:text-[#878CB4]
-                               hover:text-[#1E233C] dark:hover:text-[#E8EAF5]
+                               text-cool dark:text-cool
+                               hover:text-light-text dark:hover:text-dark-text
                                hover:bg-[rgba(70,80,120,0.08)] dark:hover:bg-[rgba(200,205,235,0.08)]
                                transition-all duration-200 block"
                   >
@@ -667,7 +667,7 @@ const Navbar: FC<NavbarProps> = ({
                 className="hidden xl:flex items-center gap-1.5 text-[0.75rem] font-medium
                            border border-[rgba(30,35,60,0.12)] dark:border-[rgba(200,205,235,0.12)]
                            rounded-full px-3.5 py-1.5
-                           text-[#1E233C] dark:text-[#E8EAF5]
+                           text-light-text dark:text-dark-text
                            hover:border-[rgba(70,80,120,0.35)] hover:bg-[rgba(70,80,120,0.08)]
                            dark:hover:border-[rgba(200,205,235,0.25)] dark:hover:bg-[rgba(200,205,235,0.08)]
                            hover:-translate-y-px active:translate-y-0
@@ -682,17 +682,17 @@ const Navbar: FC<NavbarProps> = ({
           {/* ──────────────────────────────────────────────── MOBILE TOP BAR ── */}
           <div
             className="flex lg:hidden min-h-16 w-full items-center justify-between
-                       px-5 py-3 text-[#1E233C] dark:text-[#E8EAF5]"
+                       px-5 py-3 text-light-text dark:text-dark-text"
           >
             {/* Logo + Brand */}
             <div className="flex items-center gap-3">
               <img
                 src={Assets.logo}
                 alt="logo"
-                className="w-9 h-9 rounded-full bg-[#0A0F19] p-1 shadow-md
+                className="w-9 h-9 rounded-full bg-charcoal p-1 shadow-md
                            border border-[rgba(200,205,235,0.10)]"
               />
-              <h1 className="text-[0.82rem] font-medium text-[#1E233C] dark:text-[#E8EAF5]">
+              <h1 className="text-[0.82rem] font-medium text-light-text dark:text-dark-text">
                 Nevinas Ka
               </h1>
             </div>
@@ -729,7 +729,7 @@ const Navbar: FC<NavbarProps> = ({
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
           }`}
-        style={{ background: "rgba(10,15,25,0.72)" }}
+        style={{ background: "color-mix(in srgb, var(--color-dark-bg) 72%, transparent)" }}
         onClick={closeMenu}
         aria-hidden={!isMenuOpen}
       />
@@ -760,7 +760,7 @@ const Navbar: FC<NavbarProps> = ({
         <button
           onClick={closeMenu}
           className={`absolute top-5 right-5 w-9 h-9 ${iconBtnCls}
-                      hover:text-[#1E233C] dark:hover:text-[#E8EAF5]`}
+                      hover:text-light-text dark:hover:text-dark-text`}
           aria-label="Close menu"
         >
           <i className="ri-close-line text-[22px]" />
@@ -791,12 +791,12 @@ const Navbar: FC<NavbarProps> = ({
               {/* Song info */}
               <h4
                 className="text-[0.92rem] font-normal leading-snug
-                           text-[#1E233C] dark:text-[#E8EAF5] truncate"
+                           text-light-text dark:text-dark-text truncate"
               >
                 {currentTitle}
               </h4>
               {currentArtist && (
-                <p className="text-[0.72rem] text-[#878CB4] mt-0.5 mb-4 truncate">
+                <p className="text-[0.72rem] text-cool mt-0.5 mb-4 truncate">
                   {currentArtist}
                 </p>
               )}
@@ -806,9 +806,9 @@ const Navbar: FC<NavbarProps> = ({
                 <button
                   onClick={prevSong}
                   className="w-9 h-9 flex items-center justify-center rounded-full
-                             text-[#878CB4]
+                             text-cool
                              bg-[rgba(30,35,60,0.05)] dark:bg-[rgba(200,205,235,0.06)]
-                             hover:text-[#465078] dark:hover:text-[#C8CDEB]
+                             hover:text-haze dark:hover:text-periwinkle
                              hover:bg-[rgba(70,80,120,0.10)] dark:hover:bg-[rgba(200,205,235,0.10)]
                              hover:-translate-y-0.5 active:translate-y-0
                              transition-all duration-200"
@@ -821,7 +821,7 @@ const Navbar: FC<NavbarProps> = ({
                 <button
                   onClick={isPlaying ? pauseMusic : playMusic}
                   className="w-12 h-12 flex items-center justify-center rounded-full
-                             text-[#E8EAF5]
+                             text-dark-text
                              hover:-translate-y-0.5 active:translate-y-0
                              transition-all duration-200"
                   style={playBtnStyle}
@@ -836,9 +836,9 @@ const Navbar: FC<NavbarProps> = ({
                 <button
                   onClick={nextSong}
                   className="w-9 h-9 flex items-center justify-center rounded-full
-                             text-[#878CB4]
+                             text-cool
                              bg-[rgba(30,35,60,0.05)] dark:bg-[rgba(200,205,235,0.06)]
-                             hover:text-[#465078] dark:hover:text-[#C8CDEB]
+                             hover:text-haze dark:hover:text-periwinkle
                              hover:bg-[rgba(70,80,120,0.10)] dark:hover:bg-[rgba(200,205,235,0.10)]
                              hover:-translate-y-0.5 active:translate-y-0
                              transition-all duration-200"
@@ -862,9 +862,9 @@ const Navbar: FC<NavbarProps> = ({
                               text-[0.78rem] transition-all duration-200
                               hover:-translate-y-px ${idx === songIndex
                       /* DS §13.2 Chip primary */
-                      ? "bg-[rgba(200,205,235,0.20)] border border-[rgba(200,205,235,0.40)] text-[#465078] dark:text-[#C8CDEB] font-medium"
+                      ? "bg-[rgba(200,205,235,0.20)] border border-[rgba(200,205,235,0.40)] text-haze dark:text-periwinkle font-medium"
                       /* DS §13.2 Chip muted */
-                      : "text-[#878CB4] border border-transparent hover:bg-[rgba(200,205,235,0.10)] dark:hover:bg-[rgba(200,205,235,0.06)] font-normal"
+                      : "text-cool border border-transparent hover:bg-[rgba(200,205,235,0.10)] dark:hover:bg-[rgba(200,205,235,0.06)] font-normal"
                     }`}
                 >
                   <span className="truncate block">{song.title}</span>
@@ -895,8 +895,8 @@ const Navbar: FC<NavbarProps> = ({
                     scrollToHash(link.href);
                   }}
                   className="flex items-center gap-3 px-3 py-2.5 rounded-xl
-                             text-[#878CB4] dark:text-[#878CB4]
-                             hover:text-[#1E233C] dark:hover:text-[#E8EAF5]
+                             text-cool dark:text-cool
+                             hover:text-light-text dark:hover:text-dark-text
                              hover:bg-[rgba(200,205,235,0.10)] dark:hover:bg-[rgba(200,205,235,0.06)]
                              hover:-translate-y-px active:translate-y-0
                              transition-all duration-200 group"
@@ -920,12 +920,12 @@ const Navbar: FC<NavbarProps> = ({
           >
             <img
               src={Assets.logo}
-              className="w-7 h-7 rounded-full bg-[#0A0F19] p-0.5 shadow-md"
+              className="w-7 h-7 rounded-full bg-charcoal p-0.5 shadow-md"
               alt="logo"
             />
             <span
               className="text-[0.58rem] font-semibold tracking-widest uppercase
-                         text-[#878CB4] opacity-50"
+                         text-cool opacity-50"
             >
               NEVINAS.DEV
             </span>

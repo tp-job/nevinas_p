@@ -1,9 +1,17 @@
-/* CodeWithClarity.module.css — corrected to match interactive-v2.html #s-clarity */
+/* CodeWithClarity.module.css — corrected to match interactive-v2.html #s-clarity
+   ─────────────────────────────────────────────────────────────────────────────
+   FONT TOKEN MAP (index.css → local aliases)
+     --font-inter = "Inter", system-ui, sans-serif      (from index.css @theme)
+     --font-mono  = 'DM Mono', monospace                (local — not in index.css)
+   ───────────────────────────────────────────────────────────────────────────── */
 
 /* ── SLIDE CONTAINER */
 .codeWithClarity {
-  /* blueprint: var(--color-bg-secondary) */
-  background: var(--color-bg-secondary);
+  /* ── Scoped font token: DM Mono is not in index.css @theme, defined here ── */
+  --font-mono: 'DM Mono', 'Fira Code', monospace;
+
+  background: var(--color-light-bg);
+  color: var(--color-light-text);
   min-height: 100svh;
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -11,6 +19,11 @@
   justify-content: stretch;
   overflow: hidden;
   text-align: left;
+}
+
+:global(.dark) .codeWithClarity {
+  background: var(--color-dark-bg);
+  color: var(--color-dark-text);
 }
 
 /* ── TOP HALF */
@@ -49,8 +62,9 @@
   padding-top: .15rem;
 }
 
+/* ── Uses var(--font-mono) scoped above ── */
 .tagline {
-  font-family: var(--fm, 'DM Mono', monospace);
+  font-family: var(--font-mono);
   font-size: .78rem;
   line-height: 1.9;
   font-weight: 300;
@@ -102,9 +116,9 @@
   background: var(--color-surface-variant);
 }
 
-/* column number */
+/* ── Uses var(--font-mono) scoped above ── */
 .num {
-  font-family: var(--fm, 'DM Mono', monospace);
+  font-family: var(--font-mono);
   font-size: .62rem;
   color: var(--color-text-tertiary);
   letter-spacing: .06em;

@@ -45,7 +45,7 @@ const BentoGrid: React.FC = () => {
 
   if (!slideProgress) {
     return (
-      <div className="bg-[var(--color-bg-secondary)] w-full py-16 px-5 sm:px-10 flex justify-center items-center overflow-hidden">
+      <div className="bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text w-full py-16 px-5 sm:px-10 flex justify-center items-center overflow-hidden">
         <div className="max-w-[1400px] w-full mx-auto bento">
           {/* 1: scroll smoothly card */}
           <motion.div className="bc pb-9" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}}>
@@ -72,7 +72,7 @@ const BentoGrid: React.FC = () => {
           {/* 3: center card (dark gradient) */}
           <motion.div className="bc relative overflow-hidden flex flex-col justify-end p-6" initial={{opacity:0, scale:0.95}} whileInView={{opacity:1, scale:1}} viewport={{once:true}} transition={{delay: 0.2}}>
             <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-velvet-indigo)] to-[var(--color-velvet-night)] z-0" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(200,205,235,0.15),transparent_50%)] z-0" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,var(--color-sub-french-10),transparent_50%)] z-0" />
             <div 
               className="absolute inset-0 z-0 opacity-[0.14] pointer-events-none select-none bg-cover bg-center"
               style={{ backgroundImage: `url(${glassAbstract})` }}
@@ -168,7 +168,7 @@ const BentoGrid: React.FC = () => {
   }
 
   return (
-    <div className="bg-[var(--color-bg-secondary)] w-full py-16 px-5 sm:px-10 flex justify-center items-center overflow-hidden">
+    <div className="bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text w-full py-16 px-5 sm:px-10 flex justify-center items-center overflow-hidden">
       <div className="max-w-[1400px] w-full mx-auto bento">
         {/* 1: scroll smoothly card */}
         <motion.div style={{ opacity: c1_opacity, y: c1_y }} className="bc pb-9">
@@ -195,7 +195,7 @@ const BentoGrid: React.FC = () => {
         {/* 3: center card (dark gradient) */}
         <motion.div style={{ opacity: c3_opacity, scale: c3_scale, y: c3_y }} className="bc relative overflow-hidden flex flex-col justify-end p-6">
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-velvet-indigo)] to-[var(--color-velvet-night)] z-0" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(200,205,235,0.15),transparent_50%)] z-0" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,var(--color-sub-french-10),transparent_50%)] z-0" />
           <div 
             className="absolute inset-0 z-0 opacity-[0.14] pointer-events-none select-none bg-cover bg-center"
             style={{ backgroundImage: `url(${glassAbstract})` }}
