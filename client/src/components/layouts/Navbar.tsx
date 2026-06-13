@@ -336,13 +336,14 @@ const Navbar: FC<NavbarProps> = ({
   // ── Computed nav classes ──────────────────────────────────────────────────
   // DS §1.11 semantic surfaces
   const navClass = isScrolled
-    ? "text-light-text dark:text-dark-text border-b border-light-border dark:border-dark-border"
+    ? "text-light-text dark:text-dark-text border-b border-light-border dark:border-[rgba(200,205,235,0.12)]"
     : "text-light-text dark:text-dark-text";
 
   // Nav links pill — glass surface when not scrolled (DS §5.1 Float layer)
+  // Dark: richer bg with periwinkle-tinted border for premium depth
   const navLinksClass = !isScrolled
-    ? "bg-light-surface-2/90 dark:bg-dark-bg/75 backdrop-blur-2xl shadow-sm dark:shadow-lg border border-light-border dark:border-dark-border"
-    : "";
+    ? "bg-light-surface-2/90 dark:bg-[rgba(10,15,25,0.70)] backdrop-blur-2xl shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.50)] border border-light-border dark:border-[rgba(200,205,235,0.14)]"
+    : "dark:border dark:border-[rgba(200,205,235,0.08)]";
 
   // ── Glass style for current theme ────────────────────────────────────────
   const glass = isDark ? glassStyles.dark : glassStyles.light;
@@ -382,21 +383,37 @@ const Navbar: FC<NavbarProps> = ({
       {/* ──────────────────────────────────────────────────────────────────── */}
       <header
         className={`pointer-events-none fixed top-0 left-0 right-0 z-50 w-full transition-shadow duration-400 ${isScrolled
-            ? "shadow-[0_4px_24px_rgba(30,35,60,0.08)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)]"
+            ? "shadow-[0_4px_24px_rgba(30,35,60,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.60)]"
             : ""
           }`}
       >
         <GlassSurface
           borderRadius={0}
           borderWidth={0.03}
-          brightness={78}
-          opacity={0.9}
-          blur={24}
-          backgroundOpacity={0.06}
-          saturation={2.2}
-          className="pointer-events-auto w-full"
+          brightness={isDark ? 18 : 88}
+          opacity={isDark ? 0.82 : 0.92}
+          blur={isDark ? 32 : 24}
+          backgroundOpacity={isDark ? 0.55 : 0.06}
+          saturation={isDark ? 1.8 : 2.2}
+          className="pointer-events-auto w-full overflow-visible"
           style={{ width: "100%", height: "auto", borderRadius: 0 }}
         >
+          {/* ── Dark mode inner tint — DS midnight→haze premium gradient ── */}
+          {isDark && (
+            <div
+              className="absolute inset-0 pointer-events-none z-[1]"
+              style={{
+                background: [
+                  "linear-gradient(90deg,",
+                  "rgba(10,15,25,0.72) 0%,",
+                  "rgba(19,23,43,0.65) 40%,",
+                  "rgba(30,35,60,0.60) 70%,",
+                  "rgba(10,15,25,0.72) 100%)",
+                ].join(" "),
+                borderBottom: "1px solid rgba(200,205,235,0.10)",
+              }}
+            />
+          )}
           {/* ───────────────────────────────────────────────── DESKTOP NAV ── */}
           <nav
             aria-label="Main navigation"
@@ -503,7 +520,7 @@ const Navbar: FC<NavbarProps> = ({
                         exit="exit"
                         transition={dropdownTransition}
                         className="absolute top-full right-0 mt-4 w-[22rem] rounded-[1.5rem]
-                                   overflow-hidden z-[60]"
+                                   overflow-hidden z-[200]"
                         style={glass}
                       >
                         {/* French Gray specular — DS §5.2 ::before equivalent */}

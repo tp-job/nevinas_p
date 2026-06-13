@@ -287,8 +287,9 @@ const GlassSurface: React.FC<GlassSurfaceProps> = ({
     }
   };
 
+  const hasOverflowVisible = className.split(' ').includes('overflow-visible');
   const glassSurfaceClasses =
-    'relative overflow-hidden transition-opacity duration-[260ms] ease-out';
+    `relative ${hasOverflowVisible ? 'overflow-visible' : 'overflow-hidden'} transition-opacity duration-[260ms] ease-out`;
 
   const focusVisibleClasses =
     'focus-visible:outline-2 focus-visible:outline-[rgba(200,205,235,0.70)] focus-visible:outline-offset-[3px]';

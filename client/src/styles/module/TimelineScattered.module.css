@@ -1,19 +1,30 @@
-/* TimelineScattered.module.css
-   Matches interactive-v2.html #s-tl exactly
+/* TimelineScattered.module.css — v2.1
+   Nocturnal Atelier Design System v3.2
    ─────────────────────────────────────────────────────────────
+   CHANGELOG v2.1 (fixes for TSX v2.1)
+   ──────────────────────────────────────────────────
+   [ADD] .featRight          — right-align modifier on motion.article
+   [ADD] .decor              — absolute full-bleed decorative layer
+   [ADD] .axisH / .axisV     — ghost centre-cross lines (opacity 4%)
+   [ADD] .corner / .cornerTl/Tr/Bl/Br — L-shaped corner accent marks
+   [ADD] .hoverLine          — bottom accent line, width 0→100% on hover
+   [FIX] .feat               — added overflow:hidden for hoverLine clip
+   ──────────────────────────────────────────────────
    FONT TOKEN MAP (index.css → local aliases)
      --font-inter = "Inter", system-ui, sans-serif  (from index.css @theme)
      --font-mono  = 'DM Mono', monospace            (local — not in index.css)
-   ───────────────────────────────────────────────────────────── */
+   ─────────────────────────────────────────────────────────────
+*/
 
-/* ── SLIDE CONTAINER */
+/* ── SLIDE CONTAINER ─────────────────────────────────────────── */
 .slide {
-  /* ── Scoped font token: DM Mono is not in index.css @theme, defined here ── */
+  /* Scoped font token: DM Mono is not in index.css @theme */
   --font-mono: 'DM Mono', 'Fira Code', monospace;
+  /* Used by IconHalfCircle SVG punch-through dot */
+  --tl-slide-bg: var(--color-light-bg, #F0F1F8);
 
   position: relative;
   min-height: 100svh;
-  /* blueprint: padding:0 — NO py-20 px padding */
   padding: 0;
   overflow: hidden;
   background: var(--color-light-bg);
@@ -21,54 +32,184 @@
 }
 
 :global(.dark) .slide {
+  --tl-slide-bg: var(--color-dark-bg, #0A0F19);
   background: var(--color-dark-bg);
   color: var(--color-dark-text);
 }
 
-/* ── FEATURE BLOCKS — absolute positioned corners */
+/* ── DECORATIVE LAYER — axis lines + corner L-marks ──────────── */
+/*
+ * Full-bleed absolutely-positioned container.
+ * pointer-events: none — never blocks mouse events.
+ * z-index: 0 — sits behind all feature blocks (z-index auto / 1).
+ */
+.decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Horizontal centre-cross line */
+.axisH {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.04;
+  transform: translateY(-50%);
+}
+
+/* Vertical centre-cross line */
+.axisV {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  background: currentColor;
+  opacity: 0.04;
+  transform: translateX(-50%);
+}
+
+/* Base L-mark — shared border size */
+.corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: currentColor;
+  border-style: solid;
+  border-width: 0;
+  opacity: 0.14;
+}
+
+.cornerTl {
+  top: 1.5rem;
+  left: 1.5rem;
+  border-top-width: 1px;
+  border-left-width: 1px;
+}
+
+.cornerTr {
+  top: 1.5rem;
+  right: 1.5rem;
+  border-top-width: 1px;
+  border-right-width: 1px;
+}
+
+.cornerBl {
+  bottom: 1.5rem;
+  left: 1.5rem;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+}
+
+.cornerBr {
+  bottom: 1.5rem;
+  right: 1.5rem;
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+}
+
+/* ── FEATURE BLOCKS — absolute positioned corners ────────────── */
 .feat {
   position: absolute;
   max-width: 280px;
   pointer-events: auto;
+  /* Required for .hoverLine clip */
+  overflow: hidden;
+  /* Elevates above .decor layer */
+  z-index: 1;
 }
 
-/* exact blueprint positions */
+/* Exact blueprint positions */
 .featTl { top: 13%;    left: 5%;  text-align: left;  }
 .featTr { top: 13%;    right: 5%; text-align: right; }
 .featBl { bottom: 11%; left: 5%;  text-align: left;  }
 .featBr { bottom: 11%; right: 5%; text-align: right; }
 
-/* ── ARROW — blueprint: .feat-arr */
-/* ── Uses var(--font-mono) scoped above ── */
+/*
+ * .featRight — semantic right-align modifier applied via JS.
+ * The positional classes (.featTr / .featBr) already set
+ * text-align: right, but this class is the explicit contract
+ * the TSX uses for conditional child-element alignment overrides.
+ * Keeps layout logic in CSS, not scattered across inline styles.
+ */
+.featRight {
+  text-align: right;
+}
+
+/* ── HOVER ACCENT LINE ───────────────────────────────────────── */
+/*
+ * Absolutely positioned 1px line at the bottom of each feature block.
+ * width: 0 → 100% on .feat:hover.
+ * Uses --c-periwinkle accent per design system v3.2.
+ * Left-aligned blocks: expands left→right.
+ * Right-aligned blocks (.featRight): expands right→left via right: 0.
+ */
+.hoverLine {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  width: 0;
+  background: var(--c-periwinkle, #C8CDEB);
+  transition: width 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.feat:hover .hoverLine {
+  width: 100%;
+}
+
+/* Right-side blocks: line grows from right edge */
+.featRight .hoverLine {
+  left: auto;
+  right: 0;
+}
+
+/* ── ARROW — .feat-arr ───────────────────────────────────────── */
+/* Uses var(--font-mono) scoped on .slide */
 .featArr {
   font-family: var(--font-mono);
-  /* blueprint: .58rem — NOT text-xl */
   font-size: .58rem;
   color: var(--color-text-muted);
   letter-spacing: .1em;
   margin-bottom: .55rem;
   display: block;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* right-aligned arrow */
+.feat:hover .featArr {
+  transform: translateX(4px);
+}
+
+/* Right-aligned arrow — hover moves left */
 .featArrRight {
   text-align: right;
 }
 
-/* ── ICON WRAPPER — blueprint: .feat-ico */
+.featRight:hover .featArrRight {
+  transform: translateX(-4px);
+}
+
+/* ── ICON WRAPPER — .feat-ico ────────────────────────────────── */
 .featIco {
   margin-bottom: .8rem;
 }
 
-/* right-align icon for TR + BR */
+/* Right-align icon for TR + BR */
 .featIcoRight {
   display: flex;
   justify-content: flex-end;
 }
 
-/* ── NUMBER — blueprint: .feat-num
-   CRITICAL: clamp(3rem,6vw,5.5rem) weight 200
-   Old TSX had text-[0.65rem] font-bold — completely wrong */
+/* ── NUMBER — .feat-num ──────────────────────────────────────── */
+/*
+ * CRITICAL: clamp(3rem,6vw,5.5rem) weight 200
+ * Old v1 TSX had text-[0.65rem] font-bold — completely wrong.
+ */
 .featNum {
   font-size: clamp(3rem, 6vw, 5.5rem);
   font-weight: 200;
@@ -78,8 +219,8 @@
   margin-bottom: .15rem;
 }
 
-/* ── TITLE — blueprint: .feat-title
-   clamp(1rem,2.2vw,1.55rem) — NOT text-2xl sm:text-3xl */
+/* ── TITLE — .feat-title ─────────────────────────────────────── */
+/* clamp(1rem,2.2vw,1.55rem) — NOT text-2xl sm:text-3xl */
 .featTitle {
   font-size: clamp(1rem, 2.2vw, 1.55rem);
   font-weight: 300;
@@ -89,7 +230,7 @@
   margin-bottom: .5rem;
 }
 
-/* ── LEAD (subtitle) — blueprint: .feat-lead */
+/* ── LEAD (subtitle) ─────────────────────────────────────────── */
 .featLead {
   font-size: clamp(.88rem, 1.4vw, 1.05rem);
   font-weight: 300;
@@ -97,15 +238,15 @@
   margin-bottom: .35rem;
 }
 
-/* feat 3 lead override — blueprint inline style */
+/* feat 3 lead override — blueprint inline style ~60FPS~ muted */
 .featLeadMuted {
   font-size: .75rem;
   color: var(--color-text-secondary);
 }
 
-/* ── BODY TEXT — blueprint: .feat-sub
-   DM Mono monospace + clamp(.58rem,1vw,.72rem) — NOT text-sm */
-/* ── Uses var(--font-mono) scoped above ── */
+/* ── BODY TEXT — .feat-sub ───────────────────────────────────── */
+/* DM Mono + clamp(.58rem,1vw,.72rem) — NOT text-sm */
+/* Uses var(--font-mono) scoped on .slide */
 .featSub {
   font-family: var(--font-mono);
   font-size: clamp(.58rem, 1vw, .72rem);
@@ -114,14 +255,17 @@
   max-width: 240px;
 }
 
-/* push sub text to right for TR + BR */
+/* Push sub text to right for TR + BR */
 .featSubRight {
   margin-left: auto;
 }
 
-/* ── CENTER LABEL — blueprint: .tl-label
-   bottom:5% NOT top-1/2 (old TSX was vertically centered) */
-/* ── Uses var(--font-mono) scoped above ── */
+/* ── CENTER LABEL — .tl-label ────────────────────────────────── */
+/*
+ * bottom: 5% — NOT top-1/2 (old v1 TSX was vertically centred — wrong).
+ * Uses var(--font-mono) scoped on .slide.
+ * z-index: 1 — above .decor, same level as .feat.
+ */
 .tlLabel {
   position: absolute;
   bottom: 5%;
@@ -133,9 +277,11 @@
   letter-spacing: .22em;
   text-transform: uppercase;
   white-space: nowrap;
+  z-index: 1;
+  pointer-events: none;
 }
 
-/* ── MOBILE STACK VIEW */
+/* ── MOBILE STACK VIEW ───────────────────────────────────────── */
 .mobileStack {
   display: none;
   flex-direction: column;
@@ -146,10 +292,11 @@
   margin: 0 auto;
 }
 
-/* ── RESPONSIVE */
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
 @media (max-width: 767px) {
-  .feat        { display: none; } /* hide absolute positioned feats on mobile */
+  .feat        { display: none; }
   .tlLabel     { display: none; }
+  .decor       { display: none; }
   .mobileStack { display: flex; }
 }
 
@@ -162,7 +309,7 @@
   .feat { max-width: min(280px, 40vw); }
 }
 
-/* ── MOBILE ITEM STYLES ── */
+/* ── MOBILE ITEM STYLES ─────────────────────────────────────── */
 .mobileItem {
   width: 100%;
 }
@@ -192,7 +339,7 @@
   margin-bottom: .4rem;
 }
 
-/* ── Uses var(--font-mono) scoped above ── */
+/* Uses var(--font-mono) scoped on .slide */
 .mobileSub {
   font-family: var(--font-mono);
   font-size: clamp(.62rem, 3vw, .72rem);

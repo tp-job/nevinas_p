@@ -100,7 +100,8 @@ const HomePage: FC = () => {
   return (
     <div className="relative isolate h-svh min-h-svh overflow-hidden bg-transparent homepage-root">
 
-      <header className="site-header">
+      {/* Navbar wrapper — zero-height: Navbar is position:fixed so it doesn't need layout space */}
+      <header className="site-header absolute top-0 left-0 right-0 h-0 overflow-visible z-50">
         <a href="#homepage-scroll" className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:bg-charcoal focus:text-dark-text-primary focus:p-2">Skip to content</a>
         <Navbar scrollContainerId="homepage-scroll" />
       </header>
@@ -108,7 +109,7 @@ const HomePage: FC = () => {
       <main
         ref={scrollRef}
         id="homepage-scroll"
-        className="relative z-[var(--homepage-z-sticky)] h-full overflow-y-auto overflow-x-hidden scroll-smooth" 
+        className="relative z-[var(--homepage-z-sticky)] h-svh w-full overflow-y-auto overflow-x-hidden scroll-smooth" 
         style={{ scrollSnapType: 'y mandatory', WebkitFontSmoothing: 'antialiased', MozOsxFontSmoothing: 'grayscale' }}
       >
         {/* SENTINELS for Scroll Snapping */}
