@@ -20,7 +20,7 @@ const FaqNewsFooter: React.FC = () => {
       {/* META BAR */}
       <div className="grid grid-cols-4 border-b border-midnight/10 dark:border-periwinkle/10">
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="px-4 py-2 border-r border-midnight/10 dark:border-periwinkle/10 last:border-r-0 flex items-center gap-2 font-[var(--fm)] text-[0.5rem] tracking-[0.2em] uppercase text-periwinkle-mid dark:text-haze-light">
+          <div key={i} className="px-4 py-2 border-r border-midnight/10 dark:border-periwinkle/10 last:border-r-0 flex items-center gap-2 font-[var(--fm)] text-[0.5rem] tracking-[0.2em] uppercase text-light-text-secondary dark:text-dark-text-secondary">
             <div className="w-1.5 h-1.5 rounded-full bg-matte-royal" />
             B0{i} ↑
           </div>
@@ -43,12 +43,12 @@ const FaqNewsFooter: React.FC = () => {
           <div className="font-[var(--fm)] text-sm font-semibold mb-1 flex items-center gap-1.5">
             <span className="text-matte-royal">•</span> Most Common Questions
           </div>
-          <div className="font-[var(--fm)] text-xs text-midnight/40 dark:text-periwinkle/40 leading-relaxed max-w-sm">
+          <div className="font-[var(--fm)] text-xs text-light-text-secondary dark:text-dark-text-secondary leading-relaxed max-w-sm">
             No worries, here you can find all<br/>the answers you need.
           </div>
         </div>
         <div className="p-6 flex items-center justify-center md:justify-end bg-light-surface dark:bg-dark-surface">
-          <div className="font-[var(--fj)] text-2xl text-midnight/10 dark:text-periwinkle/10 tracking-widest">問答</div>
+          <div className="font-[var(--fj)] text-2xl text-light-text-muted/40 dark:text-dark-text-muted/40 tracking-widest">問答</div>
         </div>
       </div>
 
@@ -88,7 +88,7 @@ const FaqNewsFooter: React.FC = () => {
                     transition={{ duration: 0.3 }}
                     className="px-4 md:px-6 pb-4"
                   >
-                    <div className="font-[var(--fm)] text-[0.65rem] sm:text-xs text-midnight/50 dark:text-periwinkle/50 leading-[1.75] max-w-3xl">
+                    <div className="font-[var(--fm)] text-[0.65rem] sm:text-xs text-light-text-secondary dark:text-dark-text-secondary leading-[1.75] max-w-3xl">
                       {item.a}
                     </div>
                   </motion.div>
@@ -103,7 +103,7 @@ const FaqNewsFooter: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.35fr_1fr_1fr] border-b border-midnight/10 dark:border-periwinkle/10">
         <div className="p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-midnight/10 dark:border-periwinkle/10 flex flex-col justify-between">
           <div className="font-[var(--fd)] text-3xl sm:text-4xl font-bold tracking-tight uppercase leading-none">
-            Latest<br/>News<sup className="text-[0.28em] font-normal text-midnight/30 dark:text-periwinkle/30 tracking-[0.06em] ml-1">NEW</sup>
+            Latest<br/>News<sup className="text-[0.28em] font-normal text-light-text-muted dark:text-dark-text-muted tracking-[0.06em] ml-1">NEW</sup>
           </div>
           <button className="w-8 h-8 rounded-full border-[1.5px] border-light-border dark:border-dark-border flex items-center justify-center text-sm hover:bg-matte-royal hover:border-matte-royal hover:text-dark-text-primary transition-colors mt-4">
             →
@@ -111,8 +111,8 @@ const FaqNewsFooter: React.FC = () => {
         </div>
         
         <div className="hidden lg:flex flex-col items-center justify-center gap-2 border-r border-midnight/10 dark:border-periwinkle/10">
-          <button className="w-6 h-6 rounded-full border border-light-border dark:border-dark-border flex items-center justify-center text-[0.65rem] text-periwinkle-mid dark:text-haze-light hover:bg-light-text dark:hover:bg-dark-text hover:text-dark-text-primary dark:hover:text-midnight transition-colors">‹</button>
-          <button className="w-6 h-6 rounded-full border border-light-border dark:border-dark-border flex items-center justify-center text-[0.65rem] text-periwinkle-mid dark:text-haze-light hover:bg-light-text dark:hover:bg-dark-text hover:text-dark-text-primary dark:hover:text-midnight transition-colors">›</button>
+          <button className="w-6 h-6 rounded-full border border-light-border dark:border-dark-border flex items-center justify-center text-[0.65rem] text-light-text-secondary dark:text-dark-text-secondary hover:bg-light-text dark:hover:bg-dark-text hover:text-dark-text-primary dark:hover:text-midnight transition-colors">‹</button>
+          <button className="w-6 h-6 rounded-full border border-light-border dark:border-dark-border flex items-center justify-center text-[0.65rem] text-light-text-secondary dark:text-dark-text-secondary hover:bg-light-text dark:hover:bg-dark-text hover:text-dark-text-primary dark:hover:text-midnight transition-colors">›</button>
         </div>
 
         {/* News Card 1 */}
@@ -123,7 +123,7 @@ const FaqNewsFooter: React.FC = () => {
             <div className="absolute bottom-1 right-1.5 text-sm opacity-20 text-dark-text-primary group-hover:scale-125 transition-transform">◈</div>
           </div>
           <div className="font-[var(--fm)] text-[0.7rem] sm:text-xs leading-relaxed mt-1">Smart Learning Hub — Building a full LMS with React &amp; Flask</div>
-          <div className="flex justify-between font-[var(--fm)] text-[0.55rem] text-midnight/35 dark:text-periwinkle/35 tracking-wider mt-auto pt-2">
+          <div className="flex justify-between font-[var(--fm)] text-[0.55rem] text-light-text-muted dark:text-dark-text-muted tracking-wider mt-auto pt-2">
             <span>Weekly</span>
             <span>May 2026</span>
           </div>
@@ -137,7 +137,7 @@ const FaqNewsFooter: React.FC = () => {
             <div className="absolute bottom-1 right-1.5 text-sm opacity-20 text-dark-text-primary group-hover:scale-125 transition-transform">✦</div>
           </div>
           <div className="font-[var(--fm)] text-[0.7rem] sm:text-xs leading-relaxed mt-1">3D Interactive Web — Three.js gyroscope &amp; scroll-driven experiences</div>
-          <div className="flex justify-between font-[var(--fm)] text-[0.55rem] text-midnight/35 dark:text-periwinkle/35 tracking-wider mt-auto pt-2">
+          <div className="flex justify-between font-[var(--fm)] text-[0.55rem] text-light-text-muted dark:text-dark-text-muted tracking-wider mt-auto pt-2">
             <span>Weekly</span>
             <span>Apr 2026</span>
           </div>
@@ -161,13 +161,13 @@ const FaqNewsFooter: React.FC = () => {
         
         <div className="p-4 md:p-6 border-b md:border-b-0 md:border-r border-midnight/10 dark:border-periwinkle/10 flex items-center w-full">
           <div className="flex flex-col gap-1 w-full">
-            <div className="font-[var(--fm)] text-[0.5rem] text-midnight/30 dark:text-periwinkle/30 tracking-[0.14em] uppercase">Subscribe to be in touch*</div>
-            <input type="email" placeholder="Your e-mail" className="w-full bg-transparent border-b border-light-border dark:border-dark-border py-1 font-[var(--fm)] text-sm focus:outline-none focus:border-periwinkle-mid dark:focus:border-periwinkle transition-colors placeholder:text-periwinkle-mid dark:placeholder:text-haze-light" />
+            <div className="font-[var(--fm)] text-[0.5rem] text-light-text-muted dark:text-dark-text-muted tracking-[0.14em] uppercase">Subscribe to be in touch*</div>
+            <input type="email" placeholder="Your e-mail" className="w-full bg-transparent border-b border-light-border dark:border-dark-border py-1 font-[var(--fm)] text-sm text-light-text dark:text-dark-text focus:outline-none focus:border-periwinkle-mid dark:focus:border-periwinkle transition-colors placeholder:text-light-text-muted dark:placeholder:text-dark-text-muted" />
           </div>
         </div>
         
         <div className="p-4 md:p-6 border-b md:border-b-0 md:border-r border-midnight/10 dark:border-periwinkle/10 items-center hidden md:flex">
-          <div className="font-[var(--fm)] text-[0.5rem] text-midnight/30 dark:text-periwinkle/30 tracking-[0.12em] uppercase leading-relaxed">
+          <div className="font-[var(--fm)] text-[0.5rem] text-light-text-muted dark:text-dark-text-muted tracking-[0.12em] uppercase leading-relaxed">
             *Only valuable<br/>resources &amp; updates
           </div>
         </div>
@@ -186,10 +186,10 @@ const FaqNewsFooter: React.FC = () => {
           { title: "Download", links: ["Resume PDF", "Portfolio PDF"] }
         ].map((col, i) => (
           <div key={i} className="p-4 md:p-6 md:border-r border-midnight/5 dark:border-periwinkle/5 last:border-r-0">
-            <div className="font-[var(--fm)] text-[0.55rem] tracking-[0.22em] uppercase text-midnight/30 dark:text-periwinkle/30 mb-3">{col.title}</div>
+            <div className="font-[var(--fm)] text-[0.55rem] tracking-[0.22em] uppercase text-light-text-muted dark:text-dark-text-muted mb-3">{col.title}</div>
             <div className="flex flex-col gap-1">
               {col.links.map((link, j) => (
-                <a key={j} href="#" className="flex justify-between items-center font-[var(--fm)] text-[0.65rem] text-haze dark:text-cool hover:text-matte-azure transition-colors py-0.5 group">
+                <a key={j} href="#" className="flex justify-between items-center font-[var(--fm)] text-[0.65rem] text-light-text-secondary dark:text-dark-text-secondary hover:text-matte-azure transition-colors py-0.5 group">
                   {link}
                   {!col.noExt && <span className="opacity-30 text-[0.5em] ml-1 group-hover:opacity-100 transition-opacity">↗</span>}
                 </a>
@@ -200,9 +200,9 @@ const FaqNewsFooter: React.FC = () => {
       </div>
 
       {/* COPYRIGHT */}
-      <div className="flex flex-col sm:flex-row justify-between items-center px-4 md:px-6 py-3 border-b border-midnight/5 dark:border-periwinkle/5 font-[var(--fm)] text-[0.55rem] tracking-[0.12em] text-midnight/25 dark:text-periwinkle/25 uppercase gap-2">
+      <div className="flex flex-col sm:flex-row justify-between items-center px-4 md:px-6 py-3 border-b border-midnight/5 dark:border-periwinkle/5 font-[var(--fm)] text-[0.55rem] tracking-[0.12em] text-light-text-muted dark:text-dark-text-muted uppercase gap-2">
         <span>© 2026 · All rights reserved by Nevinas</span>
-        <span className="text-midnight/20 dark:text-periwinkle/20">異世界 出身 · Isekai</span>
+        <span className="text-light-text-tertiary dark:text-dark-text-tertiary">異世界 出身 · Isekai</span>
       </div>
 
       {/* BIG WORD */}
@@ -214,7 +214,7 @@ const FaqNewsFooter: React.FC = () => {
         <div className="absolute bottom-0 right-6 w-3 h-3 border-b-2 border-r-2 border-matte-royal hidden sm:block" />
         
         <div 
-          className="font-[var(--fd)] font-black tracking-[-0.06em] leading-[0.88] uppercase text-[clamp(4.5rem,14vw,13rem)]"
+          className="font-[var(--fd)] font-black tracking-[-0.06em] leading-[0.88] uppercase text-light-text dark:text-dark-text text-[clamp(4.5rem,14vw,13rem)]"
         >
           ネヴィ<span className="text-matte-royal">ナス</span>
         </div>

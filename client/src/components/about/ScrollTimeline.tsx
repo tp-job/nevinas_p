@@ -61,6 +61,140 @@ const DEFAULT_EVENTS: TimelineEvent[] = [
     description: "Information about this key event in the timeline.",
   },
 ];
+interface TimelineItemProps {
+  event: TimelineEvent;
+  index: number;
+  smoothProgress: MotionValue<number>;
+  parallaxIntensity: number;
+  activeIndex: number;
+  timelineRefs: React.MutableRefObject<(HTMLDivElement | null)[]>;
+  cardAlignment: "alternating" | "left" | "right";
+  dateFormat: "text" | "badge";
+  getCardClasses: (index: number) => string;
+  getCardVariants: (index: number) => {
+    initial: any;
+    whileInView: any;
+    viewport: { once: boolean; margin: string };
+  };
+}
+
+const TimelineItem: FC<TimelineItemProps> = ({
+  event,
+  index,
+  smoothProgress,
+  parallaxIntensity,
+  activeIndex,
+  timelineRefs,
+  cardAlignment,
+  dateFormat,
+  getCardClasses,
+  getCardVariants,
+}) => {
+  const yOffset = useTransform(
+    smoothProgress,
+    [0, 1],
+    [parallaxIntensity * 100, -parallaxIntensity * 100],
+  );
+
+  return (
+    <div
+      ref={(el) => {
+        timelineRefs.current[index] = el;
+      }}
+      className={cn(
+        "relative flex items-center mb-20 py-4",
+        "flex-col lg:flex-row",
+        cardAlignment === "alternating"
+          ? index % 2 === 0
+            ? "lg:justify-start"
+            : "lg:flex-row-reverse lg:justify-start"
+          : cardAlignment === "left"
+            ? "lg:justify-start"
+            : "lg:flex-row-reverse lg:justify-start",
+      )}
+    >
+      <div
+        className={cn(
+          "absolute top-12 lg:top-1/2 transform -translate-y-1/2 z-30",
+          "left-6 lg:left-1/2 -translate-x-1/2",
+        )}
+      >
+        <motion.div
+          className={cn(
+            "w-6 h-6 rounded-full border-4 bg-background flex items-center justify-center",
+            index <= activeIndex
+              ? "border-primary"
+              : "border bg-card",
+          )}
+          animate={
+            index <= activeIndex
+              ? {
+                  scale: [1, 1.3, 1],
+                  boxShadow: [
+                    "0 0 0px rgba(99,102,241,0)",
+                    "0 0 12px rgba(99,102,241,0.6)",
+                    "0 0 0px rgba(99,102,241,0)",
+                  ],
+                }
+              : {}
+          }
+          transition={{
+            duration: 0.8,
+            repeat: Infinity,
+            repeatDelay: 4,
+            ease: "easeInOut",
+          }}
+        />
+      </div>
+      <motion.div
+        className={cn(getCardClasses(index), "mt-12 lg:mt-0")}
+        variants={getCardVariants(index)}
+        initial="initial"
+        whileInView="whileInView"
+        viewport={{ once: false, margin: "-100px" }}
+        style={parallaxIntensity > 0 ? { y: yOffset } : undefined}
+      >
+        <Card className="bg-background border">
+          <CardContent className="p-6">
+            {dateFormat === "badge" ? (
+              <div className="flex items-center mb-2">
+                {event.icon || (
+                  <Calendar className="h-4 w-4 mr-2 text-primary" />
+                )}
+                <span
+                  className={cn(
+                    "text-sm font-bold",
+                    event.color
+                      ? `text-${event.color}`
+                      : "text-primary",
+                  )}
+                >
+                  {event.year}
+                </span>
+              </div>
+            ) : (
+              <p className="text-lg font-bold text-primary mb-2">
+                {event.year}
+              </p>
+            )}
+            <h3 className="text-xl font-bold mb-1">
+              {event.title}
+            </h3>
+            {event.subtitle && (
+              <p className="text-muted-foreground font-medium mb-2">
+                {event.subtitle}
+              </p>
+            )}
+            <p className="text-muted-foreground">
+              {event.description}
+            </p>
+          </CardContent>
+        </Card>
+      </motion.div>
+    </div>
+  );
+};
+
 export const ScrollTimeline = ({
   events = DEFAULT_EVENTS,
   title = "Timeline",
@@ -68,7 +202,6 @@ export const ScrollTimeline = ({
   animationOrder = "sequential",
   cardAlignment = "alternating",
   lineColor = "bg-primary/30",
-  activeColor = "bg-primary",
   progressIndicator = true,
   cardVariant = "default",
   cardEffect = "none",
@@ -81,7 +214,6 @@ export const ScrollTimeline = ({
   connectorStyle = "line",
   perspective = false,
   darkMode = false,
-  smoothScroll = true,
 }: ScrollTimelineProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -152,7 +284,7 @@ export const ScrollTimeline = ({
   };
   const getConnectorClasses = () => {
     const baseClasses = cn(
-      "absolute left-1/2 transform -translate-x-1/2",
+      "absolute left-6 lg:left-1/2 transform -translate-x-1/2",
       lineColor,
     );
     const widthStyle = `w-[${progressLineWidth}px]`;
@@ -180,15 +312,15 @@ export const ScrollTimeline = ({
     };
     const effectClasses = {
       none: "",
-      glow: "hover:shadow-[0_0_15px_rgba(var(--primary-rgb)/0.5)]",
+      glow: "hover:shadow-[0_0_15px_rgba(99,102,241,0.4)] hover:border-primary/50",
       shadow: "hover:shadow-lg hover:-translate-y-1",
-      bounce: "hover:scale-[1.03] hover:shadow-md active:scale-[0.97]",
+      bounce: "hover:animate-bounce-subtle",
     };
     const alignmentClassesDesktop =
       cardAlignment === "alternating"
         ? index % 2 === 0
-          ? "lg:mr-[calc(50%+20px)]"
-          : "lg:ml-[calc(50%+20px)]"
+          ? "lg:mr-[calc(50%+20px)] lg:ml-0"
+          : "lg:ml-[calc(50%+20px)] lg:mr-0"
         : cardAlignment === "left"
           ? "lg:mr-auto lg:ml-0"
           : "lg:ml-auto lg:mr-0";
@@ -200,7 +332,8 @@ export const ScrollTimeline = ({
       variantClasses[cardVariant],
       effectClasses[cardEffect],
       alignmentClassesDesktop,
-      "w-full lg:w-[calc(50%-40px)]",
+      "w-[calc(100%-48px)] ml-12 lg:ml-0 lg:w-[calc(50%-40px)]",
+      perspectiveClass,
     );
   };
   return (
@@ -235,12 +368,10 @@ export const ScrollTimeline = ({
               {" "}
               {/* The main filled progress line */}{" "}
               <motion.div
-                className="absolute top-0 z-10"
+                className="absolute top-0 z-10 left-6 lg:left-1/2 -translate-x-1/2"
                 style={{
                   height: progressHeight,
                   width: progressLineWidth,
-                  left: "50%",
-                  transform: "translateX(-50%)",
                   borderRadius: progressLineCap === "round" ? "9999px" : "0px",
                   background: `linear-gradient(to bottom, #22d3ee, #6366f1, #a855f7)`,
                   /* Enhanced shadow for a constant glow effect along the path */ boxShadow: ` 0 0 15px rgba(99,102,241,0.5), 0 0 25px rgba(168,85,247,0.3)`,
@@ -248,13 +379,9 @@ export const ScrollTimeline = ({
               />{" "}
               {/* The traveling glow"comet" at the head of the line */}{" "}
               <motion.div
-                className="absolute z-20"
+                className="absolute z-20 left-6 lg:left-1/2 -translate-x-1/2 -translate-y-1/2"
                 style={{
                   top: progressHeight,
-                  left: "50%",
-                  translateX: "-50%",
-                  translateY:
-                    "-50%" /* Center the comet on the line's end point */,
                 }}
               >
                 {" "}
@@ -278,122 +405,21 @@ export const ScrollTimeline = ({
           {/* === MODIFICATION END === */}{" "}
           <div className="relative z-20">
             {" "}
-            {events.map((event, index) => {
-              const yOffset = useTransform(
-                smoothProgress,
-                [0, 1],
-                [parallaxIntensity * 100, -parallaxIntensity * 100],
-              );
-              return (
-                <div
-                  key={event.id || index}
-                  ref={(el) => {
-                    timelineRefs.current[index] = el;
-                  }}
-                  className={cn(
-                    "relative flex items-center mb-20 py-4",
-                    "flex-col lg:flex-row",
-                    cardAlignment === "alternating"
-                      ? index % 2 === 0
-                        ? "lg:justify-start"
-                        : "lg:flex-row-reverse lg:justify-start"
-                      : cardAlignment === "left"
-                        ? "lg:justify-start"
-                        : "lg:flex-row-reverse lg:justify-start",
-                  )}
-                >
-                  {" "}
-                  <div
-                    className={cn(
-                      "absolute top-1/2 transform -translate-y-1/2 z-30",
-                      "left-1/2 -translate-x-1/2",
-                    )}
-                  >
-                    {" "}
-                    <motion.div
-                      className={cn(
-                        "w-6 h-6 rounded-full border-4 bg-background flex items-center justify-center",
-                        index <= activeIndex
-                          ? "border-primary"
-                          : "border bg-card",
-                      )}
-                      animate={
-                        index <= activeIndex
-                          ? {
-                              scale: [1, 1.3, 1],
-                              boxShadow: [
-                                "0 0 0px rgba(99,102,241,0)",
-                                "0 0 12px rgba(99,102,241,0.6)",
-                                "0 0 0px rgba(99,102,241,0)",
-                              ],
-                            }
-                          : {}
-                      }
-                      transition={{
-                        duration: 0.8,
-                        repeat: Infinity,
-                        repeatDelay: 4,
-                        ease: "easeInOut",
-                      }}
-                    />{" "}
-                  </div>{" "}
-                  <motion.div
-                    className={cn(getCardClasses(index), "mt-12 lg:mt-0")}
-                    variants={getCardVariants(index)}
-                    initial="initial"
-                    whileInView="whileInView"
-                    viewport={{ once: false, margin: "-100px" }}
-                    style={parallaxIntensity > 0 ? { y: yOffset } : undefined}
-                  >
-                    {" "}
-                    <Card className="bg-background border">
-                      {" "}
-                      <CardContent className="p-6">
-                        {" "}
-                        {dateFormat === "badge" ? (
-                          <div className="flex items-center mb-2">
-                            {" "}
-                            {event.icon || (
-                              <Calendar className="h-4 w-4 mr-2 text-primary" />
-                            )}{" "}
-                            <span
-                              className={cn(
-                                "text-sm font-bold",
-                                event.color
-                                  ? `text-${event.color}`
-                                  : "text-primary",
-                              )}
-                            >
-                              {" "}
-                              {event.year}{" "}
-                            </span>{" "}
-                          </div>
-                        ) : (
-                          <p className="text-lg font-bold text-primary mb-2">
-                            {" "}
-                            {event.year}{" "}
-                          </p>
-                        )}{" "}
-                        <h3 className="text-xl font-bold mb-1">
-                          {" "}
-                          {event.title}{" "}
-                        </h3>{" "}
-                        {event.subtitle && (
-                          <p className="text-muted-foreground font-medium mb-2">
-                            {" "}
-                            {event.subtitle}{" "}
-                          </p>
-                        )}{" "}
-                        <p className="text-muted-foreground">
-                          {" "}
-                          {event.description}{" "}
-                        </p>{" "}
-                      </CardContent>{" "}
-                    </Card>{" "}
-                  </motion.div>{" "}
-                </div>
-              );
-            })}{" "}
+            {events.map((event, index) => (
+              <TimelineItem
+                key={event.id || index}
+                event={event}
+                index={index}
+                smoothProgress={smoothProgress}
+                parallaxIntensity={parallaxIntensity}
+                activeIndex={activeIndex}
+                timelineRefs={timelineRefs}
+                cardAlignment={cardAlignment}
+                dateFormat={dateFormat}
+                getCardClasses={getCardClasses}
+                getCardVariants={getCardVariants}
+              />
+            ))}
           </div>{" "}
         </div>{" "}
       </div>{" "}

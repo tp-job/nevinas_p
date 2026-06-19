@@ -42,7 +42,9 @@
   --color-light-surface-2:       rgba(255,255,255,0.82);
   --color-light-border:          rgba(30,35,60,0.10);
   --color-light-text:            #1E233C;
-  --color-light-text-secondary:  #465078;
+  --color-light-text-secondary:  #3D4668;
+  --color-light-text-tertiary:   #56608A;
+  --color-light-text-muted:      #626C94;
 
   /* ── Semantic Dark Mode ── */
   --color-dark-bg:               #0A0F19;
@@ -50,7 +52,9 @@
   --color-dark-surface-2:        rgba(46,53,88,0.65);
   --color-dark-border:           rgba(200,205,235,0.10);
   --color-dark-text:             #E8EAF5;
-  --color-dark-text-secondary:   #878CB4;
+  --color-dark-text-secondary:   #949BBF;
+  --color-dark-text-tertiary:    #A8B0D9;
+  --color-dark-text-muted:       #727A9E;
   --color-dark-text-primary:     #FFFFFF;
 
   /* ── Focus & Selection (DS §16 / §18) ── */
@@ -61,12 +65,19 @@
   --color-selection-text-dark:   #E8EAF5;
 
   /* ── Semantic Runtime Aliases (bridge → colors.css light defaults) ── */
-  --color-text-primary:    var(--color-light-text);
-  --color-text-secondary:  var(--color-light-text-secondary);
-  --color-bg-primary:      var(--color-light-bg);
-  --color-bg-secondary:    var(--color-periwinkle-pale);
-  --color-border-primary:  var(--color-light-border);
-  --color-border-focus:    var(--color-focus-ring);
+  --color-text-primary:      var(--color-light-text);
+  --color-text-secondary:    var(--color-light-text-secondary);
+  --color-text-tertiary:     var(--color-light-text-tertiary);
+  --color-text-muted:        var(--color-light-text-muted);
+  --color-bg-primary:        var(--color-light-bg);
+  --color-bg-secondary:      var(--color-periwinkle-pale);
+  --color-bg-tertiary:       var(--color-cool-pale);
+  --color-surface-primary:   var(--color-light-surface);
+  --color-surface-secondary: var(--color-light-surface-2);
+  --color-border-primary:    var(--color-light-border);
+  --color-border-focus:      var(--color-focus-ring);
+  --color-accent:            var(--color-haze-deep);
+  --color-accent-foreground: var(--color-dark-text-primary);
 
   /* ── Status ── */
   --color-success:   #2E7D32;
@@ -109,6 +120,27 @@
   --shadow-lg:   0 16px 40px rgba(30,35,60,0.16);
   --shadow-glow: 0 8px 24px rgba(135, 140, 180, 0.35);
   --shadow-glow-warm: 0 8px 24px rgba(133, 117, 143, 0.28);  /* Mountbatten glow — new */
+
+  /* ── Glassmorphism Tokens ── */
+  --glass-blur-sm: 8px;
+  --glass-blur-md: 14px;
+  --glass-blur-lg: 20px;
+  --glass-saturate: 160%;
+  --glass-bg: rgba(255, 255, 255, 0.52);
+  --glass-bg-elevated: rgba(255, 255, 255, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.62);
+  --glass-border-strong: rgba(30, 35, 60, 0.14);
+  --glass-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 10px 30px rgba(30, 35, 60, 0.12);
+  --glass-shadow-hover:
+    inset 0 1px 0 rgba(255, 255, 255, 0.78),
+    0 14px 34px rgba(30, 35, 60, 0.16);
+
+  /* ── Theme Transition Tokens ── */
+  --theme-motion-duration: 320ms;
+  --theme-motion-duration-slow: 520ms;
+  --theme-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 
@@ -133,3 +165,125 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/inter";
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DARK MODE — UNLAYERED SEMANTIC TOKEN OVERRIDES
+   ───────────────────────────────────────────────────────────────────────────
+   WHY UNLAYERED: Tailwind v4 @theme generates unlayered :root { } custom
+   properties (specificity 0,0,1). Our @layer tokens { .dark { } } in
+   colors.css is layered and ALWAYS loses to unlayered :root — breaking all
+   semantic token dark-mode switching. This unlayered .dark block has
+   specificity 0,1,0 (class > pseudo-class), which wins in the same unlayered
+   cascade origin and permanently fixes dark-mode for every component that
+   consumes a semantic CSS custom property.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.dark {
+  /* ── Backgrounds ─────────────────────────────────────── */
+  --color-bg-primary:        var(--color-dark-bg);
+  --color-bg-secondary:      var(--color-midnight-deep);
+  --color-bg-tertiary:       var(--color-midnight);
+
+  /* ── Surfaces ────────────────────────────────────────── */
+  --color-surface-primary:   var(--color-dark-surface);
+  --color-surface-secondary: var(--color-dark-surface-2);
+  --color-surface-tertiary:  var(--color-haze-deep);
+  --color-surface-variant:   var(--color-dark-surface);
+
+  /* ── Text ────────────────────────────────────────────── */
+  --color-text-primary:      var(--color-dark-text);
+  --color-text-secondary:    var(--color-dark-text-secondary);
+  --color-text-tertiary:     var(--color-dark-text-tertiary);
+  --color-text-muted:        var(--color-dark-text-muted);
+  --color-text-disabled:     rgba(232, 234, 245, 0.40);
+  --color-text-inverse:      var(--color-midnight);
+
+  /* ── Borders ─────────────────────────────────────────── */
+  --color-border-primary:    var(--color-dark-border);
+  --color-border-secondary:  rgba(200, 205, 235, 0.18);
+  --color-border-tertiary:   var(--color-haze-deep);
+  --color-border-subtle:     var(--color-dark-border);
+
+  /* ── Glass & Overlays ────────────────────────────────── */
+  --color-glass-bg:           rgba(30, 35, 60, 0.48);
+  --color-glass-bg-elevated:  rgba(46, 53, 88, 0.62);
+  --color-glass-border:       rgba(200, 205, 235, 0.18);
+  --color-glass-border-strong: rgba(200, 205, 235, 0.28);
+  --color-glass-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.10),
+    0 14px 36px rgba(0, 0, 0, 0.36);
+  --color-glass-shadow-hover:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 18px 40px rgba(0, 0, 0, 0.44);
+  --color-overlay-dark:  rgba(0, 0, 0, 0.70);
+  --color-overlay-light: rgba(255, 255, 255, 0.10);
+
+  /* ── Interactive ─────────────────────────────────────── */
+  --color-button-primary-bg:       var(--color-periwinkle);
+  --color-button-primary-text:     var(--color-midnight);
+  --color-button-primary-hover:    var(--color-periwinkle-mid);
+  --color-button-primary-active:   var(--color-cool);
+  --color-button-primary-disabled: rgba(200, 205, 235, 0.40);
+  --color-button-secondary-bg:     var(--color-dark-surface-2);
+  --color-button-secondary-text:   var(--color-dark-text);
+  --color-button-secondary-hover:  var(--color-haze-deep);
+  --color-button-secondary-active: var(--color-midnight);
+  --color-link-primary:  var(--color-periwinkle);
+  --color-link-hover:    var(--color-periwinkle-pale);
+  --color-link-visited:  var(--color-sub-cool);
+  --color-link-active:   var(--color-periwinkle-mid);
+
+  /* ── Accent ──────────────────────────────────────────── */
+  --color-accent:            var(--color-periwinkle);
+  --color-accent-foreground: var(--color-midnight);
+
+  /* ── App-level aliases ───────────────────────────────── */
+  --color-bg-main:     var(--color-dark-bg);
+  --color-bg-surface:  var(--color-dark-surface);
+  --color-text-main:   var(--color-dark-text);
+  --color-text-subtle: var(--color-dark-text-secondary);
+
+  /* ── Status ──────────────────────────────────────────── */
+  --color-success-bg:     rgba(46, 125, 50, 0.20);
+  --color-success-text:   #86efac;
+  --color-success-border: rgba(46, 125, 50, 0.45);
+  --color-warning-bg:     rgba(230, 81, 0, 0.20);
+  --color-warning-text:   #fbbf24;
+  --color-warning-border: rgba(230, 81, 0, 0.45);
+  --color-error-bg:       rgba(198, 40, 40, 0.20);
+  --color-error-text:     #fca5a5;
+  --color-error-border:   rgba(198, 40, 40, 0.45);
+  --color-info-bg:        rgba(46, 53, 88, 0.65);
+  --color-info-text:      var(--color-periwinkle);
+  --color-info-border:    var(--color-periwinkle-mid);
+
+  /* ── Shadows ─────────────────────────────────────────── */
+  --color-shadow-sm: rgba(0, 0, 0, 0.20);
+  --color-shadow-md: rgba(0, 0, 0, 0.30);
+  --color-shadow-lg: rgba(0, 0, 0, 0.40);
+  --color-shadow-xl: rgba(0, 0, 0, 0.50);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HOMEPAGE SLIDE MODE — semantic token lock
+   HomePage adds .homepage-theme to <html>. Slide modules bind text to their
+   own light/dark palette, but shared utilities (tl-*, Tailwind text-*) still
+   read global semantic tokens. Lock them to the active theme class so light
+   text never appears on light slide backgrounds (and vice versa).
+   ═══════════════════════════════════════════════════════════════════════════ */
+html.homepage-theme:not(.dark) {
+  --color-text-primary:      var(--color-light-text);
+  --color-text-secondary:    var(--color-light-text-secondary);
+  --color-text-tertiary:     var(--color-light-text-tertiary);
+  --color-text-muted:        var(--color-light-text-muted);
+  --color-text-main:         var(--color-light-text);
+  --color-text-subtle:       var(--color-light-text-secondary);
+}
+
+html.homepage-theme.dark {
+  --color-text-primary:      var(--color-dark-text);
+  --color-text-secondary:    var(--color-dark-text-secondary);
+  --color-text-tertiary:     var(--color-dark-text-tertiary);
+  --color-text-muted:        var(--color-dark-text-muted);
+  --color-text-main:         var(--color-dark-text);
+  --color-text-subtle:       var(--color-dark-text-secondary);
+}

@@ -10,9 +10,17 @@
 .agencySlide {
   /* ── Scoped font token: DM Mono is not in index.css @theme, defined here ── */
   --font-mono: 'DM Mono', 'Fira Code', monospace;
+  /* Slide-scoped foreground — bound to slide bg */
+  --slide-fg: var(--color-light-text);
+  --slide-fg-2: var(--color-light-text-secondary);
+  --slide-fg-3: var(--color-light-text-tertiary);
+  --slide-fg-muted: var(--color-light-text-muted);
+  --slide-border: var(--color-light-border);
+  --slide-border-2: rgba(30, 35, 60, 0.18);
+  --slide-surface: var(--color-light-surface);
 
   background: var(--color-light-bg);
-  color: var(--color-light-text);
+  color: var(--slide-fg);
   min-height: 100svh;
   text-align: left;
   display: grid;
@@ -26,8 +34,15 @@
 }
 
 :global(.dark) .agencySlide {
+  --slide-fg: var(--color-dark-text);
+  --slide-fg-2: var(--color-dark-text-secondary);
+  --slide-fg-3: var(--color-dark-text-tertiary);
+  --slide-fg-muted: var(--color-dark-text-muted);
+  --slide-border: var(--color-dark-border);
+  --slide-border-2: rgba(200, 205, 235, 0.18);
+  --slide-surface: var(--color-dark-surface);
   background: var(--color-dark-bg);
-  color: var(--color-dark-text);
+  color: var(--slide-fg);
 }
 
 /* ── ROW 1: arrow + nebula */
@@ -55,7 +70,7 @@
 .arrowKanji {
   font-family: var(--font-zen);
   font-size: clamp(0.7rem, 1.4vw, 1rem);
-  color: var(--color-text-muted);
+  color: var(--slide-fg-muted);
   opacity: 0.5;
   letter-spacing: .15em;
   margin-top: .4rem;
@@ -159,7 +174,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   padding: 0 var(--space-12);
-  border-bottom: 1px solid var(--color-border-primary);
+  border-bottom: 1px solid var(--slide-border);
   gap: 2rem;
   overflow: hidden;
 }
@@ -168,7 +183,7 @@
 .descItem {
   font-family: var(--font-mono);
   font-size: clamp(.58rem, .95vw, .72rem);
-  color: var(--color-text-secondary);
+  color: var(--slide-fg-2);
   line-height: 1.6;
   font-weight: 300;
   letter-spacing: .01em;
@@ -185,9 +200,9 @@
   padding: 0 var(--space-12);
   font-family: var(--font-mono);
   font-size: .54rem;
-  color: var(--color-text-muted);
+  color: var(--slide-fg-muted);
   letter-spacing: .14em;
-  border-bottom: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--slide-border);
 }
 
 /* ── ROW 4: statement + mood ring */
@@ -211,7 +226,7 @@
   font-weight: 300;
   letter-spacing: -.03em;
   line-height: 1.1;
-  color: var(--color-text-primary);
+  color: var(--slide-fg);
   hyphens: none;
 }
 
@@ -234,9 +249,9 @@
 .supNum {
   font-size: .32em;
   vertical-align: super;
-  color: var(--color-text-secondary);
+  color: var(--slide-fg-2);
   /* override gradient clip from parent */
-  -webkit-text-fill-color: var(--color-text-secondary);
+  -webkit-text-fill-color: var(--slide-fg-2);
   background: none;
   font-style: normal;
   font-weight: 400;
@@ -281,13 +296,13 @@
   margin-top: 1rem;
   font-family: var(--font-mono);
   font-size: .7rem;
-  color: var(--color-text-primary);
+  color: var(--slide-fg);
   letter-spacing: .06em;
-  border: 1px solid var(--color-border-secondary);
+  border: 1px solid var(--slide-border-2);
   border-radius: var(--radius-full);
   padding: .62rem 1.4rem;
   width: fit-content;
-  background: var(--color-surface-variant);
+  background: var(--slide-surface);
   backdrop-filter: blur(8px);
   cursor: none;
   transition: all var(--duration-fast) var(--ease-smooth);
@@ -366,7 +381,7 @@
   transform: translateX(-50%);
   font-family: var(--font-zen);
   font-size: .72rem;
-  color: var(--color-text-tertiary);
+  color: var(--slide-fg-3);
   opacity: 0.5;
   letter-spacing: .18em;
   white-space: nowrap;
@@ -376,12 +391,12 @@
 .awards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  border-top: 1px solid var(--color-border-primary);
+  border-top: 1px solid var(--slide-border);
 }
 
 .award {
   padding: .8rem 2rem 1rem;
-  border-right: 1px solid var(--color-border-primary);
+  border-right: 1px solid var(--slide-border);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -396,7 +411,7 @@
 }
 
 .award:hover {
-  background: var(--color-surface-variant);
+  background: var(--slide-surface);
 }
 
 /* hover gradient color bar */
@@ -424,7 +439,7 @@
 .awardTitle {
   font-family: var(--font-mono);
   font-size: clamp(.56rem, .9vw, .7rem);
-  color: var(--color-text-secondary);
+  color: var(--slide-fg-2);
   letter-spacing: .04em;
   line-height: 1.45;
 }
@@ -433,14 +448,14 @@
   font-size: clamp(.95rem, 1.8vw, 1.4rem);
   font-weight: 300;
   letter-spacing: -.025em;
-  color: var(--color-text-primary);
+  color: var(--slide-fg);
   margin-top: .12rem;
 }
 
 .awardSrc {
   font-family: var(--font-mono);
   font-size: .42rem;
-  color: var(--color-text-tertiary);
+  color: var(--slide-fg-3);
   letter-spacing: .2em;
   text-transform: uppercase;
   padding-top: .6rem;
@@ -451,7 +466,7 @@
   bottom: .8rem;
   right: 1.2rem;
   font-weight: 700;
-  color: var(--color-text-tertiary);
+  color: var(--slide-fg-3);
   opacity: 0.15;
   font-size: clamp(1.3rem, 2.5vw, 2.4rem);
   line-height: 1;

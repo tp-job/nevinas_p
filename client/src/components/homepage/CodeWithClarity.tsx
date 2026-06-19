@@ -86,9 +86,7 @@ const CodeWithClarity: React.FC = () => {
               >
                 {col.num}
               </div>
-              <div
-                className={`${styles.colTxt}${isActive ? ' text-light-text dark:text-dark-text' : ''}`}
-              >
+              <div className={styles.colTxt}>
                 {col.text}
               </div>
             </div>

@@ -26,18 +26,14 @@
           0 0 0 1px rgba(89, 131, 252, 0.18);
   }
 
+  /* semantic token — switches automatically in dark mode */
   .card-title {
-      color: var(--color-light-text);
-  }
-  .dark .card-title {
-      color: var(--color-dark-text);
+      color: var(--color-text-primary);
   }
 
+  /* semantic token — switches automatically in dark mode */
   .muted-contrast {
-      color: var(--color-light-text-secondary);
-  }
-  .dark .muted-contrast {
-      color: var(--color-dark-text-secondary);
+      color: var(--color-text-secondary);
   }
 
   /* ========================================================

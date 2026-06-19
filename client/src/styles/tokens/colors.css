@@ -33,8 +33,8 @@
 
     --color-text-primary:    var(--color-light-text);
     --color-text-secondary:  var(--color-light-text-secondary);
-    --color-text-tertiary:   var(--color-cool);
-    --color-text-muted:      var(--color-periwinkle-mid);
+    --color-text-tertiary:   var(--color-light-text-tertiary);
+    --color-text-muted:      var(--color-light-text-muted);
     --color-text-disabled:   rgba(30, 35, 60, 0.40);
     --color-text-inverse:    var(--color-dark-text-primary);
 
@@ -79,10 +79,25 @@
     --color-link-active:   var(--color-haze);
 
     /* ─── GLASS & OVERLAY ─── */
-    --color-glass-bg:     var(--color-light-surface);
-    --color-glass-border: var(--color-light-border);
+    --color-glass-bg:     var(--glass-bg);
+    --color-glass-bg-elevated: var(--glass-bg-elevated);
+    --color-glass-border: var(--glass-border);
+    --color-glass-border-strong: var(--glass-border-strong);
+    --color-glass-blur: var(--glass-blur-md);
+    --color-glass-blur-strong: var(--glass-blur-lg);
+    --color-glass-saturate: var(--glass-saturate);
+    --color-glass-shadow: var(--glass-shadow);
+    --color-glass-shadow-hover: var(--glass-shadow-hover);
     --color-overlay-dark: rgba(10, 15, 25, 0.50);
     --color-overlay-light: rgba(255, 255, 255, 0.50);
+
+    /* ─── App-level semantic aliases ─── */
+    --color-bg-main: var(--color-bg-primary);
+    --color-bg-surface: var(--color-surface-primary);
+    --color-text-main: var(--color-text-primary);
+    --color-text-subtle: var(--color-text-secondary);
+    --color-accent: var(--color-haze-deep);
+    --color-accent-foreground: var(--color-dark-text-primary);
 
     /* ─── SHADOWS (midnight-tinted, index.css card tokens) ─── */
     --color-shadow-sm: rgba(30, 35, 60, 0.08);
@@ -106,8 +121,8 @@
 
     --color-text-primary:    var(--color-dark-text);
     --color-text-secondary:  var(--color-dark-text-secondary);
-    --color-text-tertiary:   var(--color-haze-light);
-    --color-text-muted:      var(--color-cool-deep);
+    --color-text-tertiary:   var(--color-dark-text-tertiary);
+    --color-text-muted:      var(--color-dark-text-muted);
     --color-text-disabled:   rgba(232, 234, 245, 0.40);
     --color-text-inverse:    var(--color-midnight);
 
@@ -149,10 +164,28 @@
     --color-link-visited:  var(--color-sub-cool);
     --color-link-active:   var(--color-periwinkle-mid);
 
-    --color-glass-bg:     var(--color-dark-surface);
-    --color-glass-border: var(--color-dark-border);
+    --color-glass-bg:     rgba(30, 35, 60, 0.48);
+    --color-glass-bg-elevated: rgba(46, 53, 88, 0.62);
+    --color-glass-border: rgba(200, 205, 235, 0.18);
+    --color-glass-border-strong: rgba(200, 205, 235, 0.28);
+    --color-glass-blur: var(--glass-blur-md);
+    --color-glass-blur-strong: var(--glass-blur-lg);
+    --color-glass-saturate: var(--glass-saturate);
+    --color-glass-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 14px 36px rgba(0, 0, 0, 0.36);
+    --color-glass-shadow-hover:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 18px 40px rgba(0, 0, 0, 0.44);
     --color-overlay-dark: rgba(0, 0, 0, 0.70);
     --color-overlay-light: rgba(255, 255, 255, 0.10);
+
+    --color-bg-main: var(--color-bg-primary);
+    --color-bg-surface: var(--color-surface-primary);
+    --color-text-main: var(--color-text-primary);
+    --color-text-subtle: var(--color-text-secondary);
+    --color-accent: var(--color-periwinkle);
+    --color-accent-foreground: var(--color-midnight);
 
     --color-shadow-sm: rgba(0, 0, 0, 0.20);
     --color-shadow-md: rgba(0, 0, 0, 0.30);
@@ -176,8 +209,8 @@
 
       --color-text-primary:    var(--color-dark-text);
       --color-text-secondary:  var(--color-dark-text-secondary);
-      --color-text-tertiary:   var(--color-haze-light);
-      --color-text-muted:      var(--color-cool-deep);
+      --color-text-tertiary:   var(--color-dark-text-tertiary);
+      --color-text-muted:      var(--color-dark-text-muted);
       --color-text-disabled:   rgba(232, 234, 245, 0.40);
       --color-text-inverse:    var(--color-midnight);
 
@@ -187,10 +220,28 @@
       --color-border-subtle:    var(--color-dark-border);
       --color-border-focus:     var(--color-focus-ring);
 
-      --color-glass-bg:     var(--color-dark-surface);
-      --color-glass-border: var(--color-dark-border);
+      --color-glass-bg:     rgba(30, 35, 60, 0.48);
+      --color-glass-bg-elevated: rgba(46, 53, 88, 0.62);
+      --color-glass-border: rgba(200, 205, 235, 0.18);
+      --color-glass-border-strong: rgba(200, 205, 235, 0.28);
+      --color-glass-blur: var(--glass-blur-md);
+      --color-glass-blur-strong: var(--glass-blur-lg);
+      --color-glass-saturate: var(--glass-saturate);
+      --color-glass-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 14px 36px rgba(0, 0, 0, 0.36);
+      --color-glass-shadow-hover:
+        inset 0 1px 0 rgba(255, 255, 255, 0.14),
+        0 18px 40px rgba(0, 0, 0, 0.44);
       --color-overlay-dark: rgba(0, 0, 0, 0.70);
       --color-overlay-light: rgba(255, 255, 255, 0.10);
+
+      --color-bg-main: var(--color-bg-primary);
+      --color-bg-surface: var(--color-surface-primary);
+      --color-text-main: var(--color-text-primary);
+      --color-text-subtle: var(--color-text-secondary);
+      --color-accent: var(--color-periwinkle);
+      --color-accent-foreground: var(--color-midnight);
 
       --color-shadow-sm: rgba(0, 0, 0, 0.20);
       --color-shadow-md: rgba(0, 0, 0, 0.30);

@@ -144,7 +144,7 @@ const SlideWrapper: FC<SlideWrapperProps> = ({
           {/* If the slide has internal scrolling, allow it locally */}
           <div
             ref={scrollRef}
-            className={`w-full h-full ${scrollable ? 'overflow-y-auto overflow-x-hidden' : 'overflow-hidden'}`}
+            className={`w-full h-full ${scrollable ? 'overflow-y-auto overflow-x-hidden scrollbar-hide' : 'overflow-hidden'}`}
           >
             {children}
           </div>

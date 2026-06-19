@@ -39,10 +39,18 @@ const Work: FC = () => {
               to="/work/dashboard"
               className={`${spanClass} block group card-glass overflow-hidden relative cursor-pointer transition-all duration-500 hover:-translate-y-2`}
             >
-              <div
-                style={{ backgroundImage: `url(${items.img})` }}
-                className="absolute inset-0 bg-no-repeat bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-              />
+              {index === 0 ? (
+                <img
+                  src={DataWork[0].img}
+                  alt={items.title}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+              ) : (
+                <div
+                  style={{ backgroundImage: `url(${items.img})` }}
+                  className="absolute inset-0 bg-no-repeat bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                />
+              )}
 
               {/* Overlay */}
               <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-60 transition-opacity group-hover:opacity-80" />

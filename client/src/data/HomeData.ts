@@ -124,8 +124,8 @@ export const DataWork: typeDataWork[] = [
   {
     id: 1,
     img: work1,
-    title: "Frontend Project",
-    detail: "Web Design",
+    title: "The Blade Forge",
+    detail: "Architecting precision through advanced frontend patterns...",
   },
   {
     id: 2,

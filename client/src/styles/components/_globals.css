@@ -24,6 +24,35 @@
       will-change: scroll-position;
   }
 
+  :root {
+      color-scheme: light dark;
+  }
+
+  :root.theme-transition-ready,
+  :root.theme-transition-ready * ,
+  :root.theme-transition-ready *::before,
+  :root.theme-transition-ready *::after {
+      transition-property: background-color, background-image, color, border-color, box-shadow, fill, stroke, backdrop-filter;
+      transition-duration: var(--theme-motion-duration);
+      transition-timing-function: var(--theme-motion-ease);
+  }
+
+  :root.theme-transitioning,
+  :root.theme-transitioning *,
+  :root.theme-transitioning *::before,
+  :root.theme-transitioning *::after {
+      transition: none !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+      :root.theme-transition-ready,
+      :root.theme-transition-ready *,
+      :root.theme-transition-ready *::before,
+      :root.theme-transition-ready *::after {
+          transition: none !important;
+      }
+  }
+
   /* Optimize motion.section rendering for smooth edges */
   [data-slide-index] {
       -webkit-backface-visibility: hidden;
@@ -38,5 +67,27 @@
   [data-slide-index] > div {
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
+  }
+
+  /* Shared glass utility for premium minimalist surfaces. */
+  .glass-panel {
+      background: var(--color-glass-bg);
+      border: 1px solid var(--color-glass-border);
+      backdrop-filter: blur(var(--color-glass-blur)) saturate(var(--color-glass-saturate));
+      -webkit-backdrop-filter: blur(var(--color-glass-blur)) saturate(var(--color-glass-saturate));
+      box-shadow: var(--color-glass-shadow);
+  }
+
+  .glass-panel:hover {
+      background: var(--color-glass-bg-elevated);
+      box-shadow: var(--color-glass-shadow-hover);
+  }
+
+  .glass-panel-strong {
+      background: var(--color-glass-bg-elevated);
+      border: 1px solid var(--color-glass-border-strong);
+      backdrop-filter: blur(var(--color-glass-blur-strong)) saturate(var(--color-glass-saturate));
+      -webkit-backdrop-filter: blur(var(--color-glass-blur-strong)) saturate(var(--color-glass-saturate));
+      box-shadow: var(--color-glass-shadow-hover);
   }
 }

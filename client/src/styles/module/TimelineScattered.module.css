@@ -22,19 +22,26 @@
   --font-mono: 'DM Mono', 'Fira Code', monospace;
   /* Used by IconHalfCircle SVG punch-through dot */
   --tl-slide-bg: var(--color-light-bg, #F0F1F8);
+  /* Slide-scoped foreground — bound to slide bg, not global semantic tokens */
+  --slide-fg: var(--color-light-text);
+  --slide-fg-2: var(--color-light-text-secondary);
+  --slide-fg-muted: var(--color-light-text-muted);
 
   position: relative;
   min-height: 100svh;
   padding: 0;
   overflow: hidden;
   background: var(--color-light-bg);
-  color: var(--color-light-text);
+  color: var(--slide-fg);
 }
 
 :global(.dark) .slide {
   --tl-slide-bg: var(--color-dark-bg, #0A0F19);
+  --slide-fg: var(--color-dark-text);
+  --slide-fg-2: var(--color-dark-text-secondary);
+  --slide-fg-muted: var(--color-dark-text-muted);
   background: var(--color-dark-bg);
-  color: var(--color-dark-text);
+  color: var(--slide-fg);
 }
 
 /* ── DECORATIVE LAYER — axis lines + corner L-marks ──────────── */
@@ -174,7 +181,7 @@
 .featArr {
   font-family: var(--font-mono);
   font-size: .58rem;
-  color: var(--color-text-muted);
+  color: var(--slide-fg-muted);
   letter-spacing: .1em;
   margin-bottom: .55rem;
   display: block;
@@ -215,7 +222,7 @@
   font-weight: 200;
   letter-spacing: -.04em;
   line-height: 1;
-  color: var(--color-text-primary);
+  color: var(--slide-fg);
   margin-bottom: .15rem;
 }
 
@@ -226,7 +233,7 @@
   font-weight: 300;
   letter-spacing: -.02em;
   line-height: 1.12;
-  color: var(--color-text-primary);
+  color: var(--slide-fg);
   margin-bottom: .5rem;
 }
 
@@ -234,14 +241,14 @@
 .featLead {
   font-size: clamp(.88rem, 1.4vw, 1.05rem);
   font-weight: 300;
-  color: var(--color-text-primary);
+  color: var(--slide-fg);
   margin-bottom: .35rem;
 }
 
 /* feat 3 lead override — blueprint inline style ~60FPS~ muted */
 .featLeadMuted {
   font-size: .75rem;
-  color: var(--color-text-secondary);
+  color: var(--slide-fg-2);
 }
 
 /* ── BODY TEXT — .feat-sub ───────────────────────────────────── */
@@ -250,7 +257,7 @@
 .featSub {
   font-family: var(--font-mono);
   font-size: clamp(.58rem, 1vw, .72rem);
-  color: var(--color-text-secondary);
+  color: var(--slide-fg-2);
   line-height: 1.8;
   max-width: 240px;
 }
@@ -273,7 +280,7 @@
   transform: translateX(-50%);
   font-family: var(--font-mono);
   font-size: .52rem;
-  color: var(--color-text-secondary);
+  color: var(--slide-fg-2);
   letter-spacing: .22em;
   text-transform: uppercase;
   white-space: nowrap;
@@ -326,7 +333,7 @@
   font-weight: 200;
   letter-spacing: -.04em;
   line-height: 1;
-  color: var(--color-text-primary);
+  color: var(--slide-fg);
   margin-bottom: .1rem;
 }
 
@@ -335,7 +342,7 @@
   font-weight: 300;
   letter-spacing: -.02em;
   line-height: 1.12;
-  color: var(--color-text-primary);
+  color: var(--slide-fg);
   margin-bottom: .4rem;
 }
 
@@ -343,7 +350,7 @@
 .mobileSub {
   font-family: var(--font-mono);
   font-size: clamp(.62rem, 3vw, .72rem);
-  color: var(--color-text-secondary);
+  color: var(--slide-fg-2);
   line-height: 1.8;
   max-width: 280px;
 }

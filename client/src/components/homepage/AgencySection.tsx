@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '@/styles/module/AgencySection.module.css';
+import heroArt from '@/assets/image/hero-art.png';
 
 /**
  * AgencySection — corrected to match interactive-v2.html #s-agency
@@ -69,6 +70,15 @@ const AgencySection: React.FC = () => {
 
         {/* Nebula hero panel */}
         <div className={styles.heroImg}>
+          {/* Background layer image for premium brand identity */}
+          <div
+            className="absolute inset-0 z-0 bg-cover bg-center pointer-events-none select-none"
+            style={{
+              backgroundImage: `url(${heroArt})`,
+              opacity: 0.35,
+              mixBlendMode: 'color-dodge',
+            }}
+          />
           {/* Floating kanji overlay — parent has position:relative via heroImg */}
           <div className={styles.kanjiOverlay}>
             <span className={styles.kj} style={{ top: '22%', left: '12%', animationDelay: '0s' }}>異</span>

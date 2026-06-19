@@ -3,7 +3,7 @@ import { useProfile } from "@/context/ProfileContext";
 import { DataAbout, DataTools } from "@/data/HomeData";
 
 import fullBody from "@/assets/image/noubackground/nevinas-full-body.png";
-import shanshui from "@/assets/image/noubackground/illus-shanshui.png";
+import the_tree from "@/assets/image/noubackground/the_tree.png";
 
 const About: FC = () => {
   const { avatarUrl } = useProfile();
@@ -14,7 +14,7 @@ const About: FC = () => {
       {/* Background Watermark (Landscape) */}
       <div
         className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[55%] pointer-events-none select-none z-0 opacity-[0.06] dark:opacity-[0.03] bg-contain bg-right bg-no-repeat mix-blend-multiply dark:mix-blend-screen"
-        style={{ backgroundImage: `url(${shanshui})` }}
+        style={{ backgroundImage: `url(${the_tree})` }}
       />
       {/* Floating full-body portrait on large screens */}
       <img

@@ -1,21 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
 
-interface CardProps {
-  title: string;
-  children: ReactNode; // 👈 บอกว่า props นี้รองรับอะไรก็ได้ที่ React render ได้
-}
-
-export function Card({ title, children }: CardProps) {
-  return (
-    <div className="card">
-      <h2>{title}</h2>
-      <div>{children}</div> {/* 👈 แสดงสิ่งที่ส่งมา */}
-    </div>
-  );
-}
-
-// Define the shape of the context value
 interface ThemeContextType {
   isDark: boolean;
   toggleTheme: () => void;
@@ -23,10 +8,8 @@ interface ThemeContextType {
   theme: "dark" | "light";
 }
 
-// Create the context with an initial value of null
 const ThemeContext = createContext<ThemeContextType | null>(null);
 
-// Custom hook to use the theme context
 export const useTheme = (): ThemeContextType => {
   const context = useContext(ThemeContext);
   if (!context) {
@@ -35,44 +18,55 @@ export const useTheme = (): ThemeContextType => {
   return context;
 };
 
-// Define the props for the provider component
 interface ThemeProviderProps {
   children: ReactNode;
 }
 
+const getInitialTheme = (): "dark" | "light" => {
+  if (typeof window === "undefined") return "light";
+
+  const root = document.documentElement;
+  const fromData = root.dataset.theme;
+  if (fromData === "dark" || fromData === "light") return fromData;
+
+  const saved = localStorage.getItem("theme");
+  if (saved === "dark" || saved === "light") return saved;
+
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+};
+
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [isDark, setIsDark] = useState<boolean>(() => {
-    const saved = localStorage.getItem("theme");
-    if (saved) {
-      return saved === "dark";
-    }
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
-  });
+  const [theme, setThemeState] = useState<"dark" | "light">(getInitialTheme);
+  const isDark = theme === "dark";
 
   useEffect(() => {
     const root = document.documentElement;
-    if (isDark) {
-      root.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      root.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  }, [isDark]);
+    root.classList.add("theme-transitioning");
+
+    root.dataset.theme = theme;
+    root.classList.toggle("dark", theme === "dark");
+    localStorage.setItem("theme", theme);
+
+    // Enable transitions only after the initial hydration frame to prevent flash.
+    requestAnimationFrame(() => {
+      root.classList.remove("theme-transitioning");
+      root.classList.add("theme-transition-ready");
+    });
+  }, [theme]);
 
   const toggleTheme = () => {
-    setIsDark((prev) => !prev);
+    setThemeState((prev) => (prev === "dark" ? "light" : "dark"));
   };
 
-  const setTheme = (theme: "dark" | "light") => {
-    setIsDark(theme === "dark");
+  const setTheme = (nextTheme: "dark" | "light") => {
+    setThemeState(nextTheme);
   };
 
   const value: ThemeContextType = {
     isDark,
     toggleTheme,
     setTheme,
-    theme: isDark ? "dark" : "light",
+    theme,
   };
 
   return (

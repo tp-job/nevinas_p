@@ -134,12 +134,38 @@ const DotNode: React.FC<DotNodeProps> = ({ style, faded }) => (
  ───────────────────────────────────────────── */
 const NodeMap: React.FC = () => {
   return (
-    <section id="nodemap" className={styles.nodemapBg} style={{ position: 'relative', overflow: 'hidden' }}>
+    <section
+      id="nodemap"
+      className={styles.nodemapBg}
+      style={{
+        position: 'relative',
+        overflow: 'hidden',
+        // Self-contained viewport cap: this section's combined content (node
+        // canvas + CTA + social-proof grid + Sim-1 + Debug editorial) is much
+        // taller than one screen. Capping height here and scrolling internally
+        // (below) means the lower sections are reachable regardless of how the
+        // parent slide wrapper treats this slide.
+        height: '100svh',
+        maxHeight: '100svh',
+      }}
+    >
 
-      {/* Floating orb */}
+      {/* Floating orb — stays fixed as ambient backdrop while content scrolls beneath it */}
       <div
         className={`${styles.orbFloat} absolute w-[400px] h-[400px] rounded-full top-1/2 left-1/2 pointer-events-none bg-[radial-gradient(circle,theme(--color-cool-pale/.15),transparent_70%)]`}
       />
+
+      {/* Scrollable content — everything below scrolls inside the capped section */}
+      <div
+        className="h-full overflow-y-auto overscroll-contain"
+        style={{
+          position: 'relative',
+          height: '100%',
+          WebkitOverflowScrolling: 'touch',
+          scrollbarWidth: 'thin',
+          scrollbarColor: 'var(--color-border-primary, rgba(255,255,255,0.3)) transparent',
+        }}
+      >
 
       <div style={{ padding: '7rem 4rem 5rem', position: 'relative' }}>
 
@@ -328,6 +354,8 @@ const NodeMap: React.FC = () => {
             Get Started ↗
           </a>
         </div>
+      </div>
+
       </div>
 
     </section>

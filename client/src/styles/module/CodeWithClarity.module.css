@@ -9,9 +9,16 @@
 .codeWithClarity {
   /* ── Scoped font token: DM Mono is not in index.css @theme, defined here ── */
   --font-mono: 'DM Mono', 'Fira Code', monospace;
+  /* Slide-scoped foreground — bound to slide bg */
+  --slide-fg: var(--color-light-text);
+  --slide-fg-2: var(--color-light-text-secondary);
+  --slide-fg-3: var(--color-light-text-tertiary);
+  --slide-fg-muted: var(--color-light-text-muted);
+  --slide-border: var(--color-light-border);
+  --slide-surface: var(--color-light-surface);
 
   background: var(--color-light-bg);
-  color: var(--color-light-text);
+  color: var(--slide-fg);
   min-height: 100svh;
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -22,8 +29,14 @@
 }
 
 :global(.dark) .codeWithClarity {
+  --slide-fg: var(--color-dark-text);
+  --slide-fg-2: var(--color-dark-text-secondary);
+  --slide-fg-3: var(--color-dark-text-tertiary);
+  --slide-fg-muted: var(--color-dark-text-muted);
+  --slide-border: var(--color-dark-border);
+  --slide-surface: var(--color-dark-surface);
   background: var(--color-dark-bg);
-  color: var(--color-dark-text);
+  color: var(--slide-fg);
 }
 
 /* ── TOP HALF */
@@ -52,7 +65,7 @@
   font-weight: 300;
   letter-spacing: -.035em;
   line-height: 1.05;
-  color: var(--color-text-primary);
+  color: var(--slide-fg);
 }
 
 /* ── RIGHT: tagline description */
@@ -68,7 +81,7 @@
   font-size: .78rem;
   line-height: 1.9;
   font-weight: 300;
-  color: var(--color-text-secondary);
+  color: var(--slide-fg-2);
   max-width: 280px;
 }
 
@@ -83,7 +96,7 @@
   font-weight: 400;
   letter-spacing: -.055em;
   line-height: 1;
-  color: var(--color-text-primary);
+  color: var(--slide-fg);
   text-align: center;
   overflow: hidden;
   min-height: 0;
@@ -93,13 +106,13 @@
 .cols {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  border-top: 1px solid var(--color-border-primary);
+  border-top: 1px solid var(--slide-border);
   height: 100%;
 }
 
 .col {
   padding: 1.6rem 2.5vw;
-  border-right: 1px solid var(--color-border-subtle);
+  border-right: 1px solid var(--slide-border);
   display: flex;
   flex-direction: column;
   gap: .7rem;
@@ -113,14 +126,14 @@
 }
 
 .col:hover {
-  background: var(--color-surface-variant);
+  background: var(--slide-surface);
 }
 
 /* ── Uses var(--font-mono) scoped above ── */
 .num {
   font-family: var(--font-mono);
   font-size: .62rem;
-  color: var(--color-text-tertiary);
+  color: var(--slide-fg-3);
   letter-spacing: .06em;
 }
 
@@ -130,14 +143,14 @@
   font-weight: 300;
   letter-spacing: -.015em;
   line-height: 1.5;
-  color: var(--color-text-primary);
+  color: var(--slide-fg);
 }
 
 /* cols 2-4 dimmer by default */
 .col:nth-child(2) .colTxt,
 .col:nth-child(3) .colTxt,
 .col:nth-child(4) .colTxt {
-  color: var(--color-text-muted);
+  color: var(--slide-fg-muted);
 }
 
 /* hover restores full opacity */
