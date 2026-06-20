@@ -803,8 +803,8 @@ export const Hero: React.FC<HeroProps> = ({ scrollContainerRef }) => {
                                     fontFamily: "Inter, sans-serif", fontWeight: 400,
                                     fontSize: "0.875rem", color: DS.periwinklePale, margin: 0,
                                 }}>
-                                    Create Videos With{" "}
-                                    <span style={{ color: DS.periwinkle, fontWeight: 500 }}>Ai</span>
+                                    Based in Isekai &amp;{" "}
+                                    <span style={{ color: DS.periwinkle, fontWeight: 500 }}>Thailand</span>
                                 </p>
                                 <WaveformEQ bars={5} />
                             </div>
@@ -814,7 +814,7 @@ export const Hero: React.FC<HeroProps> = ({ scrollContainerRef }) => {
                                 color: DS.cool, textTransform: "uppercase",
                                 margin: 0, maxWidth: "240px", lineHeight: 1.6,
                             }}>
-                                Innovative solutions &amp; designs that push the boundaries of the ordinary
+                                Web developer &amp; UI craftsman building modern, engaging digital interfaces.
                             </p>
                         </motion.div>
 
@@ -837,7 +837,7 @@ export const Hero: React.FC<HeroProps> = ({ scrollContainerRef }) => {
                                     fontSize: "0.65rem", letterSpacing: "0.1em",
                                     color: DS.periwinklePale, textTransform: "uppercase",
                                 }}>
-                                    AI-Powered Studio
+                                    Nevinas Ka. Portfolio
                                 </span>
                             </div>
                             <AuroraBand width={200} height={2} />
@@ -1043,16 +1043,16 @@ export const Hero: React.FC<HeroProps> = ({ scrollContainerRef }) => {
                     >
                         <GlassCard
                             img={VALLEY_IMG}
-                            badge="+26"
+                            badge="5+"
                             imgAlt="Valley gallery thumbnail"
-                            title="Get Inspired"
-                            description="Start creating by exploring our curated example gallery of atmospheric landscapes."
+                            title="Interactive Work"
+                            description="Explore my latest frontend and full-stack projects combining design and clean code."
                         />
                         <GlassCard
                             img={SPHERES_IMG}
                             imgAlt="Sphere field thumbnail"
-                            title="Try These Out"
-                            description="Experiment with the latest generative AI tools and let us know what you think."
+                            title="Modern Stack"
+                            description="Using React, TailwindCSS, Node.js, and Three.js to construct high-performance apps."
                         />
                     </motion.div>
 

@@ -133,39 +133,21 @@ const DotNode: React.FC<DotNodeProps> = ({ style, faded }) => (
    Main component
  ───────────────────────────────────────────── */
 const NodeMap: React.FC = () => {
+
   return (
     <section
       id="nodemap"
       className={styles.nodemapBg}
       style={{
         position: 'relative',
-        overflow: 'hidden',
-        // Self-contained viewport cap: this section's combined content (node
-        // canvas + CTA + social-proof grid + Sim-1 + Debug editorial) is much
-        // taller than one screen. Capping height here and scrolling internally
-        // (below) means the lower sections are reachable regardless of how the
-        // parent slide wrapper treats this slide.
-        height: '100svh',
-        maxHeight: '100svh',
+        width: '100%',
       }}
     >
 
-      {/* Floating orb — stays fixed as ambient backdrop while content scrolls beneath it */}
+      {/* Floating orb — stays fixed as ambient backdrop */}
       <div
         className={`${styles.orbFloat} absolute w-[400px] h-[400px] rounded-full top-1/2 left-1/2 pointer-events-none bg-[radial-gradient(circle,theme(--color-cool-pale/.15),transparent_70%)]`}
       />
-
-      {/* Scrollable content — everything below scrolls inside the capped section */}
-      <div
-        className="h-full overflow-y-auto overscroll-contain"
-        style={{
-          position: 'relative',
-          height: '100%',
-          WebkitOverflowScrolling: 'touch',
-          scrollbarWidth: 'thin',
-          scrollbarColor: 'var(--color-border-primary, rgba(255,255,255,0.3)) transparent',
-        }}
-      >
 
       <div style={{ padding: '7rem 4rem 5rem', position: 'relative' }}>
 
@@ -239,17 +221,17 @@ const NodeMap: React.FC = () => {
         {/* ── CTA BELOW MAP ── */}
         <div style={{ textAlign: 'center', marginTop: '3rem' }}>
           <p className="text-[15px] font-normal leading-[1.8] text-haze dark:text-cool max-w-[360px] mx-auto mb-7">
-            KYBR brings AI to a new era of hardware engineering beyond the production floor.
+            Crafting responsive, high-performance, and pixel-perfect web interfaces using modern frontend standards.
           </p>
           <a
-            href="#"
+            href="#work"
             className={`${styles.shimmerHover} inline-flex items-center gap-2.5 text-[13px] font-medium py-3.5 px-8 rounded-full text-dark-text-primary no-underline shadow-md relative overflow-hidden`}
             style={{
               background: 'var(--color-button-primary-bg)',
             }}
           >
             <MiniHubIcon />
-            Request a Demo
+            View My Work
           </a>
         </div>
       </div>
@@ -268,19 +250,18 @@ const NodeMap: React.FC = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
               <BarIcon />
               <span className="text-xs font-bold tracking-[0.1em] uppercase text-light-text dark:text-dark-text">
-                KEYDATA™
+                EXPERIENCE
               </span>
             </div>
-            <p className="text-[28px] font-light tracking-[-0.02em] text-light-text dark:text-dark-text mb-1">↑ 3.2×</p>
-            <p className="text-xs font-medium text-haze dark:text-cool">Faster ticket resolution time</p>
+            <p className="text-[28px] font-light tracking-[-0.02em] text-light-text dark:text-dark-text mb-1">5+ Projects</p>
+            <p className="text-xs font-medium text-haze dark:text-cool">Built with clean, semantic code</p>
           </div>
 
           {/* Quote */}
           <div>
-            <p className="text-xl font-bold tracking-[-0.02em] text-light-text dark:text-dark-text mb-2.5">zuora</p>
+            <p className="text-xl font-bold tracking-[-0.02em] text-light-text dark:text-dark-text mb-2.5">kmitl</p>
             <p className="text-[13px] font-normal leading-[1.7] text-haze dark:text-cool">
-              "We can now predict, with much higher confidence, how code changes might impact customers{' '}
-              <em>before</em> deployment." — <em>Mu Yang, SVP</em>
+              "Studying Industrial Education and Technology, blending design with robust coding standards." — <em>Nevinas Ka.</em>
             </p>
           </div>
 
@@ -288,23 +269,23 @@ const NodeMap: React.FC = () => {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
               <EyeIcon />
-              <span className="text-[13px] font-bold tracking-[0.04em] text-light-text dark:text-dark-text">cayuse</span>
+              <span className="text-[13px] font-bold tracking-[0.04em] text-light-text dark:text-dark-text">TECH STACK</span>
             </div>
-            <p className="text-[28px] font-light tracking-[-0.02em] text-light-text dark:text-dark-text mb-1">↓ 87%</p>
-            <p className="text-xs font-medium text-haze dark:text-cool">Defects found before release</p>
+            <p className="text-[28px] font-light tracking-[-0.02em] text-light-text dark:text-dark-text mb-1">100%</p>
+            <p className="text-xs font-medium text-haze dark:text-cool">Dedicated to pixel-perfect performance</p>
           </div>
 
           {/* CTA card */}
           <div className={styles.neuInset} style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <p className="text-[13px] font-normal leading-[1.7] text-haze dark:text-cool">
-              Connect your codebase. Our models fix, understand, and simulate across large codebases in any language.
+              Exploring modern web development to build responsive, engaging interfaces and interactive systems.
             </p>
             <a
-              href="#"
+              href="#timeline"
               className={`${styles.neuBtn} ${styles.shimmerHover} inline-flex items-center gap-2 text-xs font-semibold py-2.5 px-5 text-light-text dark:text-dark-text no-underline w-fit relative overflow-hidden`}
             >
               <SignUpIcon />
-              Sign up
+              My Stack
             </a>
           </div>
         </div>
@@ -314,21 +295,23 @@ const NodeMap: React.FC = () => {
       <div className="relative py-24 px-16 grid grid-cols-2 gap-12 items-center border-t border-midnight/10 dark:border-periwinkle/10">
         <div style={{ position: 'relative', zIndex: 2 }}>
           <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-haze dark:text-cool mb-6">
-            Introducing
+            Core Philosophy
           </p>
           <h2 className="text-[clamp(26px,4vw,50px)] font-light leading-[1.1] tracking-[-0.025em] text-light-text dark:text-dark-text">
-            Sim-1<br />
-            <span className="text-haze dark:text-cool">Our smartest models capable of</span><br />
-            <em className="italic font-normal">simulating how code runs</em>
+            Clean Engineering<br />
+            <span className="text-haze dark:text-cool">Optimized for speed and accessibility with</span><br />
+            <em className="italic font-normal">interactive web components</em>
           </h2>
           <p className="text-[15px] font-normal leading-[1.8] text-haze dark:text-cool max-w-[300px] mt-8 mb-8">
-            A new category of models built to understand and predict how large codebases behave in complex scenarios.
+            Leveraging React, TailwindCSS, and Three.js to construct high-fidelity, responsive digital assets.
           </p>
           <a
-            href="#"
+            href="https://github.com/tp-job"
+            target="_blank"
+            rel="noopener noreferrer"
             className={`${styles.neuBtn} ${styles.shimmerHover} inline-flex items-center gap-2.5 text-[13px] font-medium py-3.5 px-7 text-light-text dark:text-dark-text no-underline relative overflow-hidden`}
           >
-            Read More
+            GitHub Profile
           </a>
         </div>
       </div>
@@ -336,26 +319,24 @@ const NodeMap: React.FC = () => {
       {/* ── DEBUG EDITORIAL ── */}
       <div className="py-20 px-16 pb-24 grid grid-cols-2 gap-16 items-end border-t border-midnight/10 dark:border-periwinkle/10">
         <h2 className="text-[clamp(30px,4.5vw,58px)] font-light leading-[1.08] tracking-[-0.03em] text-light-text dark:text-dark-text">
-          Debug any problem down to<br />
-          <span className="text-periwinkle-mid dark:text-haze-light">a line of code, and make sure</span><br />
-          it never happens again
+          Designing systems that scale,<br />
+          <span className="text-periwinkle-mid dark:text-haze-light">with readable clean code</span><br />
+          and solid architecture
         </h2>
         <div className="border-l-2 border-light-border dark:border-dark-border pl-6">
           <p className="text-[15px] font-normal leading-[1.8] text-haze dark:text-cool mb-6">
-            The first-of-its-kind agentic system that can understand and predict state in large distributed codebases.
+            Building responsive interfaces with smooth scroll animations, micro-interactions, and robust UX structures.
           </p>
           <a
-            href="#"
+            href="#contact"
             className={`${styles.shimmerHover} inline-flex items-center gap-2 text-[13px] font-medium py-3.5 px-7 rounded-full text-dark-text-primary no-underline shadow-md relative overflow-hidden`}
             style={{
               background: 'var(--color-button-primary-bg)',
             }}
           >
-            Get Started ↗
+            Let's Connect ↗
           </a>
         </div>
-      </div>
-
       </div>
 
     </section>
