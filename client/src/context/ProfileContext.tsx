@@ -6,7 +6,7 @@ import {
   useState,
   ReactNode,
 } from "react";
-import { Assets } from "@/data/HomeData";
+import { Assets } from "@/data/homeData";
 
 // Define the shape of the context value
 interface ProfileContextType {

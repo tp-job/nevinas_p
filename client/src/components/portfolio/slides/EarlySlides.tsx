@@ -1,4 +1,4 @@
-import { Assets } from "@/data/HomeData";
+import { Assets } from "@/data/homeData";
 import BlurReveal from "../BlurReveal";
 import StatementXL from "./StatementXL";
 

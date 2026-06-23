@@ -42,9 +42,9 @@
   --color-light-surface-2:       rgba(255,255,255,0.82);
   --color-light-border:          rgba(30,35,60,0.10);
   --color-light-text:            #1E233C;
-  --color-light-text-secondary:  #3D4668;
-  --color-light-text-tertiary:   #56608A;
-  --color-light-text-muted:      #626C94;
+  --color-light-text-secondary:  #2C3352;
+  --color-light-text-tertiary:   #465078;
+  --color-light-text-muted:      #5E6491;
 
   /* ── Semantic Dark Mode ── */
   --color-dark-bg:               #0A0F19;
@@ -52,9 +52,9 @@
   --color-dark-surface-2:        rgba(46,53,88,0.65);
   --color-dark-border:           rgba(200,205,235,0.10);
   --color-dark-text:             #E8EAF5;
-  --color-dark-text-secondary:   #949BBF;
-  --color-dark-text-tertiary:    #A8B0D9;
-  --color-dark-text-muted:       #727A9E;
+  --color-dark-text-secondary:   #AEB5D9;
+  --color-dark-text-tertiary:    #C8CDEB;
+  --color-dark-text-muted:       #878CB4;
   --color-dark-text-primary:     #FFFFFF;
 
   /* ── Focus & Selection (DS §16 / §18) ── */
@@ -141,6 +141,12 @@
   --theme-motion-duration: 320ms;
   --theme-motion-duration-slow: 520ms;
   --theme-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ── Statement Slide Unique Gradients ── */
+  --gradient-statement-design: linear-gradient(135deg, #ec4899 0%, #f43f5e 50%, #f97316 100%);
+  --gradient-statement-develop: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #6366f1 100%);
+  --gradient-statement-think: linear-gradient(135deg, #8b5cf6 0%, #d946ef 50%, #ec4899 100%);
+  --gradient-statement-listen: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #3b82f6 100%);
 }
 
 
@@ -261,6 +267,12 @@
   --color-shadow-md: rgba(0, 0, 0, 0.30);
   --color-shadow-lg: rgba(0, 0, 0, 0.40);
   --color-shadow-xl: rgba(0, 0, 0, 0.50);
+
+  /* ── Statement Slide Unique Gradients (Dark Mode Overrides) ── */
+  --gradient-statement-design: linear-gradient(135deg, #f472b6 0%, #fb7185 50%, #fdba74 100%);
+  --gradient-statement-develop: linear-gradient(135deg, #67e8f9 0%, #60a5fa 50%, #818cf8 100%);
+  --gradient-statement-think: linear-gradient(135deg, #a78bfa 0%, #f472b6 50%, #fb7185 100%);
+  --gradient-statement-listen: linear-gradient(135deg, #34d399 0%, #22d3ee 50%, #60a5fa 100%);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

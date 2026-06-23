@@ -1,12 +1,11 @@
 import type { FC } from "react";
 import { useProfile } from "@/context/ProfileContext";
-import { DataAbout, DataTools } from "@/data/HomeData";
-
-import fullBody from "@/assets/image/noubackground/nevinas-full-body.png";
-import the_tree from "@/assets/image/noubackground/the_tree.png";
+import { DataAbout, DataTools, Assets } from "@/data/homeData";
 
 const About: FC = () => {
   const { avatarUrl } = useProfile();
+  const fullBody = Assets.nevinasFullBody;
+  const the_tree = Assets.theTree;
 
   return (
     <div className="relative w-full px-[12%] py-10 scroll-mt-20 overflow-hidden min-h-[90vh] flex flex-col justify-center">

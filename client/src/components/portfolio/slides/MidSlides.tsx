@@ -1,4 +1,4 @@
-import { DataServices, DataTimeline } from "@/data/HomeData";
+import { DataServices, DataTimeline } from "@/data/homeData";
 
 type Props = { style: React.CSSProperties };
 

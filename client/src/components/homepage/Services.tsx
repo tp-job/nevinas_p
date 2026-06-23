@@ -1,10 +1,9 @@
 import type { FC } from "react";
-import { DataServices } from "@/data/HomeData";
-
-import webIcon from "@/assets/image/noubackground/web-icon.png";
-import codeIcon from "@/assets/image/noubackground/code-icon.png";
+import { DataServices, Assets } from "@/data/homeData";
 
 const Services: FC = () => {
+  const webIcon = Assets.webIcon;
+  const codeIcon = Assets.codeIcon;
   return (
     <div id="services" className="w-full px-[8%] py-20 scroll-mt-20 flex flex-col items-center">
       <div className="mb-16 flex flex-col items-center text-center">

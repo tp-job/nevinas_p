@@ -32,7 +32,7 @@ import {
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "@/context/ThemeContext";
-import { Assets, DataSong } from "@/data/HomeData";
+import { Assets, DataSong } from "@/data/homeData";
 import GlassSurface from "@/components/effect/GlassSurface";
 
 // ─────────────────────────────────────────────────────────────────────────────

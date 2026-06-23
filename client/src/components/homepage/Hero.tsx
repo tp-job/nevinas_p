@@ -64,8 +64,9 @@ const DS = {
 // ─────────────────────────────────────────────────────────────────────────────
 // 2 · ASSETS  (base64 — both landscape images embedded)
 // ─────────────────────────────────────────────────────────────────────────────
-import VALLEY_IMG from "@/assets/image/noubackground/valley_base64.png";
-import SPHERES_IMG from "@/assets/image/noubackground/spheres_base64.png";
+import { Assets } from "@/data/homeData";
+const VALLEY_IMG = Assets.valleyBase64;
+const SPHERES_IMG = Assets.spheresBase64;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 3 · MOTION VARIANTS

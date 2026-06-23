@@ -1,9 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-import chineseRoof from '@/assets/image/noubackground/chinese-roof.png';
-import waterfallValley from '@/assets/image/noubackground/waterfall-valley.png';
-import shimenawa from '@/assets/image/noubackground/shimenawa.png';
+import { Assets } from '@/data/homeData';
+
+const chineseRoof = Assets.chineseRoof;
+const waterfallValley = Assets.waterfallValley;
+const shimenawa = Assets.shimenawa;
 
 export const statements = [
   "I design.",
@@ -12,9 +14,29 @@ export const statements = [
   "And listen..."
 ];
 
+/**
+ * One gradient per statement, sourced from `--gradient-statement-*` custom
+ * properties in index.css. Each property already swaps its light/dark value
+ * via the existing `.dark` token-override block, so no `dark:` variant is
+ * needed here.
+ *
+ * IMPORTANT: keep these as full literal strings, not a template literal
+ * built from `index`. Tailwind's JIT scanner only picks up arbitrary-value
+ * classes it can find verbatim in source — `bg-[image:var(--gradient-${x})]`
+ * would silently produce no CSS.
+ */
+const STATEMENT_GRADIENT_CLASSES: Record<number, string> = {
+  0: 'bg-[image:var(--gradient-statement-design)]',
+  1: 'bg-[image:var(--gradient-statement-develop)]',
+  2: 'bg-[image:var(--gradient-statement-think)]',
+  3: 'bg-[image:var(--gradient-statement-listen)]',
+};
+
 export const StatementSlide: React.FC<{ index: number }> = ({ index }) => {
   const stmt = statements[index];
   if (!stmt) return null;
+
+  const gradientClass = STATEMENT_GRADIENT_CLASSES[index] ?? STATEMENT_GRADIENT_CLASSES[0];
 
   return (
     <div className="relative w-full h-full flex flex-col items-center justify-center text-center px-[10vw] overflow-hidden bg-light-bg dark:bg-dark-bg">
@@ -46,14 +68,14 @@ export const StatementSlide: React.FC<{ index: number }> = ({ index }) => {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
         <div
-          className="font-light leading-[0.95] tracking-[-0.04em] text-light-text dark:text-dark-text-primary"
+          className={`${gradientClass} statement-gradient bg-clip-text text-transparent font-light leading-[0.95] tracking-[-0.04em]`}
           style={{
             fontSize: 'clamp(4.5rem, 13vw, 12rem)',
             fontFamily: 'var(--fd, "Inter", sans-serif)'
           }}
         >
           {stmt === "And listen..." ? (
-            <>And<br />listen<span className="text-matte-azure">...</span></>
+            <>And<br />listen<span className="statement-accent">...</span></>
           ) : (
             stmt
           )}

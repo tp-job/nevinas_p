@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { DataTimeline } from "@/data/HomeData";
+import { DataTimeline } from "@/data/homeData";
 import "@/styles/module/Timeline.module.css";
 
 // ─── Hooks — logic unchanged ─────────────────────────────────────

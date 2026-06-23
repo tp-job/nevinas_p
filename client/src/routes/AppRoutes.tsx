@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, lazy } from "react";
 import type { FC } from "react";
 
 // context
@@ -10,18 +10,18 @@ import { registerErrorHandler } from "@/lib/httpClient";
 import ErrorBoundary from "@/components/common/server-error/ErrorBoundary";
 
 // pages
-import HomePage from "@/pages/HomePage";
-import Dashboard from "@/pages/Dashboard";
-import TechStack from "@/pages/TechStack";
-import Performance from "@/pages/Performance";
-import ToolsPage from "@/pages/ToolsPage";
-import Docs from "@/pages/Docs";
-import Website from "@/pages/Website";
-import ReactPage from "@/pages/ReactPage";
-import Repository from "@/pages/Repository";
-import TailwindPage from "@/pages/TailwindPage";
-import Gallery from "@/pages/Gallery";
-import BlogPage from "@/pages/BlogPage";
+const HomePage = lazy(() => import("@/pages/HomePage"));
+const Dashboard = lazy(() => import("@/pages/Dashboard"));
+const TechStack = lazy(() => import("@/pages/TechStack"));
+const Performance = lazy(() => import("@/pages/Performance"));
+const ToolsPage = lazy(() => import("@/pages/ToolsPage"));
+const Docs = lazy(() => import("@/pages/Docs"));
+const Website = lazy(() => import("@/pages/Website"));
+const ReactPage = lazy(() => import("@/pages/ReactPage"));
+const Repository = lazy(() => import("@/pages/Repository"));
+const TailwindPage = lazy(() => import("@/pages/TailwindPage"));
+const Gallery = lazy(() => import("@/pages/Gallery"));
+const BlogPage = lazy(() => import("@/pages/BlogPage"));
 // layout
 import WorkLayout from "@/layouts/WorkLayout";
 // common

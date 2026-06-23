@@ -50,6 +50,7 @@ const ToolsPage: FC = () => {
                   href={tool.link}
                   target="_blank"
                   rel="noopener noreferrer"
+                  title={tool.desc}
                   className="group flex items-start gap-3 p-4 rounded-xl border transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg bg-light-surface dark:bg-dark-bg border-light-border dark:border-dark-border hover:border-matte-azure/30 dark:hover:border-matte-azure/30"
                 >
                   <div className="w-2 h-2 rounded-full mt-1.5 shrink-0 bg-light-border dark:bg-dark-border group-hover:bg-matte-azure transition-colors" />

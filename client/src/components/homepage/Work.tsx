@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { DataWork } from "@/data/HomeData.ts";
+import { DataWork, Assets } from "@/data/homeData";
 import type { FC } from "react";
 
-import folderIcon from "@/assets/image/noubackground/folder-icon.png";
+const folderIcon = Assets.folderIcon;
 
 const Work: FC = () => {
   return (

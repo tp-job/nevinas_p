@@ -103,8 +103,10 @@ const Sidebar: FC = () => {
             <NavLink
               to={item.to}
               end={item.to === "/dashboard"}
+              data-testid={`sidebar-link-${item.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+              aria-label={item.label}
               className={({ isActive }) =>
-                `group flex items-center ${collapsed ? "justify-center" : "px-3"} py-2.5 rounded-xl transition-all duration-200 cursor-pointer focus:outline-none font-medium text-[0.82rem] ${isActive ? `${collapsed ? " bg-matte-azure/12" : "bg-matte-azure/10"} text-matte-azure` : "text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-light-surface/50 dark:hover:bg-dark-surface/50 hover:translate-x-0.5"}`
+                `group flex items-center ${collapsed ? "justify-center" : "px-3"} py-2.5 rounded-xl transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring font-medium text-[0.82rem] ${isActive ? `${collapsed ? " bg-matte-azure/12" : "bg-matte-azure/10"} text-matte-azure` : "text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-light-surface/50 dark:hover:bg-dark-surface/50 hover:translate-x-0.5"}`
               }
               title={collapsed ? item.label : undefined}
             >
@@ -115,14 +117,18 @@ const Sidebar: FC = () => {
               href={item.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`group flex items-center ${collapsed ? "justify-center" : "px-3"} py-2.5 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-light-surface/50 dark:hover:bg-dark-surface/50 hover:translate-x-0.5 transition-all duration-200 focus:outline-none font-medium text-[0.82rem]`}
+              data-testid={`sidebar-link-${item.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+              aria-label={item.label}
+              className={`group flex items-center ${collapsed ? "justify-center" : "px-3"} py-2.5 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-light-surface/50 dark:hover:bg-dark-surface/50 hover:translate-x-0.5 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring font-medium text-[0.82rem]`}
               title={collapsed ? item.label : undefined}
             >
               <ItemContent item={item} isCollapsed={collapsed} />
             </a>
           ) : (
             <button
-              className={`group w-full ${collapsed ? "justify-center" : "text-left px-3"} flex items-center py-2.5 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-light-surface/50 dark:hover:bg-dark-surface/50 hover:translate-x-0.5 transition-all duration-200 focus:outline-none font-medium text-[0.82rem]`}
+              data-testid={`sidebar-link-${item.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+              aria-label={item.label}
+              className={`group w-full ${collapsed ? "justify-center" : "text-left px-3"} flex items-center py-2.5 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-light-surface/50 dark:hover:bg-dark-surface/50 hover:translate-x-0.5 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring font-medium text-[0.82rem]`}
               title={collapsed ? item.label : undefined}
               type="button"
             >
@@ -150,18 +156,24 @@ const Sidebar: FC = () => {
           <li>
             <Link
               to="/"
-              className={`w-full flex items-center gap-3 ${collapsed ? "justify-center" : "px-3"} py-2.5 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-light-surface/50 dark:hover:bg-dark-surface/50 hover:translate-x-0.5 transition-all duration-200 focus:outline-none font-medium text-[0.82rem]`}
+              data-testid="sidebar-link-home"
+              aria-label="Go to homepage"
+              className={`w-full flex items-center gap-3 ${collapsed ? "justify-center" : "px-3"} py-2.5 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-light-surface/50 dark:hover:bg-dark-surface/50 hover:translate-x-0.5 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring font-medium text-[0.82rem]`}
             >
               <i className="ri-home-4-line text-lg"></i>
-              <span className={`${collapsed ? "hidden" : "flex-1 text-left"}`}>
-                Home
-              </span>
+              {!collapsed && (
+                <span className="flex-1 text-left">
+                  Home
+                </span>
+              )}
             </Link>
           </li>
           <li>
             <button
               onClick={toggleTheme}
-              className={`w-full flex items-center gap-3 ${collapsed ? "justify-center" : "px-3"} py-2.5 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-light-surface/50 dark:hover:bg-dark-surface/50 hover:translate-x-0.5 transition-all duration-200 focus:outline-none font-medium text-[0.82rem]`}
+              data-testid="sidebar-link-theme"
+              aria-label="Toggle color theme"
+              className={`w-full flex items-center gap-3 ${collapsed ? "justify-center" : "px-3"} py-2.5 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text hover:bg-light-surface/50 dark:hover:bg-dark-surface/50 hover:translate-x-0.5 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring font-medium text-[0.82rem]`}
               title={collapsed ? "Dark mode" : undefined}
             >
               <i className="ri-moon-line text-lg dark:hidden"></i>

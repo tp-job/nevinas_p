@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Assets } from "@/data/HomeData";
+import { Assets } from "@/data/homeData";
 import { useProfile } from "@/context/ProfileContext";
 import LiquidEther from "@/components/effect/LiquidEther";
 

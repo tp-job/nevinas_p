@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Assets } from "@/data/HomeData";
+import { Assets } from "@/data/homeData";
 import "@/styles/components/socalmedia.css";
 import GradualBlur from "@/components/effect/GradualBlur";
 import LiquidEther from "@/components/effect/LiquidEther";

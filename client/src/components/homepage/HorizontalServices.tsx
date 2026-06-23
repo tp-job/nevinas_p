@@ -25,11 +25,13 @@ import React, {
 } from 'react';
 import type { HorizontalServicesProps, ServicePanel } from '@/types/horizon';
 import styles from '@/styles/module/HorizontalServices.module.css';
-import iconCodeImg from '@/assets/image/noubackground/code-icon.png';
-import iconWebImg from '@/assets/image/noubackground/web-icon.png';
-import iconAIImg from '@/assets/image/noubackground/ai-solution.png';
-import iconInteractiveImg from '@/assets/image/noubackground/hand-social.png';
-import iconPortfolioImg from '@/assets/image/noubackground/nevinas-full-body.png';
+import { Assets } from '@/data/homeData';
+
+const iconCodeImg       = Assets.codeIcon;
+const iconWebImg        = Assets.webIcon;
+const iconAIImg         = Assets.aiSolution;
+const iconInteractiveImg = Assets.handSocial;
+const iconPortfolioImg  = Assets.nevinasFullBody;
 
 // ─── Default Panel Data ────────────────────────────────────
 const DEFAULT_PANELS: ServicePanel[] = [

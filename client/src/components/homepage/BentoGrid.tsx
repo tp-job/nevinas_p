@@ -2,9 +2,11 @@ import React from 'react';
 import { motion, useMotionValue, useReducedMotion, useTransform, type MotionStyle } from 'framer-motion';
 import { useSlideScroll } from './SlideWrapper';
 
-import aiSolution from '@/assets/image/noubackground/ai-solution.png';
-import glassAbstract from '@/assets/image/noubackground/glass-abstract.png';
-import heroArt from '@/assets/image/hero-art.png';
+import { Assets } from '@/data/homeData';
+
+const aiSolution = Assets.aiSolution;
+const glassAbstract = Assets.glassAbstract;
+const heroArt = Assets.heroArt;
 
 const BentoGrid: React.FC = () => {
   const slideProgress = useSlideScroll();

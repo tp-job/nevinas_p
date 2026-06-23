@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from '@/styles/module/AgencySection.module.css';
-import heroArt from '@/assets/image/hero-art.png';
+import { Assets } from '@/data/homeData';
+
+const heroArt = Assets.heroArt;
 
 /**
  * AgencySection — corrected to match interactive-v2.html #s-agency

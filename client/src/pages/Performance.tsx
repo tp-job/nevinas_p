@@ -17,7 +17,7 @@ import {
   apiResponseTimes,
   codeQuality,
   performanceHistory,
-} from "@/data/Performance";
+} from "@/data/performance";
 import { githubApi, type GitHubRepo } from "@/utils/api";
 
 // Theme colors

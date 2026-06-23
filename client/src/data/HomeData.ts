@@ -7,16 +7,52 @@ import type {
   typeDataTimeline,
 } from "@/types/homeData";
 
-import nevinas from "@/assets/image/nevinas.jpg";
-import feixiao from "@/assets/image/feixiao.png";
-import castorice from "@/assets/image/castorice.png";
-import changli from "@/assets/image/changli.png";
-import logo from "@/assets/image/logo.jpg";
-import work1 from "@/assets/image/work-1.jpg";
-import work2 from "@/assets/image/work-2.jpg";
-import work3 from "@/assets/image/work-3.jpg";
-import work4 from "@/assets/image/work-4.jpg";
-import bgpage from "@/assets/image/bg-page.png";
+// image profile
+import nevinas from "@/assets/image/profile/nevinas.jpg";
+import nevinasPng from "@/assets/image/profile/nevinas.png";
+import nevinasFullBody from "@/assets/image/profile/nevinas-full-body.png";
+import feixiao from "@/assets/image/profile/feixiao.png";
+import castorice from "@/assets/image/profile/castorice.png";
+import changli from "@/assets/image/profile/changli.png";
+
+// image logo
+import logo from "@/assets/image/icon/logo.jpg";
+
+// image work
+import work1 from "@/assets/image/work/work-1.jpg";
+import work2 from "@/assets/image/work/work-2.jpg";
+import work3 from "@/assets/image/work/work-3.jpg";
+import work4 from "@/assets/image/work/work-4.jpg";
+
+// image background
+import bgpage from "@/assets/image/background/bg-page.png";
+import glassAbstract from "@/assets/image/background/glass-abstract.png";
+import iconIllu2 from "@/assets/image/background/icon-illu2.png";
+import landscape1 from "@/assets/image/background/landspace-1.png";
+import landscape2 from "@/assets/image/background/landspace-2.png";
+import theTree from "@/assets/image/background/the-tree.png";
+import waterfallValley from "@/assets/image/background/waterfall-valley.png";
+import spheresBase64 from "@/assets/image/background/spheres_base64.png";
+import valleyBase64 from "@/assets/image/background/valley_base64.png";
+import illusShanshui from "@/assets/image/background/illus-shanshui.png";
+import redTree from "@/assets/image/background/red-tree.png";
+import traditionalChinese from "@/assets/image/background/traditional-chinese.png";
+
+// image icon
+import abstract3Icon from "@/assets/image/icon/abstract-3-icon.png";
+import chineseRoof from "@/assets/image/icon/chinese-roof.png";
+import escButton from "@/assets/image/icon/esc-button.png";
+import handNe from "@/assets/image/icon/hand-ne.png";
+import handSocial from "@/assets/image/icon/hand-social.png";
+import heroArt from "@/assets/image/icon/hero-art.png";
+import integrationStatusIcons from "@/assets/image/icon/integration-status-icons.png";
+import joystick from "@/assets/image/icon/joystick.png";
+import load from "@/assets/image/icon/load.png";
+import folderIcon from "@/assets/image/icon/folder-icon.png";
+import shimenawa from "@/assets/image/icon/shimenawa.png";
+import codeIcon from "@/assets/image/icon/code-icon.png";
+import webIcon from "@/assets/image/icon/web-icon.png";
+import aiSolution from "@/assets/image/icon/ai-solution.png";
 
 import song1 from "@/assets/audio/A_night_on_the_town_-_Stefan_Kartenberg.mp3";
 import song2 from "@/assets/audio/When_Paris_is_Singing_-_Dazie_Mae.mp3";
@@ -26,6 +62,8 @@ import resume from "@/assets/pdf/resume-nevinas-ka.pdf";
 
 export const Assets = {
   nevinas,
+  nevinasPng,
+  nevinasFullBody,
   feixiao,
   castorice,
   changli,
@@ -36,6 +74,31 @@ export const Assets = {
   work4,
   resume,
   bgpage,
+  glassAbstract,
+  iconIllu2,
+  landscape1,
+  landscape2,
+  theTree,
+  waterfallValley,
+  spheresBase64,
+  valleyBase64,
+  illusShanshui,
+  redTree,
+  traditionalChinese,
+  abstract3Icon,
+  chineseRoof,
+  escButton,
+  handNe,
+  handSocial,
+  heroArt,
+  integrationStatusIcons,
+  joystick,
+  load,
+  folderIcon,
+  shimenawa,
+  codeIcon,
+  webIcon,
+  aiSolution,
 };
 
 export const DataAbout: typeDataAbout[] = [
