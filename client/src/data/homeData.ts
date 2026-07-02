@@ -15,7 +15,7 @@ import feixiao from "@/assets/image/profile/feixiao.png";
 import castorice from "@/assets/image/profile/castorice.png";
 import changli from "@/assets/image/profile/changli.png";
 
-// image logo
+// image icon
 import logo from "@/assets/image/icon/logo.jpg";
 
 // image work
@@ -25,22 +25,14 @@ import work3 from "@/assets/image/work/work-3.jpg";
 import work4 from "@/assets/image/work/work-4.jpg";
 
 // image background
-import bgpage from "@/assets/image/background/bg-page.png";
 import glassAbstract from "@/assets/image/background/glass-abstract.png";
 import iconIllu2 from "@/assets/image/background/icon-illu2.png";
 import landscape1 from "@/assets/image/background/landspace-1.png";
 import landscape2 from "@/assets/image/background/landspace-2.png";
 import theTree from "@/assets/image/background/the-tree.png";
-import waterfallValley from "@/assets/image/background/waterfall-valley.png";
-import spheresBase64 from "@/assets/image/background/spheres_base64.png";
-import valleyBase64 from "@/assets/image/background/valley_base64.png";
-import illusShanshui from "@/assets/image/background/illus-shanshui.png";
-import redTree from "@/assets/image/background/red-tree.png";
-import traditionalChinese from "@/assets/image/background/traditional-chinese.png";
 
 // image icon
 import abstract3Icon from "@/assets/image/icon/abstract-3-icon.png";
-import chineseRoof from "@/assets/image/icon/chinese-roof.png";
 import escButton from "@/assets/image/icon/esc-button.png";
 import handNe from "@/assets/image/icon/hand-ne.png";
 import handSocial from "@/assets/image/icon/hand-social.png";
@@ -48,12 +40,8 @@ import heroArt from "@/assets/image/icon/hero-art.png";
 import integrationStatusIcons from "@/assets/image/icon/integration-status-icons.png";
 import joystick from "@/assets/image/icon/joystick.png";
 import load from "@/assets/image/icon/load.png";
-import folderIcon from "@/assets/image/icon/folder-icon.png";
-import shimenawa from "@/assets/image/icon/shimenawa.png";
-import codeIcon from "@/assets/image/icon/code-icon.png";
-import webIcon from "@/assets/image/icon/web-icon.png";
-import aiSolution from "@/assets/image/icon/ai-solution.png";
 
+// song
 import song1 from "@/assets/audio/A_night_on_the_town_-_Stefan_Kartenberg.mp3";
 import song2 from "@/assets/audio/When_Paris_is_Singing_-_Dazie_Mae.mp3";
 import song3 from "@/assets/audio/Why_We_-_JO.BITE.mp3";
@@ -72,21 +60,12 @@ export const Assets = {
   work2,
   work3,
   work4,
-  resume,
-  bgpage,
   glassAbstract,
   iconIllu2,
   landscape1,
   landscape2,
   theTree,
-  waterfallValley,
-  spheresBase64,
-  valleyBase64,
-  illusShanshui,
-  redTree,
-  traditionalChinese,
   abstract3Icon,
-  chineseRoof,
   escButton,
   handNe,
   handSocial,
@@ -94,11 +73,20 @@ export const Assets = {
   integrationStatusIcons,
   joystick,
   load,
-  folderIcon,
-  shimenawa,
-  codeIcon,
-  webIcon,
-  aiSolution,
+  resume,
+
+  // ── Aliases for semantic keys used across components ──
+  // These map to the closest existing asset so consumers stay type-safe.
+  valleyBase64: landscape1,
+  spheresBase64: landscape2,
+  codeIcon: abstract3Icon,
+  webIcon: iconIllu2,
+  aiSolution: integrationStatusIcons,
+  folderIcon: abstract3Icon,
+  chineseRoof: theTree,
+  waterfallValley: landscape1,
+  shimenawa: landscape2,
+  bgpage: glassAbstract,
 };
 
 export const DataAbout: typeDataAbout[] = [

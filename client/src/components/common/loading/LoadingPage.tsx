@@ -11,9 +11,9 @@
  * In project: replace inline LaserFlow with import from ./LaserFlow
  */
 
-import { useState, useEffect, useId, useRef } from "react";
-import * as THREE from "three";
+import { useState, useEffect, useId, useRef, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import type { Variants, Easing } from "framer-motion";
 
 /* ────────────────────────────────────────
    DS v3.2 TOKENS
@@ -35,10 +35,10 @@ const C = {
 };
 
 /* DS Motion (Section 14 / 17) */
-const EASE_SPRING = [0.22, 1, 0.36, 1];
-const EASE_OUT    = [0.4,  0, 0.2,  1];
+const EASE_SPRING: Easing = [0.22, 1, 0.36, 1];
+const EASE_OUT:    Easing = [0.4,  0, 0.2,  1];
 
-const V = {
+const V: Record<string, Variants> = {
   fadeUp: {
     hidden:  { opacity: 0, y: 18 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE_SPRING } },
@@ -67,282 +67,12 @@ const PHASES = [
 ];
 
 /* ────────────────────────────────────────
-   GLSL (LaserFlow shaders)
+   LaserFlow WebGL background
+   Lazy-loaded so three.js is NOT part of the loading screen's initial
+   bundle — the HUD shell paints instantly and the WebGL enhances in
+   progressively once three.js has downloaded.
 ──────────────────────────────────────── */
-const VERT = `precision highp float;attribute vec3 position;void main(){gl_Position=vec4(position,1.0);}`;
-const FRAG = `
-#ifdef GL_ES
-#extension GL_OES_standard_derivatives : enable
-#endif
-precision highp float;precision mediump int;
-uniform float iTime;uniform vec3 iResolution;uniform vec4 iMouse;
-uniform float uWispDensity,uTiltScale,uFlowTime,uFogTime,uBeamXFrac,uBeamYFrac;
-uniform float uFlowSpeed,uVLenFactor,uHLenFactor,uFogIntensity,uFogScale;
-uniform float uWSpeed,uWIntensity,uFlowStrength,uDecay,uFalloffStart,uFogFallSpeed;
-uniform vec3 uColor;uniform float uFade;
-#define PI 3.14159265359
-#define TWO_PI 6.28318530718
-#define EPS 1e-6
-#define EDGE_SOFT (DT_LOCAL*4.0)
-#define DT_LOCAL 0.0038
-#define TAP_RADIUS 6
-#define R_H 150.0
-#define R_V 150.0
-#define FLARE_HEIGHT 16.0
-#define FLARE_AMOUNT 8.0
-#define FLARE_EXP 2.0
-#define TOP_FADE_START 0.1
-#define TOP_FADE_EXP 1.0
-#define FLOW_PERIOD 0.5
-#define FLOW_SHARPNESS 1.5
-#define W_BASE_X 1.5
-#define W_LAYER_GAP 0.25
-#define W_LANES 10
-#define W_SIDE_DECAY 0.5
-#define W_HALF 0.01
-#define W_AA 0.15
-#define W_CELL 20.0
-#define W_SEG_MIN 0.01
-#define W_SEG_MAX 0.55
-#define W_CURVE_AMOUNT 15.0
-#define W_CURVE_RANGE (FLARE_HEIGHT-3.0)
-#define W_BOTTOM_EXP 10.0
-#define FOG_ON 1
-#define FOG_CONTRAST 1.2
-#define FOG_OCTAVES 5
-#define FOG_BOTTOM_BIAS 0.8
-#define FOG_TILT_MAX_X 0.35
-#define FOG_TILT_SHAPE 1.5
-#define FOG_BEAM_MIN 0.0
-#define FOG_BEAM_MAX 0.75
-#define FOG_MASK_GAMMA 0.5
-#define FOG_EXPAND_SHAPE 12.2
-#define FOG_EDGE_MIX 0.5
-#define HFOG_EDGE_START 0.20
-#define HFOG_EDGE_END 0.98
-#define HFOG_EDGE_GAMMA 1.4
-#define HFOG_Y_RADIUS 25.0
-#define HFOG_Y_SOFT 60.0
-#define EDGE_X0 0.22
-#define EDGE_X1 0.995
-#define EDGE_X_GAMMA 1.25
-#define EDGE_LUMA_T0 0.0
-#define EDGE_LUMA_T1 2.0
-#define DITHER_STRENGTH 1.0
-float g(float x){return x<=0.00031308?12.92*x:1.055*pow(x,1.0/2.4)-0.055;}
-float bs(vec2 p,vec2 q,float w){float d=distance(p,q),f=w*uFalloffStart,r=(f*f)/(d*d+EPS);return w*min(1.0,r);}
-float bsa(vec2 p,vec2 q,float w,vec2 s){vec2 d=p-q;float dd=(d.x*d.x)/(s.x*s.x)+(d.y*d.y)/(s.y*s.y),f=w*uFalloffStart,r=(f*f)/(dd+EPS);return w*min(1.0,r);}
-float tri01(float x){float f=fract(x);return 1.0-abs(f*2.0-1.0);}
-float tauWf(float t,float mn,float mx){float a=smoothstep(mn,mn+EDGE_SOFT,t),b=1.0-smoothstep(mx-EDGE_SOFT,mx,t);return max(0.0,a*b);}
-float h21(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+34.123);return fract(p.x*p.y);}
-float vnoise(vec2 p){vec2 i=floor(p),f=fract(p);float a=h21(i),b=h21(i+vec2(1,0)),c=h21(i+vec2(0,1)),d=h21(i+vec2(1,1));vec2 u=f*f*(3.0-2.0*f);return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);}
-float fbm2(vec2 p){float v=0.0,amp=0.6;mat2 m=mat2(0.86,0.5,-0.5,0.86);for(int i=0;i<FOG_OCTAVES;++i){v+=amp*vnoise(p);p=m*p*2.03+17.1;amp*=0.52;}return v;}
-float rGate(float x,float l){float a=smoothstep(0.0,W_AA,x),b=1.0-smoothstep(l,l+W_AA,x);return max(0.0,a*b);}
-float flareY(float y){float t=clamp(1.0-(clamp(y,0.0,FLARE_HEIGHT)/max(FLARE_HEIGHT,EPS)),0.0,1.0);return pow(t,FLARE_EXP);}
-float vWisps(vec2 uv,float topF){
-  float y=uv.y,yf=(y+uFlowTime*uWSpeed)/W_CELL;
-  float dRaw=clamp(uWispDensity,0.0,2.0),d=dRaw<=0.0?1.0:dRaw;
-  float lanesF=floor(float(W_LANES)*min(d,1.0)+0.5);int lanes=int(max(1.0,lanesF));
-  float sp=min(d,1.0),ep=max(d-1.0,0.0);
-  float fm=flareY(max(y,0.0)),rm=clamp(1.0-(y/max(W_CURVE_RANGE,EPS)),0.0,1.0),cm=fm*rm;
-  const float G=0.05;float xS=1.0+(FLARE_AMOUNT*W_CURVE_AMOUNT*G)*cm;
-  float sPix=clamp(y/R_V,0.0,1.0),bGain=pow(1.0-sPix,W_BOTTOM_EXP),sum=0.0;
-  for(int s=0;s<2;++s){
-    float sgn=s==0?-1.0:1.0;
-    for(int i=0;i<W_LANES;++i){
-      if(i>=lanes)break;
-      float off=W_BASE_X+float(i)*W_LAYER_GAP,xc=sgn*(off*xS);
-      float dx=abs(uv.x-xc),lat=1.0-smoothstep(W_HALF,W_HALF+W_AA,dx),amp=exp(-off*W_SIDE_DECAY);
-      float seed=h21(vec2(off,sgn*17.0)),yf2=yf+seed*7.0,ci=floor(yf2),fy=fract(yf2);
-      float seg=mix(W_SEG_MIN,W_SEG_MAX,h21(vec2(ci,off*2.3)));
-      float spR=h21(vec2(ci,off+sgn*31.0)),seg1=rGate(fy,seg)*step(spR,sp);
-      if(ep>0.0){float spR2=h21(vec2(ci*3.1+7.0,off*5.3+sgn*13.0));float f2=fract(fy+0.5);seg1+=rGate(f2,seg*0.9)*step(spR2,ep);}
-      sum+=amp*lat*seg1;
-    }
-  }
-  float span=smoothstep(-3.0,0.0,y)*(1.0-smoothstep(R_V-6.0,R_V,y));
-  return uWIntensity*sum*topF*bGain*span;
-}
-void mainImage(out vec4 fc,in vec2 frag){
-  vec2 C2=iResolution.xy*.5;float invW=1.0/max(C2.x,1.0);
-  vec2 sc=(512.0/iResolution.xy)*.4;
-  vec2 uv=(frag-C2)*sc,off=vec2(uBeamXFrac*iResolution.x*sc.x,uBeamYFrac*iResolution.y*sc.y);
-  vec2 uvc=uv-off;float a=0.0,b=0.0;
-  float basePhase=1.5*PI+uDecay*.5;float tauMin=basePhase-uDecay;float tauMax=basePhase;
-  float cx=clamp(uvc.x/(R_H*uHLenFactor),-1.0,1.0),tH=clamp(TWO_PI-acos(cx),tauMin,tauMax);
-  for(int k=-TAP_RADIUS;k<=TAP_RADIUS;++k){
-    float tu=tH+float(k)*DT_LOCAL,wt=tauWf(tu,tauMin,tauMax);if(wt<=0.0)continue;
-    float spd=max(abs(sin(tu)),0.02),u=clamp((basePhase-tu)/max(uDecay,EPS),0.0,1.0),env=pow(1.0-abs(u*2.0-1.0),0.8);
-    vec2 p=vec2((R_H*uHLenFactor)*cos(tu),0.0);a+=wt*bs(uvc,p,env*spd);
-  }
-  float yPix=uvc.y,cy=clamp(-yPix/(R_V*uVLenFactor),-1.0,1.0),tV=clamp(TWO_PI-acos(cy),tauMin,tauMax);
-  for(int k=-TAP_RADIUS;k<=TAP_RADIUS;++k){
-    float tu=tV+float(k)*DT_LOCAL,wt=tauWf(tu,tauMin,tauMax);if(wt<=0.0)continue;
-    float yb=(-R_V)*cos(tu),s=clamp(yb/R_V,0.0,1.0),spd=max(abs(sin(tu)),0.02);
-    float env=pow(1.0-s,0.6)*spd;float cap=1.0-smoothstep(TOP_FADE_START,1.0,s);cap=pow(cap,TOP_FADE_EXP);env*=cap;
-    float ph=s/max(FLOW_PERIOD,EPS)+uFlowTime*uFlowSpeed;float fl=pow(tri01(ph),FLOW_SHARPNESS);env*=mix(1.0-uFlowStrength,1.0,fl);
-    float yp=(-R_V*uVLenFactor)*cos(tu),m=pow(smoothstep(FLARE_HEIGHT,0.0,yp),FLARE_EXP),wx=1.0+FLARE_AMOUNT*m;
-    vec2 sig=vec2(wx,1.0),p=vec2(0.0,yp);float mask=step(0.0,yp);b+=wt*bsa(uvc,p,mask*env,sig);
-  }
-  float sPix=clamp(yPix/R_V,0.0,1.0),topA=pow(1.0-smoothstep(TOP_FADE_START,1.0,sPix),TOP_FADE_EXP);
-  float L=a+b*topA;float w=vWisps(vec2(uvc.x,yPix),topA);float fog=0.0;
-#if FOG_ON
-  vec2 fuv=uvc*uFogScale;float mAct=step(1.0,length(iMouse.xy)),nx=((iMouse.x-C2.x)*invW)*mAct;
-  float ax=abs(nx),stMag=mix(ax,pow(ax,FOG_TILT_SHAPE),0.35),st=sign(nx)*stMag*uTiltScale;
-  st=clamp(st,-FOG_TILT_MAX_X,FOG_TILT_MAX_X);
-  vec2 dir=normalize(vec2(st,1.0));fuv+=uFogTime*uFogFallSpeed*dir;
-  vec2 prp=vec2(-dir.y,dir.x);fuv+=prp*(0.08*sin(dot(uvc,prp)*0.08+uFogTime*0.9));
-  float n=fbm2(fuv+vec2(fbm2(fuv+vec2(7.3,2.1)),fbm2(fuv+vec2(-3.7,5.9)))*0.6);
-  n=pow(clamp(n,0.0,1.0),FOG_CONTRAST);
-  float pixW=1.0/max(iResolution.y,1.0);
-#ifdef GL_OES_standard_derivatives
-  float wL=max(fwidth(L),pixW);
-#else
-  float wL=pixW;
-#endif
-  float m0=pow(smoothstep(FOG_BEAM_MIN-wL,FOG_BEAM_MAX+wL,L),FOG_MASK_GAMMA);
-  float bm=1.0-pow(1.0-m0,FOG_EXPAND_SHAPE);bm=mix(bm*m0,bm,FOG_EDGE_MIX);
-  float yP=1.0-smoothstep(HFOG_Y_RADIUS,HFOG_Y_RADIUS+HFOG_Y_SOFT,abs(yPix));
-  float nxF=abs((frag.x-C2.x)*invW),hE=1.0-smoothstep(HFOG_EDGE_START,HFOG_EDGE_END,nxF);hE=pow(clamp(hE,0.0,1.0),HFOG_EDGE_GAMMA);
-  float hW=mix(1.0,hE,clamp(yP,0.0,1.0));float bBias=mix(1.0,1.0-sPix,FOG_BOTTOM_BIAS);
-  float radialFade=1.0-smoothstep(0.0,0.7,length(uvc)/120.0);
-  fog=n*(uFogIntensity*1.8)*bBias*bm*hW*radialFade;
-#endif
-  float LF=L+fog;float dith=(h21(frag)-0.5)*(DITHER_STRENGTH/255.0);
-  float tone=g(LF+w);vec3 col=tone*uColor+dith;
-  float alpha=clamp(g(L+w*0.6)+dith*0.6,0.0,1.0);
-  float nxE=abs((frag.x-C2.x)*invW),xF=pow(clamp(1.0-smoothstep(EDGE_X0,EDGE_X1,nxE),0.0,1.0),EDGE_X_GAMMA);
-  float scene=LF+max(0.0,w)*0.5,hi=smoothstep(EDGE_LUMA_T0,EDGE_LUMA_T1,scene);
-  float eM=mix(xF,1.0,hi);col*=eM;alpha*=eM;col*=uFade;alpha*=uFade;
-  fc=vec4(col,alpha);
-}
-void main(){vec4 fc;mainImage(fc,gl_FragCoord.xy);gl_FragColor=fc;}
-`;
-
-/* ────────────────────────────────────────
-   HELPERS
-──────────────────────────────────────── */
-function hexToRGB(hex) {
-  let c = hex.trim().replace(/^#/,"");
-  if (c.length===3) c=c.split("").map(x=>x+x).join("");
-  const n=parseInt(c,16)||0xffffff;
-  return {r:((n>>16)&255)/255,g:((n>>8)&255)/255,b:(n&255)/255};
-}
-
-/* ────────────────────────────────────────
-   LASERFLOW — inline (import ./LaserFlow in project)
-──────────────────────────────────────── */
-function LaserFlow({
-  style,wispDensity=1,dpr,mouseSmoothTime=0.0,mouseTiltStrength=0.01,
-  horizontalBeamOffset=0.1,verticalBeamOffset=0.0,
-  flowSpeed=0.35,verticalSizing=2.0,horizontalSizing=0.5,
-  fogIntensity=0.45,fogScale=0.3,wispSpeed=15.0,wispIntensity=5.0,
-  flowStrength=0.25,decay=1.1,falloffStart=1.2,fogFallSpeed=0.6,color="#C8CDEB",
-}) {
-  const mountRef=useRef(null),rendererRef=useRef(null),uniformsRef=useRef(null);
-  const hasFadedRef=useRef(false),rectRef=useRef(null);
-  const baseDprRef=useRef(1),currentDprRef=useRef(1),lastSizeRef=useRef({width:0,height:0,dpr:0});
-  const fpsSamplesRef=useRef([]),lastFpsCheckRef=useRef(performance.now()),emaDtRef=useRef(16.7);
-  const pausedRef=useRef(false),inViewRef=useRef(true),mouseSmoothTimeRef=useRef(mouseSmoothTime);
-  useEffect(()=>{mouseSmoothTimeRef.current=mouseSmoothTime;},[mouseSmoothTime]);
-  useEffect(()=>{
-    const mount=mountRef.current;
-    const renderer=new THREE.WebGLRenderer({antialias:false,alpha:false,depth:false,stencil:false,powerPreference:"high-performance",premultipliedAlpha:false,preserveDrawingBuffer:false});
-    rendererRef.current=renderer;
-    baseDprRef.current=Math.min(dpr??(window.devicePixelRatio||1),2);
-    currentDprRef.current=baseDprRef.current;
-    renderer.setPixelRatio(currentDprRef.current);renderer.shadowMap.enabled=false;
-    renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.setClearColor(0x0A0F19,1);
-    const canvas=renderer.domElement;canvas.style.cssText="width:100%;height:100%;display:block;";
-    mount.appendChild(canvas);
-    const scene=new THREE.Scene(),camera=new THREE.OrthographicCamera(-1,1,1,-1,0,1);
-    const geo=new THREE.BufferGeometry();
-    geo.setAttribute("position",new THREE.BufferAttribute(new Float32Array([-1,-1,0,3,-1,0,-1,3,0]),3));
-    const uniforms={
-      iTime:{value:0},iResolution:{value:new THREE.Vector3(1,1,1)},iMouse:{value:new THREE.Vector4(0,0,0,0)},
-      uWispDensity:{value:wispDensity},uTiltScale:{value:mouseTiltStrength},uFlowTime:{value:0},uFogTime:{value:0},
-      uBeamXFrac:{value:horizontalBeamOffset},uBeamYFrac:{value:verticalBeamOffset},uFlowSpeed:{value:flowSpeed},
-      uVLenFactor:{value:verticalSizing},uHLenFactor:{value:horizontalSizing},uFogIntensity:{value:fogIntensity},
-      uFogScale:{value:fogScale},uWSpeed:{value:wispSpeed},uWIntensity:{value:wispIntensity},
-      uFlowStrength:{value:flowStrength},uDecay:{value:decay},uFalloffStart:{value:falloffStart},
-      uFogFallSpeed:{value:fogFallSpeed},uColor:{value:new THREE.Vector3(1,1,1)},uFade:{value:hasFadedRef.current?1:0},
-    };
-    uniformsRef.current=uniforms;
-    const mat=new THREE.RawShaderMaterial({vertexShader:VERT,fragmentShader:FRAG,uniforms,transparent:false,depthTest:false,depthWrite:false,blending:THREE.NormalBlending});
-    const mesh=new THREE.Mesh(geo,mat);mesh.frustumCulled=false;scene.add(mesh);
-    const clock=new THREE.Clock();let prevTime=0,fade=hasFadedRef.current?1:0;
-    const mT=new THREE.Vector2(0,0),mS=new THREE.Vector2(0,0);
-    const setSize=()=>{
-      const w=mount.clientWidth||1,h=mount.clientHeight||1,pr=currentDprRef.current;
-      const last=lastSizeRef.current;
-      if(Math.abs(w-last.width)<=0.5&&Math.abs(h-last.height)<=0.5&&Math.abs(pr-last.dpr)<=0.01)return;
-      lastSizeRef.current={width:w,height:h,dpr:pr};
-      renderer.setPixelRatio(pr);renderer.setSize(w,h,false);
-      uniforms.iResolution.value.set(w*pr,h*pr,pr);rectRef.current=canvas.getBoundingClientRect();
-      if(!pausedRef.current)renderer.render(scene,camera);
-    };
-    let rRaf=0;
-    const sched=()=>{if(rRaf)cancelAnimationFrame(rRaf);rRaf=requestAnimationFrame(setSize);};
-    setSize();
-    const ro=new ResizeObserver(sched);ro.observe(mount);
-    const io=new IntersectionObserver(es=>{inViewRef.current=es[0]?.isIntersecting??true;},{threshold:0});io.observe(mount);
-    const onVis=()=>{pausedRef.current=document.hidden;};
-    document.addEventListener("visibilitychange",onVis,{passive:true});
-    const onMove=ev=>{const r=rectRef.current;if(!r)return;const ratio=currentDprRef.current;mT.set((ev.clientX-r.left)*ratio,(r.height*ratio)-(ev.clientY-r.top)*ratio);};
-    const onLeave=()=>mT.set(0,0);
-    canvas.addEventListener("pointermove",onMove,{passive:true});canvas.addEventListener("pointerdown",onMove,{passive:true});
-    canvas.addEventListener("pointerenter",onMove,{passive:true});canvas.addEventListener("pointerleave",onLeave,{passive:true});
-    const onCL=e=>{e.preventDefault();pausedRef.current=true;};
-    const onCR=()=>{pausedRef.current=false;sched();};
-    canvas.addEventListener("webglcontextlost",onCL,false);canvas.addEventListener("webglcontextrestored",onCR,false);
-    let raf=0;const clV=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));let lastDC=0;
-    const adjDpr=now=>{
-      const el=now-lastFpsCheckRef.current;if(el<750)return;
-      const sa=fpsSamplesRef.current;if(!sa.length){lastFpsCheckRef.current=now;return;}
-      const avg=sa.reduce((a,b)=>a+b,0)/sa.length;let next=currentDprRef.current;const base=baseDprRef.current;
-      if(avg<50)next=clV(currentDprRef.current*0.85,0.6,base);
-      else if(avg>58&&currentDprRef.current<base)next=clV(currentDprRef.current*1.1,0.6,base);
-      if(Math.abs(next-currentDprRef.current)>0.01&&now-lastDC>2000){currentDprRef.current=next;lastDC=now;setSize();}
-      fpsSamplesRef.current=[];lastFpsCheckRef.current=now;
-    };
-    const animate=()=>{
-      raf=requestAnimationFrame(animate);if(pausedRef.current||!inViewRef.current)return;
-      const t=clock.getElapsedTime(),dt=Math.max(0,t-prevTime);prevTime=t;
-      const dtMs=dt*1000;emaDtRef.current=emaDtRef.current*0.9+dtMs*0.1;
-      fpsSamplesRef.current.push(1000/Math.max(1,emaDtRef.current));
-      uniforms.iTime.value=t;const cdt=Math.min(0.033,Math.max(0.001,dt));
-      uniforms.uFlowTime.value+=cdt;uniforms.uFogTime.value+=cdt;
-      if(!hasFadedRef.current){fade=Math.min(1,fade+cdt/1.2);uniforms.uFade.value=fade;if(fade>=1)hasFadedRef.current=true;}
-      const tau=Math.max(1e-3,mouseSmoothTimeRef.current);
-      mS.lerp(mT,1-Math.exp(-cdt/tau));uniforms.iMouse.value.set(mS.x,mS.y,0,0);
-      renderer.render(scene,camera);adjDpr(performance.now());
-    };
-    animate();
-    return()=>{
-      cancelAnimationFrame(raf);if(rRaf)cancelAnimationFrame(rRaf);
-      ro.disconnect();io.disconnect();document.removeEventListener("visibilitychange",onVis);
-      canvas.removeEventListener("pointermove",onMove);canvas.removeEventListener("pointerdown",onMove);
-      canvas.removeEventListener("pointerenter",onMove);canvas.removeEventListener("pointerleave",onLeave);
-      canvas.removeEventListener("webglcontextlost",onCL);canvas.removeEventListener("webglcontextrestored",onCR);
-      scene.clear();geo.dispose();mat.dispose();renderer.dispose();renderer.forceContextLoss();
-      if(mount.contains(canvas))mount.removeChild(canvas);
-    };
-  },[dpr]);
-  useEffect(()=>{
-    const u=uniformsRef.current;if(!u)return;
-    u.uWispDensity.value=wispDensity;u.uTiltScale.value=mouseTiltStrength;
-    u.uBeamXFrac.value=horizontalBeamOffset;u.uBeamYFrac.value=verticalBeamOffset;
-    u.uFlowSpeed.value=flowSpeed;u.uVLenFactor.value=verticalSizing;
-    u.uHLenFactor.value=horizontalSizing;u.uFogIntensity.value=fogIntensity;
-    u.uFogScale.value=fogScale;u.uWSpeed.value=wispSpeed;u.uWIntensity.value=wispIntensity;
-    u.uFlowStrength.value=flowStrength;u.uDecay.value=decay;u.uFalloffStart.value=falloffStart;
-    u.uFogFallSpeed.value=fogFallSpeed;
-    const{r,g,b}=hexToRGB(color||"#FFFFFF");u.uColor.value.set(r,g,b);
-  },[wispDensity,mouseTiltStrength,horizontalBeamOffset,verticalBeamOffset,flowSpeed,
-     verticalSizing,horizontalSizing,fogIntensity,fogScale,wispSpeed,wispIntensity,
-     flowStrength,decay,falloffStart,fogFallSpeed,color]);
-  return <div ref={mountRef} style={{width:"100%",height:"100%",...style}} />;
-}
+const LaserFlow = lazy(() => import("@/components/effect/LaserFlow"));
 
 /* ════════════════════════════════════════
    ATOMIC HUD COMPONENTS
@@ -477,7 +207,7 @@ function ScanLine() {
 /* ════════════════════════════════════════
    LOADING SCREEN
 ════════════════════════════════════════ */
-export default function LoadingScreen({ onComplete }) {
+export default function LoadingScreen({ onComplete }: { onComplete?: () => void }) {
   const [progress, setProgress] = useState(0);
   const [ready,    setReady   ] = useState(false);
   const [done,     setDone    ] = useState(false);
@@ -535,32 +265,34 @@ export default function LoadingScreen({ onComplete }) {
   const EN = '"Inter", system-ui, sans-serif';
 
   return (
-    <div role="status" aria-label="Loading" aria-busy={String(!done)}
+    <div role="status" aria-label="Loading" aria-busy={!done}
          style={{ position:"fixed", inset:0, zIndex:9000,
                   background:C.charcoal, fontFamily:EN, overflow:"hidden" }}>
 
       {/* ── 1. LaserFlow WebGL ──────────────────────────────────── */}
       <div aria-hidden="true" style={{ position:"absolute", inset:0 }}>
-        <LaserFlow
-          color={C.periwinkle}
-          horizontalBeamOffset={0}
-          verticalBeamOffset={-0.02}
-          verticalSizing={3.8}
-          horizontalSizing={0.28}
-          fogIntensity={0.35}
-          fogScale={0.20}
-          wispDensity={0.50}
-          wispIntensity={3.5}
-          wispSpeed={7}
-          flowSpeed={0.22}
-          flowStrength={0.22}
-          decay={1.06}
-          falloffStart={1.14}
-          fogFallSpeed={0.38}
-          mouseTiltStrength={0.06}
-          mouseSmoothTime={0.20}
-          style={{ width:"100%", height:"100%" }}
-        />
+        <Suspense fallback={null}>
+          <LaserFlow
+            color={C.periwinkle}
+            horizontalBeamOffset={0}
+            verticalBeamOffset={-0.02}
+            verticalSizing={3.8}
+            horizontalSizing={0.28}
+            fogIntensity={0.35}
+            fogScale={0.20}
+            wispDensity={0.50}
+            wispIntensity={3.5}
+            wispSpeed={7}
+            flowSpeed={0.22}
+            flowStrength={0.22}
+            decay={1.06}
+            falloffStart={1.14}
+            fogFallSpeed={0.38}
+            mouseTiltStrength={0.06}
+            mouseSmoothTime={0.20}
+            style={{ width:"100%", height:"100%" }}
+          />
+        </Suspense>
       </div>
 
       {/* ── 2. Depth / atmosphere ───────────────────────────────── */}

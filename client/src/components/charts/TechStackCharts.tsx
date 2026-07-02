@@ -241,8 +241,8 @@ const TechStackCharts: FC = () => {
                     className="w-2.5 h-2.5 rounded-full shrink-0 ring-2 ring-offset-1 ring-offset-light-surface dark:ring-offset-dark-bg"
                     style={{
                       backgroundColor: lang.color,
-                      ringColor: `${lang.color}40`,
-                    }}
+                      ["--tw-ring-color" as string]: `${lang.color}40`,
+                    } as React.CSSProperties}
                   />
                   <div className="min-w-0 flex-1">
                     <p className="text-xs font-medium text-light-text-secondary dark:text-dark-text-secondary truncate">

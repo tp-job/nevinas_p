@@ -890,8 +890,8 @@ export const Hero: React.FC<HeroProps> = ({ scrollContainerRef }) => {
                             </span>
                             {/* Cursor blink */}
                             <motion.span
-                                animate={{ opacity: [1, 0] }}
-                                transition={{ duration: 0.7, repeat: Infinity, ease: "steps(1)" }}
+                                animate={{ opacity: [1, 1, 0, 0] }}
+                                transition={{ duration: 0.7, times: [0, 0.5, 0.5, 1], repeat: Infinity, ease: "linear" }}
                                 style={{
                                     display: "inline-block", width: "3px",
                                     height: "clamp(3rem,8vw,7.5rem)",

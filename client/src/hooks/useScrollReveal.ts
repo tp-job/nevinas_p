@@ -22,7 +22,7 @@ export function useScrollReveal({
   const isInView = useInView(ref, {
     once,
     amount,
-    margin,
+    margin: margin as any,
     root: scrollRoot,
   })
   return { ref, isInView }

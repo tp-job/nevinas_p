@@ -1,11 +1,9 @@
 import type { FC } from "react";
 interface ContributionHeatmapProps {
-  isDark: boolean;
   dayActivity: number[];
   hourActivity: number[];
 }
 const ContributionHeatmap: FC<ContributionHeatmapProps> = ({
-  isDark,
   dayActivity,
   hourActivity,
 }) => {
@@ -32,14 +30,7 @@ const ContributionHeatmap: FC<ContributionHeatmapProps> = ({
     });
   });
   const getColor = (val: number) => {
-    if (isDark)
-      return (
-        ["#1e202c", "#1e3a5f", "#2563eb40", "#3E60C1", "#5983FC"][val] ||
-        "#1e202c"
-      );
-    return (
-      ["#f1f5f9", "#dbeafe", "#93c5fd", "#5983FC", "#3E60C1"][val] || "#f1f5f9"
-    );
+    return `var(--color-heatmap-${val})`;
   };
   const peakDay = dayActivity.indexOf(Math.max(...dayActivity));
   const totalEvents = dayActivity.reduce((a, b) => a + b, 0);

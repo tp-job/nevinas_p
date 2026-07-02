@@ -1,7 +1,7 @@
 import React, { useState, useEffect, type FC } from "react";
 import StatsCard from "@/components/card/StatsCard";
 import RepoCard from "@/components/card/RepoCard";
-import { useTheme } from "@/context/ThemeContext";
+import ContributionHeatmap from "@/components/dashboard/ContributionHeatmap";
 import { githubApi, type GitHubStats, type GitHubRepo } from "@/utils/api";
 import { techStackData } from "@/data/techData";
 import { toolsData, toolSections } from "@/data/toolsData";
@@ -127,116 +127,8 @@ const KpiBadge: FC<{
   </div>
 );
 
-/* ==================== Heatmap ==================== */
-const ContributionHeatmap: FC<{
-  isDark: boolean;
-  dayActivity: number[];
-  hourActivity: number[];
-}> = ({ isDark, dayActivity, hourActivity }) => {
-  const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  const hours = [
-    "6am",
-    "8am",
-    "10am",
-    "12pm",
-    "2pm",
-    "4pm",
-    "6pm",
-    "8pm",
-    "10pm",
-  ];
-
-  const maxDay = Math.max(...dayActivity, 1);
-  const maxHour = Math.max(...hourActivity, 1);
-
-  const heatData = hours.map((_, hi) => {
-    const hourIdx = hi * 2 + 6;
-    return days.map((_, di) => {
-      const dayVal = dayActivity[di] / maxDay;
-      const hourVal = (hourActivity[hourIdx] || 0) / maxHour;
-      return Math.round(((dayVal + hourVal) / 2) * 4);
-    });
-  });
-
-  const getColor = (val: number) => {
-    if (isDark)
-      return (
-        ["#1e202c", "#1e3a5f", "#2563eb40", "#3E60C1", "#5983FC"][val] ||
-        "#1e202c"
-      );
-    return (
-      ["#f1f5f9", "#dbeafe", "#93c5fd", "#5983FC", "#3E60C1"][val] || "#f1f5f9"
-    );
-  };
-
-  const peakDay = dayActivity.indexOf(Math.max(...dayActivity));
-  const totalEvents = dayActivity.reduce((a, b) => a + b, 0);
-
-  return (
-    <div>
-      <div className="flex items-center gap-3 mb-4 flex-wrap">
-        <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-matte-azure/10 text-matte-azure">
-          {totalEvents} events
-        </span>
-        <span className="text-xs text-light-text-secondary dark:text-dark-text-secondary">
-          Peak:{" "}
-          <strong className="text-light-text dark:text-dark-text">
-            {days[peakDay]}
-          </strong>
-        </span>
-      </div>
-      <div className="overflow-x-auto">
-        <div className="min-w-[380px]">
-          <div className="flex mb-1.5 ml-12">
-            {days.map((d, i) => (
-              <div
-                key={d}
-                className={`flex-1 text-center text-[10px] font-semibold ${i === peakDay ? "text-matte-azure" : "text-light-text-secondary dark:text-dark-text-secondary"}`}
-              >
-                {d}
-              </div>
-            ))}
-          </div>
-          {hours.map((hour, hi) => (
-            <div key={hour} className="flex items-center gap-1 mb-1">
-              <span className="w-10 text-right text-[9px] font-medium pr-1 text-light-text-secondary dark:text-dark-text-secondary">
-                {hour}
-              </span>
-              {days.map((_, di) => (
-                <div
-                  key={di}
-                  className="flex-1 aspect-2/1 rounded transition-all duration-300 hover:scale-110 cursor-pointer"
-                  style={{ backgroundColor: getColor(heatData[hi][di]) }}
-                  title={`${hour} ${days[di]}: ${["None", "Low", "Medium", "High", "Peak"][heatData[hi][di]]}`}
-                />
-              ))}
-            </div>
-          ))}
-          <div className="flex items-center gap-1 justify-end mt-3">
-            <span className="text-[9px] mr-0.5 text-light-text-secondary dark:text-dark-text-secondary">
-              Less
-            </span>
-            {[0, 1, 2, 3, 4].map((v) => (
-              <div
-                key={v}
-                className="w-3.5 h-2 rounded-sm"
-                style={{ backgroundColor: getColor(v) }}
-              />
-            ))}
-            <span className="text-[9px] ml-0.5 text-light-text-secondary dark:text-dark-text-secondary">
-              More
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 /* ==================== DASHBOARD ==================== */
 const Dashboard: FC = () => {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
 
   const [stats, setStats] = useState<GitHubStats | null>(null);
   const [allRepos, setAllRepos] = useState<GitHubRepo[]>([]);
@@ -355,9 +247,9 @@ const Dashboard: FC = () => {
   );
 
   // Chart styling
-  const gridColor = isDark ? "#2f3848" : "#e2e8f0";
-  const tickColor = isDark ? "#9ca3af" : "#64748b";
-  const cardBg = isDark ? "#1e202c" : "#ffffff";
+  const gridColor = "var(--color-border-primary)";
+  const tickColor = "var(--color-text-secondary)";
+  const cardBg = "var(--color-surface-primary)";
   const cardCls =
     "bg-light-surface dark:bg-dark-bg backdrop-blur-xl border border-light-border dark:border-dark-border rounded-2xl relative overflow-hidden transition-all duration-300 hover:-translate-y-0.5 shadow-[0_4px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)] hover:shadow-[0_8px_40px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_12px_48px_rgba(0,0,0,0.5)]";
 
@@ -677,9 +569,7 @@ const Dashboard: FC = () => {
                       fill={
                         entry.isPeak
                           ? TH.yellow
-                          : isDark
-                            ? "#3d4759"
-                            : "#cbd5e1"
+                          : "var(--color-surface-tertiary)"
                       }
                     />
                   ))}
@@ -862,7 +752,6 @@ const Dashboard: FC = () => {
           </p>
           <div className="flex items-center justify-center">
             <ContributionHeatmap
-              isDark={isDark}
               dayActivity={dayActivity}
               hourActivity={hourActivity}
             />
