@@ -30,7 +30,9 @@ import NotFound from "@/components/common/client-error/NotFound";
 import ServerError from "@/components/common/server-error/ServerError";
 import ServiceUnavailable from "@/components/common/server-error/ServiceUnavailable";
 import GatewayTimeout from "@/components/common/server-error/GatewayTimeout";
-import LaserFlow from "@/components/effect/LaserFlow";
+// Debug-only route — lazy so the heavy three.js WebGL effect isn't pulled
+// into the initial bundle for every visitor.
+const LaserFlow = lazy(() => import("@/components/effect/LaserFlow"));
 
 // ─── Error page map ───────────────────────────────────────────────────────────
 // ✅ แก้ที่นี่ที่เดียว เพื่อเพิ่ม / เปลี่ยน error page ต่อ status code

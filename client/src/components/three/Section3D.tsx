@@ -2,6 +2,10 @@ import React, { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { useGLTF, Stage, PresentationControls, Float } from "@react-three/drei";
 
+// drei's PresentationControls typings vary by version (snap/config spring props);
+// alias to a permissive type so the spring config props type-check across versions.
+const PControls = PresentationControls as unknown as React.FC<any>;
+
 interface ModelProps {
   url: string;
   rotationY?: number;
@@ -53,7 +57,7 @@ const Section3D: React.FC<Section3DProps> = ({
           <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
           <pointLight position={[-10, -10, -10]} />
           {interactive ? (
-            <PresentationControls
+            <PControls
               global
               config={{ mass: 2, tension: 500 }}
               snap={{ mass: 4, tension: 1500 }}
@@ -68,7 +72,7 @@ const Section3D: React.FC<Section3DProps> = ({
               ) : (
                 modelContent
               )}
-            </PresentationControls>
+            </PControls>
           ) : float ? (
             <Float speed={2} rotationIntensity={1} floatIntensity={1}>
               {modelContent}

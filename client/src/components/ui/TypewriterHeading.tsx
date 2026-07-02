@@ -1,5 +1,5 @@
 import { useTypewriter } from '@/hooks/useTypewriter'
-import { ElementType } from 'react'
+import type { ElementType } from 'react'
 
 interface Props {
   as?: ElementType               // 'h1' | 'h2' | 'h3' (default: 'h1')
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function TypewriterHeading({
-  as: Tag = 'h1',
+  as: TagProp = 'h1',
   words,
   staticPrefix = '',
   className = '',
@@ -20,6 +20,9 @@ export function TypewriterHeading({
   speed,
   pause,
 }: Props) {
+  // Cast the polymorphic tag to a permissive element type so JSX children
+  // aren't narrowed to `never` (a known quirk with `ElementType` unions).
+  const Tag: any = TagProp
   const text = useTypewriter({ words, speed, pause })
 
   return (

@@ -39,7 +39,7 @@ export default function PortfolioExperience() {
   const { current, activeIndex, progressPercent, goToSlide } =
     usePortfolioScroll(SLIDE_COUNT);
 
-  const isLight = LIGHT_SLIDE_INDICES.has(activeIndex);
+  const isLight = (LIGHT_SLIDE_INDICES as Set<number>).has(activeIndex);
   const isContact = activeIndex === SLIDE_INDEX.CONTACT;
 
   const tlProgress = useMemo(() => {

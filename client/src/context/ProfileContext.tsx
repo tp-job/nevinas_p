@@ -4,8 +4,8 @@ import {
   useEffect,
   useMemo,
   useState,
-  ReactNode,
 } from "react";
+import type { ReactNode } from "react";
 import { Assets } from "@/data/homeData";
 
 // Define the shape of the context value

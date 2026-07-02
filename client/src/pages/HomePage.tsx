@@ -18,15 +18,8 @@ import NodeMap from '@/components/homepage/Nodemap';
 import Testimonials from '@/components/homepage/Testimonials';
 import HorizontalServices from '@/components/homepage/HorizontalServices';
 import Hero from '@/components/homepage/Hero';
-// import LiquidEther removed - effect now isolated in Header
-// Removed external CSS import - now using CSS Modules
+// import ContributorTimeline from '@/components/homepage/ContributorTimeline';
 
-// SLIDE_PALETTES removed - palette now static in Header
-
-// Define slides configuration for mapping
-// Takes the real scroll-container ref so Hero's internal useScroll() (parallax,
-// progress bar, navbar background) can track actual scroll position instead of
-// the window — the window itself never scrolls in this slide-stack layout.
 const getSlidesList = (scrollContainerRef: RefObject<HTMLElement | null>) => {
   const list = [
     { id: 'top', content: <Header />, variant: 'center' as const, scrollable: false }, ...statements.map((_, i) => ({ id: `statement-${i}`, content: <StatementSlide index={i} />, variant: 'center' as const, scrollable: false })),
@@ -36,6 +29,7 @@ const getSlidesList = (scrollContainerRef: RefObject<HTMLElement | null>) => {
     { id: 'bento', content: <BentoGrid />, variant: 'fill' as const, scrollable: true },
     { id: 'clarity', content: <CodeWithClarity />, variant: 'fill' as const, scrollable: true },
     { id: 'nodemap', content: <NodeMap />, variant: 'fill' as const, scrollable: true },
+    // { id: 'workflow', content: <ContributorTimeline />, variant: 'fill' as const, scrollable: true },
     { id: 'hero', content: <Hero scrollContainerRef={scrollContainerRef} />, variant: 'fill' as const, scrollable: true },
     { id: 'services', content: <HorizontalServices />, variant: 'fill' as const, scrollable: true },
     { id: 'work', content: <ScrollReveal><Work /></ScrollReveal>, variant: 'content' as const, scrollable: true },

@@ -37,7 +37,7 @@
  */
 
 import React, { useRef, useCallback } from 'react';
-import type { MotionValue } from 'framer-motion';
+import type { MotionValue, Variants } from 'framer-motion';
 import {
   motion,
   useMotionValue,
@@ -65,7 +65,7 @@ const entryVariants = {
 };
 
 /* Letter-spacing expansion on the center label */
-const labelVariants = {
+const labelVariants: Variants = {
   hidden:  { opacity: 0, letterSpacing: '0.06em' },
   visible: {
     opacity: 1,

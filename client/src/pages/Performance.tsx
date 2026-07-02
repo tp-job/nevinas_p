@@ -1,5 +1,4 @@
 import { useState, useEffect, type FC } from "react";
-import { useTheme } from "@/context/ThemeContext";
 import {
   AreaChart,
   Area,
@@ -126,12 +125,10 @@ const StatusBadge: FC<{ status: string }> = ({ status }) => {
 
 /* ==================== Performance Page ==================== */
 const Performance: FC = () => {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-  const gridColor = isDark ? "#2f3848" : "#e2e8f0";
-  const tickColor = isDark ? "#9ca3af" : "#64748b";
+  const gridColor = "var(--color-border-primary)";
+  const tickColor = "var(--color-text-secondary)";
   const cardCls =
-    "bg-light-surface dark:bg-dark-bg border border-light-border dark:border-dark-border rounded-2xl relative overflow-hidden transition-all duration-300";
+    "bg-surface-primary border border-border-primary rounded-2xl relative overflow-hidden transition-all duration-300";
 
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
   const [loadingGH, setLoadingGH] = useState(true);
@@ -492,7 +489,7 @@ const Performance: FC = () => {
                   </span>
                 </div>
                 <span className="w-44 shrink-0 text-sm font-mono text-light-text dark:text-dark-text truncate">
-                  {api.path}
+                  {api.endpoint}
                 </span>
                 <div className="flex-1 h-2 rounded-full overflow-hidden bg-light-surface-2 dark:bg-dark-surface">
                   <div

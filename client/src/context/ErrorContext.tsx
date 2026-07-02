@@ -15,7 +15,7 @@ interface ErrorProviderProps {
 
 const ErrorContext = createContext<ErrorContextValue | undefined>(undefined);
 
-export function ErrorProvider({ children, initialError = null }: ErrorProviderProps): JSX.Element {
+export function ErrorProvider({ children, initialError = null }: ErrorProviderProps) {
   const [errorCode, setErrorCode] = useState<HttpErrorCode>(initialError);
 
   const setError = useCallback((code: HttpErrorCode) => {

@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import type { FC, MouseEvent, KeyboardEvent } from "react";
 import { motion } from "framer-motion";
 import Loading from "@/components/common/loading/Loading";
-import Error from "@/components/common/server-error/Error";
+import ErrorView from "@/components/common/server-error/Error";
 
 const API_BASE_URL = "http://localhost:3000";
 
@@ -266,7 +266,7 @@ const Gallery: FC = () => {
       </div>
 
       {isLoading && <Loading />}
-      {error && <Error error={error} />}
+      {error && <ErrorView error={error} />}
 
       {!isLoading && !error && (
         <>

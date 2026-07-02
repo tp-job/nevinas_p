@@ -1,7 +1,7 @@
 import { motion }           from 'framer-motion'
 import { useScrollReveal }  from '@/hooks/useScrollReveal'
 import { staggerContainer, fadeUp } from '@/lib/scrollVariants'
-import { ReactNode }        from 'react'
+import type { ReactNode }   from 'react'
 
 interface Props {
   children:  ReactNode

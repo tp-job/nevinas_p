@@ -1,6 +1,5 @@
 import { useState, useEffect, type FC } from "react";
 import RepoCard from "@/components/card/RepoCard";
-import { useTheme } from "@/context/ThemeContext";
 import { githubApi, type GitHubRepo } from "@/utils/api";
 import Loading from "@/components/common/loading/Loading";
 import Error from "@/components/common/server-error/Error";
@@ -38,9 +37,6 @@ const formatRelativeTime = (dateString?: string): string => {
 };
 
 const Repository: FC = () => {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -105,12 +101,8 @@ const Repository: FC = () => {
 
       {/* Stats + Filter */}
       {!loading && !error && (
-        <div
-          className={`mb-6 p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${isDark ? "bg-slate-800/30" : "bg-slate-100"}`}
-        >
-          <p
-            className={`text-sm ${isDark ? "text-gray-400" : "text-slate-600"}`}
-          >
+        <div className="mb-6 p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-surface-secondary border border-border-primary/50">
+          <p className="text-sm text-text-secondary">
             <i className="ri-github-fill mr-2"></i>
             GitHub Repositories:{" "}
             <span className="font-semibold">{repos.length}</span>
@@ -129,9 +121,7 @@ const Repository: FC = () => {
                 className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
                   filter === lang
                     ? "bg-global-blue text-white"
-                    : isDark
-                      ? "bg-slate-700 text-gray-300 hover:bg-slate-600"
-                      : "bg-white text-slate-600 hover:bg-slate-200"
+                    : "bg-surface-primary text-text-secondary border border-border-primary/60 hover:bg-surface-secondary hover:text-text-primary"
                 }`}
               >
                 {lang === "all" ? "All" : lang}
@@ -152,13 +142,9 @@ const Repository: FC = () => {
 
       {/* Empty State */}
       {!loading && !error && repositories.length === 0 && (
-        <div
-          className={`text-center py-12 rounded-xl ${isDark ? "bg-slate-800/30" : "bg-slate-100"}`}
-        >
-          <i
-            className={`ri-folder-open-line text-4xl mb-4 ${isDark ? "text-gray-500" : "text-slate-400"}`}
-          ></i>
-          <p className={`${isDark ? "text-gray-400" : "text-slate-600"}`}>
+        <div className="text-center py-12 rounded-xl bg-surface-secondary border border-border-primary/50">
+          <i className="ri-folder-open-line text-4xl mb-4 text-text-muted"></i>
+          <p className="text-text-secondary">
             No repositories found
           </p>
         </div>
