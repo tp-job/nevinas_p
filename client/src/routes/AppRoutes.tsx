@@ -19,6 +19,7 @@ const Docs = lazy(() => import("@/pages/Docs"));
 const Website = lazy(() => import("@/pages/Website"));
 const ReactPage = lazy(() => import("@/pages/ReactPage"));
 const Repository = lazy(() => import("@/pages/Repository"));
+const GraphView = lazy(() => import("@/pages/GraphView"));
 const TailwindPage = lazy(() => import("@/pages/TailwindPage"));
 const Gallery = lazy(() => import("@/pages/Gallery"));
 const BlogPage = lazy(() => import("@/pages/BlogPage"));
@@ -118,6 +119,9 @@ const AppRoutesInner: FC = () => {
         <Route path="gallery" element={<Gallery />} />
         <Route path="blog" element={<BlogPage />} />
       </Route>
+
+      {/* full-page graph view — outside WorkLayout */}
+      <Route path="/work/repository/graph-view" element={<GraphView />} />
 
       {/* utility / debug routes */}
       <Route path="/loading" element={<LoadingScreen />} />

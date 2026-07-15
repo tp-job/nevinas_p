@@ -17,8 +17,7 @@ import Footer from '@/components/layouts/Footer';
 import NodeMap from '@/components/homepage/Nodemap';
 import Testimonials from '@/components/homepage/Testimonials';
 import HorizontalServices from '@/components/homepage/HorizontalServices';
-import Hero from '@/components/homepage/Hero';
-// import ContributorTimeline from '@/components/homepage/ContributorTimeline';
+import ContributorTimeline from '@/components/homepage/ContributorTimeline';
 
 const getSlidesList = (scrollContainerRef: RefObject<HTMLElement | null>) => {
   const list = [
@@ -29,8 +28,6 @@ const getSlidesList = (scrollContainerRef: RefObject<HTMLElement | null>) => {
     { id: 'bento', content: <BentoGrid />, variant: 'fill' as const, scrollable: true },
     { id: 'clarity', content: <CodeWithClarity />, variant: 'fill' as const, scrollable: true },
     { id: 'nodemap', content: <NodeMap />, variant: 'fill' as const, scrollable: true },
-    // { id: 'workflow', content: <ContributorTimeline />, variant: 'fill' as const, scrollable: true },
-    { id: 'hero', content: <Hero scrollContainerRef={scrollContainerRef} />, variant: 'fill' as const, scrollable: true },
     { id: 'services', content: <HorizontalServices />, variant: 'fill' as const, scrollable: true },
     { id: 'work', content: <ScrollReveal><Work /></ScrollReveal>, variant: 'content' as const, scrollable: true },
     { id: 'agency', content: <AgencySection />, variant: 'fill' as const, scrollable: true },

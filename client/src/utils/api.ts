@@ -1,4 +1,6 @@
-const API_BASE_URL = "http://localhost:3000";
+// Relative so the vite dev proxy (see vite.config.ts) and prod reverse
+// proxy both route it — avoids hardcoding a host that breaks off-localhost.
+const API_BASE_URL = "";
 
 // ----------------------------
 // GitHub API
@@ -21,7 +23,8 @@ export interface GitHubProfile {
 }
 
 export interface GitHubRepo {
-  id: number;
+  id: string;
+  github_id: number;
   name: string;
   full_name: string;
   description: string | null;
@@ -34,8 +37,8 @@ export interface GitHubRepo {
   watchers_count: number;
   open_issues_count: number;
   size: number;
-  created_at: string;
-  updated_at: string;
+  github_created_at: string;
+  github_updated_at: string;
   pushed_at: string;
   fork: boolean;
   archived: boolean;

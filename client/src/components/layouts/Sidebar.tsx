@@ -251,7 +251,15 @@ const Sidebar: FC = () => {
             Main Menu
           </p>
         )}
-        <div className="mt-3 flex-1 overflow-y-auto pr-2">
+        <div
+          className="mt-3 flex-1 overflow-y-auto pr-2"
+          style={{
+            maskImage:
+              "linear-gradient(to bottom, transparent 0, black 12px, black calc(100% - 12px), transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, transparent 0, black 12px, black calc(100% - 12px), transparent 100%)",
+          }}
+        >
           {renderNavItems(isCollapsed)}
         </div>
         {renderSettings(isCollapsed)}

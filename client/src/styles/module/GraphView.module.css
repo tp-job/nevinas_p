@@ -1,0 +1,427 @@
+.fullscreen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 1;
+  background: var(--color-bg-primary, #f0f1f8);
+  transition: background 0.3s ease;
+}
+:global(.dark) .fullscreen {
+  background: var(--color-dark-bg, #0A0F19);
+}
+
+.fullscreen .container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  border: none;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  /* ── Light mode defaults (Image 2 style) ── */
+  --gv-bg-0: var(--color-light-bg, #f0f1f8);
+  --gv-bg-1: var(--color-light-surface, rgba(255,255,255,0.55));
+  --gv-card: #ffffff;
+  --gv-border: var(--color-light-border, rgba(30,35,60,0.10));
+  --gv-border-strong: rgba(30, 35, 60, 0.12);
+  --gv-text: var(--color-light-text, #1e233c);
+  --gv-text-dim: var(--color-light-text-secondary, #2c3352);
+  --gv-text-faint: var(--color-light-text-muted, #5e6491);
+  --gv-blue: #3b82f6;
+  --gv-violet: #8b5cf6;
+  --gv-gold: #f59e0b;
+  --gv-mint: #10b981;
+  --gv-line: rgba(30, 35, 60, 0.15);
+
+  position: relative;
+  border-radius: 28px;
+  color: var(--gv-text);
+  padding: 28px 24px;
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: var(--gv-bg-0);
+  border: 1px solid var(--gv-border);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+:global(.dark) .container {
+  /* ── Dark mode overrides ── */
+  --gv-bg-0: var(--color-dark-bg, #0A0F19);
+  --gv-bg-1: var(--color-dark-surface, rgba(30,35,60,0.50));
+  --gv-card: rgba(22, 24, 32, 0.82);
+  --gv-border: var(--color-dark-border, rgba(200,205,235,0.10));
+  --gv-border-strong: rgba(200, 205, 235, 0.15);
+  --gv-text: var(--color-dark-text, #E8EAF5);
+  --gv-text-dim: var(--color-dark-text-secondary, #AEB5D9);
+  --gv-text-faint: var(--color-dark-text-muted, #878CB4);
+  --gv-blue: #7a90ff;
+  --gv-violet: #b58bff;
+  --gv-gold: #e5c07b;
+  --gv-mint: #6de6c1;
+  --gv-line: rgba(200, 205, 235, 0.18);
+}
+
+/* ── Brand Row ── */
+.brandRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 0 6px;
+}
+
+.brand {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--gv-text);
+  transition: color 0.3s ease;
+}
+
+.dotpulse {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gv-mint);
+  box-shadow: 0 0 12px var(--gv-mint);
+  flex-shrink: 0;
+}
+.dotpulse::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--gv-mint);
+  animation: pulseRing 1.8s ease-out infinite;
+}
+@keyframes pulseRing {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+.counter {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--gv-text-dim);
+  padding: 5px 12px;
+  border: 1px solid var(--gv-border-strong);
+  border-radius: 999px;
+  background: var(--gv-bg-1);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+/* ── Flow Wrap ── */
+.flowWrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid var(--gv-border);
+  background: var(--gv-bg-0);
+  transition: all 0.3s ease;
+}
+
+/* ── Edge Styles ── */
+.flowWrap :global(.react-flow__edge-path) {
+  stroke: var(--gv-line);
+  stroke-width: 2;
+  opacity: 0.9;
+  transition: stroke 0.3s ease;
+}
+.flowWrap :global(.react-flow__edge.animated .react-flow__edge-path) {
+  stroke-dasharray: 6 6;
+  animation: flowDash 1.4s linear infinite;
+  stroke: var(--gv-blue);
+  opacity: 0.6;
+}
+@keyframes flowDash {
+  to { stroke-dashoffset: -24; }
+}
+
+/* ── Handles ── */
+.flowWrap :global(.react-flow__handle) {
+  width: 10px;
+  height: 10px;
+  background: var(--gv-blue);
+  border: 2px solid var(--gv-bg-0);
+  border-radius: 50%;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.flowWrap :global(.react-flow__handle:hover) {
+  transform: scale(1.4);
+  background: var(--gv-violet);
+}
+.flowWrap :global(.react-flow__handle.connectable) {
+  cursor: crosshair;
+}
+
+/* ── Controls ── */
+.flowControls {
+  background: var(--gv-card) !important;
+  border: 1px solid var(--gv-border-strong) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+  backdrop-filter: blur(12px);
+}
+.flowControls :global(button) {
+  background: transparent !important;
+  color: var(--gv-text) !important;
+  border-bottom: 1px solid var(--gv-border) !important;
+  width: 32px !important;
+  height: 32px !important;
+  transition: all 0.2s ease !important;
+}
+.flowControls :global(button:hover) {
+  background: rgba(122, 144, 255, 0.1) !important;
+  color: var(--gv-blue) !important;
+}
+.flowControls :global(button svg) { fill: currentColor !important; }
+
+/* ── Minimap ── */
+.flowMinimap {
+  background: var(--gv-card) !important;
+  border: 1px solid var(--gv-border-strong) !important;
+  border-radius: 14px !important;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08) !important;
+  backdrop-filter: blur(12px);
+}
+
+/* ── Timeline Year Marker ── */
+.timelineMarker {
+  font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--gv-text-dim);
+  padding: 6px 16px 6px 24px;
+  border: 1px solid var(--gv-border-strong);
+  border-radius: 999px;
+  background: var(--gv-card);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  white-space: nowrap;
+  position: relative;
+}
+.timelineMarker::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gv-blue);
+  box-shadow: 0 0 8px var(--gv-blue);
+}
+
+/* ── Subnode Card Base ── */
+.subnodeCard {
+  position: relative;
+  width: 220px;
+  padding: 14px;
+  border-radius: 16px;
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  background: var(--gv-card);
+  border: 1px solid var(--gv-border-strong);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+  transition:
+    transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+:global(.dark) .subnodeCard {
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+}
+.subnodeCard:hover {
+  transform: translateY(-3px);
+  border-color: var(--gv-blue);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 0 0 2px rgba(122, 144, 255, 0.12);
+}
+:global(.dark) .subnodeCard:hover {
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    0 0 0 2px rgba(122, 144, 255, 0.2);
+}
+
+/* ── Subnode Handle ── */
+.subnodeHandle {
+  width: 8px !important;
+  height: 8px !important;
+  background: var(--gv-blue) !important;
+  border: 2px solid var(--gv-bg-0) !important;
+}
+
+/* ── Subnode Header ── */
+.subnodeHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 2px;
+}
+.subnodeBadge {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--gv-border-strong);
+}
+.subnodeHeaderText {
+  min-width: 0;
+}
+.subnodeEyebrow {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gv-text-faint);
+  font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+}
+.subnodeTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gv-text);
+  letter-spacing: -0.01em;
+  margin-top: 1px;
+}
+
+/* ── Divider ── */
+.subnodeDivider {
+  height: 1px;
+  background: var(--gv-border-strong);
+  margin: 10px 0;
+}
+
+/* ── Tech Stack ── */
+.techStackRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.stackChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid;
+  font-size: 10.5px;
+  font-weight: 600;
+  transition: transform 0.2s ease;
+}
+.stackChip:hover { transform: scale(1.05); }
+.stackLabel {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* ── Languages ── */
+.languagesRow {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.langItem { display: flex; flex-direction: column; gap: 3px; }
+.langMeta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.langDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.langName {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--gv-text);
+  flex: 1;
+}
+.langPct {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--gv-text-dim);
+  font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+}
+.langBar {
+  height: 3px;
+  border-radius: 999px;
+  background: var(--gv-border-strong);
+  overflow: hidden;
+}
+.langBarFill {
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* ── Last Commit / Contributor ── */
+.contributorRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.contributorAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #ccc center/cover no-repeat;
+  border: 2px solid var(--gv-border-strong);
+  flex-shrink: 0;
+}
+.contributorMeta { min-width: 0; }
+.contributorName {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gv-blue);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: opacity 0.2s ease;
+}
+.contributorName:hover { opacity: 0.7; }
+.contributorSub {
+  font-size: 10px;
+  color: var(--gv-text-faint);
+  margin-top: 2px;
+  font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+}
+
+/* ── Empty / Misc ── */
+.emptyText {
+  font-size: 10.5px;
+  color: var(--gv-text-faint);
+  font-style: italic;
+}
+.emptyState {
+  padding: 60px 20px;
+  text-align: center;
+  color: var(--gv-text-dim);
+}

@@ -211,7 +211,7 @@ const Docs: FC = () => {
     languageColor: LANG_COLORS[repo.language || ""] || "#6e7681",
     stars: repo.stargazers_count,
     forks: repo.forks_count,
-    updatedAt: formatRelativeTime(repo.updated_at),
+    updatedAt: formatRelativeTime(repo.github_updated_at),
     url: repo.html_url,
   }));
 
