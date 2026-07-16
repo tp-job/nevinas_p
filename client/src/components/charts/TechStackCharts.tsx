@@ -1,6 +1,8 @@
-import { useState, useEffect, type FC } from "react";
+import { type FC } from "react";
 import { useTheme } from "@/context/ThemeContext";
-import { githubApi, type GitHubStats } from "@/utils/api";
+import { githubApi } from "@/utils/api";
+import { useFetch } from "@/hooks/useFetch";
+import { getLangColor } from "@/utils/constants";
 
 const C = {
   azure: "#5983FC",
@@ -12,22 +14,6 @@ const C = {
   green: "#0f9d58",
   teal: "#00897b",
   orange: "#ff6d00",
-};
-
-const LANG_COLORS: Record<string, string> = {
-  TypeScript: "#3178c6",
-  JavaScript: "#f1e05a",
-  Python: "#3572A5",
-  HTML: "#e34c26",
-  CSS: "#563d7c",
-  Go: "#00ADD8",
-  Rust: "#dea584",
-  Java: "#b07219",
-  "C++": "#f34b7d",
-  "C#": "#239120",
-  PHP: "#4F5D95",
-  Ruby: "#701516",
-  Shell: "#89e051",
 };
 
 const FRAMEWORK_COLORS = [
@@ -118,21 +104,8 @@ const TechStackCharts: FC = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const [stats, setStats] = useState<GitHubStats | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await githubApi.getStats();
-        setStats(data);
-      } catch {
-        /* silent */
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
+  // Charts are optional — they render empty when stats are unavailable.
+  const { data: stats, loading } = useFetch(githubApi.getStats);
 
   // Language data from GitHub
   const langDist = stats?.languageDistribution || {};
@@ -144,7 +117,7 @@ const TechStackCharts: FC = () => {
       label,
       value,
       pct: Math.round((value / totalRepos) * 100),
-      color: LANG_COLORS[label] || "#6e7681",
+      color: getLangColor(label),
     }));
 
   // Framework data - infer from top repos + topics

@@ -7,6 +7,13 @@
       "runtimeArgs": ["--prefix", "client", "run", "dev"],
       "port": 10005,
       "autoPort": false
+    },
+    {
+      "name": "server-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "server", "run", "dev"],
+      "port": 3000,
+      "autoPort": false
     }
   ]
 }

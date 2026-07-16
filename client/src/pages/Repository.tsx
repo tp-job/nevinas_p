@@ -1,61 +1,22 @@
-import { useState, useEffect, type FC } from "react";
+import { useState, type FC } from "react";
 import { Link } from "react-router-dom";
 import RepoCard from "@/components/card/RepoCard";
-import { githubApi, type GitHubRepo } from "@/utils/api";
+import { githubApi } from "@/utils/api";
+import { useFetch } from "@/hooks/useFetch";
+import { getLangColor } from "@/utils/constants";
+import { formatRelativeTimeLong } from "@/utils/date";
 import Loading from "@/components/common/loading/Loading";
 import Error from "@/components/common/server-error/Error";
 
-const LANG_COLORS: Record<string, string> = {
-  TypeScript: "#3178c6",
-  JavaScript: "#f1e05a",
-  Python: "#3572A5",
-  HTML: "#e34c26",
-  CSS: "#563d7c",
-  Java: "#b07219",
-  Go: "#00ADD8",
-  Rust: "#dea584",
-  "C++": "#f34b7d",
-  "C#": "#239120",
-  PHP: "#4F5D95",
-  Ruby: "#701516",
-  Shell: "#89e051",
-};
-
-const formatRelativeTime = (dateString?: string): string => {
-  if (!dateString) return "Recently";
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
-  if (diffDays === 0) return "Today";
-  if (diffDays === 1) return "1 day ago";
-  if (diffDays < 7) return `${diffDays} days ago`;
-  if (diffDays < 14) return "1 week ago";
-  if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-  if (diffDays < 60) return "1 month ago";
-  return `${Math.floor(diffDays / 30)} months ago`;
-};
-
 const Repository: FC = () => {
-  const [repos, setRepos] = useState<GitHubRepo[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<string>("all");
 
-  useEffect(() => {
-    (async () => {
-      try {
-        setLoading(true);
-        const data = await githubApi.getRepos();
-        setRepos(data);
-      } catch {
-        setError("Failed to fetch repositories from GitHub");
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
+  const { data, loading, error } = useFetch(
+    githubApi.getRepos,
+    [],
+    "Failed to fetch repositories from GitHub",
+  );
+  const repos = data ?? [];
 
   // Get unique languages for filter
   const languages = [
@@ -74,10 +35,10 @@ const Repository: FC = () => {
     name: repo.name,
     description: repo.description || "No description available",
     language: repo.language || "Unknown",
-    languageColor: LANG_COLORS[repo.language || ""] || "#6e7681",
+    languageColor: getLangColor(repo.language),
     stars: repo.stargazers_count,
     forks: repo.forks_count,
-    updatedAt: formatRelativeTime(repo.github_updated_at),
+    updatedAt: formatRelativeTimeLong(repo.github_updated_at),
     url: repo.html_url,
   }));
 

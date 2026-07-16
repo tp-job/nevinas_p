@@ -7,39 +7,39 @@ import type {
   typeDataTimeline,
 } from "@/types/homeData";
 
-// image profile
-import nevinas from "@/assets/image/profile/nevinas.jpg";
-import nevinasPng from "@/assets/image/profile/nevinas.png";
-import nevinasFullBody from "@/assets/image/profile/nevinas-full-body.png";
-import feixiao from "@/assets/image/profile/feixiao.png";
-import castorice from "@/assets/image/profile/castorice.png";
-import changli from "@/assets/image/profile/changli.png";
+// image profile — avatars render at most ~288px (2× ≈ 600px)
+import nevinas from "@/assets/image/profile/nevinas.jpg?quality=78&w=600&format=webp";
+import nevinasPng from "@/assets/image/profile/nevinas.png?quality=78&w=600&format=webp";
+import nevinasFullBody from "@/assets/image/profile/nevinas-full-body.png?quality=80&w=900&format=webp";
+import feixiao from "@/assets/image/profile/feixiao.png?quality=78&w=600&format=webp";
+import castorice from "@/assets/image/profile/castorice.png?quality=78&w=600&format=webp";
+import changli from "@/assets/image/profile/changli.png?quality=78&w=600&format=webp";
 
 // image icon
-import logo from "@/assets/image/icon/logo.jpg";
+import logo from "@/assets/image/icon/logo.jpg?quality=80&w=200&format=webp";
 
 // image work
-import work1 from "@/assets/image/work/work-1.jpg";
-import work2 from "@/assets/image/work/work-2.jpg";
-import work3 from "@/assets/image/work/work-3.jpg";
-import work4 from "@/assets/image/work/work-4.jpg";
+import work1 from "@/assets/image/work/work-1.jpg?quality=78&w=800&format=webp";
+import work2 from "@/assets/image/work/work-2.jpg?quality=78&w=800&format=webp";
+import work3 from "@/assets/image/work/work-3.jpg?quality=78&w=800&format=webp";
+import work4 from "@/assets/image/work/work-4.jpg?quality=78&w=800&format=webp";
 
-// image background
-import glassAbstract from "@/assets/image/background/glass-abstract.png";
-import iconIllu2 from "@/assets/image/background/icon-illu2.png";
-import landscape1 from "@/assets/image/background/landspace-1.png";
-import landscape2 from "@/assets/image/background/landspace-2.png";
-import theTree from "@/assets/image/background/the-tree.png";
+// image background — full-bleed; landscapes are hero/LCP visuals
+import glassAbstract from "@/assets/image/background/glass-abstract.png?quality=76&w=1400&format=webp";
+import iconIllu2 from "@/assets/image/background/icon-illu2.png?quality=80&w=1200&format=webp";
+import landscape1 from "@/assets/image/background/landspace-1.png?quality=74&w=1600&format=webp";
+import landscape2 from "@/assets/image/background/landspace-2.png?quality=74&w=1600&format=webp";
+import theTree from "@/assets/image/background/the-tree.png?quality=80&w=1200&format=webp";
 
 // image icon
-import abstract3Icon from "@/assets/image/icon/abstract-3-icon.png";
-import escButton from "@/assets/image/icon/esc-button.png";
-import handNe from "@/assets/image/icon/hand-ne.png";
-import handSocial from "@/assets/image/icon/hand-social.png";
-import heroArt from "@/assets/image/icon/hero-art.png";
-import integrationStatusIcons from "@/assets/image/icon/integration-status-icons.png";
-import joystick from "@/assets/image/icon/joystick.png";
-import load from "@/assets/image/icon/load.png";
+import abstract3Icon from "@/assets/image/icon/abstract-3-icon.png?quality=82&w=600&format=webp";
+import escButton from "@/assets/image/icon/esc-button.png?quality=82&w=300&format=webp";
+import handNe from "@/assets/image/icon/hand-ne.png?quality=82&w=600&format=webp";
+import handSocial from "@/assets/image/icon/hand-social.png?quality=82&w=600&format=webp";
+import heroArt from "@/assets/image/icon/hero-art.png?quality=82&w=800&format=webp";
+import integrationStatusIcons from "@/assets/image/icon/integration-status-icons.png?quality=82&w=800&format=webp";
+import joystick from "@/assets/image/icon/joystick.png?quality=82&w=600&format=webp";
+import load from "@/assets/image/icon/load.png?quality=82&w=400&format=webp";
 
 // song
 import song1 from "@/assets/audio/A_night_on_the_town_-_Stefan_Kartenberg.mp3";

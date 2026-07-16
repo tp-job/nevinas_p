@@ -1,8 +1,13 @@
-import React, { useState, useEffect, type FC } from "react";
+import React, { type FC } from "react";
 import StatsCard from "@/components/card/StatsCard";
 import RepoCard from "@/components/card/RepoCard";
 import ContributionHeatmap from "@/components/dashboard/ContributionHeatmap";
-import { githubApi, type GitHubStats, type GitHubRepo } from "@/utils/api";
+import KpiBadge from "@/components/dashboard/KpiBadge";
+import ChartTooltip from "@/components/charts/ChartTooltip";
+import { githubApi } from "@/utils/api";
+import { useFetch } from "@/hooks/useFetch";
+import { getLangColor } from "@/utils/constants";
+import { formatRelativeTime } from "@/utils/date";
 import { techStackData } from "@/data/techData";
 import { toolsData, toolSections } from "@/data/toolsData";
 import Loading from "@/components/common/loading/Loading";
@@ -25,22 +30,6 @@ import {
 import { StaggerList, StaggerItem } from "@/components/ui/StaggerList";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
-const LANG_COLORS: Record<string, string> = {
-  TypeScript: "#3178c6",
-  JavaScript: "#f1e05a",
-  Python: "#3572A5",
-  HTML: "#e34c26",
-  CSS: "#563d7c",
-  Go: "#00ADD8",
-  Rust: "#dea584",
-  Java: "#b07219",
-  "C++": "#f34b7d",
-  "C#": "#239120",
-  PHP: "#4F5D95",
-  Ruby: "#701516",
-  Shell: "#89e051",
-};
-
 const SKILL_ICONS: Record<string, { icon: string; color: string }> = {
   react: { icon: "ri-reactjs-line", color: "#61dafb" },
   reactjs: { icon: "ri-reactjs-line", color: "#61dafb" },
@@ -58,15 +47,6 @@ const SKILL_ICONS: Record<string, { icon: string; color: string }> = {
   portfolio: { icon: "ri-user-line", color: "#964EC2" },
 };
 
-const formatRelativeTime = (d?: string): string => {
-  if (!d) return "Recently";
-  const days = Math.floor((Date.now() - new Date(d).getTime()) / 86400000);
-  if (days === 0) return "Today";
-  if (days < 7) return `${days}d ago`;
-  if (days < 30) return `${Math.floor(days / 7)}w ago`;
-  return `${Math.floor(days / 30)}mo ago`;
-};
-
 const TH = {
   royal: "#3E60C1",
   azure: "#5983FC",
@@ -80,78 +60,14 @@ const TH = {
   pink: "#e863fa",
 };
 
-/* ==================== Tooltip ==================== */
-const ChartTooltip: FC<any> = ({ active, payload, label }: any) => {
-  if (!active || !payload?.length) return null;
-  return (
-    <div className="px-4 py-3 rounded-xl border backdrop-blur-xl shadow-2xl bg-light-surface/95 dark:bg-dark-bg/95 border-light-border dark:border-dark-border text-light-text dark:text-dark-text">
-      <p className="text-xs font-semibold mb-2 text-light-text-secondary dark:text-dark-text-secondary">
-        {label}
-      </p>
-      {payload.map((entry: any, i: number) => (
-        <div key={i} className="flex items-center gap-2 text-sm">
-          <span
-            className="w-2 h-2 rounded-full"
-            style={{ backgroundColor: entry.color }}
-          />
-          <span className="opacity-70">{entry.name}:</span>
-          <span className="font-bold">{entry.value}</span>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-/* ==================== KPI Badge ==================== */
-const KpiBadge: FC<{
-  icon: string;
-  value: string | number;
-  label: string;
-  color: string;
-}> = ({ icon, value, label, color }) => (
-  <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-light-surface-2 dark:bg-dark-surface border border-light-border dark:border-dark-border">
-    <div
-      className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-      style={{ backgroundColor: `${color}15` }}
-    >
-      <i className={`${icon} text-sm`} style={{ color }}></i>
-    </div>
-    <div>
-      <p className="text-lg font-extrabold leading-none text-light-text dark:text-dark-text">
-        {value}
-      </p>
-      <p className="text-[10px] text-light-text-secondary dark:text-dark-text-secondary">
-        {label}
-      </p>
-    </div>
-  </div>
-);
-
 /* ==================== DASHBOARD ==================== */
 const Dashboard: FC = () => {
-
-  const [stats, setStats] = useState<GitHubStats | null>(null);
-  const [allRepos, setAllRepos] = useState<GitHubRepo[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        setLoading(true);
-        const [statsData, reposData] = await Promise.all([
-          githubApi.getStats(),
-          githubApi.getRepos(),
-        ]);
-        setStats(statsData);
-        setAllRepos(reposData);
-      } catch {
-        setError("Failed to fetch GitHub data");
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
+  const { data, loading, error } = useFetch(
+    () => Promise.all([githubApi.getStats(), githubApi.getRepos()]),
+    [],
+    "Failed to fetch GitHub data",
+  );
+  const [stats, allRepos] = data ?? [null, []];
 
   /* --- Derived Data --- */
   const monthlyActivity = stats?.monthlyActivity || [];
@@ -180,7 +96,7 @@ const Dashboard: FC = () => {
       name,
       count,
       pct: Math.round((count / totalLangRepos) * 100),
-      color: LANG_COLORS[name] || "#6e7681",
+      color: getLangColor(name),
     }));
 
   // Skills from all repos topics (aggregated)
@@ -201,7 +117,7 @@ const Dashboard: FC = () => {
     name: r.name,
     description: r.description || "No description available",
     language: r.language || "Unknown",
-    languageColor: LANG_COLORS[r.language || ""] || "#6e7681",
+    languageColor: getLangColor(r.language),
     stars: r.stargazers_count,
     forks: r.forks_count,
     updatedAt: formatRelativeTime(r.updated_at),

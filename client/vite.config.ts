@@ -1,11 +1,14 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import tailwindcss from '@tailwindcss/vite'
+import { imagetools } from 'vite-imagetools'
 import path from 'node:path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  // imagetools only transforms imports carrying a query directive
+  // (e.g. `?format=webp&w=600`); plain image imports pass through untouched.
+  plugins: [react(), tailwindcss(), imagetools()],
   assetsInclude: ['**/*.glb', '**/*.gltf'],
   server: {
     host: true,  // เปิดให้เข้าถึงจากเครือข่าย

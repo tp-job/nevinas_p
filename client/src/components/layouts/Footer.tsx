@@ -2,15 +2,7 @@ import type { FC } from "react";
 import { Assets } from "@/data/homeData";
 import "@/styles/components/socalmedia.css";
 import GradualBlur from "@/components/effect/GradualBlur";
-import LiquidEther from "@/components/effect/LiquidEther";
-
-/** Mirror the DS periwinkle mesh palette from Header — shared visual language */
-const DS_ETHER_PALETTE = [
-  "#E8EAF5", // periwinkle-pale
-  "#C8CDEB", // periwinkle
-  "#A8B0D9", // periwinkle-mid
-  "#878CB4", // cool
-] as const;
+import LiquidEtherBackdrop from "@/components/layouts/LiquidEtherBackdrop";
 
 const Footer: FC = () => {
   const currentYear = new Date().getFullYear();
@@ -29,30 +21,8 @@ const Footer: FC = () => {
      */
     <footer className="relative overflow-hidden min-h-svh flex flex-col items-center justify-center text-light-text dark:text-dark-text">
 
-      {/* ── LiquidEther — DS periwinkle mesh, identical config to Header ── */}
-      <div
-        className="absolute inset-0 z-0 pointer-events-none"
-        aria-hidden="true"
-      >
-        <LiquidEther
-          className="h-full w-full"
-          style={{
-            width: "100%",
-            height: "100%",
-            WebkitFontSmoothing: "antialiased",
-          }}
-          colors={[...DS_ETHER_PALETTE]}
-          resolution={0.5}
-          mouseForce={10}
-          cursorSize={90}
-          autoDemo={true}
-          autoSpeed={0.85}
-          autoIntensity={0.42}
-          isViscous={true}
-          viscous={32}
-          iterationsViscous={26}
-        />
-      </div>
+      {/* ── LiquidEther backdrop — lazy WebGL, static gradient placeholder ── */}
+      <LiquidEtherBackdrop />
 
       {/* ── Content — sits above the mesh on z-10 ── */}
       <div className="relative z-10 w-full flex flex-col items-center">

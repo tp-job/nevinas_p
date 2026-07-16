@@ -1,8 +1,11 @@
-import { useState, useEffect, type FC } from "react";
+import { useState, type FC } from "react";
 import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import RepoCard from "@/components/card/RepoCard";
 import { githubApi, type GitHubRepo } from "@/utils/api";
+import { useFetch } from "@/hooks/useFetch";
+import { getLangColor } from "@/utils/constants";
+import { formatRelativeTime } from "@/utils/date";
 import {
   apiEndpoints,
   dataModels,
@@ -13,27 +16,6 @@ import {
   designSystem,
   changelog,
 } from "@/data/docData";
-
-const LANG_COLORS: Record<string, string> = {
-  TypeScript: "#3178c6",
-  JavaScript: "#f1e05a",
-  Python: "#3572A5",
-  HTML: "#e34c26",
-  CSS: "#563d7c",
-  Java: "#b07219",
-  Go: "#00ADD8",
-};
-
-const formatRelativeTime = (dateString?: string): string => {
-  if (!dateString) return "Recently";
-  const diffDays = Math.floor(
-    (Date.now() - new Date(dateString).getTime()) / 86400000,
-  );
-  if (diffDays === 0) return "Today";
-  if (diffDays < 7) return `${diffDays}d ago`;
-  if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`;
-  return `${Math.floor(diffDays / 30)}mo ago`;
-};
 
 // Theme accent
 const TH = {
@@ -149,8 +131,6 @@ const ColorSwatch: FC<{ name: string; hex: string; variable: string }> = ({
 /* ==================== Docs Page ==================== */
 const Docs: FC = () => {
   const [openModel, setOpenModel] = useState<string | null>("Project");
-  const [repos, setRepos] = useState<GitHubRepo[]>([]);
-  const [reposLoading, setReposLoading] = useState(true);
   const [selectedRepo, setSelectedRepo] = useState<string | null>(null);
   const [selectedRepoData, setSelectedRepoData] = useState<GitHubRepo | null>(
     null,
@@ -162,19 +142,11 @@ const Docs: FC = () => {
   const cardCls =
     "bg-light-surface dark:bg-dark-bg border border-light-border dark:border-dark-border rounded-2xl relative overflow-hidden";
 
-  useEffect(() => {
-    (async () => {
-      try {
-        setReposLoading(true);
-        const data = await githubApi.getRepos();
-        setRepos(data);
-      } catch {
-        setRepos([]);
-      } finally {
-        setReposLoading(false);
-      }
-    })();
-  }, []);
+  // Repo list is optional here — on failure the section just renders empty.
+  const { data: repoData, loading: reposLoading } = useFetch(
+    githubApi.getRepos,
+  );
+  const repos = repoData ?? [];
 
   const handleRepoClick = async (name: string) => {
     const repoData = repos.find((r) => r.name === name) || null;
@@ -208,7 +180,7 @@ const Docs: FC = () => {
     name: repo.name,
     description: repo.description || "No description available",
     language: repo.language || "Unknown",
-    languageColor: LANG_COLORS[repo.language || ""] || "#6e7681",
+    languageColor: getLangColor(repo.language),
     stars: repo.stargazers_count,
     forks: repo.forks_count,
     updatedAt: formatRelativeTime(repo.github_updated_at),
@@ -435,8 +407,9 @@ const Docs: FC = () => {
                       <span
                         className="w-3 h-3 rounded-full"
                         style={{
-                          backgroundColor:
-                            LANG_COLORS[selectedRepoData.language] || "#6e7681",
+                          backgroundColor: getLangColor(
+                            selectedRepoData.language,
+                          ),
                         }}
                       />
                       <span className="text-sm font-semibold text-light-text dark:text-dark-text">

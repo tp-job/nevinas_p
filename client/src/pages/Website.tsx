@@ -1,42 +1,21 @@
-import { useState, useEffect } from "react";
-import { githubApi, type GitHubRepo } from "@/utils/api";
+import { useMemo } from "react";
+import { githubApi } from "@/utils/api";
+import { useFetch } from "@/hooks/useFetch";
+import { filterReposByKeywords } from "@/utils/repoFilters";
 import ProjectCard from "@/components/card/ProjectCard";
 import Loading from "@/components/common/loading/Loading";
 import Error from "@/components/common/server-error/Error";
 
 const Website = () => {
-  const [projects, setProjects] = useState<GitHubRepo[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        setLoading(true);
-        const repos = await githubApi.getRepos();
-        const filtered = repos.filter((r) => {
-          const topics = r.topics || [];
-          const name = (r.name || "").toLowerCase();
-          const desc = (r.description || "").toLowerCase();
-          return (
-            topics.includes("html") ||
-            topics.includes("css") ||
-            r.language === "HTML" ||
-            r.language === "CSS" ||
-            name.includes("html") ||
-            name.includes("css") ||
-            desc.includes("html") ||
-            desc.includes("css")
-          );
-        });
-        setProjects(filtered);
-      } catch {
-        setError("Failed to fetch projects from GitHub");
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
+  const { data, loading, error } = useFetch(
+    githubApi.getRepos,
+    [],
+    "Failed to fetch projects from GitHub",
+  );
+  const projects = useMemo(
+    () => filterReposByKeywords(data ?? [], ["html", "css"], ["HTML", "CSS"]),
+    [data],
+  );
 
   return (
     <>

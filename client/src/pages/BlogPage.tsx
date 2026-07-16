@@ -1,44 +1,38 @@
-import { useState, useEffect, type FC } from "react";
+import { useState, useMemo, type FC } from "react";
 import BlogPostPage from "@/components/common/BlogPostPage";
 import BlogCard from "@/components/card/BlogCard";
 import { blogsApi } from "@/utils/api";
+import { useFetch } from "@/hooks/useFetch";
 import type { BlogPost } from "@/types/blog";
 import Loading from "@/components/common/loading/Loading";
 import Error from "@/components/common/server-error/Error";
 
 const BlogPage: FC = () => {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
-  const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        setLoading(true);
-        const data = await blogsApi.getAll();
-        // Map server data to BlogPost type
-        const mapped: BlogPost[] = data.map((blog) => ({
-          id: blog._id,
-          title: blog.title,
-          excerpt: blog.excerpt,
-          content: blog.content,
-          author: blog.author,
-          role: blog.role,
-          date: blog.date,
-          readTime: blog.readTime,
-          category: blog.category,
-          imageUrl: blog.imageUrl,
-          authorAvatar: blog.authorAvatar,
-        }));
-        setPosts(mapped);
-      } catch {
-        setError("Failed to load blog posts");
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
+  const { data, loading, error } = useFetch(
+    blogsApi.getAll,
+    [],
+    "Failed to load blog posts",
+  );
+  // Map server data to BlogPost type
+  const posts: BlogPost[] = useMemo(
+    () =>
+      (data ?? []).map((blog) => ({
+        id: blog._id,
+        title: blog.title,
+        excerpt: blog.excerpt,
+        content: blog.content,
+        author: blog.author,
+        role: blog.role,
+        date: blog.date,
+        readTime: blog.readTime,
+        category: blog.category,
+        imageUrl: blog.imageUrl,
+        authorAvatar: blog.authorAvatar,
+      })),
+    [data],
+  );
 
   // If a post is selected, show the detail view
   if (selectedPost) {

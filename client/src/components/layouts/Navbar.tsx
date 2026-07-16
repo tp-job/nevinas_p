@@ -470,10 +470,12 @@ const Navbar: FC<NavbarProps> = ({
                   </div>
                 </div>
 
-                {/* Hidden audio element */}
+                {/* Hidden audio element — preload="none" so the multi-MB MP3s
+                    never download until the user actually hits play. */}
                 <audio
                   ref={audioRef}
                   src={DataSong[songIndex].song}
+                  preload="none"
                   onEnded={nextSong}
                   onLoadedData={() => {
                     if (isPlaying) {

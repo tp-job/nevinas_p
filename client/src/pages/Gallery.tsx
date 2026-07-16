@@ -1,18 +1,10 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
-import type { FC, MouseEvent, KeyboardEvent } from "react";
+import type { FC, MouseEvent } from "react";
 import { motion } from "framer-motion";
 import Loading from "@/components/common/loading/Loading";
 import ErrorView from "@/components/common/server-error/Error";
-
-const API_BASE_URL = "http://localhost:3000";
-
-// Define interface for a gallery item
-interface GalleryItem {
-  _id: string;
-  img: string;
-  name?: string;
-  category?: string;
-}
+import { galleryApi } from "@/utils/api";
+import { useFetch } from "@/hooks/useFetch";
 
 // Category menu items
 const categories = [
@@ -27,32 +19,15 @@ const categories = [
 ];
 
 const Gallery: FC = () => {
-  const [gallery, setGallery] = useState<GalleryItem[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>("all");
 
-  // Fetches gallery data from the backend API.
-  const fetchGallery = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const response = await fetch(`${API_BASE_URL}/api/gallery`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch gallery data");
-      }
-      const result = await response.json();
-      setGallery(result.data || []);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchGallery();
-  }, [fetchGallery]);
+  const {
+    data,
+    loading: isLoading,
+    error,
+  } = useFetch(galleryApi.getAll, [], "Failed to fetch gallery data");
+  const gallery = useMemo(() => data ?? [], [data]);
 
   const isLightboxOpen = selectedIndex !== null;
 
@@ -115,13 +90,13 @@ const Gallery: FC = () => {
   // Keyboard navigation for lightbox
   useEffect(() => {
     if (!isLightboxOpen) return;
-    const onKeyDown = (e: KeyboardEvent) => {
+    const onKeyDown = (e: globalThis.KeyboardEvent) => {
       if (e.key === "Escape") closeLightbox();
       if (e.key === "ArrowRight") showNext();
       if (e.key === "ArrowLeft") showPrev();
     };
-    window.addEventListener("keydown", onKeyDown as any);
-    return () => window.removeEventListener("keydown", onKeyDown as any);
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, [isLightboxOpen, showNext, showPrev]);
 
   // Update selected index when category changes
@@ -281,13 +256,13 @@ const Gallery: FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {filteredGallery.map((item, index) => (
                 <button
-                  key={item._id}
+                  key={item.id}
                   type="button"
                   onClick={() => openLightbox(index)}
                   className="aspect-square relative group overflow-hidden rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-global-blue"
                 >
                   <img
-                    src={`${API_BASE_URL}${item.img}?t=${new Date().getTime()}`}
+                    src={item.img}
                     alt={item.name || "Gallery Item"}
                     loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -326,7 +301,7 @@ const Gallery: FC = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <img
-                src={`${API_BASE_URL}${filteredGallery[selectedIndex].img}?t=${new Date().getTime()}`}
+                src={filteredGallery[selectedIndex].img}
                 alt={filteredGallery[selectedIndex].name || "Gallery Item"}
                 className="max-h-[80vh] w-auto rounded-lg shadow-2xl"
                 onError={(e) => {

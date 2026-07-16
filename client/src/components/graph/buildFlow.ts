@@ -1,7 +1,8 @@
 import type { Edge, Node } from "@xyflow/react";
-import type { GitHubRepo } from "@/utils/api";
+import type { GitHubProfile, GitHubRepo } from "@/utils/api";
 import { LANG_COLORS } from "@/components/graph/langColors";
 import { inferStackFromRepo } from "@/components/graph/techIcons";
+import { formatRelativeTimeLong } from "@/utils/date";
 
 export interface RepoDetails {
   languages: Record<string, number>;
@@ -13,25 +14,9 @@ export interface RepoDetails {
   } | null;
 }
 
-const formatRelativeTime = (dateString?: string): string => {
-  if (!dateString) return "Recently";
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
-  if (diffDays === 0) return "Today";
-  if (diffDays === 1) return "1 day ago";
-  if (diffDays < 7) return `${diffDays} days ago`;
-  if (diffDays < 14) return "1 week ago";
-  if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-  if (diffDays < 60) return "1 month ago";
-  return `${Math.floor(diffDays / 30)} months ago`;
-};
-
 export function buildFlow(
   repos: GitHubRepo[],
-  profile: any,
+  profile: GitHubProfile,
   details: Record<string, RepoDetails>,
 ): { nodes: Node[]; edges: Edge[] } {
   const sorted = [...repos].sort(
@@ -77,7 +62,7 @@ export function buildFlow(
         languageColor: langColor,
         stars: repo.stargazers_count,
         forks: repo.forks_count,
-        updatedAt: formatRelativeTime(repo.github_updated_at),
+        updatedAt: formatRelativeTimeLong(repo.github_updated_at),
         url: repo.html_url,
       },
     });

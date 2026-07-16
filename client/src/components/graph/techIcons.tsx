@@ -33,7 +33,7 @@ import { FaNodeJs } from "react-icons/fa6";
 import { RiTailwindCssFill } from "react-icons/ri";
 import { BsJavascript, BsTypescript } from "react-icons/bs";
 
-interface IconMeta {
+export interface IconMeta {
   Icon: ComponentType<{ size?: number; color?: string }>;
   color: string;
   label: string;

@@ -1,43 +1,16 @@
-import { useState, useEffect } from "react";
 import { techStackData } from "@/data/techData";
 import type { FC } from "react";
 import TechStackCard from "@/components/card/TechStackCard";
 import { githubApi } from "@/utils/api";
-
-const LANG_COLORS: Record<string, string> = {
-  TypeScript: "#3178c6",
-  JavaScript: "#f1e05a",
-  Python: "#3572A5",
-  HTML: "#e34c26",
-  CSS: "#563d7c",
-  Java: "#b07219",
-  Go: "#00ADD8",
-  Rust: "#dea584",
-  "C++": "#f34b7d",
-  "C#": "#239120",
-  PHP: "#4F5D95",
-  Ruby: "#701516",
-  Shell: "#89e051",
-};
+import { useFetch } from "@/hooks/useFetch";
+import { getLangColor } from "@/utils/constants";
 
 const TechStack: FC = () => {
-  const [langStats, setLangStats] = useState<Record<string, number>>({});
-  const [repoCount, setRepoCount] = useState(0);
-  const [loadingGH, setLoadingGH] = useState(true);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const stats = await githubApi.getStats();
-        setLangStats(stats.languageDistribution);
-        setRepoCount(stats.repoCount);
-      } catch {
-        // silently fail - GitHub section is optional
-      } finally {
-        setLoadingGH(false);
-      }
-    })();
-  }, []);
+  // error intentionally unused — the GitHub section is optional and simply
+  // doesn't render when stats are unavailable.
+  const { data: stats, loading: loadingGH } = useFetch(githubApi.getStats);
+  const langStats = stats?.languageDistribution ?? {};
+  const repoCount = stats?.repoCount ?? 0;
 
   const totalLangs = Object.values(langStats).reduce((a, b) => a + b, 0) || 1;
   const sortedLangs = Object.entries(langStats).sort((a, b) => b[1] - a[1]);
@@ -77,7 +50,7 @@ const TechStack: FC = () => {
                 className="h-full transition-all duration-500 first:rounded-l-full last:rounded-r-full"
                 style={{
                   width: `${(count / totalLangs) * 100}%`,
-                  backgroundColor: LANG_COLORS[lang] || "#6e7681",
+                  backgroundColor: getLangColor(lang),
                 }}
                 title={`${lang}: ${((count / totalLangs) * 100).toFixed(1)}%`}
               />
@@ -90,7 +63,7 @@ const TechStack: FC = () => {
               <div key={lang} className="flex items-center gap-2">
                 <span
                   className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: LANG_COLORS[lang] || "#6e7681" }}
+                  style={{ backgroundColor: getLangColor(lang) }}
                 />
                 <span className="text-sm text-light-text dark:text-dark-text font-medium">
                   {lang}

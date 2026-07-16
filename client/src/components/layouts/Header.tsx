@@ -1,15 +1,7 @@
 import type { FC } from "react";
 import { Assets } from "@/data/homeData";
 import { useProfile } from "@/context/ProfileContext";
-import LiquidEther from "@/components/effect/LiquidEther";
-
-/** DS periwinkle mesh — index.css @theme palette, minimal wave motion */
-const DS_ETHER_PALETTE = [
-  "#E8EAF5", // periwinkle-pale
-  "#C8CDEB", // periwinkle
-  "#A8B0D9", // periwinkle-mid
-  "#878CB4", // cool
-] as const;
+import LiquidEtherBackdrop from "@/components/layouts/LiquidEtherBackdrop";
 
 const Header: FC = () => {
   const { avatar, setAvatar, avatarUrl } = useProfile();
@@ -19,41 +11,8 @@ const Header: FC = () => {
       className="relative w-full h-full flex items-center justify-center overflow-hidden"
       style={{ WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale" }}
     >
-      {/* ─── LiquidEther — DS periwinkle mesh, minimal waves ─────────────── */}
-      <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden>
-        <LiquidEther
-          className="h-full w-full"
-          style={{ width: "100%", height: "100%", WebkitFontSmoothing: "antialiased" }}
-
-          colors={[...DS_ETHER_PALETTE]}
-
-          resolution={0.5}
-
-          // mouseForce ลดลง — interactive แต่ไม่ก่อคลื่นใหญ่
-          mouseForce={10}
-
-          // cursorSize เล็กลง — blob precision สูง ไม่ฟุ้ง
-          cursorSize={90}
-
-          autoDemo={true}
-
-          // autoSpeed 0.85: ช้าลง → smooth gradient feel ไม่ใช่ active wave
-          autoSpeed={0.85}
-
-          // autoIntensity 0.42: blob เล็กพอดี โชว์สีสวย ไม่ฟุ้งทั่วจอ
-          autoIntensity={0.42}
-
-          isViscous={true}
-
-          // viscous 32: KEY สำหรับ "ไม่ต้องมีคลื่นมาก"
-          // viscosity สูง = wave propagate ช้า + ดับเร็ว → พื้นผิวราบเรียบ
-          // เหมือนน้ำมันหนืดแทนน้ำ = smooth gradient ไม่ใช่ ripple
-          viscous={32}
-
-          // iterationsViscous 26: solve ละเอียด → ยิ่ง damp wave ได้ดี
-          iterationsViscous={26}
-        />
-      </div>
+      {/* ─── LiquidEther backdrop — lazy WebGL, static gradient placeholder ─── */}
+      <LiquidEtherBackdrop />
 
       {/* ─── Glass overlay — blue tint, dual theme ────────────────────────── */}
       {/*

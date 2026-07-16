@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import type { GitHubRepo } from "@/utils/api";
+import { formatRelativeTimeLong } from "@/utils/date";
 
 // Gradient backgrounds per category
 const GRADIENTS: Record<string, string> = {
@@ -22,18 +23,6 @@ interface ProjectCardProps {
   category: string; // 'react' | 'tailwindcss' | 'html' | etc.
   categoryLabel: string;
 }
-
-const formatRelativeTime = (dateString?: string): string => {
-  if (!dateString) return "";
-  const days = Math.floor(
-    (Date.now() - new Date(dateString).getTime()) / 86400000,
-  );
-  if (days === 0) return "Today";
-  if (days === 1) return "1 day ago";
-  if (days < 7) return `${days} days ago`;
-  if (days < 30) return `${Math.floor(days / 7)} weeks ago`;
-  return `${Math.floor(days / 30)} months ago`;
-};
 
 const ProjectCard: FC<ProjectCardProps> = ({
   repo,
@@ -101,7 +90,7 @@ const ProjectCard: FC<ProjectCardProps> = ({
           {repo.pushed_at && (
             <div className="flex items-center gap-1">
               <i className="ri-time-line"></i>
-              <span>{formatRelativeTime(repo.pushed_at)}</span>
+              <span>{formatRelativeTimeLong(repo.pushed_at)}</span>
             </div>
           )}
         </div>

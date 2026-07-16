@@ -1,4 +1,4 @@
-import { useState, useEffect, type FC } from "react";
+import { type FC } from "react";
 import {
   AreaChart,
   Area,
@@ -17,7 +17,11 @@ import {
   codeQuality,
   performanceHistory,
 } from "@/data/performance";
-import { githubApi, type GitHubRepo } from "@/utils/api";
+import { githubApi } from "@/utils/api";
+import { useFetch } from "@/hooks/useFetch";
+import ScoreRing from "@/components/performance/ScoreRing";
+import StatusBadge from "@/components/performance/StatusBadge";
+import ChartTooltip from "@/components/charts/ChartTooltip";
 
 // Theme colors
 const TH = {
@@ -29,100 +33,6 @@ const TH = {
   royal: "#3E60C1",
 };
 
-/* ==================== Score Ring ==================== */
-const ScoreRing: FC<{
-  score: number;
-  label: string;
-  color: string;
-  size?: number;
-}> = ({ score, label, color, size = 120 }) => {
-  const strokeWidth = 10;
-  const radius = (size - strokeWidth) / 2;
-  const circumference = 2 * Math.PI * radius;
-  const dashLength = (score / 100) * circumference;
-  const center = size / 2;
-
-  return (
-    <div className="flex flex-col items-center gap-2">
-      <div className="relative" style={{ width: size, height: size }}>
-        <svg width={size} height={size} className="-rotate-90">
-          <circle
-            cx={center}
-            cy={center}
-            r={radius}
-            fill="none"
-            strokeWidth={strokeWidth}
-            className="stroke-light-border dark:stroke-dark-surface"
-          />
-          <circle
-            cx={center}
-            cy={center}
-            r={radius}
-            fill="none"
-            stroke={color}
-            strokeWidth={strokeWidth}
-            strokeLinecap="round"
-            strokeDasharray={`${dashLength} ${circumference - dashLength}`}
-            className="transition-all duration-1000 ease-out"
-            style={{ filter: `drop-shadow(0 0 6px ${color}60)` }}
-          />
-        </svg>
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-2xl font-extrabold text-light-text dark:text-dark-text">
-            {score}
-          </span>
-        </div>
-      </div>
-      <span className="text-xs font-semibold text-light-text-secondary dark:text-dark-text-secondary">
-        {label}
-      </span>
-    </div>
-  );
-};
-
-/* ==================== Tooltip ==================== */
-const ChartTooltip: FC<any> = ({ active, payload, label }: any) => {
-  if (!active || !payload?.length) return null;
-  return (
-    <div className="px-4 py-3 rounded-xl border backdrop-blur-xl shadow-2xl bg-light-surface/95 dark:bg-dark-bg/95 border-light-border dark:border-dark-border">
-      <p className="text-xs font-semibold mb-2 text-light-text-secondary dark:text-dark-text-secondary">
-        {label}
-      </p>
-      {payload.map((entry: any, i: number) => (
-        <div key={i} className="flex items-center gap-2 text-sm">
-          <span
-            className="w-2 h-2 rounded-full"
-            style={{ backgroundColor: entry.color }}
-          />
-          <span className="text-light-text-secondary dark:text-dark-text-secondary opacity-70">
-            {entry.name}:
-          </span>
-          <span className="font-bold text-light-text dark:text-dark-text">
-            {entry.value}
-          </span>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-/* ==================== Status Badge ==================== */
-const StatusBadge: FC<{ status: string }> = ({ status }) => {
-  const cls =
-    status === "good"
-      ? "bg-global-green/10 text-global-green"
-      : status === "warning"
-        ? "bg-global-yellow/10 text-global-yellow"
-        : "bg-global-red/10 text-global-red";
-  return (
-    <span
-      className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${cls}`}
-    >
-      {status}
-    </span>
-  );
-};
-
 /* ==================== Performance Page ==================== */
 const Performance: FC = () => {
   const gridColor = "var(--color-border-primary)";
@@ -130,21 +40,9 @@ const Performance: FC = () => {
   const cardCls =
     "bg-surface-primary border border-border-primary rounded-2xl relative overflow-hidden transition-all duration-300";
 
-  const [repos, setRepos] = useState<GitHubRepo[]>([]);
-  const [loadingGH, setLoadingGH] = useState(true);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await githubApi.getRepos();
-        setRepos(data.sort((a, b) => b.size - a.size));
-      } catch {
-        /* silent */
-      } finally {
-        setLoadingGH(false);
-      }
-    })();
-  }, []);
+  // Repo sizes are optional — section is hidden if the fetch fails.
+  const { data: repoData, loading: loadingGH } = useFetch(githubApi.getRepos);
+  const repos = (repoData ?? []).slice().sort((a, b) => b.size - a.size);
 
   const totalSize = repos.reduce((sum, r) => sum + r.size, 0);
   const formatSize = (kb: number) =>

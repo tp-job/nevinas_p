@@ -101,10 +101,42 @@ export interface GitHubEvent {
   };
 }
 
+// ----------------------------
+// HTTP layer
+// ----------------------------
+
+/** Error thrown for non-2xx API responses; carries the HTTP status. */
+export class ApiError extends Error {
+  status: number;
+  constructor(status: number, message?: string) {
+    super(message ?? `Request failed (${status})`);
+    this.name = "ApiError";
+    this.status = status;
+  }
+}
+
+// Global error dispatch — AppRoutes registers ErrorContext's setError here so
+// 5xx responses show the full-page error screens (500/503/504).
+export type ServerErrorCode = 500 | 503 | 504;
+const SERVER_ERROR_CODES: ServerErrorCode[] = [500, 503, 504];
+
+let _notifyServerError: ((code: ServerErrorCode) => void) | null = null;
+
+export const registerErrorHandler = (
+  fn: (code: ServerErrorCode) => void,
+): void => {
+  _notifyServerError = fn;
+};
+
 // Generic fetch helper
 async function apiFetch<T>(endpoint: string): Promise<T> {
   const res = await fetch(`${API_BASE_URL}${endpoint}`);
-  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  if (!res.ok) {
+    if (SERVER_ERROR_CODES.includes(res.status as ServerErrorCode)) {
+      _notifyServerError?.(res.status as ServerErrorCode);
+    }
+    throw new ApiError(res.status);
+  }
   const json = await res.json();
   if (json.success === false) throw new Error(json.message || "API error");
   return json.data;
@@ -152,6 +184,14 @@ export const blogsApi = {
   getById: (id: string) => apiFetch<BlogData>(`/api/blogs/${id}`),
 };
 
-export const projectsApi = {
-  getAll: () => apiFetch<any[]>("/api/projects"),
+export interface GalleryItem {
+  id: string;
+  img: string;
+  name?: string;
+  category?: string;
+  created_at?: string;
+}
+
+export const galleryApi = {
+  getAll: () => apiFetch<GalleryItem[]>("/api/gallery"),
 };

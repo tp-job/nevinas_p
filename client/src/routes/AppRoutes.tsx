@@ -4,8 +4,8 @@ import type { FC } from "react";
 
 // context
 import { ErrorProvider, useError } from "@/context/ErrorContext";
-// http client
-import { registerErrorHandler } from "@/lib/httpClient";
+// http error dispatch — apiFetch reports 5xx here so error pages can render
+import { registerErrorHandler } from "@/utils/api";
 // error boundary
 import ErrorBoundary from "@/components/common/server-error/ErrorBoundary";
 
@@ -46,12 +46,12 @@ const ERROR_PAGE_MAP: Record<number, FC> = {
 
 /**
  * AppRoutesInner — ต้องอยู่ใน ErrorProvider เพื่อใช้ useError
- * Registers the axios interceptor here so it has access to setError from context.
+ * Registers the apiFetch error handler here so it has access to setError from context.
  */
 const AppRoutesInner: FC = () => {
   const { errorCode, setError, clearError } = useError();
 
-  // Register the axios interceptor setter once on mount
+  // Register the apiFetch 5xx handler once on mount
   useEffect(() => {
     registerErrorHandler(setError);
   }, [setError]);

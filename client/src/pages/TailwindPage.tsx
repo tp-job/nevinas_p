@@ -1,39 +1,22 @@
-import { useState, useEffect } from "react";
+import { useMemo } from "react";
 import type { FC } from "react";
-import { githubApi, type GitHubRepo } from "@/utils/api";
+import { githubApi } from "@/utils/api";
+import { useFetch } from "@/hooks/useFetch";
+import { filterReposByKeywords } from "@/utils/repoFilters";
 import ProjectCard from "@/components/card/ProjectCard";
 import Loading from "@/components/common/loading/Loading";
 import Error from "@/components/common/server-error/Error";
 
 const TailwindPage: FC = () => {
-  const [twProjects, setTwProjects] = useState<GitHubRepo[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        setLoading(true);
-        const repos = await githubApi.getRepos();
-        const filtered = repos.filter((r) => {
-          const topics = r.topics || [];
-          const name = (r.name || "").toLowerCase();
-          const desc = (r.description || "").toLowerCase();
-          return (
-            topics.includes("tailwindcss") ||
-            topics.includes("tailwind") ||
-            name.includes("tailwind") ||
-            desc.includes("tailwind")
-          );
-        });
-        setTwProjects(filtered);
-      } catch (err: any) {
-        setError(err?.message || "Failed to fetch projects");
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
+  const { data, loading, error } = useFetch(
+    githubApi.getRepos,
+    [],
+    "Failed to fetch projects",
+  );
+  const twProjects = useMemo(
+    () => filterReposByKeywords(data ?? [], ["tailwindcss", "tailwind"]),
+    [data],
+  );
 
   return (
     <>
