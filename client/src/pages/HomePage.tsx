@@ -17,7 +17,7 @@ import Footer from '@/components/layouts/Footer';
 import NodeMap from '@/components/homepage/Nodemap';
 import Testimonials from '@/components/homepage/Testimonials';
 import HorizontalServices from '@/components/homepage/HorizontalServices';
-import ContributorTimeline from '@/components/homepage/ContributorTimeline';
+// import ContributorTimeline from '@/components/homepage/ContributorTimeline';
 
 const getSlidesList = (scrollContainerRef: RefObject<HTMLElement | null>) => {
   const list = [

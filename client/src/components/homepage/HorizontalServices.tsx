@@ -31,7 +31,7 @@ const iconCodeImg       = Assets.codeIcon;
 const iconWebImg        = Assets.webIcon;
 const iconAIImg         = Assets.aiSolution;
 const iconInteractiveImg = Assets.handSocial;
-const iconPortfolioImg  = Assets.nevinasFullBody;
+const iconFeixiaoImg  = Assets.feixiao;
 
 // ─── Default Panel Data ────────────────────────────────────
 const DEFAULT_PANELS: ServicePanel[] = [
@@ -73,7 +73,7 @@ const DEFAULT_PANELS: ServicePanel[] = [
     tag:         'Portfolio',
     description:
       'Your portfolio is your signature in the world. We build digital archives that tell your story with elegance, depth, and timeless quality across all generations.',
-    icon: <img src={iconPortfolioImg} alt="Portfolio" className={styles.iconImg} draggable={false} />,
+    icon: <img src={iconFeixiaoImg} alt="Portfolio" className={styles.iconImg} draggable={false} />,
   },
 ];
 
@@ -85,7 +85,7 @@ const clamp = (v: number, min: number, max: number) =>
 // ─── Component ─────────────────────────────────────────────
 const HorizontalServices: React.FC<HorizontalServicesProps> = ({
   panels       = DEFAULT_PANELS,
-  id           = 'services',
+  id           = 'services-content',
   introBig     = '我々の\n技',
   introSub     = 'SCROLL TO EXPLORE OUR CRAFT',
 }) => {

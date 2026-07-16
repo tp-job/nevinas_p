@@ -18,6 +18,11 @@
     --radius-2xl: 1.5rem;
     --radius-full: 9999px;
 
+    /* === LAYOUT === */
+    /* Height of the fixed Navbar wrapper — reserve this much at the top of
+       any scrollable slide so content never slides underneath the nav. */
+    --nav-h: 68px;
+
     /* === Z-INDEX SCALE === */
     --z-base: 1;
     --z-sticky: 10;

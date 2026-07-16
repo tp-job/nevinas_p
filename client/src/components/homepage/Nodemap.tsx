@@ -136,7 +136,7 @@ const NodeMap: React.FC = () => {
 
   return (
     <section
-      id="nodemap"
+      id="nodemap-content"
       className={styles.nodemapBg}
       style={{
         position: 'relative',

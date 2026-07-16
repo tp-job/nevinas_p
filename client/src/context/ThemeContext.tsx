@@ -48,10 +48,19 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     localStorage.setItem("theme", theme);
 
     // Enable transitions only after the initial hydration frame to prevent flash.
-    requestAnimationFrame(() => {
+    // rAF alone can be starved on heavy routes (WebGL, chunk hydration), which
+    // left "theme-transitioning" stuck and transitions permanently disabled —
+    // the timeout guarantees re-enabling either way.
+    const enableTransitions = () => {
       root.classList.remove("theme-transitioning");
       root.classList.add("theme-transition-ready");
-    });
+    };
+    const raf = requestAnimationFrame(enableTransitions);
+    const timeout = window.setTimeout(enableTransitions, 150);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(timeout);
+    };
   }, [theme]);
 
   const toggleTheme = () => {

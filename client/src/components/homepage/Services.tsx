@@ -5,7 +5,7 @@ const Services: FC = () => {
   const webIcon = Assets.webIcon;
   const codeIcon = Assets.codeIcon;
   return (
-    <div id="services" className="w-full px-[8%] py-20 scroll-mt-20 flex flex-col items-center">
+    <div id="services-content" className="w-full px-[8%] py-20 scroll-mt-20 flex flex-col items-center">
       <div className="mb-16 flex flex-col items-center text-center">
         {/* Eyebrow — label style */}
         <p className="text-xs font-medium tracking-widest uppercase mb-2 text-text-secondary">

@@ -1,30 +1,12 @@
 import type { FC } from "react";
 import { useProfile } from "@/context/ProfileContext";
-import { DataAbout, DataTools, Assets } from "@/data/homeData";
+import { DataAbout, DataTools } from "@/data/homeData";
 
 const About: FC = () => {
   const { avatarUrl } = useProfile();
-  const fullBody = Assets.nevinasFullBody;
-  const the_tree = Assets.theTree;
 
   return (
     <div className="relative w-full px-[12%] py-10 scroll-mt-20 overflow-hidden min-h-[90vh] flex flex-col justify-center">
-      {/* <img src={fullBody} /> */}
-      {/* Background Watermark (Landscape) */}
-      <div
-        className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[55%] pointer-events-none select-none z-0 opacity-[0.06] dark:opacity-[0.03] bg-contain bg-right bg-no-repeat mix-blend-multiply dark:mix-blend-screen"
-        style={{ backgroundImage: `url(${the_tree})` }}
-      />
-      {/* Floating full-body portrait on large screens */}
-      <img
-        src={fullBody}
-        alt="nevinas-isekai"
-        loading="lazy"
-        decoding="async"
-        className="absolute right-[2%] bottom-0 h-[65%] w-auto pointer-events-none select-none z-0 opacity-80 hidden xl:block animate-float-y"
-        style={{ animationDuration: '8s' }}
-      />
-
       <div className="relative z-10">
         <h4 className="mb-1 text-lg text-center text-haze dark:text-cool">
           Introduction

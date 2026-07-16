@@ -37,10 +37,10 @@ const sanitize = (v: string, max: number): string =>
 
 const submitBtnClass = (status: FormStatus) =>
     status === 'success'
-        ? 'bg-success'
+        ? 'bg-success text-white'
         : status === 'error'
-            ? 'bg-error'
-            : 'bg-matte-azure';
+            ? 'bg-error text-white'
+            : 'bg-accent text-accent-foreground';
 
 // ─── Component ───────────────────────────────────────────────────────────────
 const ContactSplit: React.FC = () => {
@@ -205,7 +205,7 @@ const ContactSplit: React.FC = () => {
 
                     {/* Name */}
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-6 border-b border-midnight/10 dark:border-periwinkle/10 pb-2 relative group transition-colors duration-250 focus-within:border-periwinkle-mid dark:focus-within:border-periwinkle">
-                        <div className="font-[var(--fm)] text-xs tracking-widest uppercase text-periwinkle-mid dark:text-haze-light w-24 shrink-0 mt-2 sm:mt-0 group-focus-within:text-haze dark:group-focus-within:text-periwinkle" style={{ transition: 'color 0.2s' }}>
+                        <div className="font-[var(--fm)] text-xs tracking-widest uppercase text-haze dark:text-cool w-24 shrink-0 mt-2 sm:mt-0 group-focus-within:text-haze-deep dark:group-focus-within:text-periwinkle" style={{ transition: 'color 0.2s' }}>
                             Name
                         </div>
                         <input
@@ -216,17 +216,17 @@ const ContactSplit: React.FC = () => {
                             maxLength={LIMITS.name}         // S1
                             autoComplete="name"
                             placeholder="Your autograph, please"
-                            className="bg-transparent border-none outline-none text-xl sm:text-2xl font-light w-full placeholder:text-periwinkle-mid dark:placeholder:text-haze-light disabled:opacity-40 disabled:cursor-not-allowed transition-opacity"
+                            className="bg-transparent border-none outline-none text-xl sm:text-2xl font-light w-full placeholder:text-cool-deep dark:placeholder:text-cool disabled:opacity-40 disabled:cursor-not-allowed transition-opacity"
                         />
                     </div>
 
                     {/* Email */}
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-6 border-b border-midnight/10 dark:border-periwinkle/10 pb-2 relative group transition-colors duration-250 focus-within:border-periwinkle-mid dark:focus-within:border-periwinkle">
-                        <div className="font-[var(--fm)] text-xs tracking-widest uppercase text-periwinkle-mid dark:text-haze-light w-24 shrink-0 mt-2 sm:mt-0 group-focus-within:text-haze dark:group-focus-within:text-periwinkle" style={{ transition: 'color 0.2s' }}>
+                        <div className="font-[var(--fm)] text-xs tracking-widest uppercase text-haze dark:text-cool w-24 shrink-0 mt-2 sm:mt-0 group-focus-within:text-haze-deep dark:group-focus-within:text-periwinkle" style={{ transition: 'color 0.2s' }}>
                             Email
                         </div>
                         <div className="flex items-center w-full">
-                            <span className="text-xl sm:text-2xl font-light text-periwinkle-mid dark:text-haze-light mr-1">@</span>
+                            <span className="text-xl sm:text-2xl font-light text-haze dark:text-cool mr-1">@</span>
                             <input
                                 type="email"
                                 name="email"
@@ -235,14 +235,14 @@ const ContactSplit: React.FC = () => {
                                 maxLength={LIMITS.email}      // S1
                                 autoComplete="email"
                                 placeholder="your@email.com"
-                                className="bg-transparent border-none outline-none text-xl sm:text-2xl font-light w-full placeholder:text-periwinkle-mid dark:placeholder:text-haze-light disabled:opacity-40 disabled:cursor-not-allowed transition-opacity"
+                                className="bg-transparent border-none outline-none text-xl sm:text-2xl font-light w-full placeholder:text-cool-deep dark:placeholder:text-cool disabled:opacity-40 disabled:cursor-not-allowed transition-opacity"
                             />
                         </div>
                     </div>
 
                     {/* Project */}
                     <div className="flex flex-col sm:flex-row items-start gap-2 sm:gap-6 border-b border-midnight/10 dark:border-periwinkle/10 pb-2 relative group transition-colors duration-250 focus-within:border-periwinkle-mid dark:focus-within:border-periwinkle">
-                        <div className="font-[var(--fm)] text-xs tracking-widest uppercase text-periwinkle-mid dark:text-haze-light w-24 shrink-0 mt-3 group-focus-within:text-haze dark:group-focus-within:text-periwinkle" style={{ transition: 'color 0.2s' }}>
+                        <div className="font-[var(--fm)] text-xs tracking-widest uppercase text-haze dark:text-cool w-24 shrink-0 mt-3 group-focus-within:text-haze-deep dark:group-focus-within:text-periwinkle" style={{ transition: 'color 0.2s' }}>
                             Project
                         </div>
                         <textarea
@@ -252,13 +252,13 @@ const ContactSplit: React.FC = () => {
                             maxLength={LIMITS.message}      // S1
                             placeholder="Your project idea..."
                             rows={2}
-                            className="bg-transparent border-none outline-none text-xl sm:text-2xl font-light w-full placeholder:text-periwinkle-mid dark:placeholder:text-haze-light resize-none pt-1 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity"
+                            className="bg-transparent border-none outline-none text-xl sm:text-2xl font-light w-full placeholder:text-cool-deep dark:placeholder:text-cool resize-none pt-1 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity"
                         />
                     </div>
 
                     {/* Deadline */}
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-6 border-b border-midnight/10 dark:border-periwinkle/10 pb-2 relative group transition-colors duration-250 focus-within:border-periwinkle-mid dark:focus-within:border-periwinkle">
-                        <div className="font-[var(--fm)] text-xs tracking-widest uppercase text-periwinkle-mid dark:text-haze-light w-24 shrink-0 mt-2 sm:mt-0 group-focus-within:text-haze dark:group-focus-within:text-periwinkle" style={{ transition: 'color 0.2s' }}>
+                        <div className="font-[var(--fm)] text-xs tracking-widest uppercase text-haze dark:text-cool w-24 shrink-0 mt-2 sm:mt-0 group-focus-within:text-haze-deep dark:group-focus-within:text-periwinkle" style={{ transition: 'color 0.2s' }}>
                             Deadline
                         </div>
                         <input
@@ -267,7 +267,7 @@ const ContactSplit: React.FC = () => {
                             disabled={isLocked}
                             maxLength={LIMITS.deadline}     // S1
                             placeholder="Your deadline"
-                            className="bg-transparent border-none outline-none text-xl sm:text-2xl font-light w-full placeholder:text-periwinkle-mid dark:placeholder:text-haze-light disabled:opacity-40 disabled:cursor-not-allowed transition-opacity"
+                            className="bg-transparent border-none outline-none text-xl sm:text-2xl font-light w-full placeholder:text-cool-deep dark:placeholder:text-cool disabled:opacity-40 disabled:cursor-not-allowed transition-opacity"
                         />
                     </div>
 
@@ -278,7 +278,7 @@ const ContactSplit: React.FC = () => {
                         <div
                             aria-live="polite"
                             aria-atomic="true"
-                            className="font-[var(--fm)] text-[0.65rem] leading-relaxed text-periwinkle-mid dark:text-haze-light"
+                            className="font-[var(--fm)] text-[0.65rem] leading-relaxed text-haze dark:text-cool"
                         >
                             <AnimatePresence mode="wait">
                                 {status === 'idle' && (
@@ -313,7 +313,7 @@ const ContactSplit: React.FC = () => {
                                                 />
                                             ))}
                                         </span>
-                                        <span className="text-matte-azure">Transmitting your message...</span>
+                                        <span className="text-haze dark:text-periwinkle">Transmitting your message...</span>
                                     </motion.div>
                                 )}
 
@@ -373,7 +373,7 @@ const ContactSplit: React.FC = () => {
                             type="submit"
                             disabled={isLocked}
                             aria-disabled={isLocked}
-                            className={`hover:opacity-90 text-dark-text-primary px-8 py-4 rounded-full font-[var(--fm)] text-xs font-bold tracking-widest uppercase transition-all duration-300 whitespace-nowrap disabled:cursor-not-allowed relative overflow-hidden ${submitBtnClass(status)}`}
+                            className={`hover:opacity-90 px-8 py-4 rounded-full font-[var(--fm)] text-xs font-bold tracking-widest uppercase transition-all duration-300 whitespace-nowrap disabled:cursor-not-allowed relative overflow-hidden ${submitBtnClass(status)}`}
                             whileTap={!isLocked ? { scale: 0.97 } : {}}
                             animate={status === 'sending' ? { opacity: [1, 0.7, 1] } : { opacity: 1 }}
                             transition={status === 'sending' ? { duration: 1.2, repeat: Infinity } : { duration: 0.3 }}
@@ -413,7 +413,7 @@ const ContactSplit: React.FC = () => {
                     aria-hidden="true"
                 />
 
-                <div className="font-[var(--fm)] text-[0.65rem] tracking-[0.28em] uppercase text-periwinkle-mid dark:text-haze-light mb-12 relative z-10 shrink-0">
+                <div className="font-[var(--fm)] text-[0.65rem] tracking-[0.28em] uppercase text-haze dark:text-cool mb-12 relative z-10 shrink-0">
                     — Connect with Nevinas
                 </div>
 
@@ -425,7 +425,7 @@ const ContactSplit: React.FC = () => {
                     viewport={{ once: true }}
                     transition={{ delay: 0.3 }}
                 >
-                    <div className="font-[var(--fm)] text-[0.65rem] tracking-[0.22em] uppercase text-periwinkle-mid dark:text-haze-light mb-4 pt-4 border-t border-midnight/10 dark:border-periwinkle/10">
+                    <div className="font-[var(--fm)] text-[0.65rem] tracking-[0.22em] uppercase text-haze dark:text-cool mb-4 pt-4 border-t border-midnight/10 dark:border-periwinkle/10">
                         Alternatives
                     </div>
 
@@ -443,7 +443,7 @@ const ContactSplit: React.FC = () => {
                             <div className="font-[var(--fd)] text-xl sm:text-2xl font-light tracking-tight text-haze dark:text-cool group-hover:text-light-text dark:group-hover:text-dark-text transition-colors">
                                 {alt.name}
                             </div>
-                            <div className="font-[var(--fm)] text-[0.65rem] tracking-[0.14em] uppercase text-periwinkle-mid dark:text-haze-light group-hover:text-matte-azure transition-colors flex items-center gap-2">
+                            <div className="font-[var(--fm)] text-[0.65rem] tracking-[0.14em] uppercase text-haze dark:text-cool group-hover:text-haze-deep dark:group-hover:text-periwinkle transition-colors flex items-center gap-2">
                                 {alt.action}
                                 {alt.icon === 'svg-copy' && (
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">

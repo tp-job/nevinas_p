@@ -106,7 +106,7 @@ const TimelineSection = () => {
 
   return (
     <section
-      id="timeline"
+      id="timeline-content"
       className="tl-root transition-colors duration-500 py-20"
     >
       {/*
