@@ -23,6 +23,7 @@ const GraphView = lazy(() => import("@/pages/GraphView"));
 const TailwindPage = lazy(() => import("@/pages/TailwindPage"));
 const Gallery = lazy(() => import("@/pages/Gallery"));
 const BlogPage = lazy(() => import("@/pages/BlogPage"));
+const FlutterPage = lazy(() => import("@/pages/FlutterPage"));
 // layout
 import WorkLayout from "@/layouts/WorkLayout";
 // common
@@ -118,6 +119,7 @@ const AppRoutesInner: FC = () => {
         <Route path="docs" element={<Docs />} />
         <Route path="gallery" element={<Gallery />} />
         <Route path="blog" element={<BlogPage />} />
+        <Route path="flutter" element={<FlutterPage />} />
       </Route>
 
       {/* full-page graph view — outside WorkLayout */}

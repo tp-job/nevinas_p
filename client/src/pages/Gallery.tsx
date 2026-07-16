@@ -8,14 +8,14 @@ import { useFetch } from "@/hooks/useFetch";
 
 // Category menu items
 const categories = [
-  { id: "all", label: "ทั้งหมด", icon: "ri-image-line" },
-  { id: "architecture", label: "สถาปัตยกรรม", icon: "ri-building-line" },
-  { id: "nature", label: "ธรรมชาติ", icon: "ri-landscape-line" },
-  { id: "exhibition", label: "นิทรรศการ", icon: "ri-gallery-line" },
-  { id: "bangkok", label: "กรุงเทพฯ", icon: "ri-map-pin-line" },
-  { id: "vintage", label: "วินเทจ", icon: "ri-time-line" },
-  { id: "history", label: "ประวัติศาสตร์", icon: "ri-book-open-line" },
-  { id: "travel", label: "การเดินทาง", icon: "ri-flight-takeoff-line" },
+  { id: "all", label: "All", icon: "ri-image-line" },
+  { id: "tongren", label: "Tongren", icon: "ri-building-line" },
+  { id: "chongqing", label: "Chongqing", icon: "ri-landscape-line" },
+  { id: "exhibition", label: "Exhibition", icon: "ri-gallery-line" },
+  { id: "bangkok", label: "Bangkok", icon: "ri-map-pin-line" },
+  { id: "vintage", label: "Vintage", icon: "ri-time-line" },
+  { id: "history", label: "History", icon: "ri-book-open-line" },
+  { id: "travel", label: "Travel", icon: "ri-flight-takeoff-line" },
 ];
 
 const Gallery: FC = () => {
@@ -46,13 +46,13 @@ const Gallery: FC = () => {
 
       // Match category keywords
       const categoryKeywords: Record<string, string[]> = {
-        architecture: ["สถาปัตยกรรม", "architecture", "building", "structure"],
-        nature: ["ธรรมชาติ", "nature", "landscape", "forest", "tree"],
-        exhibition: ["นิทรรศการ", "exhibition", "gallery", "art"],
-        bangkok: ["กรุงเทพ", "bangkok", "bkk", "thailand"],
-        vintage: ["วินเทจ", "vintage", "old", "retro"],
-        history: ["ประวัติศาสตร์", "history", "historical", "ancient"],
-        travel: ["การเดินทาง", "travel", "trip", "journey"],
+        tongren: ["Tongren", "architecture", "building", "structure"],
+        chongqing: ["Chongqing", "nature", "landscape", "forest", "tree"],
+        exhibition: ["Exhibition", "gallery", "art"],
+        bangkok: ["Bangkok", "bkk", "thailand"],
+        vintage: ["Vintage", "old", "retro"],
+        history: ["History", "historical", "ancient"],
+        travel: ["Travel", "trip", "journey"],
       };
 
       const keywords = categoryKeywords[activeCategory] || [];

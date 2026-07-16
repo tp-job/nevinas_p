@@ -747,13 +747,23 @@ const Docs: FC = () => {
               }}
             />
 
-            {/* Main Theme */}
+            {/* Main Palette */}
             <h4 className="text-xs font-bold uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary mb-3">
-              Main Theme (Matte + Velvet)
+              Main Palette (Periwinkle → Charcoal)
             </h4>
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 mb-6">
               {designSystem.mainTheme.map((c) => (
-                <ColorSwatch key={c.hex} {...c} />
+                <ColorSwatch key={c.variable} {...c} />
+              ))}
+            </div>
+
+            {/* Sub-Palette */}
+            <h4 className="text-xs font-bold uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary mb-3">
+              Sub-Palette (Effects & SVG)
+            </h4>
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2 mb-6">
+              {designSystem.subPalette.map((c) => (
+                <ColorSwatch key={c.variable} {...c} />
               ))}
             </div>
 
@@ -765,7 +775,7 @@ const Docs: FC = () => {
                 </h4>
                 <div className="grid grid-cols-2 gap-2">
                   {designSystem.lightMode.map((c) => (
-                    <ColorSwatch key={c.hex} {...c} />
+                    <ColorSwatch key={c.variable} {...c} />
                   ))}
                 </div>
               </div>
@@ -775,10 +785,20 @@ const Docs: FC = () => {
                 </h4>
                 <div className="grid grid-cols-2 gap-2">
                   {designSystem.darkMode.map((c) => (
-                    <ColorSwatch key={c.hex} {...c} />
+                    <ColorSwatch key={c.variable} {...c} />
                   ))}
                 </div>
               </div>
+            </div>
+
+            {/* Semantic Tokens */}
+            <h4 className="text-xs font-bold uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary mb-3">
+              Semantic Tokens
+            </h4>
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2 mb-6">
+              {designSystem.semanticTokens.map((c) => (
+                <ColorSwatch key={c.variable} {...c} />
+              ))}
             </div>
 
             {/* Fonts */}
@@ -799,7 +819,7 @@ const Docs: FC = () => {
                   <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary">
                     {f.usage}
                   </p>
-                  <code className="text-[10px] font-mono mt-1 text-matte-azure">
+                  <code className="text-[10px] font-mono mt-1 text-haze dark:text-periwinkle">
                     {f.variable}
                   </code>
                 </div>
