@@ -1,169 +1,30 @@
 /**
  * Navbar.tsx — Nocturnal Atelier Design System v3.2
  * ────────────────────────────────────────────────────
- * Reviewed by: Frontend Lead · Designer · QA · Tester · PM · Prompt Engineer
- *
- * Changes from original:
- *  [COLOR]   All #c060f5 / #7b5aff off-palette colors → DS main/sub palette
- *  [COLOR]   EQ bar gradient → #C8CDEB→#878CB4 (DS Quick Ref: "bars #C8CDEB")
- *  [COLOR]   Play button → grad-primary (#1E233C→#465078, DS §1.13)
- *  [COLOR]   Active song → Chip primary (rgba(200,205,235,.20) + border, DS §13.2)
- *  [COLOR]   Drawer bg → DS Midnight/Haze/Periwinkle radial mesh (no off-palette purple)
- *  [MOTION]  All hover:scale-110 / active:scale-90 → hover:-translate-y-0.5 (DS §20 rule)
- *  [GLASS]   Dropdown & mobile card → DS §5.2 Physical Glass spec (inline, theme-aware)
- *  [GLASS]   Specular ::before → French Gray rgba(184,190,215,.45) (DS §5.2)
- *  [LOGIC]   Added prevSong useCallback (symmetry with nextSong)
- *  [LOGIC]   isDark observer — theme-aware glass/drawer styles w/o CSS-only hacks
- *  [LOGIC]   Dropdown AnimatePresence — DS §17 timing: 0.22s [.22,1,.36,1]
- *  [UI]     "Now Playing" shows title + artist separately in dropdown & mobile
- *  [UI]     Pill dot → conic-gradient sub-palette mood-ring (DS §15.5 palette)
- *  [ICONS]  TbArrowsExchange → ri-play-list-2-line (DS §20: ri/si only)
- *  [A11Y]   role="dialog" aria-modal aria-hidden, Escape key, focus trap — preserved
- *  [TYPE]   Labels → 0.58rem font-semibold tracking-[.22em] uppercase (DS §2.3 `label`)
+ * Composes the pieces in ./navbar/:
+ *   constants.ts        glass styles, nav links, motion variants, helpers
+ *   useMusicPlayer.ts   playback state + controls (audio element lives here)
+ *   EQBars / MoodDot / SectionLabel   small DS components
+ *   PlaylistDropdown    desktop playlist popover
+ *   MobileDrawer        mobile overlay + side drawer
  */
 
 import {
   useCallback,
   useEffect,
-  useId,
   useRef,
   useState,
   type FC,
 } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "@/context/ThemeContext";
 import { Assets, DataSong } from "@/data/homeData";
 import GlassSurface from "@/components/effect/GlassSurface";
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Design System §15.4 — EQ Bars
-// Quick Ref: "Music pill bg: #0A0F19 / bars #C8CDEB"
-// Gradient: Periwinkle #C8CDEB → Cool Gray #878CB4 (vertical)
-// @keyframes eq: from{height:3px} to{height:11px} (DS globals.css)
-// ─────────────────────────────────────────────────────────────────────────────
-const EQBars: FC<{ isPlaying: boolean }> = ({ isPlaying }) => {
-  const delays = [0, 0.05, 0.1, 0.12, 0.18];
-  return (
-    <div className="flex items-end gap-[2.5px] h-[14px]" aria-hidden="true">
-      {delays.map((d, i) => (
-        <span
-          key={i}
-          className="w-[2.5px] rounded-full"
-          style={{
-            background: "linear-gradient(180deg, var(--color-periwinkle) 0%, var(--color-cool) 100%)",
-            height: isPlaying ? undefined : "3px",
-            animation: isPlaying
-              ? `eq .7s ease-in-out ${d}s infinite alternate`
-              : "none",
-          }}
-        />
-      ))}
-    </div>
-  );
-};
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Design System §15.5 — Mood Ring dot (sub-palette conic)
-// Uses: Periwinkle(main) · French Gray · Mountbatten · EV1 · EV2 · back
-// Animation: moodSpin 8s linear infinite (defined in DS globals.css)
-// ─────────────────────────────────────────────────────────────────────────────
-const MoodDot: FC<{ size?: number }> = ({ size = 28 }) => (
-  <div
-    aria-hidden="true"
-    style={{
-      width: size,
-      height: size,
-      borderRadius: "50%",
-      flexShrink: 0,
-      background: [
-        "conic-gradient(from 0deg,",
-        "rgba(200,205,235,0.90),",   // Periwinkle (main)
-        "rgba(184,190,215,0.85),",   // French Gray (sub)
-        "rgba(133,117,143,0.90),",   // Mountbatten ★ (sub warm bridge)
-        "rgba(82,78,104,0.85),",     // English Violet 1 (sub)
-        "rgba(70,80,120,0.90),",     // Haze (main)
-        "rgba(200,205,235,0.90))",   // back to Periwinkle
-      ].join(" "),
-      boxShadow:
-        "0 0 10px rgba(200,205,235,0.22), 0 0 5px rgba(133,117,143,0.18)",
-      animation: "moodSpin 8s linear infinite",
-    }}
-  />
-);
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Design System §5.2 — Physical Glass (theme-aware inline styles)
-// Light:  white gradient + French Gray specular (rgba(184,190,215,.45))
-// Dark:   midnight gradient + Cool Gray Sub specular (rgba(175,174,204,.12))
-// ─────────────────────────────────────────────────────────────────────────────
-const glassStyles = {
-  light: {
-    background:
-      "linear-gradient(145deg,rgba(255,255,255,0.82) 0%,rgba(255,255,255,0.60) 40%,rgba(255,255,255,0.30) 100%)",
-    backdropFilter: "blur(20px) saturate(160%) brightness(1.04)",
-    WebkitBackdropFilter: "blur(20px) saturate(160%) brightness(1.04)",
-    borderTop: "1px solid rgba(255,255,255,0.90)",
-    borderLeft: "1px solid rgba(255,255,255,0.75)",
-    borderRight: "1px solid rgba(200,205,235,0.20)",
-    borderBottom: "1px solid rgba(200,205,235,0.15)",
-    boxShadow:
-      "0 16px 40px rgba(30,35,60,0.12),0 4px 12px rgba(30,35,60,0.06),inset 0 1px 0 rgba(255,255,255,0.95),inset 0 -1px 0 rgba(30,35,60,0.04)",
-  },
-  dark: {
-    background:
-      "linear-gradient(145deg,rgba(30,35,60,0.70) 0%,rgba(46,53,88,0.48) 40%,rgba(10,15,25,0.30) 100%)",
-    backdropFilter: "blur(24px) saturate(160%)",
-    WebkitBackdropFilter: "blur(24px) saturate(160%)",
-    border: "1px solid rgba(200,205,235,0.12)",
-    boxShadow:
-      "0 16px 40px rgba(0,0,0,0.50),0 4px 12px rgba(0,0,0,0.28),inset 0 1px 0 rgba(200,205,235,0.10),inset 0 -1px 0 rgba(0,0,0,0.18)",
-  },
-} as const;
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Navigation links — icons from react-icons/ri (DS §20 rule)
-// ─────────────────────────────────────────────────────────────────────────────
-const HOME_LINKS = [
-  { href: "#top", label: "Home", icon: "ri-home-4-line" },
-  { href: "#about", label: "About me", icon: "ri-user-3-line" },
-  { href: "#services", label: "Services", icon: "ri-heart-3-line" },
-  { href: "#work", label: "My Work", icon: "ri-briefcase-4-line" },
-  { href: "#contact", label: "Contact Me", icon: "ri-mail-send-line" },
-];
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Framer Motion variants — DS §17 timing
-// Dropdown: 0.22s [.22,1,.36,1]
-// ─────────────────────────────────────────────────────────────────────────────
-const dropdownVariants = {
-  hidden: { opacity: 0, y: -8, scale: 0.97 },
-  visible: { opacity: 1, y: 0, scale: 1.00 },
-  exit: { opacity: 0, y: -5, scale: 0.97 },
-};
-const dropdownTransition = {
-  duration: 0.22,
-  ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
-};
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Component: Label — DS §2.3 type scale (`label` token)
-// 0.58rem · font-semibold · tracking-[.22em] · uppercase · muted
-// ─────────────────────────────────────────────────────────────────────────────
-const SectionLabel: FC<{ children: string }> = ({ children }) => (
-  <p
-    className="text-[0.58rem] font-semibold tracking-[0.22em] uppercase
-               text-cool opacity-60 mb-3"
-  >
-    {children}
-  </p>
-);
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Helpers
-// ─────────────────────────────────────────────────────────────────────────────
-const getSongTitle = (raw: string) => raw.split(" - ")[0] ?? raw;
-const getSongArtist = (raw: string) =>
-  raw.includes(" - ") ? raw.split(" - ").slice(1).join(" - ") : null;
+import EQBars from "./navbar/EQBars";
+import MoodDot from "./navbar/MoodDot";
+import PlaylistDropdown from "./navbar/PlaylistDropdown";
+import MobileDrawer from "./navbar/MobileDrawer";
+import { glassStyles, HOME_LINKS, iconBtnCls } from "./navbar/constants";
+import { useMusicPlayer } from "./navbar/useMusicPlayer";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Navbar
@@ -180,17 +41,20 @@ const Navbar: FC<NavbarProps> = ({
   const { toggleTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [songIndex, setSongIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [marqueeDuration, setMarqueeDuration] = useState("15s");
   // DS §5.2 — theme-aware glass: observe .dark class on <html>
   const [isDark, setIsDark] = useState(false);
 
   const sideMenuRef = useRef<HTMLDivElement | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
   const marqueeTrackRef = useRef<HTMLDivElement | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  const player = useMusicPlayer();
+  const {
+    songIndex, isPlaying, setIsPlaying, audioRef,
+    playMusic, pauseMusic, nextSong, currentTitle,
+  } = player;
 
   // ── Dark-mode observer (for theme-aware inline glass styles) ─────────────
   useEffect(() => {
@@ -302,37 +166,6 @@ const Navbar: FC<NavbarProps> = ({
     return () => window.removeEventListener("resize", update);
   }, [songIndex]);
 
-  // ── Audio controls ────────────────────────────────────────────────────────
-  const playMusic = () => { audioRef.current?.play(); setIsPlaying(true); };
-  const pauseMusic = () => { audioRef.current?.pause(); setIsPlaying(false); };
-
-  const changeSong = (index: number) => {
-    if (index === songIndex) {
-      if (!isPlaying) playMusic();
-      return;
-    }
-    setSongIndex(index);
-    setIsPlaying(true);
-    setTimeout(() => {
-      audioRef.current?.play().catch(() => {/* autoplay blocked */ });
-    }, 50);
-  };
-
-  const nextSong = useCallback(() => {
-    setSongIndex((p) => (p + 1) % DataSong.length);
-    setIsPlaying(true);
-  }, []);
-
-  // [FIX] — added prevSong (was inline lambda in original, now consistent callback)
-  const prevSong = useCallback(() => {
-    setSongIndex((p) => (p - 1 + DataSong.length) % DataSong.length);
-    setIsPlaying(true);
-  }, []);
-
-  // ── Current song metadata ──────────────────────────────────────────────────
-  const currentTitle = getSongTitle(DataSong[songIndex].title);
-  const currentArtist = getSongArtist(DataSong[songIndex].title);
-
   // ── Computed nav classes ──────────────────────────────────────────────────
   // DS §1.11 semantic surfaces
   const navClass = isScrolled
@@ -347,34 +180,6 @@ const Navbar: FC<NavbarProps> = ({
 
   // ── Glass style for current theme ────────────────────────────────────────
   const glass = isDark ? glassStyles.dark : glassStyles.light;
-
-  // ── Drawer background — DS palette radial mesh (no off-palette purple) ───
-  // Light: Periwinkle + Haze radial → white base
-  // Dark:  Mountbatten sub + Haze radial → Charcoal base (DS §4.1 dark mesh)
-  const drawerBg = isDark
-    ? [
-      "radial-gradient(550px at 80% 100%,rgba(133,117,143,0.13),transparent)",
-      "radial-gradient(450px at 0% 0%,rgba(70,80,120,0.10),transparent)",
-      "linear-gradient(180deg,rgba(10,15,25,0.90),rgba(19,23,43,0.95))",
-    ].join(",")
-    : [
-      "radial-gradient(550px at 80% 100%,rgba(200,205,235,0.14),transparent)",
-      "radial-gradient(450px at 0% 0%,rgba(70,80,120,0.08),transparent)",
-      "linear-gradient(180deg,rgba(255,255,255,0.90),rgba(240,241,248,0.95))",
-    ].join(",");
-
-  // ── Play button — DS §13.1 Primary (grad-primary) ────────────────────────
-  const playBtnStyle = {
-    background: "linear-gradient(135deg, var(--color-midnight) 0%, var(--color-haze) 100%)",
-    boxShadow: "0 6px 20px rgba(70,80,120,0.35)",
-  };
-
-  // ── Common icon button classes ────────────────────────────────────────────
-  // DS §20: hover:-translate-y-0.5, never scale()
-  const iconBtnCls =
-    "flex items-center justify-center rounded-full text-cool " +
-    "hover:text-periwinkle hover:bg-periwinkle/10 " +
-    "hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200";
 
   return (
     <div className="font-inter">
@@ -513,127 +318,13 @@ const Navbar: FC<NavbarProps> = ({
                   </button>
 
                   {/* ── Playlist Dropdown — DS §5.2 glass + §17 animation ── */}
-                  <AnimatePresence>
-                    {isDropdownOpen && (
-                      <motion.div
-                        variants={dropdownVariants}
-                        initial="hidden"
-                        animate="visible"
-                        exit="exit"
-                        transition={dropdownTransition}
-                        className="absolute top-full right-0 mt-4 w-[22rem] rounded-[1.5rem]
-                                   overflow-hidden z-[200]"
-                        style={glass}
-                      >
-                        {/* French Gray specular — DS §5.2 ::before equivalent */}
-                        <div
-                          className="absolute top-0 left-0 w-1/2 h-1/2 pointer-events-none z-0"
-                          style={{
-                            background: isDark
-                              ? "radial-gradient(ellipse at top left,rgba(175,174,204,0.12) 0%,transparent 65%)"
-                              : "radial-gradient(ellipse at top left,rgba(184,190,215,0.45) 0%,transparent 65%)",
-                            borderRadius: "inherit",
-                          }}
-                        />
-
-                        <div className="relative z-10 p-6">
-                          {/* Now Playing section */}
-                          <div className="mb-5">
-                            <SectionLabel>Now Playing</SectionLabel>
-                            <h4
-                              className="text-[0.92rem] font-normal leading-snug
-                                         text-light-text dark:text-dark-text truncate"
-                            >
-                              {currentTitle}
-                            </h4>
-                            {currentArtist && (
-                              <p className="text-[0.72rem] text-cool mt-0.5 truncate">
-                                {currentArtist}
-                              </p>
-                            )}
-                          </div>
-
-                          {/* Controls — DS §13.1 Primary button */}
-                          <div className="flex items-center gap-4 mb-5">
-                            <button
-                              onClick={prevSong}
-                              className="text-cool hover:text-haze dark:hover:text-periwinkle
-                                         hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
-                              aria-label="Previous song"
-                            >
-                              <i className="ri-skip-back-mini-fill text-[20px]" />
-                            </button>
-
-                            <button
-                              onClick={isPlaying ? pauseMusic : playMusic}
-                              className="w-11 h-11 flex items-center justify-center rounded-full
-                                         text-dark-text hover:-translate-y-0.5 active:translate-y-0
-                                         transition-all duration-200"
-                              style={playBtnStyle}
-                              aria-label={isPlaying ? "Pause" : "Play"}
-                            >
-                              <i
-                                className={`${isPlaying ? "ri-pause-fill" : "ri-play-fill"
-                                  } text-[20px]`}
-                              />
-                            </button>
-
-                            <button
-                              onClick={nextSong}
-                              className="text-cool hover:text-haze dark:hover:text-periwinkle
-                                         hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
-                              aria-label="Next song"
-                            >
-                              <i className="ri-skip-forward-mini-fill text-[20px]" />
-                            </button>
-
-                            <span className="ml-auto text-[0.60rem] font-medium tracking-widest
-                                            text-cool opacity-40">
-                              {songIndex + 1} / {DataSong.length}
-                            </span>
-                          </div>
-
-                          {/* Aurora divider — DS §1.8 grad-aurora-band */}
-                          <div
-                            className="h-px mb-5"
-                            style={{
-                              background:
-                                "linear-gradient(90deg,transparent,rgba(200,205,235,0.30) 30%,rgba(133,117,143,0.25) 60%,transparent)",
-                            }}
-                          />
-
-                          {/* Playlist */}
-                          <SectionLabel>Playlist</SectionLabel>
-                          <div className="space-y-1">
-                            {DataSong.map((song, idx) => (
-                              <button
-                                key={song.id}
-                                onClick={() => {
-                                  changeSong(idx);
-                                  setIsDropdownOpen(false);
-                                }}
-                                className={`flex items-center justify-between w-full px-3.5 py-2.5
-                                            rounded-xl text-left text-[0.75rem] transition-all
-                                            duration-200 hover:-translate-y-px ${idx === songIndex
-                                    /* DS §13.2 Chip primary — active song */
-                                    ? "bg-[rgba(200,205,235,0.20)] border border-[rgba(200,205,235,0.40)] text-haze dark:text-periwinkle font-medium"
-                                    /* DS §13.2 Chip muted — inactive */
-                                    : "text-cool border border-transparent hover:bg-[rgba(200,205,235,0.10)] hover:border-[rgba(200,205,235,0.18)] font-normal"
-                                  }`}
-                              >
-                                <span className="truncate pr-3">
-                                  {song.title}
-                                </span>
-                                {idx === songIndex && (
-                                  <i className="ri-volume-up-fill text-[12px] shrink-0 text-cool" />
-                                )}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                  <PlaylistDropdown
+                    isOpen={isDropdownOpen}
+                    onClose={() => setIsDropdownOpen(false)}
+                    isDark={isDark}
+                    glass={glass}
+                    player={player}
+                  />
                 </div>
               </div>
             </div>
@@ -738,219 +429,16 @@ const Navbar: FC<NavbarProps> = ({
         </GlassSurface>
       </header>
 
-      {/* ──────────────────────────────────────────────────────────────────── */}
-      {/* MOBILE OVERLAY                                                       */}
-      {/* DS §4.1 dark bg: rgba(10,15,25,0.70) Charcoal tinted               */}
-      {/* ──────────────────────────────────────────────────────────────────── */}
-      <div
-        className={`fixed inset-0 lg:hidden z-40 transition-opacity duration-400
-                    backdrop-blur-sm ${isMenuOpen
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-          }`}
-        style={{ background: "color-mix(in srgb, var(--color-dark-bg) 72%, transparent)" }}
-        onClick={closeMenu}
-        aria-hidden={!isMenuOpen}
+      {/* Mobile overlay + side drawer */}
+      <MobileDrawer
+        isMenuOpen={isMenuOpen}
+        closeMenu={closeMenu}
+        sideMenuRef={sideMenuRef}
+        isDark={isDark}
+        glass={glass}
+        player={player}
+        scrollToHash={scrollToHash}
       />
-
-      {/* ──────────────────────────────────────────────────────────────────── */}
-      {/* MOBILE SIDE DRAWER                                                   */}
-      {/* DS §4.1 bg radial mesh — NO off-palette purple                       */}
-      {/* ──────────────────────────────────────────────────────────────────── */}
-      <div
-        id="sideMenu"
-        ref={sideMenuRef}
-        className={`fixed top-0 bottom-0 left-0 z-50 flex flex-col w-80
-                    transition-transform duration-500 ease-in-out
-                    border-r border-[rgba(30,35,60,0.10)] dark:border-[rgba(200,205,235,0.08)]
-                    shadow-2xl lg:hidden overflow-hidden ${isMenuOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
-        style={{
-          background: drawerBg,
-          backdropFilter: "blur(24px) saturate(160%)",
-          WebkitBackdropFilter: "blur(24px) saturate(160%)",
-        }}
-        role="dialog"
-        aria-modal="true"
-        aria-hidden={!isMenuOpen}
-        aria-label="Navigation menu"
-      >
-        {/* Close button */}
-        <button
-          onClick={closeMenu}
-          className={`absolute top-5 right-5 w-9 h-9 ${iconBtnCls}
-                      hover:text-light-text dark:hover:text-dark-text`}
-          aria-label="Close menu"
-        >
-          <i className="ri-close-line text-[22px]" />
-        </button>
-
-        <div className="flex flex-col p-6 gap-6 h-full overflow-y-auto custom-scrollbar">
-
-          {/* ── Music Player Card — DS §5.2 Physical Glass ── */}
-          <div
-            className="rounded-[1.5rem] p-5 relative overflow-hidden"
-            style={glass}
-          >
-            {/* Specular highlight — French Gray (light) / Cool Gray Sub (dark) */}
-            <div
-              className="absolute top-0 left-0 w-1/2 h-1/2 pointer-events-none"
-              style={{
-                background: isDark
-                  ? "radial-gradient(ellipse at top left,rgba(175,174,204,0.12) 0%,transparent 65%)"
-                  : "radial-gradient(ellipse at top left,rgba(184,190,215,0.45) 0%,transparent 65%)",
-                borderRadius: "inherit",
-              }}
-            />
-
-            <div className="relative z-10">
-              {/* Label — DS §2.3 `label` token */}
-              <SectionLabel>Now Playing</SectionLabel>
-
-              {/* Song info */}
-              <h4
-                className="text-[0.92rem] font-normal leading-snug
-                           text-light-text dark:text-dark-text truncate"
-              >
-                {currentTitle}
-              </h4>
-              {currentArtist && (
-                <p className="text-[0.72rem] text-cool mt-0.5 mb-4 truncate">
-                  {currentArtist}
-                </p>
-              )}
-
-              {/* Player controls — DS §13.1 Primary + no-scale hover */}
-              <div className="flex items-center justify-center gap-4 mt-4">
-                <button
-                  onClick={prevSong}
-                  className="w-9 h-9 flex items-center justify-center rounded-full
-                             text-cool
-                             bg-[rgba(30,35,60,0.05)] dark:bg-[rgba(200,205,235,0.06)]
-                             hover:text-haze dark:hover:text-periwinkle
-                             hover:bg-[rgba(70,80,120,0.10)] dark:hover:bg-[rgba(200,205,235,0.10)]
-                             hover:-translate-y-0.5 active:translate-y-0
-                             transition-all duration-200"
-                  aria-label="Previous song"
-                >
-                  <i className="ri-skip-back-mini-fill text-[18px]" />
-                </button>
-
-                {/* Primary play button — DS §13.1 grad-primary */}
-                <button
-                  onClick={isPlaying ? pauseMusic : playMusic}
-                  className="w-12 h-12 flex items-center justify-center rounded-full
-                             text-dark-text
-                             hover:-translate-y-0.5 active:translate-y-0
-                             transition-all duration-200"
-                  style={playBtnStyle}
-                  aria-label={isPlaying ? "Pause music" : "Play music"}
-                >
-                  <i
-                    className={`${isPlaying ? "ri-pause-fill" : "ri-play-fill"
-                      } text-[22px]`}
-                  />
-                </button>
-
-                <button
-                  onClick={nextSong}
-                  className="w-9 h-9 flex items-center justify-center rounded-full
-                             text-cool
-                             bg-[rgba(30,35,60,0.05)] dark:bg-[rgba(200,205,235,0.06)]
-                             hover:text-haze dark:hover:text-periwinkle
-                             hover:bg-[rgba(70,80,120,0.10)] dark:hover:bg-[rgba(200,205,235,0.10)]
-                             hover:-translate-y-0.5 active:translate-y-0
-                             transition-all duration-200"
-                  aria-label="Next song"
-                >
-                  <i className="ri-skip-forward-mini-fill text-[18px]" />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* ── Playlist ── */}
-          <div>
-            <SectionLabel>Playlist</SectionLabel>
-            <div className="space-y-1">
-              {DataSong.map((song, idx) => (
-                <button
-                  key={song.id}
-                  onClick={() => changeSong(idx)}
-                  className={`w-full text-left px-3.5 py-2.5 rounded-xl
-                              text-[0.78rem] transition-all duration-200
-                              hover:-translate-y-px ${idx === songIndex
-                      /* DS §13.2 Chip primary */
-                      ? "bg-[rgba(200,205,235,0.20)] border border-[rgba(200,205,235,0.40)] text-haze dark:text-periwinkle font-medium"
-                      /* DS §13.2 Chip muted */
-                      : "text-cool border border-transparent hover:bg-[rgba(200,205,235,0.10)] dark:hover:bg-[rgba(200,205,235,0.06)] font-normal"
-                    }`}
-                >
-                  <span className="truncate block">{song.title}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Aurora divider — DS §1.8 grad-aurora-band */}
-          <div
-            className="h-px -my-2"
-            style={{
-              background:
-                "linear-gradient(90deg,transparent,rgba(200,205,235,0.28) 35%,rgba(133,117,143,0.22) 65%,transparent)",
-            }}
-          />
-
-          {/* ── Explorer / Nav Links ── */}
-          <div className="flex flex-col">
-            <SectionLabel>Explorer</SectionLabel>
-            <nav aria-label="Mobile navigation" className="flex flex-col gap-0.5">
-              {HOME_LINKS.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToHash(link.href);
-                  }}
-                  className="flex items-center gap-3 px-3 py-2.5 rounded-xl
-                             text-cool dark:text-cool
-                             hover:text-light-text dark:hover:text-dark-text
-                             hover:bg-[rgba(200,205,235,0.10)] dark:hover:bg-[rgba(200,205,235,0.06)]
-                             hover:-translate-y-px active:translate-y-0
-                             transition-all duration-200 group"
-                >
-                  <span
-                    className="w-5 h-5 flex items-center justify-center text-[17px]
-                                opacity-55 group-hover:opacity-100 transition-opacity duration-200"
-                  >
-                    <i className={link.icon} />
-                  </span>
-                  <span className="text-[0.82rem] font-normal">{link.label}</span>
-                </a>
-              ))}
-            </nav>
-          </div>
-
-          {/* ── Footer — DS §2.3 label token ── */}
-          <div
-            className="mt-auto pt-4 flex items-center gap-3
-                       border-t border-[rgba(30,35,60,0.08)] dark:border-[rgba(200,205,235,0.08)]"
-          >
-            <img
-              src={Assets.logo}
-              className="w-7 h-7 rounded-full bg-charcoal p-0.5 shadow-md"
-              alt="logo"
-            />
-            <span
-              className="text-[0.58rem] font-semibold tracking-widest uppercase
-                         text-cool opacity-50"
-            >
-              NEVINAS.DEV
-            </span>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
