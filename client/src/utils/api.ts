@@ -1,6 +1,9 @@
-// Relative so the vite dev proxy (see vite.config.ts) and prod reverse
-// proxy both route it — avoids hardcoding a host that breaks off-localhost.
-const API_BASE_URL = "";
+// In production the client (static site) and API live on different origins,
+// so VITE_API_URL points at the backend (e.g. https://nevinas-api.onrender.com).
+// When unset — local dev — the empty base lets the vite proxy (see
+// vite.config.ts) route "/api" to localhost:3000. Trailing slash is stripped
+// so we never build a "//api" URL.
+const API_BASE_URL = (import.meta.env.VITE_API_URL ?? "").replace(/\/+$/, "");
 
 // ----------------------------
 // GitHub API
