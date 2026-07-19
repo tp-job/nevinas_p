@@ -34,26 +34,20 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (!id.includes('node_modules')) return
-          // Order matters: check the more specific scopes before "react".
+          // three.js (and @react-three/*) has no runtime dependency on React
+          // internals at module-init time, so it's safe to isolate — it never
+          // calls e.g. React.forwardRef() at the top level.
           if (id.includes('three') || id.includes('@react-three')) return 'three-vendor'
-          if (id.includes('@mui') || id.includes('@emotion')) return 'mui-vendor'
-          if (
-            id.includes('recharts') ||
-            id.includes('@mui/x-charts') ||
-            id.includes('d3-') ||
-            id.includes('victory')
-          )
-            return 'charts-vendor'
-          if (
-            id.includes('framer-motion') ||
-            id.includes('/motion/') ||
-            id.includes('gsap') ||
-            id.includes('animejs')
-          )
-            return 'motion-vendor'
-          if (id.includes('react-router')) return 'router-vendor'
-          if (id.includes('react-icons') || id.includes('remixicon') || id.includes('lucide')) return 'icons-vendor'
-          if (id.includes('react') || id.includes('scheduler')) return 'react-vendor'
+          // Everything else (react, react-dom, react-router, framer-motion,
+          // gsap, recharts + its react-redux/@reduxjs/toolkit dependencies,
+          // icons, mui, d3-*, victory) stays in ONE chunk. Splitting these
+          // apart by substring previously created a circular dependency
+          // between chunks (recharts → react-redux → react, but react-redux
+          // and react-redux's own react-toolkit deps landed in different
+          // chunks) which made "React" read as undefined mid-cycle —
+          // surfacing as "Cannot read properties of undefined (reading
+          // 'forwardRef')" in production only, since dev's non-bundled ESM
+          // graph never hit the cycle.
           return 'vendor'
         },
       },
