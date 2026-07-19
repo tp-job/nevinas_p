@@ -1,7 +1,6 @@
 import type { FC } from "react";
 import { Assets } from "@/data/homeData";
 import { useProfile } from "@/context/ProfileContext";
-import LiquidEtherBackdrop from "@/components/layouts/LiquidEtherBackdrop";
 
 const Header: FC = () => {
   const { avatar, setAvatar, avatarUrl } = useProfile();
@@ -11,19 +10,17 @@ const Header: FC = () => {
       className="relative w-full h-full flex items-center justify-center overflow-hidden"
       style={{ WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale" }}
     >
-      {/* ─── LiquidEther backdrop — lazy WebGL, static gradient placeholder ─── */}
-      <LiquidEtherBackdrop />
+      {/* LiquidEther mesh is now a single shared backdrop mounted in HomePage. */}
 
-      {/* ─── Glass overlay — blue tint, dual theme ────────────────────────── */}
+      {/* ─── Glass overlay — eases the ether into the page bg, dual theme ──── */}
       {/*
-       *  Light: via/10 → to/40
-       *    พื้นขาวยังโชว์เป็น base + ฟ้าปรากฏ soft clean
-       *
-       *  Dark: via/18 → to/52
-       *    ฟ้าสวย glow บนพื้นดำ luminous blue aurora
+       *  Soft page-bg tint at top (under the navbar) and bottom (toward the
+       *  next slide) with a transparent middle where the content sits — so the
+       *  mesh frames the hero and blends seamlessly at the slide seams instead
+       *  of ending on a hard periwinkle edge.
        */}
       <div
-        className="absolute inset-0 z-1 pointer-events-none bg-gradient-to-b from-transparent via-light-bg/10 to-light-bg/40 dark:via-dark-bg/18 dark:to-dark-bg/52 backdrop-blur-[1px]"
+        className="absolute inset-0 z-1 pointer-events-none backdrop-blur-[1px] bg-gradient-to-b from-light-bg/25 via-transparent to-light-bg/45 dark:from-dark-bg/30 dark:via-transparent dark:to-dark-bg/55"
         style={{ WebkitFontSmoothing: "antialiased" }}
       />
 

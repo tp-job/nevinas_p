@@ -15,6 +15,7 @@ import ContactSplit from '@/components/homepage/ContactSplit';
 import SlideWrapper from '@/components/homepage/SlideWrapper';
 import Footer from '@/components/layouts/Footer';
 import NodeMap from '@/components/homepage/Nodemap';
+import LiquidEtherBackdrop from '@/components/layouts/LiquidEtherBackdrop';
 import Testimonials from '@/components/homepage/Testimonials';
 import HorizontalServices from '@/components/homepage/HorizontalServices';
 // import ContributorTimeline from '@/components/homepage/ContributorTimeline';
@@ -49,6 +50,23 @@ const HomePage: FC = () => {
   const slidesList = useMemo(() => getSlidesList(scrollRef), []);
   // Create refs for each sentinel
   const sentinelRefs = useRef(slidesList.map(() => createRef<HTMLDivElement>())).current;
+
+  // Indices of the slides that show the LiquidEther mesh (Header + statements +
+  // Footer). A single shared backdrop behind the stack is faded/paused for every
+  // other slide, so only ONE WebGL context runs instead of one per slide.
+  const etherSlideSet = useMemo(
+    () =>
+      new Set(
+        slidesList
+          .map((s, i) => ({ id: s.id, i }))
+          .filter(
+            ({ id }) =>
+              id === 'top' || id.startsWith('statement-') || id === 'footer',
+          )
+          .map(({ i }) => i),
+      ),
+    [slidesList],
+  );
 
   // Track active slide based on sentinels for color changing
   useEffect(() => {
@@ -124,6 +142,11 @@ const HomePage: FC = () => {
 
         {/* STICKY CONTAINER for Slides */}
         <div className="sticky top-0 left-0 w-full h-svh overflow-hidden z-[var(--homepage-z-overlay)] pointer-events-none">
+          {/* Single shared LiquidEther behind every slide — one WebGL context
+              instead of one per slide. Visible/animated only while an
+              ether-slide (Header / statements / Footer) is active. */}
+          <LiquidEtherBackdrop active={etherSlideSet.has(activeSlide)} />
+
           {slidesList.map((slide, i) => (
             <div key={`slide-${i}`} className="pointer-events-auto absolute inset-0 w-full h-full">
               <SlideWrapper

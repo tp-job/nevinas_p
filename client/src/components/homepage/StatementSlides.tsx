@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import LiquidEtherBackdrop from '@/components/layouts/LiquidEtherBackdrop';
 
 export const statements: { en: string; jp: string }[] = [
   { en: 'I design.',      jp: 'デザインする' },
@@ -17,9 +16,9 @@ export const StatementSlide: React.FC<{ index: number }> = ({ index }) => {
 
   return (
     <div className="relative w-full h-full flex flex-col items-center justify-center text-center overflow-hidden">
-      <LiquidEtherBackdrop />
+      {/* LiquidEther mesh is now a single shared backdrop mounted in HomePage. */}
 
-      <div className="absolute inset-0 z-1 pointer-events-none bg-gradient-to-b from-transparent via-light-bg/10 to-light-bg/40 dark:via-dark-bg/18 dark:to-dark-bg/52 backdrop-blur-[1px]" />
+      <div className="absolute inset-0 z-1 pointer-events-none backdrop-blur-[1px] bg-gradient-to-b from-light-bg/25 via-transparent to-light-bg/45 dark:from-dark-bg/30 dark:via-transparent dark:to-dark-bg/55" />
 
       <motion.div
         className="relative z-10 flex flex-col items-center gap-5"

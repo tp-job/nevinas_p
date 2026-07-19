@@ -2,7 +2,6 @@ import type { FC } from "react";
 import { Assets } from "@/data/homeData";
 import "@/styles/components/socalmedia.css";
 import GradualBlur from "@/components/effect/GradualBlur";
-import LiquidEtherBackdrop from "@/components/layouts/LiquidEtherBackdrop";
 
 const Footer: FC = () => {
   const currentYear = new Date().getFullYear();
@@ -21,8 +20,7 @@ const Footer: FC = () => {
      */
     <footer className="relative overflow-hidden min-h-svh flex flex-col items-center justify-center text-light-text dark:text-dark-text">
 
-      {/* ── LiquidEther backdrop — lazy WebGL, static gradient placeholder ── */}
-      <LiquidEtherBackdrop />
+      {/* LiquidEther mesh is now a single shared backdrop mounted in HomePage. */}
 
       {/* ── Content — sits above the mesh on z-10 ── */}
       <div className="relative z-10 w-full flex flex-col items-center">
@@ -45,7 +43,7 @@ const Footer: FC = () => {
 
         {/* Copyright & Social Icons */}
         <div className="w-full text-center sm:flex items-center justify-between border-t border-light-border dark:border-dark-border mx-auto px-[10%] mt-12 py-6 max-w-5xl text-light-text-secondary dark:text-dark-text-secondary">
-          <p>{currentYear} | Nevinas</p>
+          <p className="dark:text-dark-text">{currentYear} | Nevinas</p>
           <ul className="flex items-center justify-center gap-10 mt-4 sm:mt-0 wrapper">
             <li className="icon contact">
               <span className="tooltip" aria-hidden="true">Twitter</span>

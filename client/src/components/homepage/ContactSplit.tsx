@@ -1,5 +1,24 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Assets } from '@/data/homeData';
+
+// ─── Alternative contact actions ─────────────────────────────────────────────
+type AltKind = 'copy' | 'link' | 'download';
+interface AltAction {
+    name: string;
+    action: string;
+    kind: AltKind;
+    /** copy → text copied · link/download → the href */
+    value: string;
+}
+
+const ALTERNATIVES: AltAction[] = [
+    { name: 'hello@nevinas.dev', action: 'COPY', kind: 'copy', value: 'hello@nevinas.dev' },
+    { name: 'nevinasv@gmail.com', action: 'COPY', kind: 'copy', value: 'nevinasv@gmail.com' },
+    { name: 'GitHub', action: 'VISIT ↗', kind: 'link', value: 'https://github.com/tp-job' },
+    { name: 'Twitter / X', action: 'FOLLOW ↗', kind: 'link', value: 'https://x.com/nevinas_ka' },
+    { name: 'Resume PDF', action: 'DOWNLOAD ↓', kind: 'download', value: Assets.resume },
+];
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 type FormStatus = 'idle' | 'sending' | 'success' | 'error';
@@ -46,6 +65,8 @@ const submitBtnClass = (status: FormStatus) =>
 const ContactSplit: React.FC = () => {
     const [status, setStatus] = useState<FormStatus>('idle');
     const [errorMessage, setErrorMessage] = useState('');
+    // Which alternative was just copied (by name) — drives the "COPIED ✓" label
+    const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
     // C2 — Guard setState calls after the component unmounts
     const mountedRef = useRef(true);
@@ -57,6 +78,8 @@ const ContactSplit: React.FC = () => {
     const lastSubmitRef = useRef<number>(0);
     // Abort in-flight fetch when the component unmounts
     const abortRef = useRef<AbortController | null>(null);
+    // Resets the "COPIED ✓" label back to idle
+    const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     // C1 + C2 — Cleanup on unmount
     useEffect(() => {
@@ -64,8 +87,36 @@ const ContactSplit: React.FC = () => {
         return () => {
             mountedRef.current = false;
             if (timerRef.current) clearTimeout(timerRef.current);
+            if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
             if (abortRef.current) abortRef.current.abort();
         };
+    }, []);
+
+    /** Copy a value to the clipboard, with a graceful fallback + brief feedback */
+    const handleCopy = useCallback(async (value: string, key: string) => {
+        try {
+            if (navigator.clipboard?.writeText) {
+                await navigator.clipboard.writeText(value);
+            } else {
+                // Fallback for non-secure contexts where the async API is missing
+                const ta = document.createElement('textarea');
+                ta.value = value;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+            }
+            if (!mountedRef.current) return;
+            setCopiedKey(key);
+            if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+            copyTimerRef.current = setTimeout(() => {
+                if (mountedRef.current) setCopiedKey((k) => (k === key ? null : k));
+            }, 2000);
+        } catch {
+            /* clipboard blocked — silently ignore */
+        }
     }, []);
 
     /** Schedule an auto-reset back to idle, cancelling any pending timer first */
@@ -168,7 +219,8 @@ const ContactSplit: React.FC = () => {
         <div className="w-full bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text flex flex-col md:flex-row min-h-screen">
 
             {/* LEFT: Heading + Form */}
-            <div className="w-full md:w-[60%] p-8 sm:p-12 lg:p-20 flex flex-col justify-center relative">
+            <div className="w-full md:w-1/2 p-8 sm:p-12 lg:p-20 flex flex-col justify-center relative">
+              <div className="w-full max-w-xl mx-auto md:ml-auto md:mr-0">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -189,7 +241,7 @@ const ContactSplit: React.FC = () => {
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.2 }}
-                    className="flex flex-col gap-8 max-w-xl"
+                    className="flex flex-col gap-8"
                     onSubmit={onSubmit}
                     noValidate                  // We handle validation ourselves
                 >
@@ -403,57 +455,99 @@ const ContactSplit: React.FC = () => {
                         </motion.button>
                     </div>
                 </motion.form>
+              </div>
             </div>
 
             {/* RIGHT: Alternatives + Ambient */}
-            <div className="w-full md:w-[40%] bg-charcoal/20 p-8 sm:p-12 lg:p-20 relative overflow-hidden flex flex-col">
+            <div className="w-full md:w-1/2 bg-charcoal/20 p-8 sm:p-12 lg:p-20 relative overflow-hidden flex flex-col justify-center">
                 {/* Ambient Nebula */}
                 <div
                     className="absolute inset-0 pointer-events-none opacity-40 mix-blend-screen bg-[radial-gradient(ellipse_70%_60%_at_80%_20%,theme(--color-matte-azure/.22),transparent_65%),radial-gradient(ellipse_50%_70%_at_20%_80%,theme(--color-velvet-orchid/.15),transparent_60%),radial-gradient(ellipse_40%_40%_at_60%_60%,theme(--color-velvet-flamingo/.08),transparent_55%)]"
                     aria-hidden="true"
                 />
 
-                <div className="font-[var(--fm)] text-[0.65rem] tracking-[0.28em] uppercase text-haze dark:text-cool mb-12 relative z-10 shrink-0">
-                    — Connect with Nevinas
-                </div>
-
                 {/* Alternatives List */}
                 <motion.div
-                    className="flex flex-col justify-end flex-1 relative z-10"
+                    className="w-full max-w-xl mx-auto md:mr-auto md:ml-0 relative z-10"
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.3 }}
                 >
+                    <div className="font-[var(--fm)] text-[0.65rem] tracking-[0.28em] uppercase text-haze dark:text-cool mb-12">
+                        — Connect with Nevinas
+                    </div>
+
                     <div className="font-[var(--fm)] text-[0.65rem] tracking-[0.22em] uppercase text-haze dark:text-cool mb-4 pt-4 border-t border-midnight/10 dark:border-periwinkle/10">
                         Alternatives
                     </div>
 
-                    {[
-                        { name: 'hello@nevinas.dev', action: 'COPY', icon: 'svg-copy' },
-                        { name: 'GitHub', action: 'VISIT ↗' },
-                        { name: 'LinkedIn', action: 'VISIT ↗' },
-                        { name: 'Resume PDF', action: 'DOWNLOAD ↓' },
-                        { name: 'Twitter / X', action: 'FOLLOW ↗' },
-                    ].map((alt, i) => (
-                        <div
-                            key={i}
-                            className="flex items-center justify-between py-4 border-b border-midnight/10 dark:border-periwinkle/10 cursor-pointer group transition-all duration-200 hover:pl-2"
-                        >
-                            <div className="font-[var(--fd)] text-xl sm:text-2xl font-light tracking-tight text-haze dark:text-cool group-hover:text-light-text dark:group-hover:text-dark-text transition-colors">
-                                {alt.name}
-                            </div>
-                            <div className="font-[var(--fm)] text-[0.65rem] tracking-[0.14em] uppercase text-haze dark:text-cool group-hover:text-haze-deep dark:group-hover:text-periwinkle transition-colors flex items-center gap-2">
-                                {alt.action}
-                                {alt.icon === 'svg-copy' && (
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                                        <rect x="9" y="9" width="13" height="13" rx="2" />
-                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                                    </svg>
-                                )}
-                            </div>
-                        </div>
-                    ))}
+                    {ALTERNATIVES.map((alt) => {
+                        const isCopied = alt.kind === 'copy' && copiedKey === alt.name;
+                        const rowClass =
+                            'flex items-center justify-between w-full text-left py-4 border-b border-midnight/10 dark:border-periwinkle/10 cursor-pointer group transition-all duration-200 hover:pl-2';
+
+                        const inner = (
+                            <>
+                                <span className="font-[var(--fd)] text-xl sm:text-2xl font-light tracking-tight text-haze dark:text-cool group-hover:text-light-text dark:group-hover:text-dark-text transition-colors">
+                                    {alt.name}
+                                </span>
+                                <span
+                                    className={`font-[var(--fm)] text-[0.65rem] tracking-[0.14em] uppercase transition-colors flex items-center gap-2 ${isCopied
+                                        ? 'text-success'
+                                        : 'text-haze dark:text-cool group-hover:text-haze-deep dark:group-hover:text-periwinkle'
+                                        }`}
+                                >
+                                    {isCopied ? 'COPIED ✓' : alt.action}
+                                    {alt.kind === 'copy' && !isCopied && (
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" />
+                                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                                        </svg>
+                                    )}
+                                </span>
+                            </>
+                        );
+
+                        if (alt.kind === 'link') {
+                            return (
+                                <a
+                                    key={alt.name}
+                                    href={alt.value}
+                                    target="_blank"
+                                    rel="noreferrer noopener"
+                                    className={rowClass}
+                                >
+                                    {inner}
+                                </a>
+                            );
+                        }
+
+                        if (alt.kind === 'download') {
+                            return (
+                                <a
+                                    key={alt.name}
+                                    href={alt.value}
+                                    download="resume-nevinas-ka.pdf"
+                                    className={rowClass}
+                                >
+                                    {inner}
+                                </a>
+                            );
+                        }
+
+                        return (
+                            <button
+                                key={alt.name}
+                                type="button"
+                                onClick={() => handleCopy(alt.value, alt.name)}
+                                aria-label={`Copy ${alt.name}`}
+                                className={rowClass}
+                            >
+                                {inner}
+                            </button>
+                        );
+                    })}
                 </motion.div>
 
                 {/* Ambient Kanji */}

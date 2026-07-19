@@ -802,7 +802,7 @@ export function createLiquidEther(
         const hidden = document.hidden;
         if (hidden) {
           this.pause();
-        } else if (config.isElementVisible()) {
+        } else if (config.isElementVisible() && !config.isPaused()) {
           this.start();
         }
       };

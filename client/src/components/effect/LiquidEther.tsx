@@ -23,6 +23,9 @@ export interface LiquidEtherProps {
   takeoverDuration?: number;
   autoResumeDelay?: number;
   autoRampDuration?: number;
+  /** When true, the render loop is stopped even while on-screen. Lets a shared
+   *  backdrop keep one live WebGL context but only animate on active slides. */
+  paused?: boolean;
   scrollContainerRef?: React.RefObject<HTMLElement | null>;
 }
 
@@ -48,6 +51,7 @@ export default function LiquidEther({
   takeoverDuration = 0.25,
   autoResumeDelay = 1000,
   autoRampDuration = 0.6,
+  paused = false,
   scrollContainerRef
 }: LiquidEtherProps): React.ReactElement {
   const mountRef = useRef<HTMLDivElement | null>(null);
@@ -56,6 +60,9 @@ export default function LiquidEther({
   const intersectionObserverRef = useRef<IntersectionObserver | null>(null);
   const isVisibleRef = useRef<boolean>(true);
   const resizeRafRef = useRef<number | null>(null);
+  // Kept in a ref so the IntersectionObserver / visibility handlers read the
+  // latest value without re-creating the whole WebGL engine on toggle.
+  const pausedRef = useRef<boolean>(paused);
 
   // Framer Motion scroll and velocity tracking
   const { scrollY } = useScroll(
@@ -97,7 +104,8 @@ export default function LiquidEther({
       autoResumeDelay,
       autoRampDuration,
       getScrollVelocity: () => velocityRef.current,
-      isElementVisible: () => isVisibleRef.current
+      isElementVisible: () => isVisibleRef.current,
+      isPaused: () => pausedRef.current
     });
     webglRef.current = webgl;
 
@@ -121,7 +129,7 @@ export default function LiquidEther({
       if (resolution !== prevRes) sim.resize();
     };
     applyOptionsFromProps();
-    webgl.start();
+    if (!pausedRef.current) webgl.start();
 
     const io = new IntersectionObserver(
       entries => {
@@ -129,7 +137,7 @@ export default function LiquidEther({
         const isVisible = entry.isIntersecting && entry.intersectionRatio > 0;
         isVisibleRef.current = isVisible;
         if (!webglRef.current) return;
-        if (isVisible && !document.hidden) {
+        if (isVisible && !document.hidden && !pausedRef.current) {
           webglRef.current.start();
         } else {
           webglRef.current.pause();
@@ -192,6 +200,18 @@ export default function LiquidEther({
     autoRampDuration,
     scrollContainerRef
   ]);
+
+  // Pause / resume the render loop without tearing down the WebGL context.
+  useEffect(() => {
+    pausedRef.current = paused;
+    const webgl = webglRef.current;
+    if (!webgl) return;
+    if (paused) {
+      webgl.pause();
+    } else if (isVisibleRef.current && !document.hidden) {
+      webgl.start();
+    }
+  }, [paused]);
 
   useEffect(() => {
     const webgl = webglRef.current;

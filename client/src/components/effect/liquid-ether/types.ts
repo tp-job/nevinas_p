@@ -52,4 +52,7 @@ export interface LiquidEtherConfig {
   getScrollVelocity: () => number;
   /** Whether the mount element is currently intersecting the viewport. */
   isElementVisible: () => boolean;
+  /** Whether the React layer has explicitly paused rendering (e.g. the shared
+   *  backdrop is behind an inactive slide). Overrides visibility-based resume. */
+  isPaused: () => boolean;
 }
