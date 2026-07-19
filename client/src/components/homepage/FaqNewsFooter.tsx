@@ -1,5 +1,38 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Assets } from '@/data/homeData';
+
+interface FooterLink {
+  label: string;
+  href: string;
+  ext: boolean;
+  download?: string;
+}
+
+const FOOTER_LINK_COLUMNS: { title: string; links: FooterLink[] }[] = [
+  {
+    title: 'Connect',
+    links: [
+      { label: 'GitHub', href: 'https://github.com/tp-job', ext: true },
+      { label: 'Instagram', href: 'https://www.instagram.com/tp_job_th/?hl=en', ext: true },
+      { label: 'Twitter / X', href: 'https://x.com/nevinas_ka', ext: true },
+      { label: 'Email', href: 'mailto:nevinasv@gmail.com', ext: true },
+    ],
+  },
+  {
+    title: 'Quick Links',
+    links: [
+      { label: 'Home', href: '#top', ext: false },
+      { label: 'About', href: '#about', ext: false },
+      { label: 'Timeline', href: '#timeline', ext: false },
+      { label: 'Contact', href: '#contact', ext: false },
+    ],
+  },
+  {
+    title: 'Download',
+    links: [{ label: 'Resume PDF', href: Assets.resume, ext: true, download: 'resume-nevinas-ka.pdf' }],
+  },
+];
 
 const faqData = [
   { q: "What technologies do you work with?", a: "I work with React, Next.js, TypeScript, TailwindCSS, Three.js, Flask, Python, and Node.js. I'm comfortable across the full stack but my passion is creating exceptional frontend experiences with performant, clean architecture." },
@@ -7,8 +40,8 @@ const faqData = [
   { q: "What is your design philosophy?", a: "I believe in intentional design — every pixel, interaction, and line of code should serve a purpose. Inspired by Japanese minimalism, I create interfaces where restraint and precision lead to experiences that feel effortless to use." },
   { q: "What is your development process?", a: "I start with understanding the problem deeply, then prototype rapidly, iterate with feedback, and deliver production-ready code. I prioritize performance, accessibility, and maintainability throughout every project lifecycle." },
   { q: "What is 異世界 (Isekai) in your portfolio context?", a: "Isekai (異世界) means \"another world\" in Japanese — it reflects my belief that great web experiences should transport users into a world entirely their own. My portfolio is built in that spirit: immersive, precise, and otherworldly." },
-  { q: "How do you approach performance optimization?", a: "Performance is non-negotiable. I target 60FPS with careful use of requestAnimationFrame, CSS transforms over layout-triggering properties, lazy loading, and Three.js optimizations. This portfolio itself runs at 60FPS with multiple WebGL renderers." },
-  { q: "How can we get in touch?", a: "Scroll to the Contact slide using the nav above, or reach out directly at hello@nevinas.dev — I respond within 24 hours and love discussing ambitious projects, creative collaborations, or just great ideas." }
+  { q: "How do you approach performance optimization?", a: "Performance is non-negotiable. I target 60FPS with careful use of requestAnimationFrame, CSS transforms over layout-triggering properties, lazy loading, and Three.js optimizations. This portfolio itself runs at a steady 60FPS on a single shared WebGL renderer." },
+  { q: "How can we get in touch?", a: "Scroll to the Contact slide using the nav above, or reach out directly at nevinasv@gmail.com — I respond within 24 hours and love discussing ambitious projects, creative collaborations, or just great ideas." }
 ];
 
 const FaqNewsFooter: React.FC = () => {
@@ -178,20 +211,29 @@ const FaqNewsFooter: React.FC = () => {
       </div>
 
       {/* FOOTER LINKS */}
-      <div className="grid grid-cols-2 md:grid-cols-4 border-b border-midnight/10 dark:border-periwinkle/10">
-        {[
-          { title: "Connect", links: ["GitHub", "LinkedIn", "Twitter / X", "Medium"] },
-          { title: "Quick Links", links: ["Home", "About", "Timeline", "Contact"], noExt: true },
-          { title: "Legal", links: ["Privacy Policy", "Cookie Policy", "Terms of Service"], noExt: true },
-          { title: "Download", links: ["Resume PDF", "Portfolio PDF"] }
-        ].map((col, i) => (
+      <div className="grid grid-cols-2 md:grid-cols-3 border-b border-midnight/10 dark:border-periwinkle/10">
+        {FOOTER_LINK_COLUMNS.map((col, i) => (
           <div key={i} className="p-4 md:p-6 md:border-r border-midnight/5 dark:border-periwinkle/5 last:border-r-0">
             <div className="font-[var(--fm)] text-[0.55rem] tracking-[0.22em] uppercase text-light-text-muted dark:text-dark-text-muted mb-3">{col.title}</div>
             <div className="flex flex-col gap-1">
-              {col.links.map((link, j) => (
-                <a key={j} href="#" className="flex justify-between items-center font-[var(--fm)] text-[0.65rem] text-light-text-secondary dark:text-dark-text-secondary hover:text-matte-azure transition-colors py-0.5 group">
-                  {link}
-                  {!col.noExt && <span className="opacity-30 text-[0.5em] ml-1 group-hover:opacity-100 transition-opacity">↗</span>}
+              {col.links.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  {...(link.download ? { download: link.download } : {})}
+                  {...(link.ext && !link.download ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  onClick={
+                    link.href.startsWith('#')
+                      ? (e) => {
+                          e.preventDefault();
+                          document.getElementById(link.href.slice(1))?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                      : undefined
+                  }
+                  className="flex justify-between items-center font-[var(--fm)] text-[0.65rem] text-light-text-secondary dark:text-dark-text-secondary hover:text-matte-azure transition-colors py-0.5 group"
+                >
+                  {link.label}
+                  {link.ext && <span className="opacity-30 text-[0.5em] ml-1 group-hover:opacity-100 transition-opacity">↗</span>}
                 </a>
               ))}
             </div>

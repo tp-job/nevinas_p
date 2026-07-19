@@ -17,34 +17,9 @@ const heroArt = Assets.heroArt;
  * - Removed Tailwind classes that conflicted with CSS module grid
  */
 
-const awards = [
-  {
-    title: 'Best Frontend Experience\nof the Year',
-    year: '2026',
-    src: 'AWWWARDS',
-    logo: 'W.',
-    logoStyle: undefined as React.CSSProperties | undefined,
-  },
-  {
-    title: "'Developer of the Year'\nNominee",
-    year: '2025',
-    src: 'CSS DESIGN AWARDS',
-    logo: '◈',
-    logoStyle: undefined as React.CSSProperties | undefined,
-  },
-  {
-    title: "'Studio of the Year'\nNominee",
-    year: '2025',
-    src: 'THE WEBBY AWARDS',
-    logo: '彡',
-    // blueprint: font-family var(--fj), font-weight 200
-    logoStyle: { fontFamily: 'var(--fj, "Noto Serif JP", serif)', fontWeight: 200 } as React.CSSProperties,
-  },
-];
-
 const AgencySection: React.FC = () => {
   return (
-    /* Root element IS the 5-row grid — no wrapper divs */
+    /* Root element IS the 4-row grid — no wrapper divs */
     <div className={styles.agencySlide}>
 
       {/* ── ROW 1: Arrow (28%) + Nebula hero (72%) */}
@@ -157,7 +132,13 @@ const AgencySection: React.FC = () => {
             <span className={styles.downArr}>↓</span>
           </div>
 
-          <button className={styles.cta} type="button">
+          <button
+            className={styles.cta}
+            type="button"
+            onClick={() =>
+              document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }
+          >
             Get in touch <span className={styles.ctaArr}>→</span>
           </button>
         </div>
@@ -167,32 +148,6 @@ const AgencySection: React.FC = () => {
           <div className={styles.moodRing} />
           <div className={styles.moodLabel}>異世界 / ISEKAI</div>
         </div>
-      </div>
-
-      {/* ── ROW 5: Awards — flat border style, no rounded cards */}
-      <div className={styles.awards}>
-        {awards.map((award, i) => (
-          <div key={i} className={styles.award}>
-            {/* top: title + year */}
-            <div>
-              <div className={styles.awardTitle}>
-                {award.title.split('\n').map((line, j, arr) => (
-                  <React.Fragment key={j}>
-                    {line}
-                    {j < arr.length - 1 && <br />}
-                  </React.Fragment>
-                ))}
-              </div>
-              <div className={styles.awardYear}>{award.year}</div>
-            </div>
-            {/* bottom: source label */}
-            <div className={styles.awardSrc}>{award.src}</div>
-            {/* absolute logo glyph */}
-            <div className={styles.awardLogo} style={award.logoStyle}>
-              {award.logo}
-            </div>
-          </div>
-        ))}
       </div>
 
     </div>

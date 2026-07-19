@@ -77,7 +77,7 @@ const Header: FC = () => {
 
         {/* Name badge */}
         <h3 className="flex items-end gap-4 mb-1 text-xl md:text-2xl text-light-text dark:text-white font-medium select-text">
-          Hi I'm Nevinas
+          Hi, I'm Nevinas
           <i className="ri-check-line text-base text-center text-dark-text-primary bg-periwinkle rounded-full px-1" />
         </h3>
 

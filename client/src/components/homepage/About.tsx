@@ -53,7 +53,7 @@ const About: FC = () => {
               ))}
             </ul>
             <h4 className="my-6 text-haze dark:text-cool">
-              Tools i use
+              Tools I use
             </h4>
             <ul className="flex items-center gap-3 sm:gap-5">
               {DataTools.map((items) => (

@@ -13,8 +13,8 @@ interface AltAction {
 }
 
 const ALTERNATIVES: AltAction[] = [
-    { name: 'hello@nevinas.dev', action: 'COPY', kind: 'copy', value: 'hello@nevinas.dev' },
     { name: 'nevinasv@gmail.com', action: 'COPY', kind: 'copy', value: 'nevinasv@gmail.com' },
+    { name: 'Instagram', action: 'VISIT ↗', kind: 'link', value: 'https://www.instagram.com/tp_job_th/?hl=en' },
     { name: 'GitHub', action: 'VISIT ↗', kind: 'link', value: 'https://github.com/tp-job' },
     { name: 'Twitter / X', action: 'FOLLOW ↗', kind: 'link', value: 'https://x.com/nevinas_ka' },
     { name: 'Resume PDF', action: 'DOWNLOAD ↓', kind: 'download', value: Assets.resume },

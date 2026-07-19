@@ -25,11 +25,10 @@
   text-align: left;
   display: grid;
   grid-template-rows:
-    32vh   /* row 1: arrow + nebula */
-    10vh   /* row 2: desc 3-col */
-    3vh    /* row 3: year */
-    31vh   /* row 4: statement + cta */
-    24vh;  /* row 5: awards */
+    38vh   /* row 1: arrow + nebula */
+    12vh   /* row 2: desc 3-col */
+    4vh    /* row 3: year */
+    46vh;  /* row 4: statement + cta */
   overflow: hidden;
 }
 

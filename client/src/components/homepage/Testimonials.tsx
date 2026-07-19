@@ -24,21 +24,21 @@ const TESTIMONIALS: Testimonial[] = [
     source: '©',
   },
   {
-    quote: "KYBR's craftsmanship is in a league of its own. The tactile precision of the OP-1 transformed our entire workflow — the kind of tool that makes you fall in love with the process again.",
+    quote: "Nevinas' craftsmanship is in a league of its own. Every animation and interaction felt deliberate — the kind of frontend work that makes you fall in love with the web again.",
     name: 'Yuki Tanaka',
     role: 'Lead Designer, Muji Studio Tokyo',
     initials: 'YT',
     source: '★',
   },
   {
-    quote: "We evaluated dozens of controllers before choosing KYBR. The polymer keycap system and lock-in display are genuine innovations — not marketing language. It simply works, every time.",
+    quote: "We reviewed dozens of portfolios before this collaboration. The clean architecture and attention to performance are genuine strengths — not marketing language. It simply works, every time.",
     name: 'Sofia Marchetti',
     role: 'Director of Engineering, Braun Heritage',
     initials: 'SM',
     source: '⊕',
   },
   {
-    quote: "From unboxing to first use, the attention to detail is extraordinary. Small magic moments — the weight, the click, the silence of a well-engineered mechanism. Truly iconic.",
+    quote: "From the first prototype to launch, the attention to detail was extraordinary. Small magic moments — the motion, the typography, the quiet precision of a well-engineered interface.",
     name: 'Marcus Okonkwo',
     role: 'Creative Director, Colour & Form',
     initials: 'MO',
@@ -231,13 +231,21 @@ const Testimonials: React.FC = () => {
         </p>
         <div className="flex items-center justify-center gap-3">
           <a
-            href="#"
+            href="#contact"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
             className={`${styles.shimmerHover} text-[13px] font-medium py-3.5 px-9 rounded-full bg-light-text dark:bg-dark-text text-dark-text-primary dark:text-midnight no-underline shadow-md relative overflow-hidden`}
           >
             Get in Touch →
           </a>
           <a
-            href="#"
+            href="#work"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('work')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
             className={`${styles.neuBtn} text-[13px] font-medium py-3.5 px-9 text-light-text dark:text-dark-text no-underline inline-block`}
           >
             View All Work

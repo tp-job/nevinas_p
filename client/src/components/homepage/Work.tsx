@@ -15,7 +15,7 @@ const Work: FC = () => {
         私の最新の作品
       </h3>
       <p className="max-w-2xl mx-auto mt-5 mb-12 text-center text-[var(--color-text-secondary)]">
-        Welcome to my web development portfolio Explore a collection of projects
+        Welcome to my web development portfolio. Explore a collection of projects
         showcasing my expertise in front-end development.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 my-10 auto-rows-[minmax(300px,auto)]">
