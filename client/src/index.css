@@ -170,7 +170,48 @@
 /* External Libraries */
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SELF-HOSTED FONTS  (previously 2 render-blocking <link>s to Google Fonts)
+   ───────────────────────────────────────────────────────────────────────────
+   Loading these from fonts.googleapis.com cost the critical path two extra
+   origins (DNS + TLS + HTTP to googleapis, then again to gstatic) before a
+   single glyph could paint — the dominant FCP cost on a throttled mobile
+   connection. Inter was also downloaded TWICE: once from Google and once from
+   the @fontsource package below.
+
+   Bundling through Vite instead makes every face a same-origin, content-hashed,
+   immutably-cacheable asset, and lets the CSS be minified into the main sheet.
+
+   LATIN SUBSETS ONLY — deliberately. The CJK families ship as 100+ numbered
+   subset files (Zen Kaku 24 MB, Noto Serif JP 20 MB on disk); importing their
+   full index.css would emit hundreds of @font-face rules into the
+   render-blocking stylesheet. The site uses only ~151 distinct Japanese
+   glyphs, which are served instead by a tiny `text=`-scoped subset requested
+   asynchronously from index.html.
+   ═══════════════════════════════════════════════════════════════════════════ */
 @import "@fontsource-variable/inter";
+
+/* Zen Kaku Gothic New — --font-zen, the most-used display face (40 refs) */
+@import "@fontsource/zen-kaku-gothic-new/latin-400.css";
+@import "@fontsource/zen-kaku-gothic-new/latin-500.css";
+@import "@fontsource/zen-kaku-gothic-new/latin-700.css";
+
+/* DM Mono — --fm / --font-mono, weights 300 & 400 as used */
+@import "@fontsource/dm-mono/latin-300.css";
+@import "@fontsource/dm-mono/latin-400.css";
+
+/* Bricolage Grotesque — --fd, large display headings (weight axis only) */
+@import "@fontsource-variable/bricolage-grotesque/wght.css";
+
+/* Remix Icon — was a third render-blocking request to cdnjs.cloudflare.com.
+   Now same-origin and, crucially, SUBSET: the upstream sheet is 154 kB of
+   ~3,245 rules for ~2,800 icons, of which this site uses ~125. Importing it
+   whole added ~21 kB gzip to this render-blocking stylesheet. The generated
+   subset is 7 kB and also drops the eot/ttf/woff/svg @font-face fallbacks that
+   were copying >4.5 MB of never-requested assets into dist.
+   Regenerate after adding icons: npm run icons:subset */
+@import "./styles/vendor/remixicon-subset.css";
 
 /* ═══════════════════════════════════════════════════════════════════════════
    DARK MODE — UNLAYERED SEMANTIC TOKEN OVERRIDES

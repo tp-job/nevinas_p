@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState, type FC } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useTheme } from "@/context/ThemeContext";
+import { useDeviceProfile } from "@/hooks/useDeviceCapability";
 
 // three.js lives entirely inside LiquidEther. Lazy-importing it keeps the ~500 KB
 // three-vendor chunk off the homepage's critical path — it now loads on idle,
@@ -49,15 +50,34 @@ interface LiquidEtherBackdropProps {
 const LiquidEtherBackdrop: FC<LiquidEtherBackdropProps> = ({ active = true }) => {
   const reduced = useReducedMotion();
   const { isDark } = useTheme();
+  const { isMobile, reducedMotion } = useDeviceProfile();
   const [mountEffect, setMountEffect] = useState(false);
   const idleRef = useRef<number | null>(null);
+
+  // Gated on MOBILE, not on the general capability tier.
+  //
+  // Every desktop and laptop gets the fluid sim, including modest ones — this
+  // is the signature backdrop of the site and it is worth the frames there.
+  // Phones and tablets do not: a full-screen viscous solve every frame is the
+  // single largest drain on a handheld's battery and thermals, and it competes
+  // with scrolling for the main thread. The radial-gradient placeholder below
+  // is the dominant tone of the effect anyway, so those devices still get the
+  // intended look, just static.
+  //
+  // reducedMotion is honoured separately — that is an accessibility
+  // preference, not a performance guess, so it wins on any device.
+  const allowEffect = !isMobile && !reducedMotion && !reduced;
 
   // Stable per-theme references — only remounts the WebGL colors on theme flip.
   const palette = isDark ? ETHER_PALETTE_DARK : ETHER_PALETTE_LIGHT;
   const placeholder = isDark ? PLACEHOLDER_DARK : PLACEHOLDER_LIGHT;
 
   useEffect(() => {
-    if (reduced) return;
+    if (!allowEffect) {
+      // Tier can settle to 'low' after mount; tear the sim down if it does.
+      setMountEffect(false);
+      return;
+    }
     // Defer WebGL init until the browser is idle so it never competes with the
     // initial render / hydration. Falls back to a timeout where rIC is missing.
     const ric = window.requestIdleCallback;
@@ -69,7 +89,7 @@ const LiquidEtherBackdrop: FC<LiquidEtherBackdropProps> = ({ active = true }) =>
     }
     const t = window.setTimeout(() => setMountEffect(true), 1500);
     return () => window.clearTimeout(t);
-  }, [reduced]);
+  }, [allowEffect]);
 
   return (
     <motion.div

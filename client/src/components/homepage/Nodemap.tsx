@@ -149,10 +149,50 @@ const NodeMap: React.FC = () => {
         className={`${styles.orbFloat} absolute w-[400px] h-[400px] rounded-full top-1/2 left-1/2 pointer-events-none bg-[radial-gradient(circle,theme(--color-cool-pale/.15),transparent_70%)]`}
       />
 
-      <div style={{ padding: '7rem 4rem 5rem', position: 'relative' }}>
+      {/* Padding was a flat inline '7rem 4rem 5rem'. On a 375 px phone the 4rem
+          side padding alone ate 128 px — a third of the screen — which is what
+          crushed the content below into unreadable columns. */}
+      <div className="relative px-5 pt-20 pb-14 sm:px-10 md:px-16 md:pt-28 md:pb-20">
 
-        {/* ── NODE MAP CANVAS ── */}
-        <div style={{ position: 'relative', width: '100%', height: 300, maxWidth: 900, margin: '0 auto' }}>
+        {/* ── MOBILE COMPOSITION ──────────────────────────────────────────────
+            The node map below is a FIXED 900×300 canvas: its SVG scales with
+            preserveAspectRatio but the pills and dot-labels are absolutely
+            positioned at design-pixel offsets (left: 654, left: 760 …), so they
+            do NOT scale. Under ~768 px they pile onto the centred hub — that is
+            the "FIX. LEARN." text colliding with the hub icon on phones.
+
+            A 900 px diagram cannot reflow into 375 px, and scaling it to fit
+            would render the labels at ~5 px. Since the map is decorative — it
+            illustrates the FIX / LEARN / PREVENT idea rather than carrying
+            content — phones get the same message as a legible centred stack,
+            and the full diagram returns at md. */}
+        <div className="md:hidden flex flex-col items-center text-center gap-6">
+          <div
+            className={styles.neu}
+            style={{
+              width: 96, height: 96, borderRadius: 24,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+          >
+            <HubIcon />
+          </div>
+          <h2 className="text-[clamp(1.5rem,7vw,2.25rem)] font-bold tracking-[-0.02em] leading-tight text-light-text dark:text-dark-text text-balance">
+            Fix. Learn. Prevent.
+          </h2>
+          <ul className="flex flex-wrap justify-center gap-2 list-none p-0 m-0">
+            {['Customer', 'Code', 'Bug', 'Issues', 'Ticket', 'Commit', 'PR'].map((label) => (
+              <li
+                key={label}
+                className={`${styles.glass} rounded-full px-3.5 py-1.5 text-[12px] font-medium text-haze dark:text-cool`}
+              >
+                {label}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* ── NODE MAP CANVAS (md and up) ── */}
+        <div className="hidden md:block" style={{ position: 'relative', width: '100%', height: 300, maxWidth: 900, margin: '0 auto' }}>
 
           {/* SVG connectors */}
           <svg
@@ -219,7 +259,7 @@ const NodeMap: React.FC = () => {
         </div>
 
         {/* ── CTA BELOW MAP ── */}
-        <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+        <div style={{ textAlign: 'center' }} className="mt-10 md:mt-12">
           <p className="text-[15px] font-normal leading-[1.8] text-haze dark:text-cool max-w-[360px] mx-auto mb-7">
             Crafting responsive, high-performance, and pixel-perfect web interfaces using modern frontend standards.
           </p>
@@ -237,13 +277,16 @@ const NodeMap: React.FC = () => {
       </div>
 
       {/* ── SOCIAL PROOF BAR ── */}
-      <div style={{ padding: '0 2.5rem 5rem' }}>
+      <div className="px-5 pb-16 sm:px-10 md:px-10 md:pb-20">
+        {/* `repeat(4,1fr)` was hard-coded inline, so it never collapsed. On a
+            375 px phone the four columns were left ~30 px each after padding —
+            which is why "5+ Projects" broke onto two lines and the kmitl quote
+            rendered one word per line. auto-fit + a 200 px floor keeps the
+            four-across desktop layout while collapsing to 2 columns on tablets
+            and a single readable column on phones. */}
         <div
-          className={styles.glass}
-          style={{
-            borderRadius: '1.5rem', padding: '2.5rem',
-            display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '2rem',
-          }}
+          className={`${styles.glass} grid gap-6 md:gap-8 rounded-3xl p-6 md:p-10
+                      [grid-template-columns:repeat(auto-fit,minmax(200px,1fr))]`}
         >
           {/* Stat 1 */}
           <div>
@@ -292,14 +335,20 @@ const NodeMap: React.FC = () => {
       </div>
 
       {/* ── SIM-1 ── */}
-      <div className="relative py-24 px-16 grid grid-cols-2 gap-12 items-center border-t border-midnight/10 dark:border-periwinkle/10">
+      {/* grid-cols-2 + px-16 were unconditional: on a 375 px phone that left
+          each column ~91 px wide, so the headline below wrapped one word per
+          line. Single column until md, with side padding scaled to the screen. */}
+      <div className="relative py-16 px-5 sm:px-10 md:py-24 md:px-16 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center border-t border-midnight/10 dark:border-periwinkle/10">
         <div style={{ position: 'relative', zIndex: 2 }}>
           <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-haze dark:text-cool mb-6">
             Core Philosophy
           </p>
-          <h2 className="text-[clamp(26px,4vw,50px)] font-light leading-[1.1] tracking-[-0.025em] text-light-text dark:text-dark-text">
-            Clean Engineering<br />
-            <span className="text-haze dark:text-cool">Optimized for speed and accessibility with</span><br />
+          {/* The <br>s are the desktop's deliberate line composition. On a phone
+              they land mid-thought on top of the natural wrap, so they are
+              dropped below md and the browser balances the lines instead. */}
+          <h2 className="text-[clamp(26px,6.5vw,50px)] font-light leading-[1.15] tracking-[-0.025em] text-light-text dark:text-dark-text text-pretty">
+            Clean Engineering<br className="hidden md:inline" />{' '}
+            <span className="text-haze dark:text-cool">Optimized for speed and accessibility with</span><br className="hidden md:inline" />{' '}
             <em className="italic font-normal">interactive web components</em>
           </h2>
           <p className="text-[15px] font-normal leading-[1.8] text-haze dark:text-cool max-w-[300px] mt-8 mb-8">
@@ -317,10 +366,10 @@ const NodeMap: React.FC = () => {
       </div>
 
       {/* ── DEBUG EDITORIAL ── */}
-      <div className="py-20 px-16 pb-24 grid grid-cols-2 gap-16 items-end border-t border-midnight/10 dark:border-periwinkle/10">
-        <h2 className="text-[clamp(30px,4.5vw,58px)] font-light leading-[1.08] tracking-[-0.03em] text-light-text dark:text-dark-text">
-          Designing systems that scale,<br />
-          <span className="text-periwinkle-mid dark:text-haze-light">with readable clean code</span><br />
+      <div className="py-14 px-5 pb-16 sm:px-10 md:py-20 md:px-16 md:pb-24 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 md:items-end border-t border-midnight/10 dark:border-periwinkle/10">
+        <h2 className="text-[clamp(30px,7vw,58px)] font-light leading-[1.12] tracking-[-0.03em] text-light-text dark:text-dark-text text-pretty">
+          Designing systems that scale,<br className="hidden md:inline" />{' '}
+          <span className="text-periwinkle-mid dark:text-haze-light">with readable clean code</span><br className="hidden md:inline" />{' '}
           and solid architecture
         </h2>
         <div className="border-l-2 border-light-border dark:border-dark-border pl-6">

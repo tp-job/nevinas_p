@@ -20,6 +20,17 @@ export default defineConfig({
       '/uploads': { target: 'http://localhost:3000', changeOrigin: true },
     },
   },
+  // `vite preview` serves the real production build (hashed chunks, minified),
+  // which is the only way to exercise code-splitting locally. It needs the same
+  // backend proxy as the dev server, otherwise every /work route trips the
+  // global 5xx error overlay and can't be verified.
+  preview: {
+    port: 10006,
+    proxy: {
+      '/api': { target: 'http://localhost:3000', changeOrigin: true },
+      '/uploads': { target: 'http://localhost:3000', changeOrigin: true },
+    },
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
@@ -30,27 +41,21 @@ export default defineConfig({
     // chunks so the main app bundle stays small and vendors download in
     // parallel (and stay cached across deploys since they rarely change).
     chunkSizeWarningLimit: 900,
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (!id.includes('node_modules')) return
-          // three.js (and @react-three/*) has no runtime dependency on React
-          // internals at module-init time, so it's safe to isolate — it never
-          // calls e.g. React.forwardRef() at the top level.
-          if (id.includes('three') || id.includes('@react-three')) return 'three-vendor'
-          // Everything else (react, react-dom, react-router, framer-motion,
-          // gsap, recharts + its react-redux/@reduxjs/toolkit dependencies,
-          // icons, mui, d3-*, victory) stays in ONE chunk. Splitting these
-          // apart by substring previously created a circular dependency
-          // between chunks (recharts → react-redux → react, but react-redux
-          // and react-redux's own react-toolkit deps landed in different
-          // chunks) which made "React" read as undefined mid-cycle —
-          // surfacing as "Cannot read properties of undefined (reading
-          // 'forwardRef')" in production only, since dev's non-bundled ESM
-          // graph never hit the cycle.
-          return 'vendor'
-        },
-      },
-    },
+    // NO manualChunks. A hand-rolled substring-based manualChunks previously
+    // caused a production-only "Cannot read properties of undefined (reading
+    // 'forwardRef')" — splitting by substring can place two modules of one
+    // dependency cycle into different chunks, so a chunk reads an import
+    // before the cycle has initialised it.
+    //
+    // Lumping everything into one 'vendor' chunk fixed that crash, but cost
+    // far more than it saved: recharts, @xyflow, react-markdown, gsap and
+    // animejs are reachable ONLY from lazy routes, yet every homepage visitor
+    // downloaded them inside the 1 MB vendor bundle.
+    //
+    // Rollup's automatic chunking is cycle-safe by construction (it groups
+    // modules by the set of entry/dynamic chunks that reach them, so a cycle
+    // can never straddle a chunk boundary) AND splits along the existing
+    // React.lazy() route boundaries. That gives correct output and a much
+    // smaller homepage critical path, so we simply let it do its job.
   },
 })

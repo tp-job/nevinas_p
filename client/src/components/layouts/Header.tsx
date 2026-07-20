@@ -75,21 +75,25 @@ const Header: FC = () => {
           </button>
         </div>
 
-        {/* Name badge */}
-        <h3 className="flex items-end gap-4 mb-1 text-xl md:text-2xl text-light-text dark:text-white font-medium select-text">
+        {/* Name badge — a greeting that introduces the <h1>, not a section
+            heading. It was an <h3>, which made the page open at level 3 and
+            then jump to <h1>, failing Lighthouse's sequential heading-order
+            check. <p> is both accessible and semantically truer. */}
+        <p className="flex items-end justify-center gap-4 mb-1 text-xl md:text-2xl text-light-text dark:text-white font-medium select-text">
           Hi, I'm Nevinas
-          <i className="ri-check-line text-base text-center text-dark-text-primary bg-periwinkle rounded-full px-1" />
-        </h3>
+          <i aria-hidden="true" className="ri-check-line text-base text-center text-dark-text-primary bg-periwinkle rounded-full px-1" />
+        </p>
 
-        {/* Headline */}
+        {/* Headline — the page's single <h1> */}
         <h1 className="text-3xl sm:text-5xl lg:text-[56px] text-light-text dark:text-dark-text font-normal leading-tight tracking-tight select-text">
           Frontend web developer based in Isekai
         </h1>
 
-        {/* Sub-heading */}
-        <h4 className="max-w-2xl mx-auto font-zen text-light-text-secondary dark:text-dark-text-secondary font-light select-text">
+        {/* Sub-heading — supporting copy for the <h1>; was an <h4>, which
+            skipped levels 2 and 3. */}
+        <p lang="ja" className="max-w-2xl mx-auto font-zen text-light-text-secondary dark:text-dark-text-secondary font-light select-text">
           私の名前はネヴィナスです。異世界出身のフロントエンド開発者です。
-        </h4>
+        </p>
 
         {/* CTA buttons */}
         <div className="flex flex-col items-center gap-4 mt-4 sm:flex-row">

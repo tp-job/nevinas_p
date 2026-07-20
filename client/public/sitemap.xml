@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://nevinas-p.onrender.com/</loc><priority>1.0</priority></url>
+  <url><loc>https://nevinas-p.onrender.com/work/dashboard</loc><priority>0.8</priority></url>
+  <url><loc>https://nevinas-p.onrender.com/work/website</loc><priority>0.7</priority></url>
+  <url><loc>https://nevinas-p.onrender.com/work/react</loc><priority>0.7</priority></url>
+  <url><loc>https://nevinas-p.onrender.com/work/tailwindcss</loc><priority>0.7</priority></url>
+  <url><loc>https://nevinas-p.onrender.com/work/tech-stack</loc><priority>0.7</priority></url>
+  <url><loc>https://nevinas-p.onrender.com/work/performance</loc><priority>0.7</priority></url>
+  <url><loc>https://nevinas-p.onrender.com/work/repository</loc><priority>0.7</priority></url>
+  <url><loc>https://nevinas-p.onrender.com/work/tooling</loc><priority>0.6</priority></url>
+  <url><loc>https://nevinas-p.onrender.com/work/docs</loc><priority>0.6</priority></url>
+  <url><loc>https://nevinas-p.onrender.com/work/gallery</loc><priority>0.6</priority></url>
+  <url><loc>https://nevinas-p.onrender.com/work/blog</loc><priority>0.6</priority></url>
+  <url><loc>https://nevinas-p.onrender.com/work/flutter</loc><priority>0.6</priority></url>
+</urlset>

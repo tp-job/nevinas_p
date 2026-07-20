@@ -68,6 +68,64 @@ const HomePage: FC = () => {
     [slidesList],
   );
 
+  // ── Progressive slide mounting ───────────────────────────────────────────
+  // Only slides within one step of the active one are mounted. At first paint
+  // that means 2 slides instead of ~18, which is the single biggest lever on
+  // Total Blocking Time — previously the initial render had to construct every
+  // section of the site (bento grid, node map, charts, testimonials, contact…)
+  // before the header could become interactive.
+  //
+  // The set only ever GROWS. Unmounting slides after they scroll away would
+  // reclaim more memory, but it would also re-run their entry animations and
+  // discard internal scroll position each time the user scrolled back — jank
+  // that costs more than it saves. Growing means a full scroll-through ends up
+  // at today's memory usage, while the initial load (what a cold visit and
+  // Lighthouse both measure) is dramatically cheaper.
+  const [mountedSlides, setMountedSlides] = useState<Set<number>>(() => new Set([0, 1]));
+
+  // Growth is deliberately withheld until the user actually scrolls.
+  //
+  // activeSlide comes from an IntersectionObserver over 18 full-height
+  // sentinels. While the first paint is still settling — svh resolving, fonts
+  // swapping, images landing — that observer can briefly report a slide far
+  // from the top. Because the mounted set only grows, one such transient blip
+  // permanently mounts a band of heavy slides, and the cost is paid forever.
+  // That showed up as a bimodal cold-load: most runs mounted 2 slides, some
+  // mounted many and spent 1.5-2s in mount work (16-20 long tasks vs 3).
+  //
+  // A real visitor cannot reach slide N without scrolling, so treating "has
+  // scrolled" as the precondition costs nothing and makes the cold load
+  // deterministic.
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el || hasScrolled) return;
+    const onScroll = () => {
+      if (el.scrollTop > 0) setHasScrolled(true);
+    };
+    // Anchor navigation (e.g. href="#work") also scrolls the container, so this
+    // covers programmatic jumps as well as user input.
+    el.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // catch a restored scroll position on mount
+    return () => el.removeEventListener('scroll', onScroll);
+  }, [hasScrolled]);
+
+  useEffect(() => {
+    if (!hasScrolled) return;
+    setMountedSlides((prev) => {
+      const next = new Set(prev);
+      let grew = false;
+      for (const i of [activeSlide - 1, activeSlide, activeSlide + 1]) {
+        if (i >= 0 && i < slidesList.length && !next.has(i)) {
+          next.add(i);
+          grew = true;
+        }
+      }
+      return grew ? next : prev;
+    });
+  }, [activeSlide, slidesList.length, hasScrolled]);
+
   // Track active slide based on sentinels for color changing
   useEffect(() => {
     let timeoutId: number;
@@ -155,6 +213,7 @@ const HomePage: FC = () => {
                 scrollable={slide.scrollable}
                 sentinelRef={sentinelRefs[i]}
                 scrollContainerRef={scrollRef}
+                mounted={mountedSlides.has(i)}
               >
                 {slide.content}
               </SlideWrapper>

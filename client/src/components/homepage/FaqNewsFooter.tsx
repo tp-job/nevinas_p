@@ -51,7 +51,9 @@ const FaqNewsFooter: React.FC = () => {
     <div className="bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text flex flex-col w-full overflow-hidden min-h-svh">
       
       {/* META BAR */}
-      <div className="grid grid-cols-4 border-b border-midnight/10 dark:border-periwinkle/10">
+      {/* 4 across on a 375 px screen gave each cell ~94 px, so the already-tiny
+          0.5rem label wrapped. 2 across on phones, 4 from sm up. */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 border-b border-midnight/10 dark:border-periwinkle/10">
         {[1, 2, 3, 4].map((i) => (
           <div key={i} className="px-4 py-2 border-r border-midnight/10 dark:border-periwinkle/10 last:border-r-0 flex items-center gap-2 font-[var(--fm)] text-[0.5rem] tracking-[0.2em] uppercase text-light-text-secondary dark:text-dark-text-secondary">
             <div className="w-1.5 h-1.5 rounded-full bg-matte-royal" />

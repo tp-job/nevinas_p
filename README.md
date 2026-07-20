@@ -1,139 +1,175 @@
-# Nevinas — Developer Portfolio & Work Hub
+# Nevinas-ka
 
-> โปรเจกต์ **nevinas_ka_i** — แพลตฟอร์มรวมผลงานและเอกสารสำหรับ Developer
+> 異世界 — *another world.*
+> A frontend portfolio built as a single, continuous experience where restraint and precision lead to interfaces that feel effortless.
 
-## Project Title & Description
+[![React](https://img.shields.io/badge/React-19-149eca?logo=react&logoColor=white)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-7-646cff?logo=vite&logoColor=white)](https://vite.dev)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38bdf8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 
-**Nevinas** เป็นแพลตฟอร์มรวมผลงานและศูนย์กลางข้อมูลสำหรับ Developer — รวม Dashboard แบบ Real-time, เอกสาร API/โปรเจกต์, Gallery, Blog และการซิงค์กับ GitHub ไว้ในที่เดียว
-
-**Value Proposition:** ลดเวลาในการจัดเก็บและนำเสนอผลงาน, เอกสารเทคนิค และเมตริกจาก GitHub ให้ทีมหรือผู้สนใจเข้าถึงได้ง่ายผ่าน UI ที่ทันสมัยและมี Analytics ชัดเจน
-
----
-
-## Tech Stack
-
-| Layer      | Technologies |
-|-----------|--------------|
-| **Frontend** | React 19, TypeScript, Vite 7, Tailwind CSS 4, MUI (Material UI), Recharts / MUI X-Charts, React Router, Axios |
-| **Backend**  | Node.js, Express 5, TypeScript, Mongoose (MongoDB), JWT, Helmet, Multer, node-cron |
-| **Database** | MongoDB |
-| **Tools**    | Git, ESLint, dotenv |
+**Experience it live →** https://nevinas-p.onrender.com/
 
 ---
 
-## Getting Started
+## Table of Contents
 
-### Prerequisites
+- [Design Philosophy](#design-philosophy)
+- [The Experience](#the-experience)
+- [Design System](#design-system)
+  - [Color](#color)
+  - [Typography](#typography)
+  - [Surface & Depth](#surface--depth)
+  - [Motion](#motion)
+- [Architecture of the System](#architecture-of-the-system)
+- [Signature Craft](#signature-craft)
+- [Explore Locally](#explore-locally)
 
-- **Node.js** (v18+)
-- **MongoDB** (รัน locally หรือใช้ Atlas)
-- **npm** หรือ yarn
+---
 
-### Step 1: Clone repository
+## Design Philosophy
 
-```bash
-git clone <repository-url>
-cd nevinas_ka_i
+Every pixel, every interaction, and every line of code should serve a purpose.
+
+Nevinas-ka is built on **intentional design** — a belief drawn from Japanese
+minimalism (間, *ma* — the meaningful use of negative space) that restraint is
+not the absence of expression but its sharpest form. Nothing decorates for its
+own sake; motion earns its place by guiding attention, and silence between
+elements is treated as a material, not a gap.
+
+The result is an interface that feels *quiet* — precise, immersive, and
+otherworldly. A portfolio that doesn't ask to be admired so much as inhabited.
+
+## The Experience
+
+The site is not a set of pages but a **single continuous journey**. Content is
+staged as a stack of full-viewport slides — hero, statements, timeline,
+services, work, testimonials, contact — that the visitor moves through by
+scroll, each transition deliberate and snap-aligned.
+
+- **Bilingual by design** — English carries the message; Japanese (異世界 /
+  ネヴィナス) carries the mood. The two typographic voices are woven together,
+  never merely translated.
+- **A living backdrop** — a fluid, ink-like field drifts behind the composition,
+  reacting to presence without ever competing with content.
+- **Light and dark as equals** — the entire system is authored twice over, so
+  neither theme is an afterthought. Switching is a smooth, deliberate
+  cross-fade, not a jarring flip.
+
+## Design System
+
+The visual language is expressed entirely through **design tokens** — a single
+source of truth in CSS custom properties that every component, chart, and
+surface consumes. Change a token, and the whole world shifts in step.
+
+### Color
+
+A disciplined palette anchors the mood in cool twilight blues.
+
+**Primary scale — fourteen steps from mist to midnight**
+
+```
+Periwinkle  #E8EAF5 → #C8CDEB → #A8B0D9      (light, airy highs)
+Cool / Haze #878CB4 → #465078 → #2E3558      (structural mids)
+Midnight    #1E233C → #13172B                 (grounding depths)
+Charcoal    #0A0F19 → #05080F                 (the deepest night)
 ```
 
-### Step 2: Backend — ติดตั้งและตั้งค่า
+**Sub-palette — "Hue Aesthetic"** — a warmer bridge of French Gray, Mountbatten
+Pink, and English Violet, reserved for effects, gradients, and glass so accents
+never feel bolted on.
 
-```bash
-cd server
-npm install
-cp .env.example .env
+**Accent set** — matte and velvet tones (Royal, Azure, Indigo, Orchid,
+Flamingo) power the statement gradients, one signature blend per idea:
+
+```
+I design.   → rose → coral → amber
+I develop.  → cyan → blue → indigo
+I think.    → violet → fuchsia → rose
+And listen. → emerald → cyan → blue
 ```
 
-แก้ไขไฟล์ `server/.env` ตามค่าจริง เช่น:
+Every hue is mapped to a **semantic layer** (`text-primary`, `surface-elevated`,
+`border-subtle`, `focus-ring`…) so components speak in meaning, not raw values —
+and the light/dark inversion happens in one place.
 
-- `MONGODB_URI` — เชื่อมต่อ MongoDB
-- `JWT_SECRET` — ค่า secret สำหรับ JWT
-- `GITHUB_TOKEN`, `GITHUB_USERNAME` — ถ้าใช้ฟีเจอร์ซิงค์ GitHub
+### Typography
 
-### Step 3: Frontend — ติดตั้ง
+Four voices, each with a clear role:
 
-```bash
-cd ../client
-npm install
+| Token | Typeface | Role |
+|---|---|---|
+| Display | **Bricolage Grotesque** | Oversized headlines, expressive character |
+| Body | **Inter** (variable) | Clarity at every size |
+| Mono | **DM Mono** | Labels, metadata, the "engineered" voice |
+| Japanese | **Noto Serif JP** · **Zen Kaku Gothic New** | Mood, atmosphere, 異世界 |
+
+Headlines lean into tight tracking and generous scale (`clamp()`-driven, up to
+`13vw`) so type becomes composition, not just words.
+
+### Surface & Depth
+
+Depth is built from three deliberate material systems rather than flat drop
+shadows:
+
+- **Glassmorphism** — layered blur, saturation, and inset highlights tuned per
+  theme, so panels feel like frosted glass floating over the backdrop.
+- **Neumorphism** — soft, periwinkle-tinted dual shadows for tactile,
+  pressed-from-the-surface controls.
+- **Elevation shadows** — a midnight-tinted `sm → md → lg → glow` ramp for
+  consistent, calm layering.
+
+### Motion
+
+Movement follows a single easing philosophy — a confident
+`cubic-bezier(0.16, 1, 0.3, 1)` that decelerates into place — applied through
+shared duration and timing tokens. Animation is choreographed, never random:
+elements enter to lead the eye and exit to release it. All motion respects
+`prefers-reduced-motion`.
+
+## Architecture of the System
+
+The stylesheet is engineered as carefully as the visuals, using an explicit
+**CSS cascade-layer order** so specificity never becomes a guessing game:
+
+```
+tokens → reset → base → components → layouts → theme
 ```
 
-### Step 4: รันโปรเจกต์
+- **Tokens first, always** — colors, type, spacing, and motion resolve before
+  anything paints.
+- **Scoped theming** — the homepage runs its own token namespace, letting it
+  carry a distinct atmosphere without leaking into the rest of the app.
+- **One source of truth for dark mode** — a single semantic override block
+  re-points every meaning-level token, so the whole product themes in lockstep.
 
-**Terminal 1 — Backend:**
+## Signature Craft
+
+- **One shared WebGL backdrop, not many.** The fluid field behind the slides is
+  a *single* rendering context shared across the entire stack — rather than one
+  per section — preserving the full visual effect while keeping the experience
+  smooth and light on the GPU.
+- **Scroll as the primary instrument.** A precise, snap-aligned scroll model
+  drives every transition and the active-slide state, with animations bound to
+  `requestAnimationFrame` and passive listeners to keep frames buttery.
+- **Composable, token-driven components** — cards, timelines, charts, and
+  navigation all draw from the same vocabulary, so the system stays coherent as
+  it grows.
+
+## Explore Locally
 
 ```bash
-cd server
-npm run dev
-```
-
-**Terminal 2 — Frontend:**
-
-```bash
+# Frontend
 cd client
+npm install
 npm run dev
 ```
 
-### Access
-
-- **Frontend:** http://localhost:5173  
-- **Backend API:** http://localhost:3000  
+The experience is best viewed full-screen, in both light and dark, with the
+sound on.
 
 ---
 
-## Key Features
-
-- **Dashboard & Analytics** — สถิติจาก GitHub (repos, stars, languages), กราฟกิจกรรม, contribution heatmap และ KPI cards
-- **Documentation** — หน้า Docs รวม API endpoints, data models, สถาปัตยกรรม, โครงสร้างโฟลเดอร์ และคู่มือเริ่มต้น
-- **Repository** — แสดงรายการ repo จาก GitHub พร้อม topics และลิงก์
-- **Gallery** — จัดการและแสดงรูปภาพ (รองรับ sync จาก backend)
-- **Blog** — อ่านบทความจาก API
-- **Tech Stack / Performance / Tools** — หน้าแสดงสแต็ก เทคโนโลยี และเครื่องมือที่ใช้
-- **Theme** — รองรับ Light/Dark mode
-- **GitHub Sync** — ซิงค์โปรไฟล์และ repo จาก GitHub (ใช้ token จาก env)
-
----
-
-## Security Note
-
-**ห้าม commit ค่า API Keys หรือ Secrets เข้า Git.**
-
-- เก็บค่าเช่น `JWT_SECRET`, `GITHUB_TOKEN`, หรือ API keys อื่น (เช่น Stripe, payment, third-party) ในไฟล์ **`.env`** เท่านั้น
-- ใช้ **`.env.example`** เป็นเทมเพลต (ไม่มีค่าจริง) และให้ `.env` ถูก **`.gitignore`** เสมอ  
-- เคสที่พบบ่อย: ค่าเช่น Stripe API key ถูก commit โดยไม่ตั้งใจ → key รั่ว → ต้อง revoke และเปลี่ยน key ทันที  
-- โปรเจกต์นี้มี `server/.env` และ `.env*` ใน `.gitignore แล้ว — ตรวจสอบว่าไม่มี `.env` ถูก add ก่อน push
-
----
-
-## Folder Structure
-
-```
-nevinas_ka_i/
-├── client/                 # Frontend (React + Vite)
-│   ├── src/
-│   │   ├── components/      # UI components, cards, charts, layouts
-│   │   ├── context/         # Theme, global state
-│   │   ├── data/            # Static data (docData, techData, toolsData)
-│   │   ├── layouts/         # WorkLayout, Sidebar
-│   │   ├── pages/           # หน้าเว็บ (Dashboard, Docs, Gallery, Blog, …)
-│   │   ├── routes/          # AppRoutes
-│   │   ├── styles/          # CSS / Tailwind
-│   │   └── utils/           # api, helpers
-│   ├── index.html
-│   ├── package.json
-│   └── vite.config.ts
-├── server/                  # Backend (Express + MongoDB)
-│   ├── src/
-│   │   ├── routes/          # API routes (github, blogs, gallery, …)
-│   │   ├── models/          # Mongoose models
-│   │   ├── sync/            # GitHub sync scripts
-│   │   └── server.ts
-│   ├── .env.example         # เทมเพลต env (ไม่มีค่าจริง)
-│   └── package.json
-├── docs/                    # เอกสารเพิ่มเติม (overview, API, frontend/backend)
-├── .gitignore               # รวม .env และ server/.env
-└── README.md
-```
-
----
-
-**Last Updated:** 2025-02-21
+<div align="center">
+  <sub>Designed & built with intention · 異世界 出身 · Nevinas</sub>
+</div>

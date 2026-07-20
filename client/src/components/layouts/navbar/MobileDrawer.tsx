@@ -249,7 +249,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
           >
             <img
               src={Assets.logo}
-              className="w-7 h-7 rounded-full bg-charcoal p-0.5 shadow-md"
+              className="w-7 h-7 object-cover rounded-full bg-charcoal p-0.5 shadow-md"
               alt="logo"
             />
             <span

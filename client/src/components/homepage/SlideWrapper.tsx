@@ -14,6 +14,19 @@ export interface SlideWrapperProps {
   scrollable?: boolean;
   sentinelRef: React.RefObject<HTMLDivElement | null>;
   scrollContainerRef?: React.RefObject<HTMLElement | null>;
+  /**
+   * Whether this slide's children should actually be mounted.
+   *
+   * The homepage stacks ~18 absolutely-positioned slides on top of each other.
+   * Mounting all of them up-front meant the very first paint had to build the
+   * entire site's DOM and run every slide's effects — the dominant source of
+   * Total Blocking Time. Slides more than one step from the active one are
+   * already at `opacity: 0` (see the transform below), so not rendering them is
+   * visually identical while cutting the initial render to two slides.
+   *
+   * Defaults to true so standalone/other usages are unaffected.
+   */
+  mounted?: boolean;
 }
 
 const innerVariantClass: Record<SlideVariant, string> = {
@@ -22,7 +35,29 @@ const innerVariantClass: Record<SlideVariant, string> = {
   content: 'flex w-full h-full flex-col items-stretch justify-center px-0 pb-0',
 };
 
-const SlideWrapper: FC<SlideWrapperProps> = ({
+/**
+ * Placeholder for a slide that is not mounted.
+ *
+ * Deliberately a plain element with NO hooks. The active wrapper below opens a
+ * framer-motion `useScroll` plus three `useTransform` chains; running those for
+ * all ~18 stacked slides meant 18 scroll-linked animations recalculating style
+ * and layout on every scroll and resize, for 16 slides that render nothing.
+ * That was the largest remaining cost on a throttled cold load — it showed up
+ * as `styleLayout` swinging between 0.9 s and 2.9 s run to run.
+ *
+ * Keeping `data-slide-index` here preserves the DOM contract for anything that
+ * queries slides by index.
+ */
+const InertSlide: FC<{ slideIndex: number; className: string }> = ({ slideIndex, className }) => (
+  <section
+    data-slide-index={slideIndex}
+    aria-hidden
+    style={{ opacity: 0, pointerEvents: 'none' }}
+    className={`relative z-[var(--z-overlay)] w-full h-full ${className}`}
+  />
+);
+
+const ActiveSlide: FC<SlideWrapperProps> = ({
   children,
   slideIndex,
   className = '',
@@ -153,5 +188,18 @@ const SlideWrapper: FC<SlideWrapperProps> = ({
     </SlideScrollContext.Provider>
   );
 };
+
+/**
+ * Renders the full scroll-linked slide once mounted, and an inert placeholder
+ * before that. The split is what lets the unmounted case skip the motion hooks
+ * entirely — React forbids calling them conditionally, so the two cases have to
+ * be separate components.
+ */
+const SlideWrapper: FC<SlideWrapperProps> = ({ mounted = true, ...props }) =>
+  mounted ? (
+    <ActiveSlide {...props} />
+  ) : (
+    <InertSlide slideIndex={props.slideIndex} className={props.className ?? ''} />
+  );
 
 export default SlideWrapper;

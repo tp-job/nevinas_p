@@ -1,7 +1,7 @@
 {
   "profiles": [
     {
-      "id": "f9688ea2-acfc-4850-ac16-98984c5f4306",
+      "id": "b28aca69-180b-4df7-819a-c0856fadfbc7",
       "login": "tp-job",
       "name": "nevinas_ka",
       "avatar_url": "https://avatars.githubusercontent.com/u/184330396?v=4",
@@ -15,12 +15,56 @@
       "following": 1,
       "github_created_at": "2024-10-09T02:35:36Z",
       "github_updated_at": "2026-07-01T03:13:00Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     }
   ],
   "events": [
     {
-      "id": "2100e410-8d20-462a-8295-868a60494597",
+      "id": "45de8be3-db4d-4b97-b4bc-dc8ccca2f16d",
+      "github_id": "15300461351",
+      "type": "PushEvent",
+      "repo": "tp-job/nevinas_p",
+      "payload": {
+        "ref": "refs/heads/main"
+      },
+      "event_at": "2026-07-19T12:26:05Z",
+      "synced_at": "2026-07-20T07:30:00.802Z"
+    },
+    {
+      "id": "5a3435e7-a2d6-4699-95d4-0664571e45c1",
+      "github_id": "15299707873",
+      "type": "PushEvent",
+      "repo": "tp-job/nevinas_p",
+      "payload": {
+        "ref": "refs/heads/main"
+      },
+      "event_at": "2026-07-19T12:10:52Z",
+      "synced_at": "2026-07-20T07:30:00.802Z"
+    },
+    {
+      "id": "1b3c5d59-bbd0-4ee8-9544-6f59fae69f7d",
+      "github_id": "15298573322",
+      "type": "PushEvent",
+      "repo": "tp-job/nevinas_p",
+      "payload": {
+        "ref": "refs/heads/main"
+      },
+      "event_at": "2026-07-19T11:47:25Z",
+      "synced_at": "2026-07-20T07:30:00.802Z"
+    },
+    {
+      "id": "316adf81-0b83-49a3-8547-2e074c4f8f85",
+      "github_id": "15288435075",
+      "type": "PushEvent",
+      "repo": "tp-job/nevinas_p",
+      "payload": {
+        "ref": "refs/heads/main"
+      },
+      "event_at": "2026-07-19T08:16:57Z",
+      "synced_at": "2026-07-20T07:30:00.802Z"
+    },
+    {
+      "id": "e1fb4474-47dc-4ad3-bddb-8a4e5e139383",
       "github_id": "15246241088",
       "type": "PushEvent",
       "repo": "tp-job/nevinas_p",
@@ -28,10 +72,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-07-18T13:06:50Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "3cc777e8-85c2-47cd-9bea-aabba37f21bb",
+      "id": "f8178bd5-48a4-41db-8b62-21f3de7e7626",
       "github_id": "15140956791",
       "type": "PushEvent",
       "repo": "tp-job/nevinas_p",
@@ -39,10 +83,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-07-16T22:46:03Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "e0eda387-fa82-4fe7-8995-79aa55c92d25",
+      "id": "efd62cfd-e6d9-4aa0-8ba8-a6b474f8d405",
       "github_id": "15140181735",
       "type": "PushEvent",
       "repo": "tp-job/nevinas_p",
@@ -50,10 +94,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-07-16T22:26:22Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "8f7b8015-70e7-496d-bd5e-7e4e7a27a65c",
+      "id": "a8c1df10-8d79-4c97-a22e-75946dc08aad",
       "github_id": "15140063913",
       "type": "PushEvent",
       "repo": "tp-job/agent-skill",
@@ -61,10 +105,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-07-16T22:23:33Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "81c72de1-d1da-463e-a72b-baf96172140f",
+      "id": "85f06a89-7978-4ee7-8a93-434f11f6c976",
       "github_id": "15117593466",
       "type": "PushEvent",
       "repo": "tp-job/agent-skill",
@@ -72,10 +116,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-07-16T15:44:38Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "b95f8299-7859-4248-83c6-f98190698a65",
+      "id": "b49f1607-a85f-40c4-82bc-7a3e7a8eae4b",
       "github_id": "15117223093",
       "type": "PushEvent",
       "repo": "tp-job/nevinas_p",
@@ -83,10 +127,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-07-16T15:39:20Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "99867ea1-2363-470e-ba19-c100d038c313",
+      "id": "9e20b160-e546-4dc0-b8c8-eba872a6922f",
       "github_id": "15041577033",
       "type": "PushEvent",
       "repo": "tp-job/sushi_restaurant_i",
@@ -94,10 +138,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-07-15T15:17:06Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "64bd5046-8582-495d-b4ba-9d3e28a23aec",
+      "id": "20d1ea55-9250-4acb-91e3-c55ce1000dfc",
       "github_id": "15040716471",
       "type": "PushEvent",
       "repo": "tp-job/nevinas_p",
@@ -105,10 +149,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-07-15T15:02:49Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "03c50188-2b87-4d7d-aeb1-aafd4145c2a1",
+      "id": "48073a58-0ed0-45a1-b858-9dadfa5bc8cf",
       "github_id": "14931013854",
       "type": "PushEvent",
       "repo": "tp-job/wedsite_tools",
@@ -116,10 +160,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-07-14T01:22:22Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "74915106-3eff-4d7b-a503-4d970343aa8d",
+      "id": "3d795590-b507-47ec-9f35-7f5d2a9f7775",
       "github_id": "14828368443",
       "type": "CreateEvent",
       "repo": "tp-job/sushi_restaurant_i",
@@ -128,10 +172,10 @@
         "ref_type": "branch"
       },
       "event_at": "2026-07-12T15:18:15Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "333a9a2c-2d81-43d5-b7e0-76ac6ab425ba",
+      "id": "36c4e076-b382-47b6-94cb-f746c6163f85",
       "github_id": "14821872057",
       "type": "CreateEvent",
       "repo": "tp-job/kairos_i",
@@ -140,10 +184,10 @@
         "ref_type": "branch"
       },
       "event_at": "2026-07-12T13:10:53Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "353155d5-77f6-4fe3-9deb-79474208a647",
+      "id": "f0c2c511-a74f-4091-b8ae-cebcef7933c8",
       "github_id": "14224153937",
       "type": "PushEvent",
       "repo": "tp-job/agent-skill",
@@ -151,10 +195,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-07-02T10:51:11Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "83475c03-a6d1-4981-b431-323d7f98d25b",
+      "id": "cd5ebf31-601c-495f-8fbc-77f177315f66",
       "github_id": "14217399707",
       "type": "PushEvent",
       "repo": "tp-job/nevinas_p",
@@ -162,10 +206,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-07-02T08:34:24Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "b2384776-4349-4a55-a69a-8d83de835802",
+      "id": "c4cde2fd-3bef-4c9c-acc3-9a17acaa710c",
       "github_id": "11263733794",
       "type": "PullRequestEvent",
       "repo": "tp-job/nevinas_p",
@@ -173,10 +217,10 @@
         "action": "merged"
       },
       "event_at": "2026-07-02T08:34:23Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "37bce7de-8770-4920-93ee-4bd793b8473d",
+      "id": "9ddb537a-4f02-493a-a63a-53de49de65c2",
       "github_id": "11263723647",
       "type": "PullRequestEvent",
       "repo": "tp-job/nevinas_p",
@@ -184,10 +228,10 @@
         "action": "opened"
       },
       "event_at": "2026-07-02T08:34:11Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "5508138c-381e-4137-8f15-065b006cd4bf",
+      "id": "637b7f29-b3eb-4c05-b512-cbcc87944122",
       "github_id": "14217061251",
       "type": "CreateEvent",
       "repo": "tp-job/nevinas_p",
@@ -196,10 +240,10 @@
         "ref_type": "branch"
       },
       "event_at": "2026-07-02T08:27:34Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "cd4fd38e-8a7a-40f6-81b6-5615b3129b6e",
+      "id": "1c13a1c3-3374-43ae-8158-ce82ceba1cee",
       "github_id": "14217011095",
       "type": "PushEvent",
       "repo": "tp-job/agent-skill",
@@ -207,10 +251,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-07-02T08:26:31Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "45acda55-a2e5-4bf4-8fa9-511abd0ee878",
+      "id": "9b2f064c-4736-4e16-9ffc-9fd987485272",
       "github_id": "14146786935",
       "type": "CreateEvent",
       "repo": "tp-job/agent-skill",
@@ -219,10 +263,10 @@
         "ref_type": "branch"
       },
       "event_at": "2026-07-01T03:38:14Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "e8ec631f-f0f1-499e-939e-995188c5bad2",
+      "id": "24e893d0-c6ad-4f83-80f9-e5ea8d42434c",
       "github_id": "13760982428",
       "type": "PushEvent",
       "repo": "tp-job/nevinas_p",
@@ -230,10 +274,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-06-23T13:31:30Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "01a6ebbb-4da1-42f3-ab7c-820e397c97b3",
+      "id": "f00be1fe-5a3d-4133-991a-0d28ac8a496e",
       "github_id": "13620982727",
       "type": "PushEvent",
       "repo": "tp-job/nevinas_p",
@@ -241,49 +285,39 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-06-20T11:54:48Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
-    },
-    {
-      "id": "b764e791-579e-4262-a2c8-67f484c5d438",
-      "github_id": "13590496219",
-      "type": "PushEvent",
-      "repo": "tp-job/nevinas_p",
-      "payload": {
-        "ref": "refs/heads/main"
-      },
-      "event_at": "2026-06-19T16:12:40Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     }
   ],
   "repos": [
     {
-      "id": "088befe2-0d8d-49c4-b976-182627c61180",
+      "id": "a391c3d6-3886-46cf-b478-9abeb287ff85",
       "github_id": 1154066920,
       "name": "nevinas_p",
       "full_name": "tp-job/nevinas_p",
-      "description": null,
+      "description": "This portfolio",
       "html_url": "https://github.com/tp-job/nevinas_p",
-      "homepage": null,
+      "homepage": "https://nevinas-p.onrender.com/",
       "language": "TypeScript",
       "topics": [
-        "typescript"
+        "typescript",
+        "portfolio"
       ],
       "stargazers_count": 0,
       "forks_count": 0,
       "watchers_count": 0,
       "open_issues_count": 0,
-      "size": 106789,
+      "size": 106846,
       "fork": false,
       "archived": false,
       "visibility": "public",
       "default_branch": "main",
-      "pushed_at": "2026-07-18T13:06:50Z",
+      "pushed_at": "2026-07-19T12:26:04Z",
       "github_created_at": "2026-02-10T01:20:01Z",
-      "github_updated_at": "2026-07-18T13:06:58Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "github_updated_at": "2026-07-19T12:46:20Z",
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "fef3d3fd-3b0f-4f7c-8d0f-d71648b8d4c3",
+      "id": "ee2580d5-3a9a-4cd5-aa39-9c3ceb4dbc4d",
       "github_id": 1285677187,
       "name": "agent-skill",
       "full_name": "tp-job/agent-skill",
@@ -306,10 +340,10 @@
       "pushed_at": "2026-07-16T22:23:33Z",
       "github_created_at": "2026-07-01T03:36:35Z",
       "github_updated_at": "2026-07-16T22:23:36Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "e6d527a5-935f-4a0a-a4fc-3a2193c75b2c",
+      "id": "413b1744-bc4e-4d47-bb04-4ca3ee3c670e",
       "github_id": 1298385577,
       "name": "sushi_restaurant_i",
       "full_name": "tp-job/sushi_restaurant_i",
@@ -330,10 +364,10 @@
       "pushed_at": "2026-07-15T15:17:06Z",
       "github_created_at": "2026-07-12T15:15:55Z",
       "github_updated_at": "2026-07-15T15:19:14Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "92045c07-1edd-4d0b-80d8-c2e1eb59a63b",
+      "id": "49477e73-b8b8-45c3-88cf-f2c7bec7b86e",
       "github_id": 927836269,
       "name": "wedsite_tools",
       "full_name": "tp-job/wedsite_tools",
@@ -354,10 +388,10 @@
       "pushed_at": "2026-07-14T01:22:21Z",
       "github_created_at": "2025-02-05T16:15:37Z",
       "github_updated_at": "2026-07-14T01:22:24Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "ad3e513e-d336-423d-85da-33633e4dbace",
+      "id": "b6b215e6-7b4c-401b-b40b-c277ea4a84e9",
       "github_id": 1298289795,
       "name": "kairos_i",
       "full_name": "tp-job/kairos_i",
@@ -378,10 +412,10 @@
       "pushed_at": "2026-07-12T13:10:53Z",
       "github_created_at": "2026-07-12T13:07:53Z",
       "github_updated_at": "2026-07-12T13:11:02Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "995aa5d5-ce55-4f67-a378-b75cb1cf55e1",
+      "id": "89745dca-ad93-4e5c-a750-df63029b42ff",
       "github_id": 1194424313,
       "name": "the_bunko",
       "full_name": "tp-job/the_bunko",
@@ -404,10 +438,10 @@
       "pushed_at": "2026-03-28T10:42:38Z",
       "github_created_at": "2026-03-28T10:40:13Z",
       "github_updated_at": "2026-03-28T10:42:42Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "f82bafbc-857a-4a4d-88fb-c60bdec7cd79",
+      "id": "2bd2f59e-b64c-4c69-b586-48f1946474be",
       "github_id": 1154067785,
       "name": "apexops_i",
       "full_name": "tp-job/apexops_i",
@@ -430,10 +464,10 @@
       "pushed_at": "2026-03-23T12:40:08Z",
       "github_created_at": "2026-02-10T01:21:55Z",
       "github_updated_at": "2026-03-23T12:40:15Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "b6fbcc71-1ce4-4e2d-81d4-ed3404d44ef3",
+      "id": "eef6b9b9-796a-44f3-956c-060e4fc1129b",
       "github_id": 1160764118,
       "name": "random-group-GXX",
       "full_name": "tp-job/random-group-GXX",
@@ -456,10 +490,10 @@
       "pushed_at": "2026-02-18T10:48:38Z",
       "github_created_at": "2026-02-18T10:46:21Z",
       "github_updated_at": "2026-02-18T10:48:42Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "1c0f0587-db48-4352-bfbc-58956b6d38af",
+      "id": "988b92b2-ee99-4558-95e1-3bb650dc8ed0",
       "github_id": 1154259625,
       "name": "comtech-research-infographic",
       "full_name": "tp-job/comtech-research-infographic",
@@ -482,10 +516,10 @@
       "pushed_at": "2026-02-10T07:24:43Z",
       "github_created_at": "2026-02-10T07:23:29Z",
       "github_updated_at": "2026-02-10T07:24:46Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "c5084525-b010-49b8-a9b6-bc3dca409338",
+      "id": "91413adc-70bb-49bc-8ae3-48df6b676321",
       "github_id": 910821264,
       "name": "my_profilecard_i",
       "full_name": "tp-job/my_profilecard_i",
@@ -510,10 +544,10 @@
       "pushed_at": "2025-01-11T12:04:15Z",
       "github_created_at": "2025-01-01T14:35:28Z",
       "github_updated_at": "2025-09-27T07:11:59Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "de147a00-b05b-47af-8b90-f5b2f08c9338",
+      "id": "76bc8df4-97e7-4f69-9550-4f3c8ab3cfa2",
       "github_id": 913937003,
       "name": "my_protfolio_i",
       "full_name": "tp-job/my_protfolio_i",
@@ -539,10 +573,10 @@
       "pushed_at": "2025-05-18T05:30:17Z",
       "github_created_at": "2025-01-08T16:28:57Z",
       "github_updated_at": "2025-09-27T07:11:29Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "52d8c72e-0674-43df-b785-e0af7ce0ed57",
+      "id": "12267368-38ba-4610-906d-ee173b66ad7c",
       "github_id": 1020046062,
       "name": "buildly",
       "full_name": "tp-job/buildly",
@@ -565,10 +599,10 @@
       "pushed_at": "2025-07-15T09:03:20Z",
       "github_created_at": "2025-07-15T09:00:33Z",
       "github_updated_at": "2025-09-27T07:10:20Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "e6a0ed72-ed28-4db5-8be8-d6b8280e7a8e",
+      "id": "5676c96a-5c41-4a60-9572-f48fbc198670",
       "github_id": 1040013515,
       "name": "memonote",
       "full_name": "tp-job/memonote",
@@ -591,10 +625,10 @@
       "pushed_at": "2025-09-01T11:44:27Z",
       "github_created_at": "2025-08-18T10:25:57Z",
       "github_updated_at": "2025-09-27T07:08:52Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "69c701e6-212f-4c90-a23c-f9f14eff3931",
+      "id": "9e301ea3-5545-4eb3-93ed-d2e5853519a9",
       "github_id": 1060625293,
       "name": "my_theme",
       "full_name": "tp-job/my_theme",
@@ -617,10 +651,10 @@
       "pushed_at": "2025-09-21T09:10:52Z",
       "github_created_at": "2025-09-20T09:06:41Z",
       "github_updated_at": "2025-09-27T07:08:24Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "94891a18-5e7a-47cc-85c9-92541af14b37",
+      "id": "70fdf330-1100-4d18-a564-f18a28c43fb7",
       "github_id": 1002927586,
       "name": "project_tailwindcss_ii",
       "full_name": "tp-job/project_tailwindcss_ii",
@@ -646,10 +680,10 @@
       "pushed_at": "2025-06-19T09:52:28Z",
       "github_created_at": "2025-06-16T11:05:49Z",
       "github_updated_at": "2025-06-19T09:52:31Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "ad967364-077a-478f-a2c2-ea1143bcc0f4",
+      "id": "c42c7086-7fa4-4342-ae74-b06747e0becb",
       "github_id": 1002378404,
       "name": "project_tailwindcss_i",
       "full_name": "tp-job/project_tailwindcss_i",
@@ -675,10 +709,10 @@
       "pushed_at": "2025-06-16T12:52:33Z",
       "github_created_at": "2025-06-15T10:49:06Z",
       "github_updated_at": "2025-06-16T12:52:36Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "d22b5bb6-116f-4532-a470-c90423490537",
+      "id": "68e11497-7f1f-4510-859e-8eb85330cbe3",
       "github_id": 956958071,
       "name": "restaurant_demo",
       "full_name": "tp-job/restaurant_demo",
@@ -701,10 +735,10 @@
       "pushed_at": "2025-03-29T08:04:37Z",
       "github_created_at": "2025-03-29T08:01:02Z",
       "github_updated_at": "2025-03-29T08:04:41Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "28dc09c0-4514-4b73-a5a3-ee4c94cc96ad",
+      "id": "ec2bcfb7-355e-48a1-9685-bae9fc0405b9",
       "github_id": 907831559,
       "name": "homepage_i",
       "full_name": "tp-job/homepage_i",
@@ -727,10 +761,10 @@
       "pushed_at": "2024-12-24T14:02:10Z",
       "github_created_at": "2024-12-24T13:53:54Z",
       "github_updated_at": "2025-01-01T14:25:27Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "0b06606f-29c3-4505-b519-f995b244a650",
+      "id": "a2d029dc-0529-4b05-934b-30a6d4c2c242",
       "github_id": 891995124,
       "name": "chessgame",
       "full_name": "tp-job/chessgame",
@@ -753,10 +787,10 @@
       "pushed_at": "2024-11-22T04:49:18Z",
       "github_created_at": "2024-11-21T10:28:06Z",
       "github_updated_at": "2024-11-22T04:49:21Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     },
     {
-      "id": "7afe71a1-b94e-4aa3-a6d6-994ce5de5bcc",
+      "id": "81c691e2-5797-4762-bf71-9be81d7842d0",
       "github_id": 892136296,
       "name": "discovery-piscine-coding-for-all-18-22-nov-Limerreen",
       "full_name": "tp-job/discovery-piscine-coding-for-all-18-22-nov-Limerreen",
@@ -779,12 +813,12 @@
       "pushed_at": "2024-11-21T15:15:04Z",
       "github_created_at": "2024-11-21T15:14:20Z",
       "github_updated_at": "2024-11-21T15:14:20Z",
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     }
   ],
   "stats": [
     {
-      "id": "53507f1e-a1ad-47f3-adb0-9a0f9f957d16",
+      "id": "9c0903f6-5edb-4cd5-bf76-562135ba9887",
       "totalStars": 0,
       "totalForks": 1,
       "totalCommits": 0,
@@ -823,9 +857,9 @@
         2,
         3,
         8,
-        4,
+        3,
         2,
-        2
+        6
       ],
       "hourActivity": [
         0,
@@ -843,15 +877,15 @@
         0,
         0,
         0,
-        5,
+        6,
         0,
         1,
-        1,
-        0,
+        2,
+        2,
         3,
         0,
         5,
-        1
+        0
       ],
       "projectStatus": {
         "active": 5,
@@ -875,17 +909,18 @@
         },
         {
           "name": "nevinas_p",
-          "description": null,
+          "description": "This portfolio",
           "html_url": "https://github.com/tp-job/nevinas_p",
-          "homepage": null,
+          "homepage": "https://nevinas-p.onrender.com/",
           "language": "TypeScript",
           "topics": [
-            "typescript"
+            "typescript",
+            "portfolio"
           ],
           "stargazers_count": 0,
           "forks_count": 0,
-          "updated_at": "2026-07-18T13:06:58Z",
-          "pushed_at": "2026-07-18T13:06:50Z"
+          "updated_at": "2026-07-19T12:46:20Z",
+          "pushed_at": "2026-07-19T12:26:04Z"
         },
         {
           "name": "agent-skill",
@@ -947,7 +982,7 @@
         "followers": 4,
         "following": 1
       },
-      "synced_at": "2026-07-19T08:00:01.164Z"
+      "synced_at": "2026-07-20T07:30:00.802Z"
     }
   ]
 }

@@ -231,7 +231,7 @@ const Navbar: FC<NavbarProps> = ({
               <img
                 src={Assets.logo}
                 alt="Nevinas"
-                className="w-10 sm:w-11 rounded-full cursor-pointer bg-charcoal p-1
+                className="w-10 h-10 sm:w-11 sm:h-11 object-cover rounded-full cursor-pointer bg-charcoal p-1
                            shadow-lg border border-[rgba(200,205,235,0.12)]
                            hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
               />
@@ -399,7 +399,7 @@ const Navbar: FC<NavbarProps> = ({
               <img
                 src={Assets.logo}
                 alt="logo"
-                className="w-9 h-9 rounded-full bg-charcoal p-1 shadow-md
+                className="w-9 h-9 object-cover rounded-full bg-charcoal p-1 shadow-md
                            border border-[rgba(200,205,235,0.10)]"
               />
               <h1 className="text-[0.82rem] font-medium text-light-text dark:text-dark-text">

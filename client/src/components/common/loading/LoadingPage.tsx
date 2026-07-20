@@ -14,6 +14,7 @@
 import { useState, useEffect, useId, useRef, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Variants, Easing } from "framer-motion";
+import { useDeviceCapability } from "@/hooks/useDeviceCapability";
 
 /* ────────────────────────────────────────
    DS v3.2 TOKENS
@@ -212,17 +213,16 @@ export default function LoadingScreen({ onComplete }: { onComplete?: () => void 
   const [ready,    setReady   ] = useState(false);
   const [done,     setDone    ] = useState(false);
   const timerRef = useRef(null);
+  const tier = useDeviceCapability();
 
-  /* Inject keyframes + Google Fonts (Noto Sans JP) */
+  /* Inject keyframes */
   useEffect(() => {
-    /* Fonts */
-    if (!document.getElementById("__na-fonts")) {
-      const link = document.createElement("link");
-      link.id   = "__na-fonts";
-      link.rel  = "stylesheet";
-      link.href = "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400&display=swap";
-      document.head.appendChild(link);
-    }
+    /* NOTE: this used to append a <link> to fonts.googleapis.com for
+       Noto Sans JP. This component is the router's Suspense fallback, so that
+       fired on EVERY cold visit — adding a third-party DNS + TLS + CSS
+       round trip to the critical path purely to style a few kana on a screen
+       that is visible for a second or two. The JP stack below now resolves to
+       installed system fonts, which every target OS ships. */
     /* Keyframes */
     if (!document.getElementById("__na-kf")) {
       const s = document.createElement("style");
@@ -260,8 +260,12 @@ export default function LoadingScreen({ onComplete }: { onComplete?: () => void 
   const phase = PHASES.reduce((acc,ph) => progress>=ph.min ? ph : acc, PHASES[0]);
   const pct   = Math.min(Math.round(progress), 100);
 
-  /* Font stacks */
-  const JP = '"Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif';
+  /* Font stacks — system JP faces, no webfont download (see the note above).
+     Covers macOS/iOS (Hiragino), Windows (Yu Gothic UI / Meiryo) and
+     Android (Noto Sans CJK JP). */
+  const JP =
+    '"Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic UI", "Yu Gothic", ' +
+    'Meiryo, "Noto Sans CJK JP", sans-serif';
   const EN = '"Inter", system-ui, sans-serif';
 
   return (
@@ -269,8 +273,17 @@ export default function LoadingScreen({ onComplete }: { onComplete?: () => void 
          style={{ position:"fixed", inset:0, zIndex:9000,
                   background:C.charcoal, fontFamily:EN, overflow:"hidden" }}>
 
-      {/* ── 1. LaserFlow WebGL ──────────────────────────────────── */}
+      {/* ── 1. LaserFlow WebGL ──────────────────────────────────────────────
+           Skipped entirely on low-tier devices (budget phones, data-saver,
+           reduced-motion). This component is the router's Suspense fallback, so
+           it renders while the app's own chunks are still downloading — mounting
+           a full-screen three.js fragment shader here made the LOADING screen
+           the most expensive thing on the critical path, pulling ~500 kB of
+           three.js and saturating a weak GPU exactly when the device is most
+           contended. The vignette and nebula layers below carry the same look
+           without a WebGL context. */}
       <div aria-hidden="true" style={{ position:"absolute", inset:0 }}>
+        {tier === "high" && (
         <Suspense fallback={null}>
           <LaserFlow
             color={C.periwinkle}
@@ -293,6 +306,7 @@ export default function LoadingScreen({ onComplete }: { onComplete?: () => void 
             style={{ width:"100%", height:"100%" }}
           />
         </Suspense>
+        )}
       </div>
 
       {/* ── 2. Depth / atmosphere ───────────────────────────────── */}

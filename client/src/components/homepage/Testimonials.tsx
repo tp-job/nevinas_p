@@ -116,9 +116,13 @@ const Testimonials: React.FC = () => {
       </div>
 
       {/* ── HEADER ── */}
-      <div className="py-20 px-16 pb-10 grid grid-cols-2 gap-16">
-        <h2 className="text-[clamp(26px,3.8vw,50px)] font-light leading-[1.15] tracking-[-0.02em] text-light-text dark:text-dark-text">
-          Gather&apos;round —<br />client tales<br />incoming.
+      {/* Was grid-cols-2 + px-16 unconditionally: ~91 px per column on a phone,
+          which broke the headline into one word per line. */}
+      <div className="py-14 px-5 pb-8 sm:px-10 md:py-20 md:px-16 md:pb-10 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-16">
+        <h2 className="text-[clamp(26px,6.5vw,50px)] font-light leading-[1.15] tracking-[-0.02em] text-light-text dark:text-dark-text text-pretty">
+          Gather&apos;round —<br className="hidden md:inline" />{' '}
+          client tales<br className="hidden md:inline" />{' '}
+          incoming.
         </h2>
         <p className="text-[15px] font-normal leading-[1.8] text-haze dark:text-cool self-end">
           Stories travel — about the ideas, the flow, the small magic moments
@@ -127,10 +131,10 @@ const Testimonials: React.FC = () => {
       </div>
 
       {/* Divider */}
-      <div className="mx-16 h-px bg-cool-pale dark:bg-haze-deep" />
+      <div className="mx-5 sm:mx-10 md:mx-16 h-px bg-cool-pale dark:bg-haze-deep" />
 
       {/* ── STAGE ── */}
-      <div className="py-10 px-16 pb-8">
+      <div className="py-8 px-5 pb-6 sm:px-10 md:py-10 md:px-16 md:pb-8">
 
         {/* Controls row */}
         <div className="flex items-center justify-between mb-10">
@@ -216,12 +220,12 @@ const Testimonials: React.FC = () => {
       </div>
 
       {/* Divider */}
-      <div className="mx-16 h-px bg-cool-pale dark:bg-haze-deep" />
+      <div className="mx-5 sm:mx-10 md:mx-16 h-px bg-cool-pale dark:bg-haze-deep" />
 
       {/* ── TIME TO CONNECT ── */}
       <div
         id="connect"
-        className="py-20 px-16 text-center"
+        className="py-14 px-5 sm:px-10 md:py-20 md:px-16 text-center"
       >
         <h2 className="text-[clamp(44px,7.5vw,108px)] font-light leading-[0.95] tracking-[-0.04em] text-light-text dark:text-dark-text mb-3">
           Time to connect
