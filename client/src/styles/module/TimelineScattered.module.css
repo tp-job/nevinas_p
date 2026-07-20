@@ -12,14 +12,13 @@
    ──────────────────────────────────────────────────
    FONT TOKEN MAP (index.css → local aliases)
      --font-inter = "Inter", system-ui, sans-serif  (from index.css @theme)
-     --font-mono  = 'DM Mono', monospace            (local — not in index.css)
+     --font-mono  = "Inter", system-ui, sans-serif  (was DM Mono, consolidated)
    ─────────────────────────────────────────────────────────────
 */
 
 /* ── SLIDE CONTAINER ─────────────────────────────────────────── */
 .slide {
-  /* Scoped font token: DM Mono is not in index.css @theme */
-  --font-mono: 'DM Mono', 'Fira Code', monospace;
+  --font-mono: 'Inter', system-ui, sans-serif;
   /* Used by IconHalfCircle SVG punch-through dot */
   --tl-slide-bg: var(--color-light-bg, #F0F1F8);
   /* Slide-scoped foreground — bound to slide bg, not global semantic tokens */
@@ -252,7 +251,7 @@
 }
 
 /* ── BODY TEXT — .feat-sub ───────────────────────────────────── */
-/* DM Mono + clamp(.58rem,1vw,.72rem) — NOT text-sm */
+/* Inter + clamp(.58rem,1vw,.72rem) — NOT text-sm */
 /* Uses var(--font-mono) scoped on .slide */
 .featSub {
   font-family: var(--font-mono);

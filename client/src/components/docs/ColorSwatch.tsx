@@ -22,10 +22,10 @@ const ColorSwatch: FC<{ name: string; hex: string; variable: string }> = ({
       <p className="text-[11px] font-semibold text-light-text dark:text-dark-text truncate">
         {name}
       </p>
-      <p className="text-[10px] font-mono text-light-text-secondary dark:text-dark-text-secondary truncate">
+      <p className="text-[10px] font-inter text-light-text-secondary dark:text-dark-text-secondary truncate">
         {hex}
       </p>
-      <code className="block text-[9px] font-mono mt-0.5 text-haze/70 dark:text-periwinkle/60 truncate">
+      <code className="block text-[9px] font-inter mt-0.5 text-haze/70 dark:text-periwinkle/60 truncate">
         {variable}
       </code>
     </div>

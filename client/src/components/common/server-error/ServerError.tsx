@@ -32,7 +32,7 @@ const ServerError: FC = () => {
         }
                 `}
       </style>
-      <div className="bg-background-light dark:bg-background-dark min-h-screen flex flex-col lg:flex-row overflow-hidden font-display">
+      <div className="bg-background-light dark:bg-background-dark min-h-screen flex flex-col lg:flex-row overflow-hidden font-inter">
         {/* Left column */}
         <div className="w-full lg:w-1/2 h-[50vh] lg:h-screen relative bg-gradient-to-b from-red-400 via-red-300 to-orange-500 flex items-center justify-center p-8 overflow-hidden">
           <div className="absolute inset-0 pointer-events-none">

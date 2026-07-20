@@ -1,9 +1,9 @@
 @layer components {
   /* TOKENS */
   :root {
-    --fd: "Bricolage Grotesque", "Inter", sans-serif;
+    --fd: "Inter", system-ui, sans-serif;
     --fj: "Noto Serif JP", serif;
-    --fm: "DM Mono", monospace;
+    --fm: "Inter", system-ui, sans-serif;
   }
 
   /* AGENCY SLIDE */

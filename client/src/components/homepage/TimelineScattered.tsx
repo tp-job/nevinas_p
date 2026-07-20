@@ -341,7 +341,7 @@ const TimelineScattered: React.FC = () => {
               {feat.lead}
             </p>
 
-            {/* Body text — DM Mono */}
+            {/* Body text — Inter */}
             <p className={[styles.featSub, isRight ? styles.featSubRight : ''].filter(Boolean).join(' ')}>
               {feat.sub}
             </p>

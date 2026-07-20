@@ -99,7 +99,7 @@ html.homepage-slide-mode body {
 }
 
 .cl-num {
-  font-family: var(--fm, "DM Mono", monospace);
+  font-family: var(--fm, "Inter", sans-serif);
   font-size: 0.62rem;
   color: rgba(20, 18, 16, 0.3);
   letter-spacing: 0.06em;
@@ -179,7 +179,7 @@ html.homepage-slide-mode body {
   overflow: hidden;
 }
 .ag-desc-item {
-  font-family: var(--fm, "DM Mono", monospace);
+  font-family: var(--fm, "Inter", sans-serif);
   font-size: clamp(0.58rem, 0.95vw, 0.72rem);
   color: rgba(30, 41, 59, 0.5);
   line-height: 1.6;
@@ -192,7 +192,7 @@ html.homepage-slide-mode body {
   display: flex;
   align-items: center;
   padding: 0 2.6rem;
-  font-family: var(--fm, "DM Mono", monospace);
+  font-family: var(--fm, "Inter", sans-serif);
   font-size: 0.54rem;
   color: rgba(20, 18, 16, 0.25);
   letter-spacing: 0.14em;
@@ -227,7 +227,7 @@ html.homepage-slide-mode body {
   align-items: center;
   gap: 0.55rem;
   margin-top: 1rem;
-  font-family: var(--fm, "DM Mono", monospace);
+  font-family: var(--fm, "Inter", sans-serif);
   font-size: 0.7rem;
   color: var(--color-light-text-primary, #0f172a);
   letter-spacing: 0.06em;
@@ -317,7 +317,7 @@ html.homepage-slide-mode body {
   transform: scaleX(1);
 }
 .ag-award-title {
-  font-family: var(--fm, "DM Mono", monospace);
+  font-family: var(--fm, "Inter", sans-serif);
   font-size: clamp(0.56rem, 0.9vw, 0.7rem);
   color: rgba(30, 41, 59, 0.5);
   letter-spacing: 0.04em;
@@ -331,7 +331,7 @@ html.homepage-slide-mode body {
   margin-top: 0.12rem;
 }
 .ag-award-src {
-  font-family: var(--fm, "DM Mono", monospace);
+  font-family: var(--fm, "Inter", sans-serif);
   font-size: 0.42rem;
   color: rgba(20, 18, 16, 0.25);
   letter-spacing: 0.2em;

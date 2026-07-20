@@ -52,7 +52,7 @@ const GatewayTimeout: FC = () => {
             <p className="text-xs uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary mb-1">
               Time waited
             </p>
-            <p className="text-4xl font-bold font-mono text-global-yellow">
+            <p className="text-4xl font-bold font-inter text-global-yellow">
               {Math.floor(elapsed / 60)}:
               {(elapsed % 60).toString().padStart(2, "0")}
             </p>
@@ -141,7 +141,7 @@ const GatewayTimeout: FC = () => {
         {/* Error badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-global-yellow/10 dark:bg-global-yellow/15 border border-global-yellow/20">
           <div className="w-2 h-2 rounded-full bg-global-yellow animate-pulse" />
-          <span className="text-sm font-mono text-global-yellow">
+          <span className="text-sm font-inter text-global-yellow">
             Error 504 &middot; Gateway Timeout
           </span>
         </div>

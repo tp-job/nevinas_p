@@ -2,13 +2,12 @@
    ─────────────────────────────────────────────────────────────────────────────
    FONT TOKEN MAP (index.css → local aliases)
      --font-inter = "Inter", system-ui, sans-serif      (from index.css @theme)
-     --font-mono  = 'DM Mono', monospace                (local — not in index.css)
+     --font-mono  = "Inter", system-ui, sans-serif      (was DM Mono, consolidated)
    ───────────────────────────────────────────────────────────────────────────── */
 
 /* ── SLIDE CONTAINER */
 .codeWithClarity {
-  /* ── Scoped font token: DM Mono is not in index.css @theme, defined here ── */
-  --font-mono: 'DM Mono', 'Fira Code', monospace;
+  --font-mono: 'Inter', system-ui, sans-serif;
   /* Slide-scoped foreground — bound to slide bg */
   --slide-fg: var(--color-light-text);
   --slide-fg-2: var(--color-light-text-secondary);

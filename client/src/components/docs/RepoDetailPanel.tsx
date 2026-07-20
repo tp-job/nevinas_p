@@ -146,7 +146,7 @@ const RepoDetailPanel: FC<RepoDetailPanelProps> = ({
                       [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:text-light-text [&_h3]:dark:text-dark-text
                       [&_p]:text-base [&_p]:text-light-text [&_p]:dark:text-dark-text [&_p]:mb-4 [&_p]:leading-relaxed
                       [&_a]:text-matte-azure [&_a]:underline [&_a]:hover:no-underline
-                      [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm [&_code]:bg-light-surface-2 [&_code]:dark:bg-dark-surface [&_code]:font-mono
+                      [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm [&_code]:bg-light-surface-2 [&_code]:dark:bg-dark-surface [&_code]:font-inter
                       [&_pre]:p-5 [&_pre]:rounded-xl [&_pre]:overflow-x-auto [&_pre]:text-sm [&_pre]:bg-light-surface-2 [&_pre]:dark:bg-dark-surface [&_pre]:border [&_pre]:border-light-border [&_pre]:dark:border-dark-border [&_pre]:mb-6
                       [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_ul]:space-y-2 [&_ul]:text-light-text [&_ul]:dark:text-dark-text
                       [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-4 [&_ol]:space-y-2 [&_ol]:text-light-text [&_ol]:dark:text-dark-text"

@@ -62,7 +62,7 @@ const ServiceUnavailable: FC = () => {
         {/* Status badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-global-yellow/10 dark:bg-global-yellow/15 border border-global-yellow/20">
           <div className="w-2 h-2 rounded-full bg-global-yellow animate-pulse" />
-          <span className="text-sm font-mono text-global-yellow">
+          <span className="text-sm font-inter text-global-yellow">
             Status: Maintenance Mode
           </span>
         </div>
@@ -73,7 +73,7 @@ const ServiceUnavailable: FC = () => {
             <p className="text-xs uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary mb-1">
               Auto-retry in
             </p>
-            <p className="text-4xl font-bold font-mono text-global-blue">
+            <p className="text-4xl font-bold font-inter text-global-blue">
               {countdown}
               <span className="text-lg text-light-text-secondary dark:text-dark-text-secondary">
                 s

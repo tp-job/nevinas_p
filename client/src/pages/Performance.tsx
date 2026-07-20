@@ -334,10 +334,10 @@ const Performance: FC = () => {
                   <td className="py-3 px-4 text-light-text-secondary dark:text-dark-text-secondary">
                     {b.buildTime}
                   </td>
-                  <td className="py-3 px-4 font-mono text-matte-azure">
+                  <td className="py-3 px-4 font-inter text-matte-azure">
                     {b.jsSize}
                   </td>
-                  <td className="py-3 px-4 font-mono text-velvet-orchid">
+                  <td className="py-3 px-4 font-inter text-velvet-orchid">
                     {b.cssSize}
                   </td>
                   <td className="py-3 px-4 font-bold text-light-text dark:text-dark-text">
@@ -386,7 +386,7 @@ const Performance: FC = () => {
                     {api.method}
                   </span>
                 </div>
-                <span className="w-44 shrink-0 text-sm font-mono text-light-text dark:text-dark-text truncate">
+                <span className="w-44 shrink-0 text-sm font-inter text-light-text dark:text-dark-text truncate">
                   {api.endpoint}
                 </span>
                 <div className="flex-1 h-2 rounded-full overflow-hidden bg-light-surface-2 dark:bg-dark-surface">

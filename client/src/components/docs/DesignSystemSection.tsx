@@ -134,7 +134,7 @@ const DesignSystemSection: FC = () => (
               <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary">
                 {f.usage}
               </p>
-              <code className="inline-block text-[10px] font-mono mt-1.5 px-2 py-0.5 rounded-md bg-light-surface dark:bg-dark-bg/50 text-haze dark:text-periwinkle">
+              <code className="inline-block text-[10px] font-inter mt-1.5 px-2 py-0.5 rounded-md bg-light-surface dark:bg-dark-bg/50 text-haze dark:text-periwinkle">
                 {f.variable}
               </code>
             </div>

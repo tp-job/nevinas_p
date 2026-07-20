@@ -99,6 +99,7 @@
   /* ── Fonts ── */
   --font-inter: "Inter", system-ui, sans-serif;
   --font-zen:   "Zen Kaku Gothic New", sans-serif;
+  --font-playpen: "Playpen Sans", system-ui, sans-serif;
 
   /* ── Neumorphic Shadows (periwinkle-tinted) ── */
   --shadow-neu-light:
@@ -197,12 +198,6 @@
 @import "@fontsource/zen-kaku-gothic-new/latin-500.css";
 @import "@fontsource/zen-kaku-gothic-new/latin-700.css";
 
-/* DM Mono — --fm / --font-mono, weights 300 & 400 as used */
-@import "@fontsource/dm-mono/latin-300.css";
-@import "@fontsource/dm-mono/latin-400.css";
-
-/* Bricolage Grotesque — --fd, large display headings (weight axis only) */
-@import "@fontsource-variable/bricolage-grotesque/wght.css";
 
 /* Remix Icon — was a third render-blocking request to cdnjs.cloudflare.com.
    Now same-origin and, crucially, SUBSET: the upstream sheet is 154 kB of
