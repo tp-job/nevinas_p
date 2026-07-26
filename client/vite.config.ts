@@ -13,11 +13,16 @@ export default defineConfig({
   server: {
     host: true,  // เปิดให้เข้าถึงจากเครือข่าย
     port: 10005,  // กำหนดพอร์ตใหม่
-    // Proxy API + uploaded assets to the backend so the httpClient's
-    // relative "/api" baseURL works in dev without CORS or hardcoded hosts.
+    // Proxy /api to the backend so the httpClient's relative "/api" baseURL
+    // works in dev without CORS or hardcoded hosts.
+    //
+    // Deliberately NOT proxying /uploads: gallery images live in client/public
+    // and are served same-origin by the static host in production. Proxying
+    // /uploads here would shadow public/ with the backend's 404s, so dev would
+    // disagree with production about where images come from — which is exactly
+    // how they ended up broken on the deployed site in the first place.
     proxy: {
       '/api': { target: 'http://localhost:3000', changeOrigin: true },
-      '/uploads': { target: 'http://localhost:3000', changeOrigin: true },
     },
   },
   // `vite preview` serves the real production build (hashed chunks, minified),
@@ -28,7 +33,6 @@ export default defineConfig({
     port: 10006,
     proxy: {
       '/api': { target: 'http://localhost:3000', changeOrigin: true },
-      '/uploads': { target: 'http://localhost:3000', changeOrigin: true },
     },
   },
   resolve: {

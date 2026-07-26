@@ -34,10 +34,10 @@ const ToolsPage: FC = () => {
               <div className="w-9 h-9 rounded-lg bg-matte-azure/10 dark:bg-matte-azure/15 flex items-center justify-center">
                 <i className={`${section.icon} text-lg text-matte-azure`}></i>
               </div>
-              <h3 className="text-xl font-bold text-light-text dark:text-dark-text">
+              <h3 className="text-xl font-normal text-light-text dark:text-dark-text">
                 {section.title}
               </h3>
-              <span className="ml-auto text-xs font-semibold px-2.5 py-1 rounded-md bg-light-surface-2 dark:bg-dark-surface text-light-text-secondary dark:text-dark-text-secondary">
+              <span className="ml-auto text-xs font-medium px-2.5 py-1 rounded-md bg-light-surface-2 dark:bg-dark-surface text-light-text-secondary dark:text-dark-text-secondary">
                 {section.tools.length} tools
               </span>
             </div>
@@ -55,7 +55,7 @@ const ToolsPage: FC = () => {
                 >
                   <div className="w-2 h-2 rounded-full mt-1.5 shrink-0 bg-light-border dark:bg-dark-border group-hover:bg-matte-azure transition-colors" />
                   <div className="min-w-0">
-                    <h4 className="text-sm font-semibold text-light-text dark:text-dark-text group-hover:text-matte-azure transition-colors truncate">
+                    <h4 className="text-sm font-medium text-light-text dark:text-dark-text group-hover:text-matte-azure transition-colors truncate">
                       {tool.title}
                     </h4>
                     <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary mt-0.5 line-clamp-2 leading-relaxed">

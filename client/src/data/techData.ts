@@ -14,7 +14,7 @@ export const techStackData: TechStack[] = [
       "React Router DOM ^7.9.5",
     ],
     icon: "ri-reactjs-line",
-    color: "bg-linear-to-br from-matte-navy to-matte-azure",
+    color: "bg-linear-to-br from-matte-navy to-cool",
     link: "https://react.dev",
   },
   {
@@ -64,7 +64,7 @@ export const techStackData: TechStack[] = [
     category: "Frontend",
     itemTools: ["Remixicon ^4.7.0"],
     icon: "ri-remixicon-line",
-    color: "bg-linear-to-br from-matte-azure to-velvet-flamingo",
+    color: "bg-linear-to-br from-cool to-velvet-flamingo",
     link: "https://remixicon.com",
   },
 
@@ -104,7 +104,7 @@ export const techStackData: TechStack[] = [
     category: "Backend",
     itemTools: ["multer ^2.0.2", "body-parser ^2.2.0"],
     icon: "ri-upload-cloud-line",
-    color: "bg-linear-to-br from-velvet-indigo to-matte-azure",
+    color: "bg-linear-to-br from-velvet-indigo to-cool",
     link: "https://github.com/expressjs/multer",
   },
 
@@ -147,7 +147,7 @@ export const techStackData: TechStack[] = [
     category: "ComTech-Prep",
     itemTools: ["@xyflow/react ^12.10.0"],
     icon: "ri-mind-map",
-    color: "bg-linear-to-br from-matte-azure to-matte-royal",
+    color: "bg-linear-to-br from-cool to-matte-royal",
     link: "https://reactflow.dev",
   },
   {
@@ -180,7 +180,7 @@ export const techStackData: TechStack[] = [
     category: "ComTech-Prep",
     itemTools: ["zustand ^5.0.11"],
     icon: "ri-stack-line",
-    color: "bg-linear-to-br from-velvet-orchid to-matte-azure",
+    color: "bg-linear-to-br from-velvet-orchid to-cool",
     link: "https://zustand-demo.pmnd.rs",
   },
   {

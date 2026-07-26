@@ -34,7 +34,7 @@ const TechStack: FC = () => {
         <div className="mb-8 p-6 rounded-2xl bg-light-surface dark:bg-dark-bg border border-light-border dark:border-dark-border">
           <div className="flex items-center gap-2 mb-4">
             <i className="ri-github-fill text-xl text-light-text dark:text-dark-text"></i>
-            <h3 className="text-lg font-bold text-light-text dark:text-dark-text">
+            <h3 className="text-lg font-medium text-light-text dark:text-dark-text">
               GitHub Languages
             </h3>
             <span className="ml-auto text-xs text-light-text-secondary dark:text-dark-text-secondary">

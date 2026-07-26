@@ -40,7 +40,7 @@ const RepoCard: FC<RepoCardProps> = ({
           </div>
           <div className="min-w-0 overflow-hidden">
             <h3
-              className={`text-lg font-bold text-light-text dark:text-matte-azure group-hover:text-global-blue transition-colors ${name.length > 18 ? "" : "truncate"
+              className={`text-lg font-medium text-light-text dark:text-matte-azure group-hover:text-global-blue transition-colors ${name.length > 18 ? "" : "truncate"
                 }`}
               title={name}
             >
@@ -67,7 +67,7 @@ const RepoCard: FC<RepoCardProps> = ({
       <div className="flex items-center gap-4 text-xs flex-wrap">
         <div className="flex items-center gap-2">
           <span
-            className="w-3 h-3 rounded-full ring-2 ring-light-surface dark:ring-dark-bg ring-offset-1"
+            className="w-2.5 h-2.5 rounded-full ring-1 ring-inset ring-black/20 dark:ring-white/20"
             style={{ backgroundColor: languageColor }}
           />
           <span className="font-medium text-light-text-secondary dark:text-dark-text-secondary">

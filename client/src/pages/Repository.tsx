@@ -91,7 +91,7 @@ const Repository: FC = () => {
                 onClick={() => setFilter(lang)}
                 className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
                   filter === lang
-                    ? "bg-global-blue text-white"
+                    ? "bg-accent text-accent-foreground"
                     : "bg-surface-primary text-text-secondary border border-border-primary/60 hover:bg-surface-secondary hover:text-text-primary"
                 }`}
               >

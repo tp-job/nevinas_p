@@ -96,6 +96,34 @@
   --color-nodejs:      #3C873A;
   --color-vscode:      #007ACC;
 
+  /* ── Legacy accent aliases → v3.2 palette.
+     See the "LEGACY ACCENT ALIASES" note below this @theme block for why
+     they must be declared here and not in styles/tokens/colors.css. ── */
+  --color-matte-midnight:  var(--color-midnight);
+  --color-matte-navy:      var(--color-haze);
+  --color-matte-royal:     var(--color-haze-deep);
+  --color-matte-azure:     var(--color-periwinkle);
+  --color-velvet-night:    var(--color-midnight-deep);
+  --color-velvet-indigo:   var(--color-sub-ev2);
+  --color-velvet-orchid:   var(--color-sub-ev1);
+  --color-velvet-flamingo: var(--color-sub-mount);
+
+  --color-global-blue:    var(--accent-ui);
+  --color-global-purple:  var(--accent-purple);
+  --color-global-green:   var(--accent-green);
+  --color-global-red:     var(--accent-red);
+  --color-global-yellow:  var(--accent-yellow);
+  --color-global-line:    var(--accent-line);
+  --color-global-pink:    var(--color-sub-mount);
+  /* Deepened Mountbatten — the only legacy accent used as a solid fill under
+     light text (Sidebar badge, ProjectCard button), so it must clear contrast
+     in BOTH themes and therefore does not flip. */
+  --color-global-redpink: #6E6078;
+  /* NOTE: keep every comment inside @theme free of the two-character
+     sequence that ends a CSS comment. Writing a glob like matte-<star><slash>
+     velvet closes the comment early and Tailwind then rejects the whole block
+     with "@theme blocks must only contain custom properties". */
+
   /* ── Fonts ── */
   --font-inter: "Inter", system-ui, sans-serif;
   --font-zen:   "Zen Kaku Gothic New", sans-serif;
@@ -219,7 +247,47 @@
    cascade origin and permanently fixes dark-mode for every component that
    consumes a semantic CSS custom property.
    ═══════════════════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════════════════
+   LEGACY ACCENT ALIASES — why they live in @theme
+   ───────────────────────────────────────────────────────────────────────────
+   Tailwind v4 generates utility classes ONLY from @theme entries. The
+   matte- and velvet- aliases used to be declared in styles/tokens/colors.css
+   under :root, which makes `var(--color-matte-azure)` resolve inside
+   handwritten CSS but leaves every `text-matte-azure`, `from-matte-navy` and
+   `bg-global-blue/10` class in .tsx generating no rule at all — the element
+   silently inherits its parent color instead. That is what made
+   /work/repository, /work/tech-stack and /work/tooling render dark-on-dark
+   card titles, invisible feature chips and empty card heroes, while the
+   homepage (which consumes the same tokens through handwritten CSS) looked
+   correct. The `global-` names had never been defined anywhere at all.
+
+   The `global-` accents resolve through the --accent- runtime vars below so
+   they flip with the theme; the matte- and velvet- aliases are fixed palette
+   stops and intentionally do not flip.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Theme-reactive accent channel backing the `global-` @theme aliases above.
+   Unlayered on purpose, for the same cascade reason as the .dark block below.
+   Named without the `--color-` prefix so Tailwind never emits them itself and
+   there is exactly one place per theme where an accent value is decided. */
+:root {
+  --accent-ui:     var(--color-haze);
+  --accent-purple: var(--color-sub-ev1);
+  --accent-green:  var(--color-success);
+  --accent-red:    var(--color-error);
+  --accent-yellow: var(--color-warning);
+  --accent-line:   var(--color-light-border);
+}
+
 .dark {
+  /* ── Legacy accent channel (see @theme "global-*" aliases) ── */
+  --accent-ui:     var(--color-periwinkle);
+  --accent-purple: var(--color-sub-cool);
+  --accent-green:  #86EFAC;
+  --accent-red:    #FCA5A5;
+  --accent-yellow: #FBBF24;
+  --accent-line:   var(--color-dark-border);
+
   /* ── Backgrounds ─────────────────────────────────────── */
   --color-bg-primary:        var(--color-dark-bg);
   --color-bg-secondary:      var(--color-midnight-deep);

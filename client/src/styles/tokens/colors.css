@@ -6,15 +6,13 @@
      ═════════════════════════════════════════════════════════════ */
 
   :root {
-    /* ─── BRAND PALETTE ALIASES (index.css @theme) ─── */
-    --color-matte-midnight: var(--color-midnight);
-    --color-matte-navy:     var(--color-haze);
-    --color-matte-royal:    var(--color-haze-deep);
-    --color-matte-azure:    var(--color-periwinkle);
-    --color-velvet-night:   var(--color-midnight-deep);
-    --color-velvet-indigo:  var(--color-sub-ev2);
-    --color-velvet-orchid:  var(--color-sub-ev1);
-    --color-velvet-flamingo: var(--color-sub-mount);
+    /* ─── BRAND PALETTE ALIASES ───
+       MOVED to index.css @theme. Declaring them here only created the custom
+       property; it never taught Tailwind to emit `text-matte-azure` /
+       `from-matte-navy` / `bg-global-blue` utilities, so every .tsx usage
+       rendered nothing. They now live in @theme, which both emits the
+       utilities and defines the property. Do not re-add them here — @theme
+       output is unlayered and would silently win over this layer anyway. */
 
     --color-pastel-green:  #6FD195;
     --color-pastel-blue:   var(--color-cool);

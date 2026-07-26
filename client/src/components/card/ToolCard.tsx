@@ -22,7 +22,8 @@ const ToolCard: FC<ToolCardProps> = ({ tool }) => {
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300"></div>
 
         {/* Category badge (top-left like Blog) */}
-        <div className="absolute top-4 left-4 bg-light-bg/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-global-blue uppercase tracking-wide shadow-sm">
+        {/* See TechStackCard — pinned to the dark hero, not to the theme. */}
+        <div className="absolute top-4 left-4 bg-charcoal/55 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-periwinkle-pale uppercase tracking-wide ring-1 ring-white/15">
           {tool.category}
         </div>
 
@@ -49,7 +50,7 @@ const ToolCard: FC<ToolCardProps> = ({ tool }) => {
         </div>
 
         {/* Title */}
-        <h3 className="text-xl font-bold text-light-text dark:text-dark-text mb-3 group-hover:text-global-blue transition-colors line-clamp-2">
+        <h3 className="text-xl font-normal text-light-text dark:text-dark-text mb-3 group-hover:text-global-blue transition-colors line-clamp-2">
           {tool.name}
         </h3>
 
@@ -76,7 +77,7 @@ const ToolCard: FC<ToolCardProps> = ({ tool }) => {
             Visit
             <i className="ri-external-link-line"></i>
           </span>
-          <div className="bg-blue-50 dark:bg-global-blue/10 p-2 rounded-full text-global-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="bg-periwinkle/25 dark:bg-global-blue/10 p-2 rounded-full text-global-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <i className="ri-arrow-right-s-line"></i>
           </div>
         </div>

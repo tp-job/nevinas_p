@@ -79,6 +79,7 @@ const Sidebar: FC = () => {
       label: "TailwindCSS",
       to: "/work/tailwindcss",
     },
+    { icon: "ri-flutter-fill", label: "Flutter", to: "/work/flutter" },
     { icon: "ri-stack-fill", label: "Tech Stack", to: "/work/tech-stack" },
     { icon: "ri-tools-line", label: "Tooling", to: "/work/tooling" },
     {

@@ -15,7 +15,7 @@ export const toolsData: Tool[] = [
       "GitLens",
     ],
     icon: "ri-code-box-line",
-    color: "bg-linear-to-br from-matte-navy to-matte-azure",
+    color: "bg-linear-to-br from-matte-navy to-cool",
     link: "https://code.visualstudio.com",
   },
   {

@@ -5,9 +5,19 @@ import { v4 as uuidv4 } from 'uuid';
 import { dataStore } from '../services/fileManager';
 import type { IGallery } from '../types/models';
 
-// Base directories (relative to server root)
-const SERVER_ROOT = path.join(__dirname, '../..');
-const UPLOADS_DIR = path.join(SERVER_ROOT, 'uploads');
+// Gallery assets are served by the CLIENT, not this server.
+//
+// The client deploys as a standalone static site on a different origin from the
+// API, so a relative "/uploads/..." path in gallery.json resolves against the
+// frontend host. Serving these files from server/uploads therefore 404'd in
+// production no matter what — and server/uploads was gitignored, so the files
+// were never deployed either. They now live in client/public, which Vite copies
+// to dist/ and the static host serves same-origin from its CDN.
+//
+// Resolves identically from src/sync (ts-node-dev) and dist/sync (compiled).
+const REPO_ROOT = path.join(__dirname, '../../..');
+const PUBLIC_ROOT = path.join(REPO_ROOT, 'client', 'public');
+const UPLOADS_DIR = path.join(PUBLIC_ROOT, 'uploads');
 const IMAGES_DIR = path.join(UPLOADS_DIR, 'images');
 
 interface ImageFile {
@@ -64,7 +74,7 @@ async function syncGallery(): Promise<void> {
         console.log('\nStep 1: Cleaning up orphan records...');
         let orphanCount = 0;
         const cleaned = currentGallery.filter((record) => {
-            const filePath = path.join(SERVER_ROOT, record.img.replace(/^\//, ''));
+            const filePath = path.join(PUBLIC_ROOT, record.img.replace(/^\//, ''));
             if (!fs.existsSync(filePath)) {
                 console.log(`  Removed orphan: ${record.img}`);
                 orphanCount++;
