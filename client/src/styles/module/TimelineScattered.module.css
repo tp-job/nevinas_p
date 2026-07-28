@@ -288,7 +288,14 @@
 }
 
 /* ── MOBILE STACK VIEW ───────────────────────────────────────── */
+/*
+ * z-index 1 puts the stack above SpiralRingStage (z-index 0), which on mobile
+ * stops being a framed centrepiece and becomes a backdrop behind this column.
+ * Without the stacking context the canvas would paint over the cards.
+ */
 .mobileStack {
+  position: relative;
+  z-index: 1;
   display: none;
   flex-direction: column;
   gap: 3rem;

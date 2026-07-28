@@ -107,6 +107,9 @@ export default function LiquidEther({
       isElementVisible: () => isVisibleRef.current,
       isPaused: () => pausedRef.current
     });
+    // null when the browser refused a WebGL context. Nothing to observe, start
+    // or tear down — the parent's gradient placeholder is the fallback.
+    if (!webgl) return;
     webglRef.current = webgl;
 
     const applyOptionsFromProps = () => {

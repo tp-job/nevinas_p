@@ -69,6 +69,14 @@ desktop.ini
 server/uploads/images/gallery/
 
 # =============================================
+# Raw 3D exports (archive material, not repo material)
+# =============================================
+# ~15 MB each straight out of the authoring tool. `npm run models:optimize`
+# turns these into the committed client/public/models/*-hq.glb / *-lq.glb
+# (~26x smaller). Keep the raws in cloud storage, not in git.
+client/models-source/
+
+# =============================================
 # Misc
 # =============================================
 .cache/

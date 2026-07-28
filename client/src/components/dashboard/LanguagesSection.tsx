@@ -4,11 +4,18 @@ import ChartTooltip from "@/components/charts/ChartTooltip";
 import { StaggerItem } from "@/components/ui/StaggerList";
 import { TH, cardCls } from "./constants";
 
+/**
+ * Recharts v3 types `<Pie data>` as `ChartDataInput[]`, which requires a string
+ * index signature — a plain interface is rejected with "Index signature for
+ * type 'string' is missing". The extra member is a type-level requirement only;
+ * the four named fields are still the contract callers write against.
+ */
 export interface LangDatum {
   name: string;
   count: number;
   pct: number;
   color: string;
+  [key: string]: string | number;
 }
 
 interface LanguagesSectionProps {

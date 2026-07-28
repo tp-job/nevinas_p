@@ -7,12 +7,14 @@ declare module "*&format=webp" {
   export default src;
 }
 
-declare module "*.glb" {
-  const src: string;
-  export default src;
-}
-
-declare module "*.gltf" {
-  const src: string;
-  export default src;
-}
+// NO `declare module "*.glb"` here, on purpose.
+//
+// 3D models live in public/models/ and are referenced by absolute path
+// (`/models/<name>.glb`), never imported. Importing one from src/ builds fine
+// but breaks `npm run dev`: Vite's dev server answers a browser fetch() for
+// /src/**/*.glb with the ~400-byte JS module that exports the URL instead of
+// the file, so GLTFLoader gets "export default" and dies in JSON.parse.
+//
+// Leaving the ambient declaration out means that mistake fails loudly at the
+// type level instead of silently working in prod and breaking in dev. See
+// scripts/optimize-models.mjs for the full write-up.

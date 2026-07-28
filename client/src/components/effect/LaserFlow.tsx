@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { createGuardedRenderer, releaseRenderer } from '@/three/webglGuard';
 
 type Props = {
     className?: string;
@@ -315,7 +316,12 @@ export const LaserFlow: React.FC<Props> = ({
 
     useEffect(() => {
         const mount = mountRef.current!;
-        const renderer = new THREE.WebGLRenderer({
+        // May be null: the browser can refuse a context (no GPU, too many live
+        // contexts, or the page blacklisted after earlier context losses). This
+        // is a decorative background — if we can't have it, render nothing and
+        // let the caller's CSS layers stand in. Throwing here would reach the
+        // router's ErrorBoundary and take the whole site down.
+        const renderer = createGuardedRenderer({
             antialias: false,
             alpha: false,
             depth: false,
@@ -326,6 +332,7 @@ export const LaserFlow: React.FC<Props> = ({
             failIfMajorPerformanceCaveat: false,
             logarithmicDepthBuffer: false
         });
+        if (!renderer) return;
         rendererRef.current = renderer;
 
         baseDprRef.current = Math.min(dpr ?? (window.devicePixelRatio || 1), 2);
@@ -559,8 +566,13 @@ export const LaserFlow: React.FC<Props> = ({
             scene.clear();
             geometry.dispose();
             material.dispose();
-            renderer.dispose();
-            renderer.forceContextLoss();
+            // releaseRenderer() disposes but deliberately does NOT force a
+            // context loss — see three/webglGuard.ts. This component is mounted
+            // by the router's Suspense fallback, so it unmounts on every lazy
+            // route transition; forcing a loss each time is what got the
+            // deployed page blocked from creating any further WebGL contexts.
+            releaseRenderer(renderer);
+            rendererRef.current = null;
             if (mount.contains(canvas)) mount.removeChild(canvas);
         };
     }, [dpr]);

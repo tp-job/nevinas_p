@@ -1,0 +1,123 @@
+/* SpiralRingStage.module.css
+   Nocturnal Atelier Design System v3.2
+   ─────────────────────────────────────────────────────────────
+   Centre-stage 3D viewport for TimelineScattered.
+
+   LAYERING CONTRACT with TimelineScattered.module.css:
+     .decor  z-index 0   ghost axis lines + corner marks
+     .stage  z-index 0   THIS — same layer, later in DOM so it paints on top
+     .feat   z-index 1   quadrant text blocks, always above the model
+   The model is scenery. Text wins every overlap.
+
+   PALETTE NOTE: the halo uses sub-palette tones (French Gray / English Violet)
+   because it is an effect, not a surface — per v3.2 the sub-palette is for
+   glows, gradients and WebGL only, never for text, borders or buttons.
+   ─────────────────────────────────────────────────────────────
+*/
+
+.stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+
+  /* Square viewport sized off BOTH axes so it can never crowd the corner
+     feature blocks: vw keeps it clear of .featTl/.featTr horizontally, vh keeps
+     it clear of them vertically on short laptop screens. */
+  width: min(46vw, 54vh);
+  height: min(46vw, 54vh);
+
+  /* Purely decorative — must never eat pointer events. The parent slide's
+     mousemove handler needs to keep receiving them for the whole parallax
+     system, and .feat blocks need their hover states. */
+  pointer-events: none;
+}
+
+/* ── AMBIENT HALO ────────────────────────────────────────────────────────
+   Also the fallback state. Two jobs:
+   1. Occupies the centre of the composition while the GLB streams in, so the
+      layout never reads as "empty box that later fills" (no CLS either way —
+      .stage is fixed-size — but the visual pop would be obvious).
+   2. On devices that skip WebGL entirely it IS the centrepiece.
+*/
+.halo {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(184, 190, 215, 0.10) 0%,
+    rgba(82, 78, 104, 0.07) 42%,
+    transparent 68%
+  );
+}
+
+:global(.dark) .halo {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(200, 205, 235, 0.09) 0%,
+    rgba(68, 64, 90, 0.14) 42%,
+    transparent 70%
+  );
+}
+
+/* Fallback gets a slightly stronger presence — nothing renders on top of it. */
+.fallback .halo,
+.fallback {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(184, 190, 215, 0.16) 0%,
+    rgba(82, 78, 104, 0.10) 45%,
+    transparent 70%
+  );
+  border-radius: 50%;
+}
+
+/* ── CANVAS ──────────────────────────────────────────────────────────────
+   Starts transparent and fades in once the model is decoded and framed.
+   Without this you see one frame of empty canvas, then a pop.
+*/
+.canvas {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.canvasReady {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The stage renders a single static frame in this mode; a 0.9s fade would
+     still be motion. Show it immediately instead. */
+  .canvas {
+    transition: none;
+  }
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────────────
+   Below 768px TimelineScattered swaps its four absolute corner blocks for a
+   vertical .mobileStack. The model stops being a centrepiece framed by text and
+   becomes a backdrop behind a scrolling column — so it grows relative to the
+   viewport and drops back in opacity to keep body copy legible.
+*/
+@media (max-width: 767px) {
+  .stage {
+    width: min(82vw, 44vh);
+    height: min(82vw, 44vh);
+    opacity: 0.42;
+  }
+}
+
+/* Tablet: corner blocks are narrower (max-width 200px), so the stage can
+   afford a little more room than the desktop ratio. */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .stage {
+    width: min(52vw, 50vh);
+    height: min(52vw, 50vh);
+  }
+}

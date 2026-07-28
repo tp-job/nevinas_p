@@ -46,6 +46,7 @@ import {
   useReducedMotion,
 } from 'framer-motion';
 import styles from '@/styles/module/TimelineScattered.module.css';
+import SpiralRingStage from './three/SpiralRingStage';
 
 /* ─────────────────────────────────────────────────
    SPRING CONFIG
@@ -277,6 +278,25 @@ const TimelineScattered: React.FC = () => {
         <span className={`${styles.corner} ${styles.cornerBl}`} />
         <span className={`${styles.corner} ${styles.cornerBr}`} />
       </div>
+
+      {/* ─── Centre stage — spiral-ring GLB ──────────────────────────────────
+       *
+       *  Sits at z-index 0 alongside .decor but later in the DOM, so it paints
+       *  over the ghost axis lines and under every .feat block (z-index 1).
+       *  Text always wins the overlap; the model is scenery.
+       *
+       *  It reuses springX/springY rather than taking its own mousemove
+       *  listener: the parallax the corner blocks already read from is exactly
+       *  the signal the camera wants, and sharing it guarantees the model and
+       *  the text drift in sympathy instead of on two slightly different
+       *  timings. The spring's lag is deliberate — see SPRING_CFG above.
+       *
+       *  renderOnLowTier: phones are always `low` tier by useDeviceProfile's
+       *  rules, and we do want the model there — just on the lq asset with the
+       *  reduced-quality renderer path. The stage handles that split itself.
+       *
+       ──────────────────────────────────────────────────────────────────── */}
+      <SpiralRingStage pointerX={springX} pointerY={springY} renderOnLowTier />
 
       {/* ─── Feature Blocks ─────────────────────────────────────────────────
        *

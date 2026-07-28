@@ -9,7 +9,9 @@ export default defineConfig({
   // imagetools only transforms imports carrying a query directive
   // (e.g. `?format=webp&w=600`); plain image imports pass through untouched.
   plugins: [react(), tailwindcss(), imagetools()],
-  assetsInclude: ['**/*.glb', '**/*.gltf'],
+  // No `assetsInclude` for .glb/.gltf. Models are served from public/ and
+  // fetched by URL, never imported — see src/vite-env.d.ts for why importing
+  // them from src/ silently breaks the dev server.
   server: {
     host: true,  // เปิดให้เข้าถึงจากเครือข่าย
     port: 10005,  // กำหนดพอร์ตใหม่

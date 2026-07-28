@@ -12,6 +12,7 @@ import {
   viscous_frag
 } from './shaders';
 import type { LiquidEtherConfig, LiquidEtherWebGL, SimOptions } from './types';
+import { createGuardedRenderer, releaseRenderer } from '@/three/webglGuard';
 
 function makePaletteTexture(stops: string[]): THREE.DataTexture {
   let arr: string[];
@@ -48,7 +49,7 @@ function makePaletteTexture(stops: string[]): THREE.DataTexture {
 export function createLiquidEther(
   mountContainer: HTMLElement,
   config: LiquidEtherConfig
-): LiquidEtherWebGL {
+): LiquidEtherWebGL | null {
   const paletteTex = makePaletteTexture(config.colors);
   // Hard-code transparent background vector (alpha 0)
   const bgVec4 = new THREE.Vector4(0, 0, 0, 0);
@@ -68,11 +69,20 @@ export function createLiquidEther(
     container: HTMLElement | null = null;
     renderer: THREE.WebGLRenderer | null = null;
     clock: THREE.Clock | null = null;
-    init(container: HTMLElement) {
+    /** @returns false when the browser refused a WebGL context. */
+    init(container: HTMLElement): boolean {
       this.container = container;
       this.pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
       this.resize();
-      this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      // Idempotent: the factory pre-flights this call so it can bail on a
+      // refused context, and WebGLManager's constructor calls it again. Only
+      // the first call may allocate a context.
+      if (this.renderer) return true;
+      this.renderer = createGuardedRenderer({ antialias: true, alpha: true });
+      // A refused context is not an error condition — the backdrop's CSS
+      // gradient placeholder is the intended fallback. Report it upward so the
+      // factory can bail before building shader passes against a null renderer.
+      if (!this.renderer) return false;
       // Always transparent
       this.renderer.autoClear = false;
       this.renderer.setClearColor(new THREE.Color(0x000000), 0);
@@ -84,6 +94,7 @@ export function createLiquidEther(
       el.style.display = 'block';
       this.clock = new THREE.Clock();
       this.clock.start();
+      return true;
     }
     resize() {
       if (!this.container) return;
@@ -865,14 +876,23 @@ export function createLiquidEther(
         if (Common.renderer) {
           const canvas = Common.renderer.domElement;
           if (canvas && canvas.parentNode) canvas.parentNode.removeChild(canvas);
-          Common.renderer.dispose();
-          Common.renderer.forceContextLoss();
+          // dispose only — forceContextLoss() counts as a page-caused context
+          // loss, and enough of those get the document blocked from creating
+          // any further WebGL context. See three/webglGuard.ts.
+          releaseRenderer(Common.renderer);
+          Common.renderer = null;
         }
       } catch {
         /* noop */
       }
     }
   }
+
+  // Claim the WebGL context before building anything on top of it. If the
+  // browser refuses one there is nothing to construct — return null and let the
+  // caller keep its static placeholder rather than throwing into the app's
+  // ErrorBoundary.
+  if (!Common.init(mountContainer)) return null;
 
   return new WebGLManager({
     $wrapper: mountContainer,

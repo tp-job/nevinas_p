@@ -75,6 +75,25 @@ const PHASES = [
 ──────────────────────────────────────── */
 const LaserFlow = lazy(() => import("@/components/effect/LaserFlow"));
 
+/**
+ * The WebGL beam is allowed exactly ONCE per page load.
+ *
+ * This component is the router's Suspense fallback, so it mounts and unmounts
+ * on every lazy route transition. Each mount allocated a full-screen WebGL
+ * context and each unmount tore it down; after a handful of navigations Chrome
+ * counted enough page-caused context losses to blacklist the document, and
+ * every subsequent context — including the homepage's LiquidEther backdrop —
+ * failed with "Web page caused context loss and was blocked". That threw out of
+ * the renderer constructor, hit the ErrorBoundary, and replaced the site with
+ * the 500 page.
+ *
+ * The guard in three/webglGuard.ts now makes the failure non-fatal; this flag
+ * stops us provoking it in the first place. Cold boot still gets the full
+ * treatment — mid-session route spinners flash for a few hundred milliseconds
+ * and never needed a shader anyway.
+ */
+let beamBudgetSpent = false;
+
 /* ════════════════════════════════════════
    ATOMIC HUD COMPONENTS
 ════════════════════════════════════════ */
@@ -215,6 +234,19 @@ export default function LoadingScreen({ onComplete }: { onComplete?: () => void 
   const timerRef = useRef(null);
   const tier = useDeviceCapability();
 
+  /* Claim the one-per-page-load beam slot, if it's still available.
+
+     A ref rather than useState: StrictMode double-invokes a state initializer,
+     which would let the second call see the flag its own first call had just
+     set and decide the budget was already gone. The ref makes the claim
+     idempotent per instance. */
+  const beamClaimRef = useRef<boolean | null>(null);
+  if (beamClaimRef.current === null) {
+    beamClaimRef.current = !beamBudgetSpent;
+    beamBudgetSpent = true;
+  }
+  const beamAllowed = beamClaimRef.current;
+
   /* Inject keyframes */
   useEffect(() => {
     /* NOTE: this used to append a <link> to fonts.googleapis.com for
@@ -283,7 +315,7 @@ export default function LoadingScreen({ onComplete }: { onComplete?: () => void 
            contended. The vignette and nebula layers below carry the same look
            without a WebGL context. */}
       <div aria-hidden="true" style={{ position:"absolute", inset:0 }}>
-        {tier === "high" && (
+        {tier === "high" && beamAllowed && (
         <Suspense fallback={null}>
           <LaserFlow
             color={C.periwinkle}
