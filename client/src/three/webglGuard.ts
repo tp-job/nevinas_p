@@ -39,9 +39,28 @@ let blocked = false
  * triggers a context-loss event and feeds problem 1 above. Nothing here needs
  * more than a couple at a time, so cap well below the browser limit and treat
  * hitting it as a bug we degrade around rather than crash on.
+ *
+ * Two lanes, ONE budget. Most effects here go through three.js, but some own a
+ * raw WebGL2 context instead (ParticleScroll). Both draw on the same per-page
+ * context allowance, so they must be counted together — a raw context that the
+ * guard cannot see is exactly how the page creeps back over the limit.
  */
-const live = new Set<THREE.WebGLRenderer>()
+const liveRenderers = new Set<THREE.WebGLRenderer>()
+const liveContexts = new Set<WebGL2RenderingContext>()
 const MAX_LIVE_CONTEXTS = 4
+
+/** Total contexts held across both lanes. */
+function liveCount(): number {
+  return liveRenderers.size + liveContexts.size
+}
+
+function refuse(what: string): null {
+  console.warn(
+    `[webglGuard] Refusing a new ${what} — ${liveCount()} contexts already live. ` +
+      'Something is leaking; check that every effect releases its context on unmount.',
+  )
+  return null
+}
 
 /** True once the browser has refused us a context. */
 export function isWebGLBlocked(): boolean {
@@ -80,17 +99,11 @@ export function createGuardedRenderer(
 ): THREE.WebGLRenderer | null {
   if (blocked) return null
 
-  if (live.size >= MAX_LIVE_CONTEXTS) {
-    console.warn(
-      `[webglGuard] Refusing a new WebGL context — ${live.size} already live. ` +
-        'Something is leaking renderers; check that every effect calls releaseRenderer() on unmount.',
-    )
-    return null
-  }
+  if (liveCount() >= MAX_LIVE_CONTEXTS) return refuse('WebGL renderer')
 
   try {
     const renderer = new THREE.WebGLRenderer(params)
-    live.add(renderer)
+    liveRenderers.add(renderer)
     return renderer
   } catch (err) {
     blocked = true
@@ -112,10 +125,59 @@ export function createGuardedRenderer(
  */
 export function releaseRenderer(renderer: THREE.WebGLRenderer | null | undefined): void {
   if (!renderer) return
-  live.delete(renderer)
+  liveRenderers.delete(renderer)
   try {
     renderer.dispose()
   } catch {
     /* a renderer whose context is already gone throws here; nothing to clean up */
   }
+}
+
+/**
+ * Raw-WebGL2 counterpart to `createGuardedRenderer()`, for effects that drive
+ * the GL API directly instead of going through three.js.
+ *
+ * Callers MUST handle `null` — same contract as the renderer lane.
+ *
+ * Note on `blocked`: a plain `null` from `getContext('webgl2')` only means this
+ * document has no WebGL2 (an older browser, or a software rasteriser refusing
+ * the profile). That is NOT evidence the page has been blacklisted, and
+ * latching it would needlessly kill every three.js effect too — several of
+ * which fall back to WebGL1 quite happily. So only a *throw* latches.
+ */
+export function createGuardedContext(
+  canvas: HTMLCanvasElement,
+  attributes?: WebGLContextAttributes,
+): WebGL2RenderingContext | null {
+  if (blocked) return null
+
+  if (liveCount() >= MAX_LIVE_CONTEXTS) return refuse('WebGL2 context')
+
+  try {
+    const gl = canvas.getContext('webgl2', attributes) as WebGL2RenderingContext | null
+    if (!gl || gl.isContextLost()) return null
+    liveContexts.add(gl)
+    return gl
+  } catch (err) {
+    blocked = true
+    console.warn(
+      '[webglGuard] WebGL2 context creation threw; all GPU effects are disabled for this page load.',
+      err,
+    )
+    return null
+  }
+}
+
+/**
+ * Hand a raw context back to the budget.
+ *
+ * Deliberately does NOT call `WEBGL_lose_context.loseContext()` — for exactly
+ * the reason `releaseRenderer()` avoids `forceContextLoss()`. The caller is
+ * expected to have deleted its own GL objects (programs, buffers, textures)
+ * already; dropping the last reference lets the browser reclaim the context on
+ * its own schedule without counting it as a page-caused loss.
+ */
+export function releaseContext(gl: WebGL2RenderingContext | null | undefined): void {
+  if (!gl) return
+  liveContexts.delete(gl)
 }

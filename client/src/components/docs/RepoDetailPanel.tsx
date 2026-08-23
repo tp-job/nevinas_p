@@ -43,12 +43,12 @@ const RepoDetailPanel: FC<RepoDetailPanelProps> = ({
           <div
             className="absolute top-0 left-0 right-0 h-[2px]"
             style={{
-              background: `linear-gradient(90deg, transparent, ${TH.azure}60, ${TH.orchid}60, transparent)`,
+              background: `linear-gradient(90deg, transparent, ${TH.primary}60, ${TH.secondary}60, transparent)`,
             }}
           />
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="text-lg font-bold text-light-text dark:text-dark-text">
+              <h3 className="text-lg font-semibold text-light-text dark:text-dark-text">
                 <i className="ri-folder-3-line mr-2 text-matte-azure"></i>
                 {selectedRepo} — Project Detail
               </h3>
@@ -68,12 +68,12 @@ const RepoDetailPanel: FC<RepoDetailPanelProps> = ({
           <div
             className="absolute top-0 left-0 right-0 h-[2px]"
             style={{
-              background: `linear-gradient(90deg, transparent, ${TH.azure}60, transparent)`,
+              background: `linear-gradient(90deg, transparent, ${TH.primary}60, transparent)`,
             }}
           />
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="text-lg font-bold text-light-text dark:text-dark-text">
+              <h3 className="text-lg font-semibold text-light-text dark:text-dark-text">
                 <i className="ri-folder-3-line mr-2 text-matte-azure"></i>
                 {selectedRepo} — Project Info
               </h3>
@@ -116,11 +116,11 @@ const RepoDetailPanel: FC<RepoDetailPanelProps> = ({
         <div
           className="absolute top-0 left-0 right-0 h-[2px]"
           style={{
-            background: `linear-gradient(90deg, transparent, ${TH.green}60, transparent)`,
+            background: `linear-gradient(90deg, transparent, ${TH.tertiary}60, transparent)`,
           }}
         />
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-bold text-light-text dark:text-dark-text">
+          <h3 className="text-lg font-semibold text-light-text dark:text-dark-text">
             <i className="ri-file-list-3-line mr-2 text-matte-azure"></i>
             {selectedRepo} — README
           </h3>
@@ -141,8 +141,8 @@ const RepoDetailPanel: FC<RepoDetailPanelProps> = ({
         )}
         {readmeContent && !readmeLoading && (
           <div
-            className="prose-doc [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:mb-4 [&_h1]:mt-8 [&_h1]:text-light-text [&_h1]:dark:text-dark-text
-                      [&_h2]:text-xl [&_h2]:font-bold [&_h2]:mt-8 [&_h2]:mb-4 [&_h2]:text-light-text [&_h2]:dark:text-dark-text
+            className="prose-doc [&_h1]:text-2xl [&_h1]:font-semibold [&_h1]:mb-4 [&_h1]:mt-8 [&_h1]:text-light-text [&_h1]:dark:text-dark-text
+                      [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:mt-8 [&_h2]:mb-4 [&_h2]:text-light-text [&_h2]:dark:text-dark-text
                       [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:text-light-text [&_h3]:dark:text-dark-text
                       [&_p]:text-base [&_p]:text-light-text [&_p]:dark:text-dark-text [&_p]:mb-4 [&_p]:leading-relaxed
                       [&_a]:text-matte-azure [&_a]:underline [&_a]:hover:no-underline

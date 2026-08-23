@@ -31,21 +31,21 @@ const ArchitectureGrid: FC<ArchitectureGridProps> = ({ data }) => (
         title: "Frontend",
         subtitle: "Client-side layer",
         icon: "ri-window-line",
-        color: TH.azure,
+        color: TH.primary,
         data: data.frontend,
       },
       {
         title: "Backend",
         subtitle: "Server & data layer",
         icon: "ri-server-line",
-        color: TH.orchid,
+        color: TH.secondary,
         data: data.backend,
       },
       {
         title: "Dev Tools",
         subtitle: "Build & tooling",
         icon: "ri-tools-line",
-        color: TH.yellow,
+        color: TH.tertiary,
         data: data.devTools,
       },
     ].map((section) => {
@@ -80,7 +80,7 @@ const ArchitectureGrid: FC<ArchitectureGridProps> = ({ data }) => (
               <i className={`${section.icon} text-xl text-white`} />
             </div>
             <div className="min-w-0">
-              <h4 className="text-base font-bold text-light-text dark:text-dark-text leading-tight">
+              <h4 className="text-base font-semibold text-light-text dark:text-dark-text leading-tight">
                 {section.title}
               </h4>
               <p className="text-[11px] text-light-text-secondary dark:text-dark-text-secondary mt-0.5">
@@ -88,7 +88,7 @@ const ArchitectureGrid: FC<ArchitectureGridProps> = ({ data }) => (
               </p>
             </div>
             <span
-              className="ml-auto text-[11px] font-bold px-2 py-0.5 rounded-full self-start"
+              className="ml-auto text-[11px] font-semibold px-2 py-0.5 rounded-full self-start"
               style={{ backgroundColor: `${section.color}18`, color: section.color }}
             >
               {items.length}

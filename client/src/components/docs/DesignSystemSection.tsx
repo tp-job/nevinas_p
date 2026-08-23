@@ -26,7 +26,7 @@ const PaletteGroup: FC<PaletteGroupProps> = ({
         className="w-2.5 h-2.5 rounded-full shrink-0"
         style={{ backgroundColor: color, boxShadow: `0 0 8px ${color}80` }}
       />
-      <h4 className="text-xs font-bold uppercase tracking-wider text-light-text dark:text-dark-text">
+      <h4 className="text-xs font-semibold uppercase tracking-wider text-light-text dark:text-dark-text">
         {label}
       </h4>
       {hint && (
@@ -50,21 +50,21 @@ const DesignSystemSection: FC = () => (
       <div
         className="absolute top-0 left-0 right-0 h-[2px]"
         style={{
-          background: `linear-gradient(90deg, transparent, ${TH.flamingo}60, ${TH.orchid}60, transparent)`,
+          background: `linear-gradient(90deg, transparent, ${TH.warm}60, ${TH.secondary}60, transparent)`,
         }}
       />
 
       <PaletteGroup
         label="Main Palette"
         hint="Periwinkle → Charcoal"
-        color={TH.orchid}
+        color={TH.secondary}
         swatches={designSystem.mainTheme}
       />
 
       <PaletteGroup
         label="Sub-Palette"
         hint="Effects & SVG"
-        color={TH.flamingo}
+        color={TH.warm}
         cols="grid-cols-2 sm:grid-cols-4 lg:grid-cols-5"
         swatches={designSystem.subPalette}
       />
@@ -74,7 +74,7 @@ const DesignSystemSection: FC = () => (
         <div className="rounded-2xl p-5 border border-light-border dark:border-dark-border bg-light-surface/40 dark:bg-dark-bg/30">
           <PaletteGroup
             label="Light Mode"
-            color={TH.yellow}
+            color={TH.primary}
             cols="grid-cols-2"
             swatches={designSystem.lightMode}
           />
@@ -82,7 +82,7 @@ const DesignSystemSection: FC = () => (
         <div className="rounded-2xl p-5 border border-light-border dark:border-dark-border bg-light-surface/40 dark:bg-dark-bg/30">
           <PaletteGroup
             label="Dark Mode"
-            color={TH.royal}
+            color={TH.sub}
             cols="grid-cols-2"
             swatches={designSystem.darkMode}
           />
@@ -91,7 +91,7 @@ const DesignSystemSection: FC = () => (
 
       <PaletteGroup
         label="Semantic Tokens"
-        color={TH.green}
+        color={TH.tertiary}
         cols="grid-cols-2 sm:grid-cols-4 lg:grid-cols-5"
         swatches={designSystem.semanticTokens}
       />
@@ -100,9 +100,9 @@ const DesignSystemSection: FC = () => (
       <div className="flex items-center gap-2.5 mb-4">
         <span
           className="w-2.5 h-2.5 rounded-full shrink-0"
-          style={{ backgroundColor: TH.azure, boxShadow: `0 0 8px ${TH.azure}80` }}
+          style={{ backgroundColor: TH.primary, boxShadow: `0 0 8px ${TH.primary}80` }}
         />
-        <h4 className="text-xs font-bold uppercase tracking-wider text-light-text dark:text-dark-text">
+        <h4 className="text-xs font-semibold uppercase tracking-wider text-light-text dark:text-dark-text">
           Typography
         </h4>
       </div>
@@ -121,7 +121,7 @@ const DesignSystemSection: FC = () => (
                           bg-gradient-to-br from-haze to-midnight text-periwinkle-pale
                           transition-transform duration-300 group-hover:scale-105
                           ${f.variable === "--font-zen" ? "font-zen" : "font-inter"}`}
-              style={{ boxShadow: `0 6px 18px ${TH.azure}30` }}
+              style={{ boxShadow: `0 6px 18px ${TH.primary}30` }}
             >
               <span className="text-xl font-semibold">Aa</span>
             </div>

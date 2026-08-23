@@ -17,6 +17,7 @@ import Footer from '@/components/layouts/Footer';
 import NodeMap from '@/components/homepage/Nodemap';
 import LiquidEtherBackdrop from '@/components/layouts/LiquidEtherBackdrop';
 import Testimonials from '@/components/homepage/Testimonials';
+import ParticleScrollLazy from '@/components/effect/ParticleScrollLazy';
 import HorizontalServices from '@/components/homepage/HorizontalServices';
 // import ContributorTimeline from '@/components/homepage/ContributorTimeline';
 
@@ -27,7 +28,9 @@ const getSlidesList = (scrollContainerRef: RefObject<HTMLElement | null>) => {
     { id: 'timeline-sc', content: <TimelineScattered />, variant: 'fill' as const, scrollable: true },
     { id: 'timeline', content: <ScrollReveal><TimelineSection /></ScrollReveal>, variant: 'content' as const, scrollable: true },
     { id: 'bento', content: <BentoGrid />, variant: 'fill' as const, scrollable: true },
-    { id: 'clarity', content: <CodeWithClarity />, variant: 'fill' as const, scrollable: true },
+    // `particles` wraps this slide's content in ParticleScroll — see the note at
+    // the render site for why this slide and not another.
+    { id: 'clarity', content: <CodeWithClarity />, variant: 'fill' as const, scrollable: true, particles: true },
     { id: 'nodemap', content: <NodeMap />, variant: 'fill' as const, scrollable: true },
     { id: 'services', content: <HorizontalServices />, variant: 'fill' as const, scrollable: true },
     { id: 'work', content: <ScrollReveal><Work /></ScrollReveal>, variant: 'content' as const, scrollable: true },
@@ -215,7 +218,29 @@ const HomePage: FC = () => {
                 scrollContainerRef={scrollRef}
                 mounted={mountedSlides.has(i)}
               >
-                {slide.content}
+                {/* ParticleScroll rides this slide's own scroll progress via
+                    SlideScrollContext — never its own scroller, which would
+                    starve the page's single container and freeze activeSlide.
+
+                    Only slides marked `particles` qualify, and the constraints
+                    are narrow: the effect's base pass is OPAQUE (uCover = 1,
+                    filled with a background colour sampled from the nearest
+                    opaque ancestor), so a slide sitting over the shared
+                    LiquidEther would have the ether painted out. Ether slides
+                    (top / statement-* / footer) are therefore excluded, and the
+                    host must bring its own solid background — CodeWithClarity
+                    does, and is a self-contained 100svh block, so the sweep
+                    geometry (content ≈ viewport) holds. */}
+                {'particles' in slide && slide.particles ? (
+                  <ParticleScrollLazy
+                    active={activeSlide === i}
+                    className="w-full h-full"
+                  >
+                    {slide.content}
+                  </ParticleScrollLazy>
+                ) : (
+                  slide.content
+                )}
               </SlideWrapper>
             </div>
           ))}

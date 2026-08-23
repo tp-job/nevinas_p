@@ -23,10 +23,13 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 /* ==================== DASHBOARD ==================== */
 const Dashboard: FC = () => {
+  // `fatal` because this IS the page — Dashboard renders nothing but the error
+  // state without it, so a 5xx here earns the full-page screen. Every other
+  // page's fetch stays transient and reports inline.
   const { data, loading, error } = useFetch(
-    () => Promise.all([githubApi.getStats(), githubApi.getRepos()]),
+    (o) => Promise.all([githubApi.getStats(o), githubApi.getRepos(o)]),
     [],
-    "Failed to fetch GitHub data",
+    { errorMessage: "Failed to fetch GitHub data", severity: "fatal" },
   );
   const [stats, allRepos] = data ?? [null, []];
 

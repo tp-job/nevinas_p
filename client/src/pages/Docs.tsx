@@ -1,6 +1,6 @@
 import { useState, type FC } from "react";
 import RepoCard from "@/components/card/RepoCard";
-import { githubApi, type GitHubRepo } from "@/utils/api";
+import { githubApi, ApiError, type GitHubRepo } from "@/utils/api";
 import { useFetch } from "@/hooks/useFetch";
 import { getLangColor } from "@/utils/constants";
 import { formatRelativeTime } from "@/utils/date";
@@ -40,8 +40,15 @@ const Docs: FC = () => {
     try {
       const readme = await githubApi.getRepoReadme(name);
       setReadmeContent(readme.content);
-    } catch {
-      setReadmeError("README not found or failed to load");
+    } catch (err) {
+      // Prefer what the server actually said ("README not found for this
+      // repository", "Request timed out after 8000ms") over a catch-all — the
+      // API layer now carries it through instead of discarding the body.
+      setReadmeError(
+        err instanceof ApiError
+          ? err.message
+          : "README not found or failed to load",
+      );
     } finally {
       setReadmeLoading(false);
     }
@@ -86,11 +93,8 @@ const Docs: FC = () => {
           items={[{ label: "Work", href: "/work" }, { label: "Docs" }]}
         />
 
-        {/* Header / Introduction */}
+        {/* Introduction */}
         <div className="mb-12">
-          <h1 className="text-4xl sm:text-5xl font-bold text-light-text dark:text-dark-text mb-3">
-            Documentation
-          </h1>
           <p className="text-lg text-light-text-secondary dark:text-dark-text-secondary mb-6">
             Developer analytics, API reference, and project guides.
           </p>
@@ -130,7 +134,7 @@ const Docs: FC = () => {
             <div
               className="absolute top-0 left-0 right-0 h-[2px]"
               style={{
-                background: `linear-gradient(90deg, transparent, ${TH.azure}60, ${TH.orchid}60, transparent)`,
+                background: `linear-gradient(90deg, transparent, ${TH.primary}60, ${TH.secondary}60, transparent)`,
               }}
             />
             {reposLoading ? (
@@ -182,7 +186,7 @@ const Docs: FC = () => {
             <div
               className="absolute top-0 left-0 right-0 h-[2px]"
               style={{
-                background: `linear-gradient(90deg, transparent, ${TH.azure}60, ${TH.orchid}60, transparent)`,
+                background: `linear-gradient(90deg, transparent, ${TH.primary}60, ${TH.secondary}60, transparent)`,
               }}
             />
             <ArchitectureGrid data={architecture} />

@@ -35,6 +35,8 @@ import GatewayTimeout from "@/components/common/server-error/GatewayTimeout";
 // Debug-only route — lazy so the heavy three.js WebGL effect isn't pulled
 // into the initial bundle for every visitor.
 const LaserFlow = lazy(() => import("@/components/effect/LaserFlow"));
+// Debug-only route — sandbox for the ParticleScroll effect, see the file header.
+const ParticleScrollLab = lazy(() => import("@/pages/ParticleScrollLab"));
 
 // ─── Error page map ───────────────────────────────────────────────────────────
 // ✅ แก้ที่นี่ที่เดียว เพื่อเพิ่ม / เปลี่ยน error page ต่อ status code
@@ -128,6 +130,7 @@ const AppRoutesInner: FC = () => {
       {/* utility / debug routes */}
       <Route path="/loading" element={<LoadingScreen />} />
       <Route path="/laserflow" element={<LaserFlow />} />
+      <Route path="/particle-scroll" element={<ParticleScrollLab />} />
 
       {/* explicit error routes — for direct navigation & testing */}
       <Route path="/notfound" element={<NotFound />} />

@@ -1,13 +1,15 @@
 // Shared constants for the Docs page sections.
 
-// Theme accent
+// Section accents — tonal steps of the Nocturnal Atelier v3.2 main palette,
+// used for per-category identification (Frontend/Backend/Dev Tools, chart
+// dots, gradient bars). `warm` is the palette's one warm bridge tone
+// (sub-palette, decorative-only) — keep it to a single accent role.
 export const TH = {
-  azure: "#5983FC",
-  orchid: "#964EC2",
-  green: "#0f9d58",
-  yellow: "#f4b400",
-  flamingo: "#FF7BBF",
-  royal: "#3E60C1",
+  primary: "#878CB4", // Cool Gray
+  secondary: "#465078", // Haze Purple
+  tertiary: "#2E3558", // Haze Deep
+  warm: "#85758F", // Mountbatten Pink — sub-palette, decorative only
+  sub: "#524E68", // English Violet 1 — sub-palette, decorative only
 };
 
 export const cardCls =

@@ -13,7 +13,12 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import styles from "@/styles/module/GraphView.module.css";
-import { githubApi, type GitHubProfile, type GitHubRepo } from "@/utils/api";
+import {
+  githubApi,
+  UPSTREAM_TIMEOUT_MS,
+  type GitHubProfile,
+  type GitHubRepo,
+} from "@/utils/api";
 import Loading from "@/components/common/loading/Loading";
 import Error from "@/components/common/server-error/Error";
 import RepoCardNode from "@/components/graph/nodes/RepoCardNode";
@@ -65,8 +70,16 @@ const GraphView: FC = () => {
 
         const detailResults = await Promise.allSettled(
           repoData.map(async (r) => {
+            // Only the direct github.com call still needs a hand-rolled
+            // timeout — it bypasses our API layer. getRepoLanguages goes
+            // through apiFetch, which applies UPSTREAM_TIMEOUT_MS itself.
+            // Both talk to the same slow unauthenticated upstream, so they use
+            // the same budget.
             const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 8000);
+            const timeout = setTimeout(
+              () => controller.abort(),
+              UPSTREAM_TIMEOUT_MS,
+            );
             const [langs, contribs] = await Promise.allSettled([
               githubApi.getRepoLanguages(r.name),
               fetch(
