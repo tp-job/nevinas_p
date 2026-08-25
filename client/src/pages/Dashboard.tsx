@@ -15,8 +15,7 @@ import { githubApi } from "@/utils/api";
 import { useFetch } from "@/hooks/useFetch";
 import { getLangColor } from "@/utils/constants";
 import { formatRelativeTime } from "@/utils/date";
-import Loading from "@/components/common/loading/Loading";
-import Error from "@/components/common/server-error/Error";
+import AsyncBoundary from "@/components/common/AsyncBoundary";
 
 import { StaggerList, StaggerItem } from "@/components/ui/StaggerList";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
@@ -89,22 +88,14 @@ const Dashboard: FC = () => {
     ? Math.min(Math.round((stats.totalCommits / 100) * 100), 100)
     : 0;
 
-  /* ---- Loading ---- */
-  if (loading) {
+  /* ---- Loading / error share the page chrome ---- */
+  if (loading || error) {
     return (
       <>
         <DashboardHeader />
-        <Loading />
-      </>
-    );
-  }
-
-  /* ---- Error ---- */
-  if (error) {
-    return (
-      <>
-        <DashboardHeader />
-        <Error error={error} />
+        <AsyncBoundary loading={loading} error={error}>
+          {null}
+        </AsyncBoundary>
       </>
     );
   }

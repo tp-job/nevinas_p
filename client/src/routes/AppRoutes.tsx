@@ -4,6 +4,8 @@ import type { FC } from "react";
 
 // context
 import { ErrorProvider, useError } from "@/context/ErrorContext";
+import { NotificationProvider } from "@/context/NotificationContext";
+import ToastViewport from "@/components/ui/Toast";
 // http error dispatch — apiFetch reports 5xx here so error pages can render
 import { registerErrorHandler } from "@/utils/api";
 // error boundary
@@ -28,6 +30,8 @@ const FlutterPage = lazy(() => import("@/pages/FlutterPage"));
 import WorkLayout from "@/layouts/WorkLayout";
 // common
 import LoadingScreen from "@/components/common/loading/LoadingPage";
+// Route transitions get the cheap fallback, not the WebGL HUD — see the file.
+import RouteFallback from "@/components/common/loading/RouteFallback";
 import NotFound from "@/components/common/client-error/NotFound";
 import ServerError from "@/components/common/server-error/ServerError";
 import ServiceUnavailable from "@/components/common/server-error/ServiceUnavailable";
@@ -64,38 +68,29 @@ const AppRoutesInner: FC = () => {
   if (errorCode !== null) {
     const ErrorPage = ERROR_PAGE_MAP[errorCode] ?? ServerError;
     return (
-      <div style={{ position: "relative" }}>
+      <div className="relative">
         <ErrorPage />
-        {/* Dismiss button — กด clear แล้วกลับไปใช้ app ต่อได้ */}
+        {/* Dismiss — clear the error and return to the app.
+            Design-system tokens only: the previous version hardcoded
+            #1f2937/#374151/#9ca3af and asked for 'JetBrains Mono', a font this
+            project does not ship (Inter + Zen Kaku Gothic New only), so it
+            silently fell back to the generic monospace. */}
         <button
           onClick={clearError}
           title="Dismiss error and return to app"
-          style={{
-            position: "fixed",
-            top: 16,
-            right: 16,
-            zIndex: 9999,
-            background: "#1f2937",
-            border: "1px solid #374151",
-            borderRadius: "8px",
-            color: "#9ca3af",
-            fontFamily: "'JetBrains Mono', monospace",
-            fontSize: "0.72rem",
-            padding: "6px 14px",
-            cursor: "pointer",
-            letterSpacing: "0.08em",
-            transition: "all 0.2s",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.color = "#f9fafb";
-            e.currentTarget.style.borderColor = "#6b7280";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.color = "#9ca3af";
-            e.currentTarget.style.borderColor = "#374151";
-          }}
+          className="fixed top-4 right-4 z-[400] rounded-lg px-3.5 py-1.5
+                     text-xs tracking-[0.08em] font-normal
+                     bg-light-surface-2 dark:bg-dark-surface
+                     border border-light-border dark:border-dark-border
+                     text-light-text-secondary dark:text-dark-text-secondary
+                     backdrop-blur-md transition-colors
+                     hover:text-light-text dark:hover:text-dark-text
+                     hover:border-haze/40 dark:hover:border-periwinkle/30
+                     focus-visible:outline-2 focus-visible:outline-offset-2
+                     focus-visible:outline-haze dark:focus-visible:outline-periwinkle"
         >
-          ✕ DISMISS
+          <i aria-hidden="true" className="ri-close-line mr-1.5 align-[-1px]" />
+          DISMISS
         </button>
       </div>
     );
@@ -148,11 +143,16 @@ const AppRoutesInner: FC = () => {
 const AppRoutes: FC = () => (
   <Router>
     <ErrorProvider>
-      <ErrorBoundary>
-        <Suspense fallback={<LoadingScreen />}>
-          <AppRoutesInner />
-        </Suspense>
-      </ErrorBoundary>
+      {/* Outside ErrorBoundary so notifications survive a boundary reset, and
+          above the routes so any page's useFetch can reach it. */}
+      <NotificationProvider>
+        <ErrorBoundary>
+          <Suspense fallback={<RouteFallback />}>
+            <AppRoutesInner />
+          </Suspense>
+        </ErrorBoundary>
+        <ToastViewport />
+      </NotificationProvider>
     </ErrorProvider>
   </Router>
 );

@@ -4,8 +4,7 @@ import BlogCard from "@/components/card/BlogCard";
 import { blogsApi } from "@/utils/api";
 import { useFetch } from "@/hooks/useFetch";
 import type { BlogPost } from "@/types/blog";
-import Loading from "@/components/common/loading/Loading";
-import Error from "@/components/common/server-error/Error";
+import AsyncBoundary from "@/components/common/AsyncBoundary";
 
 const BlogPage: FC = () => {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
@@ -13,7 +12,11 @@ const BlogPage: FC = () => {
   const { data, loading, error } = useFetch(
     blogsApi.getAll,
     [],
-    "Failed to load blog posts",
+    {
+    // notifyOnError: false — this page renders <ErrorDisplay> inline already.
+    errorMessage: "Failed to load blog posts",
+    notifyOnError: false,
+  },
   );
   // Map server data to BlogPost type
   const posts: BlogPost[] = useMemo(
@@ -55,24 +58,18 @@ const BlogPage: FC = () => {
         </h3>
       </div>
 
-      {loading && <Loading />}
-      {error && <Error error={error} />}
-
-      {!loading && !error && (
+      <AsyncBoundary
+        loading={loading}
+        error={error}
+        isEmpty={posts.length === 0}
+        emptyMessage="No blog posts found"
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {posts.map((post) => (
             <BlogCard key={post.id} post={post} onClick={setSelectedPost} />
           ))}
         </div>
-      )}
-
-      {!loading && !error && posts.length === 0 && (
-        <div className="text-center py-12 rounded-xl bg-light-surface-2 dark:bg-dark-surface">
-          <p className="text-light-text-secondary dark:text-dark-text-secondary">
-            No blog posts found
-          </p>
-        </div>
-      )}
+      </AsyncBoundary>
     </div>
   );
 };

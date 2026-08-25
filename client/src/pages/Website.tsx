@@ -3,14 +3,17 @@ import { githubApi } from "@/utils/api";
 import { useFetch } from "@/hooks/useFetch";
 import { filterReposByKeywords } from "@/utils/repoFilters";
 import ProjectCard from "@/components/card/ProjectCard";
-import Loading from "@/components/common/loading/Loading";
-import Error from "@/components/common/server-error/Error";
+import AsyncBoundary from "@/components/common/AsyncBoundary";
 
 const Website = () => {
   const { data, loading, error } = useFetch(
     githubApi.getRepos,
     [],
-    "Failed to fetch projects from GitHub",
+    {
+    // notifyOnError: false — this page renders <ErrorDisplay> inline already.
+    errorMessage: "Failed to fetch projects from GitHub",
+    notifyOnError: false,
+  },
   );
   const projects = useMemo(
     () => filterReposByKeywords(data ?? [], ["html", "css"], ["HTML", "CSS"]),
@@ -33,10 +36,12 @@ const Website = () => {
         </div>
       </div>
 
-      {loading && <Loading />}
-      {error && <Error error={error} />}
-
-      {!loading && !error && (
+      <AsyncBoundary
+        loading={loading}
+        error={error}
+        isEmpty={projects.length === 0}
+        emptyMessage="No HTML/CSS projects found"
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((repo) => (
             <ProjectCard
@@ -47,15 +52,7 @@ const Website = () => {
             />
           ))}
         </div>
-      )}
-
-      {!loading && !error && projects.length === 0 && (
-        <div className="text-center py-12 rounded-xl bg-light-surface-2 dark:bg-dark-surface">
-          <p className="text-light-text-secondary dark:text-dark-text-secondary">
-            No HTML/CSS projects found
-          </p>
-        </div>
-      )}
+      </AsyncBoundary>
     </>
   );
 };

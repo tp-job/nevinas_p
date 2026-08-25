@@ -1,8 +1,7 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import type { FC, MouseEvent } from "react";
 import { motion } from "framer-motion";
-import Loading from "@/components/common/loading/Loading";
-import ErrorView from "@/components/common/server-error/Error";
+import AsyncBoundary from "@/components/common/AsyncBoundary";
 import { galleryApi } from "@/utils/api";
 import { useFetch } from "@/hooks/useFetch";
 
@@ -26,7 +25,11 @@ const Gallery: FC = () => {
     data,
     loading: isLoading,
     error,
-  } = useFetch(galleryApi.getAll, [], "Failed to fetch gallery data");
+  } = useFetch(galleryApi.getAll, [], {
+    // Inline <ErrorView> already covers this failure.
+    errorMessage: "Failed to fetch gallery data",
+    notifyOnError: false,
+  });
   const gallery = useMemo(() => data ?? [], [data]);
 
   const isLightboxOpen = selectedIndex !== null;
@@ -240,19 +243,19 @@ const Gallery: FC = () => {
 
       </div>
 
-      {isLoading && <Loading />}
-      {error && <ErrorView error={error} />}
-
-      {!isLoading && !error && (
-        <>
-          {filteredGallery.length === 0 ? (
-            <div className="text-center py-12">
-              <i className="ri-image-line text-6xl text-light-text-secondary dark:text-dark-text-secondary mb-4"></i>
-              <p className="text-light-text-secondary dark:text-dark-text-secondary">
-                No images found in this category.
-              </p>
-            </div>
-          ) : (
+      <AsyncBoundary
+        loading={isLoading}
+        error={error}
+        isEmpty={filteredGallery.length === 0}
+        emptyState={
+          <div className="text-center py-12">
+            <i className="ri-image-line text-6xl text-light-text-secondary dark:text-dark-text-secondary mb-4"></i>
+            <p className="text-light-text-secondary dark:text-dark-text-secondary">
+              No images found in this category.
+            </p>
+          </div>
+        }
+      >
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {filteredGallery.map((item, index) => (
                 <button
@@ -276,9 +279,7 @@ const Gallery: FC = () => {
                 </button>
               ))}
             </div>
-          )}
-        </>
-      )}
+      </AsyncBoundary>
 
       {isLightboxOpen &&
         filteredGallery.length > 0 &&

@@ -2,9 +2,11 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import {
   ApiError,
   escalateToErrorPage,
+  isFatalStatus,
   type ApiRequestOptions,
   type ErrorSeverity,
 } from "@/utils/api";
+import { useOptionalNotifications } from "@/context/NotificationContext";
 
 interface UseFetchState<T> {
   data: T | null;
@@ -17,6 +19,19 @@ interface UseFetchState<T> {
 export interface UseFetchOptions {
   /** Fixed message to show instead of whatever the server said. */
   errorMessage?: string;
+  /**
+   * Raise a toast when a transient fetch fails. Defaults to true.
+   *
+   * Silence has to be deliberate: the failure this whole phase exists to fix
+   * was invisible ones — a repo list that 404s and renders as "no repositories"
+   * is indistinguishable from an empty account. So new call sites are loud
+   * unless they say otherwise.
+   *
+   * Pass false where the page ALREADY renders an inline error region for the
+   * same failure; a toast on top of that is duplicate noise, not redundancy.
+   * Ignored when `severity` is `fatal` — the page is being replaced anyway.
+   */
+  notifyOnError?: boolean;
   /**
    * How to surface a failure.
    *
@@ -60,6 +75,13 @@ export function useFetch<T>(
   const fetcherRef = useRef(fetcher);
   fetcherRef.current = fetcher;
 
+  // Held in a ref so doFetch stays dependency-free — the context value changes
+  // identity on every notification, and depending on it would rebuild doFetch
+  // (and therefore refetch) constantly.
+  const notifications = useOptionalNotifications();
+  const notifyRef = useRef(notifications);
+  notifyRef.current = notifications;
+
   // Accepts a bare string for the original `errorMessage` call style.
   const resolved: UseFetchOptions =
     typeof options === "string" ? { errorMessage: options } : (options ?? {});
@@ -90,15 +112,37 @@ export function useFetch<T>(
       // A cancellation we caused is not a failure worth reporting.
       if (controller.signal.aborted && !(err instanceof ApiError)) return;
 
-      const { errorMessage, severity = "transient" } = optionsRef.current;
+      const {
+        errorMessage,
+        severity = "transient",
+        notifyOnError = true,
+      } = optionsRef.current;
+
+      let escalated = false;
       if (err instanceof ApiError) {
         setApiError(err);
-        if (severity === "fatal") escalateToErrorPage(err.status);
+        if (severity === "fatal" && isFatalStatus(err.status)) {
+          escalateToErrorPage(err.status);
+          escalated = true;
+        }
       }
-      setError(
+
+      const text =
         errorMessage ??
-          (err instanceof Error ? err.message : "Something went wrong"),
-      );
+        (err instanceof Error ? err.message : "Something went wrong");
+      setError(text);
+
+      // Not when the full-page screen has already taken over — a toast on top
+      // of it is unreachable furniture.
+      if (notifyOnError && !escalated) {
+        notifyRef.current?.notify({
+          message: text,
+          type: "error",
+          // Keyed on the message so a fan-out of identical failures collapses
+          // into one notice instead of a wall of them.
+          key: `fetch:${text}`,
+        });
+      }
     } finally {
       if (requestId === requestIdRef.current) setLoading(false);
     }

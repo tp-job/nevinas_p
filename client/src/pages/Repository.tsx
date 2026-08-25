@@ -5,8 +5,7 @@ import { githubApi } from "@/utils/api";
 import { useFetch } from "@/hooks/useFetch";
 import { getLangColor } from "@/utils/constants";
 import { formatRelativeTimeLong } from "@/utils/date";
-import Loading from "@/components/common/loading/Loading";
-import Error from "@/components/common/server-error/Error";
+import AsyncBoundary from "@/components/common/AsyncBoundary";
 
 const Repository: FC = () => {
   const [filter, setFilter] = useState<string>("all");
@@ -14,7 +13,11 @@ const Repository: FC = () => {
   const { data, loading, error } = useFetch(
     githubApi.getRepos,
     [],
-    "Failed to fetch repositories from GitHub",
+    {
+    // notifyOnError: false — this page renders <ErrorDisplay> inline already.
+    errorMessage: "Failed to fetch repositories from GitHub",
+    notifyOnError: false,
+  },
   );
   const repos = data ?? [];
 
@@ -67,11 +70,18 @@ const Repository: FC = () => {
         </div>
       </div>
 
-      {loading && <Loading />}
-      {error && <Error error={error} />}
-
-      {/* Stats + Filter */}
-      {!loading && !error && (
+      <AsyncBoundary
+        loading={loading}
+        error={error}
+        isEmpty={repositories.length === 0}
+        emptyState={
+          <div className="text-center py-12 rounded-xl bg-surface-secondary border border-border-primary/50">
+            <i className="ri-folder-open-line text-4xl mb-4 text-text-muted"></i>
+            <p className="text-text-secondary">No repositories found</p>
+          </div>
+        }
+      >
+        {/* Stats + Filter */}
         <div className="mb-6 p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-surface-secondary border border-border-primary/50">
           <p className="text-sm text-text-secondary">
             <i className="ri-github-fill mr-2"></i>
@@ -100,26 +110,14 @@ const Repository: FC = () => {
             ))}
           </div>
         </div>
-      )}
 
-      {/* Repository Grid */}
-      {!loading && !error && (
+        {/* Repository Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {repositories.map((repo, index) => (
             <RepoCard key={index} {...repo} />
           ))}
         </div>
-      )}
-
-      {/* Empty State */}
-      {!loading && !error && repositories.length === 0 && (
-        <div className="text-center py-12 rounded-xl bg-surface-secondary border border-border-primary/50">
-          <i className="ri-folder-open-line text-4xl mb-4 text-text-muted"></i>
-          <p className="text-text-secondary">
-            No repositories found
-          </p>
-        </div>
-      )}
+      </AsyncBoundary>
     </div>
   );
 };

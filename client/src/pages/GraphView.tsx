@@ -19,8 +19,7 @@ import {
   type GitHubProfile,
   type GitHubRepo,
 } from "@/utils/api";
-import Loading from "@/components/common/loading/Loading";
-import Error from "@/components/common/server-error/Error";
+import AsyncBoundary from "@/components/common/AsyncBoundary";
 import RepoCardNode from "@/components/graph/nodes/RepoCardNode";
 import TimelineMarkerNode from "@/components/graph/nodes/TimelineMarkerNode";
 import TechStackNode from "@/components/graph/nodes/TechStackNode";
@@ -149,10 +148,16 @@ const GraphView: FC = () => {
 
   return (
     <div className={styles.fullscreen}>
-      {loading && <Loading />}
-      {error && <Error error={error} />}
-
-      {!loading && !error && repos.length > 0 && profile && (
+      <AsyncBoundary
+        loading={loading}
+        error={error}
+        isEmpty={repos.length === 0 || !profile}
+        emptyState={
+          <div className={styles.container}>
+            <div className={styles.emptyState}>No repositories found.</div>
+          </div>
+        }
+      >
         <div className={styles.container}>
           <div className={styles.brandRow}>
             <span className={styles.dotpulse}></span>
@@ -200,13 +205,7 @@ const GraphView: FC = () => {
             </ReactFlow>
           </div>
         </div>
-      )}
-
-      {!loading && !error && repos.length === 0 && (
-        <div className={styles.container}>
-          <div className={styles.emptyState}>No repositories found.</div>
-        </div>
-      )}
+      </AsyncBoundary>
     </div>
   );
 };
