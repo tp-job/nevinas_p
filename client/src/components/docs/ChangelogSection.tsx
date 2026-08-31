@@ -5,7 +5,7 @@ import { TH, cardCls } from "./constants";
 
 /** Changelog — version history timeline. */
 const ChangelogSection: FC = () => (
-  <DocSection title="Changelog" subtitle="Version history">
+  <DocSection title="Changelog" subtitle="Version history" wide>
     <div className={`p-6 sm:p-8 mb-8 ${cardCls}`}>
       <div
         className="absolute top-0 left-0 right-0 h-[2px]"

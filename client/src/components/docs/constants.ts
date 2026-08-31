@@ -12,5 +12,17 @@ export const TH = {
   sub: "#524E68", // English Violet 1 — sub-palette, decorative only
 };
 
+/**
+ * The reading column.
+ *
+ * Prose was running the full width of the content wrapper — measured at 987 px
+ * / ~110 characters per line, roughly double a comfortable measure. Everything
+ * that is read as sentences gets this cap; grids and swatch walls opt out via
+ * DocSection's `wide` prop.
+ *
+ * In `ch` so it tracks the font, and applied on a 16 px context.
+ */
+export const proseCls = "max-w-[68ch]";
+
 export const cardCls =
   "bg-light-surface dark:bg-dark-bg border border-light-border dark:border-dark-border rounded-2xl relative overflow-hidden";

@@ -45,7 +45,7 @@ const PaletteGroup: FC<PaletteGroupProps> = ({
 
 /** Design System — theme colors and typography. */
 const DesignSystemSection: FC = () => (
-  <DocSection title="Design System" subtitle="Theme colors and typography">
+  <DocSection title="Design System" subtitle="Theme colors and typography" wide>
     <div className={`p-6 sm:p-8 mb-8 ${cardCls}`}>
       <div
         className="absolute top-0 left-0 right-0 h-[2px]"
