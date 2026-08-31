@@ -3,6 +3,7 @@ import { designSystem } from "@/data/docData";
 import DocSection from "./DocSection";
 import ColorSwatch from "./ColorSwatch";
 import { TH, cardCls } from "./constants";
+import Disclosure from "./Disclosure";
 
 interface PaletteGroupProps {
   label: string;
@@ -46,6 +47,17 @@ const PaletteGroup: FC<PaletteGroupProps> = ({
 /** Design System — theme colors and typography. */
 const DesignSystemSection: FC = () => (
   <DocSection title="Design System" subtitle="Theme colors and typography" wide>
+    {/* Collapsed by default. Measured at 1653 px tall — the largest section on
+        the page by a wide margin, and an internal reference rather than
+        something a visitor reads top to bottom. Collapsing keeps it on the
+        Docs page (it IS documentation) while stopping it from dominating the
+        scroll. A disclosure rather than its own route: reversible, and moving
+        it would add a nav entry and change the site's information
+        architecture, which is a bigger decision than this phase. */}
+    <Disclosure
+      summary="Palette, semantic tokens and typography"
+      hint="30+ swatches"
+    >
     <div className={`p-6 sm:p-8 mb-8 ${cardCls}`}>
       <div
         className="absolute top-0 left-0 right-0 h-[2px]"
@@ -142,6 +154,7 @@ const DesignSystemSection: FC = () => (
         ))}
       </div>
     </div>
+    </Disclosure>
   </DocSection>
 );
 
