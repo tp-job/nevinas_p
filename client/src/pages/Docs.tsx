@@ -1,5 +1,5 @@
 import { useState, type FC } from "react";
-import RepoCard from "@/components/card/RepoCard";
+import { Link } from "react-router-dom";
 import { githubApi, ApiError, type GitHubRepo } from "@/utils/api";
 import { useFetch } from "@/hooks/useFetch";
 import { getLangColor } from "@/utils/constants";
@@ -156,42 +156,71 @@ const Docs: FC = () => {
         {/* ========== Repo Cards (Skill Showcase) ========== */}
         <DocSection
           title="Project Docs"
-          subtitle="คลิกที่ repo card เพื่อดูเอกสาร (README) ของโปรเจกต์นั้น"
-          wide
+          subtitle="Pick a repository to read its README."
         >
-          <div className={`p-6 sm:p-8 mb-8 ${cardCls}`}>
-            <div
-              className="absolute top-0 left-0 right-0 h-[2px]"
-              style={{
-                background: `linear-gradient(90deg, transparent, ${TH.primary}60, ${TH.secondary}60, transparent)`,
-              }}
-            />
+          {/* A compact index, not a second repository browser.
+              This was a 4-column grid of all 21 repo cards and the visual
+              centre of gravity of the page — while /work/repository already is
+              the repo browser, using the same fetch and the same card family.
+              What Docs uniquely offers is the README drill-down, so the list
+              only needs to be enough to choose one. */}
+          <div className={`overflow-hidden ${cardCls}`}>
             {reposLoading ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <ul className="divide-y divide-light-border dark:divide-dark-border">
                 {[...Array(6)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="rounded-2xl p-6 animate-pulse bg-light-surface-2 dark:bg-dark-surface h-40"
-                  />
+                  <li key={i} className="flex items-center gap-3 px-4 py-3">
+                    <span className="h-3 w-40 rounded animate-pulse bg-light-surface-2 dark:bg-dark-surface" />
+                    <span className="ml-auto h-3 w-16 rounded animate-pulse bg-light-surface-2 dark:bg-dark-surface" />
+                  </li>
                 ))}
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {repoCardData.map((repo, i) => (
-                  <RepoCard
-                    key={i}
-                    {...repo}
-                    onClick={() => handleRepoClick(repo.name)}
-                  />
-                ))}
-              </div>
-            )}
-            {!reposLoading && repos.length === 0 && (
-              <p className="text-center py-8 text-light-text-secondary dark:text-dark-text-secondary">
+              </ul>
+            ) : repos.length === 0 ? (
+              <p className="px-4 py-8 text-center text-light-text-secondary dark:text-dark-text-secondary">
                 No repositories found
               </p>
+            ) : (
+              <ul className="divide-y divide-light-border dark:divide-dark-border">
+                {repoCardData.map((repo) => (
+                  <li key={repo.name}>
+                    <button
+                      type="button"
+                      onClick={() => handleRepoClick(repo.name)}
+                      aria-label={`Read the README for ${repo.name}`}
+                      className="flex w-full items-center gap-3 px-4 py-2.5 text-left transition-colors
+                                 hover:bg-light-surface/60 dark:hover:bg-dark-surface/40
+                                 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-matte-azure"
+                    >
+                      <span className="truncate text-sm font-medium text-light-text dark:text-dark-text">
+                        {repo.name}
+                      </span>
+                      <span className="flex shrink-0 items-center gap-1.5 text-xs text-light-text-secondary dark:text-dark-text-secondary">
+                        <span
+                          aria-hidden="true"
+                          className="inline-block h-2 w-2 rounded-full"
+                          style={{ backgroundColor: repo.languageColor }}
+                        />
+                        {repo.language}
+                      </span>
+                      <span className="ml-auto shrink-0 text-xs tabular-nums text-light-text-tertiary dark:text-dark-text-muted">
+                        {repo.updatedAt}
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
             )}
           </div>
+
+          <p className="mt-4 text-sm text-light-text-secondary dark:text-dark-text-secondary">
+            Looking for stars, forks and topics?{" "}
+            <Link
+              to="/work/repository"
+              className="text-matte-azure underline underline-offset-2 hover:no-underline"
+            >
+              Browse all repositories
+            </Link>
+            .
+          </p>
         </DocSection>
 
         {/* ========== Project Detail (when repo selected) ========== */}

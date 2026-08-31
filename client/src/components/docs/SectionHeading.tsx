@@ -1,7 +1,13 @@
 import type { FC } from "react";
 
-/** Stable, URL-safe id from a section title. */
-export function slugify(title: string): string {
+/**
+ * Stable, URL-safe id from a section title.
+ *
+ * Deliberately NOT exported: the file would then export a component and a
+ * function, which breaks Fast Refresh. Nothing else needs it — OnThisPage
+ * reads the ids back off the DOM rather than recomputing them.
+ */
+function slugify(title: string): string {
   return title
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
