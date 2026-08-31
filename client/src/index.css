@@ -80,9 +80,9 @@
   --color-accent-foreground: var(--color-dark-text-primary);
 
   /* ── Status ── */
-  --color-success:   #2E7D32;
-  --color-error:     #C62828;
-  --color-warning:   #E65100;
+  --color-success:   #34a853;
+  --color-error:     #ea4335;
+  --color-warning:   #fbbc05;
 
   /* ── Tech Dot Colors ── */
   --color-javascript:  #f1e05a;
