@@ -102,7 +102,15 @@
   --color-matte-midnight:  var(--color-midnight);
   --color-matte-navy:      var(--color-haze);
   --color-matte-royal:     var(--color-haze-deep);
-  --color-matte-azure:     var(--color-periwinkle);
+  /* Follows the theme-reactive accent channel rather than being pinned to one
+     palette value. Periwinkle is a DARK-mode foreground; pinned here it made
+     every light-mode use near-white on near-white — measured 1.11:1 on the
+     active sidebar item, 1.39:1 on the breadcrumb link and the Callout accent
+     bar, against bars of 4.5 and 3. Via --accent-ui it resolves to Haze
+     (#465078, 6.96:1) in light and Periwinkle (#C8CDEB, 12.22:1) in dark.
+     42 of its 54 usages are text/border/stroke, so this is the one that had to
+     flip. See .agent/docs/frontend/DOCS_PAGE_DESIGN_SPEC.md Phase A. */
+  --color-matte-azure:     var(--accent-ui);
   --color-velvet-night:    var(--color-midnight-deep);
   --color-velvet-indigo:   var(--color-sub-ev2);
   --color-velvet-orchid:   var(--color-sub-ev1);
