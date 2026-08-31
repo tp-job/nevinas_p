@@ -5,6 +5,7 @@ import { useFetch } from "@/hooks/useFetch";
 import { getLangColor } from "@/utils/constants";
 import { formatRelativeTime } from "@/utils/date";
 import Breadcrumb from "@/components/docs/Breadcrumb";
+import OnThisPage from "@/components/docs/OnThisPage";
 import DocSection from "@/components/docs/DocSection";
 import Callout from "@/components/docs/Callout";
 import ArchitectureGrid from "@/components/docs/ArchitectureGrid";
@@ -104,6 +105,21 @@ const Docs: FC = () => {
         <Breadcrumb
           items={[{ label: "Work", href: "/work" }, { label: "Docs" }]}
         />
+
+        {/* Two-column from xl: content, then the sticky "On this page" rail.
+            Below xl the rail renders above the content as a plain list rather
+            than a sticky sidebar, so narrow viewports still get navigation. */}
+        <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_15rem] xl:gap-12 xl:items-start">
+          {/* The rail is FIRST in the DOM so that below xl — where the parent
+              is a plain block and `order` does nothing — it lands above the
+              content. A table of contents underneath the content it indexes is
+              useless. At xl it is placed explicitly into column 2, so reading
+              order and visual order agree in both layouts. */}
+          <aside className="mb-10 xl:mb-0 xl:col-start-2 xl:row-start-1 xl:sticky xl:top-4">
+            <OnThisPage />
+          </aside>
+
+          <div className="min-w-0 xl:col-start-1 xl:row-start-1">
 
         {/* Introduction */}
         <div className={`mb-16 ${proseCls}`}>
@@ -212,6 +228,8 @@ const Docs: FC = () => {
 
         {/* ========== Changelog ========== */}
         <ChangelogSection />
+          </div>
+        </div>
       </div>
     </div>
   );
