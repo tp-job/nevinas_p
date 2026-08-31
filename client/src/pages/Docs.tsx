@@ -11,7 +11,7 @@ import ArchitectureGrid from "@/components/docs/ArchitectureGrid";
 import RepoDetailPanel from "@/components/docs/RepoDetailPanel";
 import DesignSystemSection from "@/components/docs/DesignSystemSection";
 import ChangelogSection from "@/components/docs/ChangelogSection";
-import { TH, cardCls } from "@/components/docs/constants";
+import { TH, cardCls, proseCls } from "@/components/docs/constants";
 import { architecture } from "@/data/docData";
 
 /* ==================== Docs Page ==================== */
@@ -74,27 +74,32 @@ const Docs: FC = () => {
 
   return (
     <div className="w-full">
-      {/* Header */}
-      <div className="mb-6">
-        <h4 className="mb-1 text-lg text-light-text dark:text-dark-text">
-          Developer Analytics
-        </h4>
-        <h2 className="mb-1 text-4xl sm:text-5xl text-light-text dark:text-dark-text">
-          Document
-        </h2>
-        <h3 className="text-xl font-zen text-light-text-secondary dark:text-dark-text-secondary">
-          ドキュメント
-        </h3>
-      </div>
-      {/* Doc-style content wrapper */}
+      {/* Doc-style content wrapper.
+          The page header lives INSIDE this wrapper. It used to sit outside,
+          so it did not receive the wrapper's `lg:px-12` and rendered exactly
+          48 px to the left of the breadcrumb and every section below it —
+          measured title left edge 384 px against body 432 px. */}
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
+        {/* Header */}
+        <div className={`mb-8 ${proseCls}`}>
+          <h4 className="mb-1 text-lg text-light-text dark:text-dark-text">
+            Developer Analytics
+          </h4>
+          <h2 className="mb-1 text-4xl sm:text-5xl text-light-text dark:text-dark-text">
+            Document
+          </h2>
+          <h3 className="text-xl font-zen text-light-text-secondary dark:text-dark-text-secondary">
+            ドキュメント
+          </h3>
+        </div>
+
         {/* Breadcrumb */}
         <Breadcrumb
           items={[{ label: "Work", href: "/work" }, { label: "Docs" }]}
         />
 
         {/* Introduction */}
-        <div className="mb-12">
+        <div className={`mb-16 ${proseCls}`}>
           <p className="text-lg text-light-text-secondary dark:text-dark-text-secondary mb-6">
             Developer analytics, API reference, and project guides.
           </p>
@@ -129,6 +134,7 @@ const Docs: FC = () => {
         <DocSection
           title="Project Docs"
           subtitle="คลิกที่ repo card เพื่อดูเอกสาร (README) ของโปรเจกต์นั้น"
+          wide
         >
           <div className={`p-6 sm:p-8 mb-8 ${cardCls}`}>
             <div
@@ -181,6 +187,7 @@ const Docs: FC = () => {
         <DocSection
           title="Architecture Overview"
           subtitle="Technology stack breakdown"
+          wide
         >
           <div className={`p-6 sm:p-8 mb-8 ${cardCls}`}>
             <div
