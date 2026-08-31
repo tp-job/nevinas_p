@@ -80,17 +80,24 @@ const Docs: FC = () => {
           48 px to the left of the breadcrumb and every section below it —
           measured title left edge 384 px against body 432 px. */}
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
-        {/* Header */}
+        {/* Header.
+            Semantics, not just styling: the page title is now the only h1 in
+            main. It used to be an h2, with the eyebrow above it as an h4 and
+            the Japanese subtitle below as an h3 — an h4 → h2 → h3 order with no
+            h1 anywhere, so the page never announced what it was. The eyebrow
+            and the subtitle are labels, not sections, so they are paragraphs.
+            Weight follows DS v3.2: the title is 300 and sections are 500, so
+            hierarchy descends with size instead of fighting it. */}
         <div className={`mb-8 ${proseCls}`}>
-          <h4 className="mb-1 text-lg text-light-text dark:text-dark-text">
+          <p className="mb-2 text-sm font-medium uppercase tracking-[0.14em] text-light-text-tertiary dark:text-dark-text-muted">
             Developer Analytics
-          </h4>
-          <h2 className="mb-1 text-4xl sm:text-5xl text-light-text dark:text-dark-text">
+          </p>
+          <h1 className="mb-1 text-4xl sm:text-5xl font-light tracking-tight text-light-text dark:text-dark-text">
             Document
-          </h2>
-          <h3 className="text-xl font-zen text-light-text-secondary dark:text-dark-text-secondary">
+          </h1>
+          <p className="text-lg font-light font-zen text-light-text-secondary dark:text-dark-text-secondary">
             ドキュメント
-          </h3>
+          </p>
         </div>
 
         {/* Breadcrumb */}

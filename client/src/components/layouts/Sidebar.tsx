@@ -230,7 +230,7 @@ const Sidebar: FC = () => {
             <i className="ri-code-s-slash-line text-xl text-matte-azure"></i>
             {!isCollapsed && (
               <div>
-                <h1 className="text-lg text-light-text dark:text-dark-text">Frontend Developer</h1>
+                <p className="text-lg text-light-text dark:text-dark-text">Frontend Developer</p>
                 <p className="text-sm opacity-70 font-zen text-light-text-secondary dark:text-dark-text-secondary">フロントエンド</p>
               </div>
             )}
@@ -272,7 +272,7 @@ const Sidebar: FC = () => {
       <div className="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 flex items-center justify-between px-4 bg-light-surface/80 dark:bg-dark-surface/80 backdrop-blur-xl border-b border-light-border dark:border-dark-border shadow-sm">
         <div className="flex items-center gap-2">
           <i className="ri-code-s-slash-line text-xl text-matte-azure"></i>
-          <h1 className="text-[0.82rem] font-medium text-light-text dark:text-dark-text">Frontend Developer</h1>
+          <p className="text-[0.82rem] font-medium text-light-text dark:text-dark-text">Frontend Developer</p>
         </div>
         <button
           type="button"
@@ -305,7 +305,7 @@ const Sidebar: FC = () => {
             <div className="flex items-center gap-2 px-2 py-2">
               <i className="ri-code-s-slash-line text-xl text-matte-azure"></i>
               <div>
-                <h1 className="text-lg text-light-text dark:text-dark-text">Frontend Developer</h1>
+                <p className="text-lg text-light-text dark:text-dark-text">Frontend Developer</p>
                 <p className="text-sm opacity-70 font-zen text-light-text-secondary dark:text-dark-text-secondary">フロントエンド</p>
               </div>
             </div>

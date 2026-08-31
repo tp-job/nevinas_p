@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { proseCls } from "./constants";
+import SectionHeading from "./SectionHeading";
 
 /* ==================== Doc Section (Introduction style) ==================== */
 /**
@@ -24,9 +25,7 @@ const DocSection: FC<{
 }> = ({ title, subtitle, wide = false, children }) => (
   <section className="mb-20">
     <div className={proseCls}>
-      <h2 className="text-2xl sm:text-3xl font-semibold text-light-text dark:text-dark-text mb-1.5">
-        {title}
-      </h2>
+      <SectionHeading title={title} />
       {subtitle && (
         <p className="text-base text-light-text-secondary dark:text-dark-text-secondary mb-8">
           {subtitle}
