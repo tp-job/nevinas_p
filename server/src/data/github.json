@@ -1,7 +1,7 @@
 {
   "profiles": [
     {
-      "id": "a77f316b-ae5f-42d1-bf0b-2c93957ae023",
+      "id": "7028d446-e818-4e92-b493-dd3b457ad8df",
       "login": "tp-job",
       "name": "nevinas_ka",
       "avatar_url": "https://avatars.githubusercontent.com/u/184330396?v=4",
@@ -15,12 +15,104 @@
       "following": 1,
       "github_created_at": "2024-10-09T02:35:36Z",
       "github_updated_at": "2026-08-19T06:14:19Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     }
   ],
   "events": [
     {
-      "id": "3e1da635-59d6-404d-9a30-3d3b60471113",
+      "id": "da08e577-e321-4e0d-bfc2-d60e8c60fbd8",
+      "github_id": "19646438315",
+      "type": "CreateEvent",
+      "repo": "tp-job/nevinas_p",
+      "payload": {
+        "ref": "docs/redesign",
+        "ref_type": "branch"
+      },
+      "event_at": "2026-09-01T09:14:18Z",
+      "synced_at": "2026-09-01T11:52:25.009Z"
+    },
+    {
+      "id": "ca33a33a-49a4-4965-a2bb-0eeee4283ba0",
+      "github_id": "19626042539",
+      "type": "PushEvent",
+      "repo": "tp-job/nevinas_p",
+      "payload": {
+        "ref": "refs/heads/main"
+      },
+      "event_at": "2026-08-31T17:50:26Z",
+      "synced_at": "2026-09-01T11:52:25.009Z"
+    },
+    {
+      "id": "170ca0ac-d5dc-46f7-ab9e-37f019867bf2",
+      "github_id": "19596436485",
+      "type": "CreateEvent",
+      "repo": "tp-job/nevinas_p",
+      "payload": {
+        "ref": "ui/phase-a-accent-alias",
+        "ref_type": "branch"
+      },
+      "event_at": "2026-08-31T16:24:41Z",
+      "synced_at": "2026-09-01T11:52:25.009Z"
+    },
+    {
+      "id": "b4a87188-305b-4bd1-8026-e9c246791667",
+      "github_id": "19583669863",
+      "type": "CreateEvent",
+      "repo": "tp-job/nevinas_p",
+      "payload": {
+        "ref": "docs/phase-e-section-weight",
+        "ref_type": "branch"
+      },
+      "event_at": "2026-08-31T17:49:56Z",
+      "synced_at": "2026-09-01T11:52:25.009Z"
+    },
+    {
+      "id": "2395e445-d486-4803-aa2d-711ef3680a4d",
+      "github_id": "19581553366",
+      "type": "CreateEvent",
+      "repo": "tp-job/nevinas_p",
+      "payload": {
+        "ref": "docs/phase-b-layout",
+        "ref_type": "branch"
+      },
+      "event_at": "2026-08-31T17:26:26Z",
+      "synced_at": "2026-09-01T11:52:25.009Z"
+    },
+    {
+      "id": "401656b9-29a6-4320-afcf-b92fc9d3059f",
+      "github_id": "14156097404",
+      "type": "PullRequestEvent",
+      "repo": "tp-job/nevinas_p",
+      "payload": {
+        "action": "merged"
+      },
+      "event_at": "2026-08-31T17:50:25Z",
+      "synced_at": "2026-09-01T11:52:25.009Z"
+    },
+    {
+      "id": "2535f7ba-0d97-4dad-9dae-62f820850193",
+      "github_id": "14156086678",
+      "type": "PullRequestEvent",
+      "repo": "tp-job/nevinas_p",
+      "payload": {
+        "action": "opened"
+      },
+      "event_at": "2026-08-31T17:50:13Z",
+      "synced_at": "2026-09-01T11:52:25.009Z"
+    },
+    {
+      "id": "a6d6011f-db5a-4183-852f-b88b554725d1",
+      "github_id": "14155317648",
+      "type": "PullRequestEvent",
+      "repo": "tp-job/nevinas_p",
+      "payload": {
+        "action": "merged"
+      },
+      "event_at": "2026-08-31T17:28:26Z",
+      "synced_at": "2026-09-01T11:52:25.009Z"
+    },
+    {
+      "id": "06b16c63-8888-4355-b9e5-7fb2f37d9698",
       "github_id": "14155021109",
       "type": "PullRequestEvent",
       "repo": "tp-job/nevinas_p",
@@ -28,10 +120,10 @@
         "action": "opened"
       },
       "event_at": "2026-08-31T17:27:26Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "51e05917-cd7b-41c5-8b95-d33182ce98ef",
+      "id": "cd48b445-34d6-44eb-b9c8-ed58978cdd81",
       "github_id": "18869327114",
       "type": "PushEvent",
       "repo": "tp-job/agent_skill",
@@ -39,10 +131,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-25T13:29:29Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "f08cdcd0-8378-4a3b-9122-efb740cde391",
+      "id": "130561da-bb6f-459a-bece-d27af7e8025f",
       "github_id": "18813816135",
       "type": "PushEvent",
       "repo": "tp-job/nevinas_p",
@@ -50,10 +142,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-25T06:35:07Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "7e6466bc-5149-4d23-afa5-64097a35bd0f",
+      "id": "cc5a59df-324c-4173-b0d7-954e8e19d44c",
       "github_id": "18628613576",
       "type": "PushEvent",
       "repo": "tp-job/nevinas_p",
@@ -61,10 +153,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-23T16:10:59Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "8a796ba8-c706-459c-a5fd-f9714c09aa46",
+      "id": "57be07fb-53b5-41de-bc94-a4da74389950",
       "github_id": "18609701229",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -72,10 +164,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-23T11:55:03Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "d3acff7d-3dbe-48fe-9a4d-4d14fe0995b9",
+      "id": "ffed5040-1b6b-4d04-901b-756269bb03f3",
       "github_id": "18609621491",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -83,10 +175,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-23T11:53:53Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "8fbb64f0-4858-4698-9ede-77857dfd7a88",
+      "id": "5430b7ff-f54c-4099-b9e4-3a13c81a61e7",
       "github_id": "18418583011",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -94,10 +186,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-21T14:49:35Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "5b181d51-2739-41e1-ae05-ad734a32ebcb",
+      "id": "17b97e43-1d2a-4f46-b7c4-4e53b84d244a",
       "github_id": "18386860153",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -105,10 +197,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-21T08:09:51Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "13e0c1c4-3c0e-48ec-8601-e510f8dc67df",
+      "id": "d145751e-a710-46dc-b522-59c7e802240a",
       "github_id": "13640861428",
       "type": "PullRequestEvent",
       "repo": "tp-job/apexops_i",
@@ -116,10 +208,10 @@
         "action": "merged"
       },
       "event_at": "2026-08-21T11:11:03Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "8906969f-edab-4ff7-b59f-c80405ad706c",
+      "id": "2ca6525b-5a13-4c80-9151-187bb5c11330",
       "github_id": "18386704927",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -127,10 +219,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-21T11:11:04Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "325688c6-dd3a-4a04-aa9e-793940d248ca",
+      "id": "beb10372-2a77-47be-b633-6af7bbd5f904",
       "github_id": "13640853069",
       "type": "PullRequestEvent",
       "repo": "tp-job/apexops_i",
@@ -138,10 +230,10 @@
         "action": "opened"
       },
       "event_at": "2026-08-21T11:10:53Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "d7829663-e0c4-4390-86a6-9189afdf413e",
+      "id": "69ac4174-a446-4fa6-b200-3230342191dc",
       "github_id": "18386354207",
       "type": "CreateEvent",
       "repo": "tp-job/apexops_i",
@@ -150,10 +242,10 @@
         "ref_type": "branch"
       },
       "event_at": "2026-08-21T11:06:57Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "25c591b4-0f48-4a51-85ba-062037ef1f30",
+      "id": "85fd0428-bf7a-4cb7-affb-a984a993a92e",
       "github_id": "18381578664",
       "type": "CreateEvent",
       "repo": "tp-job/apexops_i",
@@ -162,10 +254,10 @@
         "ref_type": "branch"
       },
       "event_at": "2026-08-21T08:03:33Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "30a5e9b6-4d45-484e-aebd-699877ead640",
+      "id": "48e98c3e-1ff9-4b5b-91cd-4d1f5cb0afbe",
       "github_id": "13632426242",
       "type": "PullRequestEvent",
       "repo": "tp-job/apexops_i",
@@ -173,10 +265,10 @@
         "action": "merged"
       },
       "event_at": "2026-08-21T08:09:50Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "fc1c919b-9acb-4397-96be-c762567a5438",
+      "id": "891ffbba-d9c2-4bf9-9bfe-881470285f47",
       "github_id": "13632179918",
       "type": "PullRequestEvent",
       "repo": "tp-job/apexops_i",
@@ -184,10 +276,10 @@
         "action": "opened"
       },
       "event_at": "2026-08-21T08:04:39Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "2755bc08-6c3e-40c9-8a95-758dd174146f",
+      "id": "a32d86d8-184a-4117-abcb-04c4316e515c",
       "github_id": "13632107749",
       "type": "PullRequestEvent",
       "repo": "tp-job/apexops_i",
@@ -195,10 +287,10 @@
         "action": "merged"
       },
       "event_at": "2026-08-21T08:03:04Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "24c5a3fe-b029-4966-862e-90bcb8e6debe",
+      "id": "c9f51862-17a1-4601-aad7-db402b757c9c",
       "github_id": "18370939813",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -206,10 +298,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-21T08:03:05Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "2960dc95-5680-4c58-85e4-b9c255c17607",
+      "id": "d488046a-ebbb-43fd-8513-7a25b3414672",
       "github_id": "18287023543",
       "type": "CreateEvent",
       "repo": "tp-job/apexops_i",
@@ -218,10 +310,10 @@
         "ref_type": "branch"
       },
       "event_at": "2026-08-20T13:25:36Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "3dfeacf9-e1a6-4338-9934-58940832474b",
+      "id": "f591d40c-9c22-4e39-bd6b-0c185bb6a92d",
       "github_id": "13586310692",
       "type": "PullRequestEvent",
       "repo": "tp-job/apexops_i",
@@ -229,10 +321,10 @@
         "action": "opened"
       },
       "event_at": "2026-08-20T13:47:02Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "1a46b9c1-bebf-4c7a-bc69-3785337f9635",
+      "id": "81424132-337c-481a-ac95-d485df33d485",
       "github_id": "18275554056",
       "type": "CreateEvent",
       "repo": "tp-job/apexops_i",
@@ -241,10 +333,10 @@
         "ref_type": "branch"
       },
       "event_at": "2026-08-20T12:00:55Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "bc8f3cbc-0f0f-443f-b0ee-852887c62cc7",
+      "id": "383dc1f5-56a2-4a59-b378-bf170baa4995",
       "github_id": "18272578004",
       "type": "PushEvent",
       "repo": "tp-job/kairos_i",
@@ -252,10 +344,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-20T11:00:53Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "7bc74fc5-aa52-42d0-b28b-a73733c41f9c",
+      "id": "1221530d-bcce-4575-a3e7-944d95396315",
       "github_id": "18192172598",
       "type": "PushEvent",
       "repo": "tp-job/kairos_i",
@@ -263,10 +355,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-19T17:49:15Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "110e6999-4407-4b48-b462-a0865fd83312",
+      "id": "ed8d8b03-da42-44e7-ba78-5f61d2c6b174",
       "github_id": "18181747047",
       "type": "PushEvent",
       "repo": "tp-job/kairos_i",
@@ -274,10 +366,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-19T15:43:14Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "1a2a973a-85ad-4dae-9db6-def1cdb41425",
+      "id": "0b6aeefc-98fd-44c7-9a3e-3768d2c5a602",
       "github_id": "18177862837",
       "type": "PushEvent",
       "repo": "tp-job/kairos_i",
@@ -285,10 +377,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-19T15:10:25Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "a7839018-c651-410f-a972-ef09e04804d0",
+      "id": "c0557c98-06e3-4848-8c12-d487c3e6408c",
       "github_id": "18152213550",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -296,10 +388,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-19T11:18:20Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "41e459a8-c31e-478d-8910-6b0f36854e8f",
+      "id": "ea216467-7164-49c1-bfb6-42997d3e41d1",
       "github_id": "18151110358",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -307,10 +399,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-19T11:10:00Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "124463d2-3b5b-4e25-8958-80cbfe94002c",
+      "id": "dfb713f2-d9ea-4a71-9597-8dd55cbfe450",
       "github_id": "18146939378",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -318,10 +410,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-19T10:26:45Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "4c7c88d9-9277-4ddf-9d74-d79936076b57",
+      "id": "5f746ab7-84c1-4516-a624-ef02a971b15c",
       "github_id": "18145154561",
       "type": "PushEvent",
       "repo": "tp-job/agent_skill",
@@ -329,10 +421,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-19T10:24:57Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "5fcd8762-a9a1-4bc3-bd2f-dff4a74419fa",
+      "id": "ab582403-ec28-4aae-ad4b-9fd1e55b5674",
       "github_id": "18140366684",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -340,10 +432,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-19T09:30:37Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "564e95cc-3927-45d1-becb-ed6648932b4e",
+      "id": "8053ef22-7a9b-49a6-ad72-805f32534358",
       "github_id": "13509224383",
       "type": "PullRequestEvent",
       "repo": "tp-job/apexops_i",
@@ -351,10 +443,10 @@
         "action": "merged"
       },
       "event_at": "2026-08-19T09:30:36Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "e4f68ff5-4741-4c62-b653-aca30536851a",
+      "id": "e9350697-7357-489b-bf1b-9674a5cedad2",
       "github_id": "13509138499",
       "type": "PullRequestEvent",
       "repo": "tp-job/apexops_i",
@@ -362,10 +454,10 @@
         "action": "opened"
       },
       "event_at": "2026-08-19T09:28:55Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "481a2886-c997-4589-940a-36a94ed72b16",
+      "id": "dce15c61-a6ec-4b5f-b72f-363db98efa1e",
       "github_id": "18067378837",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -373,10 +465,10 @@
         "ref": "refs/heads/sprint-12/notes-ssot-groundwork"
       },
       "event_at": "2026-08-18T15:48:43Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "c4ec9eee-3a0f-4287-bf57-688ee71e84cd",
+      "id": "e3e85a44-14fe-4e56-ac6e-b48219f5f78b",
       "github_id": "18048361451",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -384,10 +476,10 @@
         "ref": "refs/heads/sprint-12/notes-ssot-groundwork"
       },
       "event_at": "2026-08-18T13:47:47Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "2f11d984-b103-4d82-913c-04a27b78c6e4",
+      "id": "0da520f7-4486-4ec8-bbb3-d8e227a28dc5",
       "github_id": "17919192639",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -395,10 +487,10 @@
         "ref": "refs/heads/sprint-12/notes-ssot-groundwork"
       },
       "event_at": "2026-08-17T09:55:23Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "d3e9977b-ad72-42ae-95a8-bd16c3201a4b",
+      "id": "e4bcd49d-742e-4e50-9c1b-a89fb84ce5c2",
       "github_id": "17913555735",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -406,10 +498,10 @@
         "ref": "refs/heads/sprint-12/notes-ssot-groundwork"
       },
       "event_at": "2026-08-17T09:04:47Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "58a17ae1-648c-4128-9a30-cadc32c66f19",
+      "id": "3c507f12-7884-4ff7-a176-9f6ecb9c5149",
       "github_id": "17905615732",
       "type": "CreateEvent",
       "repo": "tp-job/apexops_i",
@@ -418,10 +510,10 @@
         "ref_type": "branch"
       },
       "event_at": "2026-08-17T07:58:24Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "e729371b-97c2-4486-a2b1-1449a32ef492",
+      "id": "10d8ad8e-9004-4913-bb22-e60db784cde2",
       "github_id": "17898006400",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -429,10 +521,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-17T06:28:35Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "9c614a13-268f-4ad8-a2de-5b5c6969dc72",
+      "id": "622e5961-3f84-4906-b32a-296197b50ab9",
       "github_id": "13355432667",
       "type": "PullRequestEvent",
       "repo": "tp-job/apexops_i",
@@ -440,10 +532,10 @@
         "action": "merged"
       },
       "event_at": "2026-08-16T13:22:02Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "862efcdd-de2e-4248-9bb7-d5a2fa2f2363",
+      "id": "01a235cd-30b8-4f0d-98d5-8bb66de7f3cc",
       "github_id": "17832280139",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -451,10 +543,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-16T13:22:03Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "965ebfe2-cfa4-4abf-89e8-7775d3463c89",
+      "id": "aba11f8f-d530-4cbf-b128-d06721413035",
       "github_id": "13353771073",
       "type": "PullRequestEvent",
       "repo": "tp-job/apexops_i",
@@ -462,10 +554,10 @@
         "action": "opened"
       },
       "event_at": "2026-08-16T11:55:45Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "1db1283c-e51e-40cf-b52a-7729304af199",
+      "id": "c8e0812d-3f04-4a45-8fd1-27883f712188",
       "github_id": "17821895302",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -473,10 +565,10 @@
         "ref": "refs/heads/sprint-11/ai-assistant-byok"
       },
       "event_at": "2026-08-16T11:01:24Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "260777af-e4c3-497e-882a-61406080a06c",
+      "id": "f1c5a00e-9ebf-466a-ab3c-b37f17e2fd50",
       "github_id": "17808786342",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -484,10 +576,10 @@
         "ref": "refs/heads/sprint-11/ai-assistant-byok"
       },
       "event_at": "2026-08-16T08:09:56Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "862c427b-abac-48ad-a09f-4c88c65ada87",
+      "id": "039c9e39-4254-48d3-b98f-e9b2fbdebdfd",
       "github_id": "17807148587",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -495,10 +587,10 @@
         "ref": "refs/heads/sprint-11/ai-assistant-byok"
       },
       "event_at": "2026-08-16T07:47:33Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "94ec8e82-655b-4a92-a6fe-383b4b9e5f74",
+      "id": "5e681533-f11d-4bb4-af38-9a8506ff619c",
       "github_id": "17763369393",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -506,10 +598,10 @@
         "ref": "refs/heads/sprint-11/ai-assistant-byok"
       },
       "event_at": "2026-08-15T18:33:17Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "e44e6a5c-be4f-4dc7-bbb4-02c4e3858534",
+      "id": "25261fcf-8e0a-44ba-987a-8b97f502e4ec",
       "github_id": "17761489783",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -517,10 +609,10 @@
         "ref": "refs/heads/sprint-11/ai-assistant-byok"
       },
       "event_at": "2026-08-15T18:03:20Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "70a33bee-ea34-4522-9abc-cd5a105ce46a",
+      "id": "b515f404-891c-4c11-a83d-4b59670119e0",
       "github_id": "17758718386",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -528,10 +620,10 @@
         "ref": "refs/heads/sprint-11/ai-assistant-byok"
       },
       "event_at": "2026-08-15T17:21:09Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "7e51c1a5-9302-4f4b-b425-8ed873e233e2",
+      "id": "f30989c3-ab64-49ce-ae24-987d87bec04b",
       "github_id": "17757327682",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -539,10 +631,10 @@
         "ref": "refs/heads/sprint-11/ai-assistant-byok"
       },
       "event_at": "2026-08-15T17:00:00Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "dcf0cc32-19cc-4908-a6d6-29cc03c60482",
+      "id": "0d08edd4-773e-4d9b-8697-22614e3d0f06",
       "github_id": "17744618527",
       "type": "CreateEvent",
       "repo": "tp-job/apexops_i",
@@ -551,10 +643,10 @@
         "ref_type": "branch"
       },
       "event_at": "2026-08-15T13:53:29Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "3a2b0d8a-9037-4de3-97a1-74247b4d836e",
+      "id": "5272d564-946e-469f-b2f1-54543eb9e38b",
       "github_id": "17743671292",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -562,10 +654,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-15T13:37:55Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "a1fbb235-0111-4978-87fc-4cb9b5797943",
+      "id": "6a283086-0480-42f2-8284-ebe4ed8eb168",
       "github_id": "17675241550",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -573,10 +665,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-14T17:55:01Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "a2b7dd5c-3e33-47fb-a728-8bfc561f4361",
+      "id": "80b88f77-5c0c-4a26-9f93-04f772268f7a",
       "github_id": "17673931399",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -584,10 +676,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-14T17:36:43Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "6abb8cd8-2ca5-4e3b-8500-bfee16330e69",
+      "id": "11594576-1923-49aa-945b-33f8faf57c5a",
       "github_id": "17652393562",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -595,10 +687,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-14T13:03:44Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "150b3a80-1093-4be8-9271-f12cc698bfa0",
+      "id": "ab02db64-097e-45ec-947f-7abe1b945e34",
       "github_id": "13288625798",
       "type": "PullRequestEvent",
       "repo": "tp-job/apexops_i",
@@ -606,10 +698,10 @@
         "action": "merged"
       },
       "event_at": "2026-08-14T13:03:43Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "ad9e3095-843a-471d-a69c-46e87253028d",
+      "id": "238ae867-d199-416a-9b3b-5f2ccfece117",
       "github_id": "13288596296",
       "type": "PullRequestEvent",
       "repo": "tp-job/apexops_i",
@@ -617,10 +709,10 @@
         "action": "opened"
       },
       "event_at": "2026-08-14T13:03:05Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "edd4aac8-b3aa-4c2f-9c21-df53f100d07c",
+      "id": "8401e670-4a1d-41af-bad3-5da33bd4dbb5",
       "github_id": "17652233693",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -628,10 +720,10 @@
         "ref": "refs/heads/sprint-10/daily-note-todo"
       },
       "event_at": "2026-08-14T13:01:48Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "2aeb12ce-35ae-4378-b433-6d1c11a8ceeb",
+      "id": "12b4006f-f3f3-4932-81a9-d62ea5a0990e",
       "github_id": "17571084874",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -639,10 +731,10 @@
         "ref": "refs/heads/sprint-10/daily-note-todo"
       },
       "event_at": "2026-08-13T13:25:59Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "d1b617b6-ce44-4ca4-b922-f1ead0a30da8",
+      "id": "e21bac3b-b9f1-489b-b277-61e5164eb4f1",
       "github_id": "13177385786",
       "type": "PullRequestEvent",
       "repo": "tp-job/apexops_i",
@@ -650,10 +742,10 @@
         "action": "merged"
       },
       "event_at": "2026-08-12T15:56:54Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "c20751cc-e017-43ae-baff-0e4c414857b2",
+      "id": "37e76e03-3e37-4eb6-9edb-040369e97d3a",
       "github_id": "17495816363",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -661,10 +753,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-12T15:56:55Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "8a77bdc3-830a-447c-b3b7-64a51e951f5a",
+      "id": "8de5c8f2-96b7-4e06-83c7-a08305189d31",
       "github_id": "13177200561",
       "type": "PullRequestEvent",
       "repo": "tp-job/apexops_i",
@@ -672,10 +764,10 @@
         "action": "opened"
       },
       "event_at": "2026-08-12T15:55:03Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "d165d850-d0c0-4197-9a54-00c0f8ac5918",
+      "id": "8b86a46c-eea1-4c6f-a729-965897264ee8",
       "github_id": "17495514142",
       "type": "CreateEvent",
       "repo": "tp-job/apexops_i",
@@ -684,10 +776,10 @@
         "ref_type": "branch"
       },
       "event_at": "2026-08-12T15:52:46Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "7a57aa17-2688-417c-8f74-128827433561",
+      "id": "4739b987-27f7-4901-94e0-3866a7ffc743",
       "github_id": "17401883998",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -695,10 +787,10 @@
         "ref": "refs/heads/sprint-9/console-monitor"
       },
       "event_at": "2026-08-11T14:23:49Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "c936c800-1edc-49cd-a4fb-e77b5856361c",
+      "id": "5737c225-a1fd-492e-83bd-06dd4f36d4ab",
       "github_id": "17400516014",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -706,10 +798,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-11T14:38:29Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "0be9ffef-f765-4656-95cd-6ffa9ceac443",
+      "id": "f58898b9-2029-4080-b0dd-3bdfcb50cb2d",
       "github_id": "13110163770",
       "type": "PullRequestEvent",
       "repo": "tp-job/apexops_i",
@@ -717,10 +809,10 @@
         "action": "merged"
       },
       "event_at": "2026-08-11T14:38:27Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "6316306c-e44b-490c-935d-7734d4aacf86",
+      "id": "c8593a63-c502-4f86-adfd-ca30e8136826",
       "github_id": "13110151590",
       "type": "PullRequestEvent",
       "repo": "tp-job/apexops_i",
@@ -728,10 +820,10 @@
         "action": "opened"
       },
       "event_at": "2026-08-11T14:38:17Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "979f8cd9-0101-45e3-ba2f-4af6a81297c0",
+      "id": "ca7f2691-6eaf-424b-8eb3-c51c658398b1",
       "github_id": "17398812889",
       "type": "PushEvent",
       "repo": "tp-job/kairos_i",
@@ -739,10 +831,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-11T14:16:59Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "51752c2f-c6c2-4f84-b0b6-71c6c5b0f5c5",
+      "id": "d912976b-603f-42c8-b8b9-abb163512eeb",
       "github_id": "17382688421",
       "type": "CreateEvent",
       "repo": "tp-job/template_html",
@@ -751,10 +843,10 @@
         "ref_type": "branch"
       },
       "event_at": "2026-08-11T10:47:23Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "5ddf6b10-65c2-494d-9136-30e61871caee",
+      "id": "20a8b1c4-b8d4-42bf-87f7-6803ca6a15aa",
       "github_id": "17382187612",
       "type": "PushEvent",
       "repo": "tp-job/agent_skill",
@@ -762,10 +854,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-11T10:40:33Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "3819b766-d814-4a17-adb7-cc6b907d2f0c",
+      "id": "e780a416-9784-4ecf-8fa8-fce7ed6b734a",
       "github_id": "17186336407",
       "type": "PushEvent",
       "repo": "tp-job/agent_skill",
@@ -773,10 +865,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-09T10:53:44Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "bef39eab-5067-4986-8d6c-ec757a3198ff",
+      "id": "4d94d7e5-f08d-413d-aa7f-b2e5dacc18ec",
       "github_id": "17129605495",
       "type": "CreateEvent",
       "repo": "tp-job/apexops_i",
@@ -785,10 +877,10 @@
         "ref_type": "branch"
       },
       "event_at": "2026-08-08T13:54:13Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "991d5b3a-66d5-4c6d-81e8-2b0190432a3f",
+      "id": "86c2078f-0697-458e-8b6c-5da114951fe5",
       "github_id": "17121423645",
       "type": "PushEvent",
       "repo": "tp-job/kairos_i",
@@ -796,10 +888,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-08T11:10:08Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "761d8e71-59a9-43fb-9d41-b5ba33f21916",
+      "id": "88007d05-a2a2-48b0-85a7-783d0c4bb93a",
       "github_id": "17005248922",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -807,10 +899,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-07T06:30:15Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "2efdf770-b979-470f-8214-891e995df3ab",
+      "id": "cfd8ca68-830e-4a00-8d94-6d73ff7ff707",
       "github_id": "16573559523",
       "type": "PushEvent",
       "repo": "tp-job/apexops_i",
@@ -818,10 +910,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-03T13:01:54Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "ef5f8bc5-a17f-428c-a271-be89e4b8d314",
+      "id": "33db4cce-4b34-446c-bee2-c00fcc1ed5d6",
       "github_id": "16489024133",
       "type": "PushEvent",
       "repo": "tp-job/the_bunko",
@@ -829,10 +921,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-02T16:10:10Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "045625ac-99dd-42ee-864f-aa7ec2447c06",
+      "id": "d5172281-14c7-4e9b-829f-ddd9c9dd63fc",
       "github_id": "16488942957",
       "type": "PushEvent",
       "repo": "tp-job/nevinas_p",
@@ -840,10 +932,10 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-02T16:08:54Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "497a29b8-3f33-4842-9ff1-59f3e9083a64",
+      "id": "cc403ea4-9fdf-4549-9ae3-0467845104f9",
       "github_id": "16488497775",
       "type": "PushEvent",
       "repo": "tp-job/agent_skill",
@@ -851,12 +943,12 @@
         "ref": "refs/heads/main"
       },
       "event_at": "2026-08-02T16:02:19Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     }
   ],
   "repos": [
     {
-      "id": "c1e185d4-2a68-4c63-aa11-a0976ca88bae",
+      "id": "f1434e4f-8363-44a3-b015-e94c889b6607",
       "github_id": 1285677187,
       "name": "agent_skill",
       "full_name": "tp-job/agent_skill",
@@ -871,18 +963,18 @@
       "forks_count": 0,
       "watchers_count": 0,
       "open_issues_count": 0,
-      "size": 1042,
+      "size": 1047,
       "fork": false,
       "archived": false,
       "visibility": "public",
       "default_branch": "main",
-      "pushed_at": "2026-08-25T13:29:28Z",
+      "pushed_at": "2026-09-01T08:33:08Z",
       "github_created_at": "2026-07-01T03:36:35Z",
-      "github_updated_at": "2026-08-25T13:41:51Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "github_updated_at": "2026-09-01T08:42:19Z",
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "366caf6b-2e4c-4619-b9b1-fae4469936f5",
+      "id": "47d0fa1a-246b-44a2-8e79-86ed0173e75a",
       "github_id": 1154066920,
       "name": "nevinas_p",
       "full_name": "tp-job/nevinas_p",
@@ -898,18 +990,18 @@
       "forks_count": 0,
       "watchers_count": 0,
       "open_issues_count": 0,
-      "size": 112575,
+      "size": 112646,
       "fork": false,
       "archived": false,
       "visibility": "public",
       "default_branch": "main",
-      "pushed_at": "2026-08-31T17:28:26Z",
+      "pushed_at": "2026-09-01T10:52:04Z",
       "github_created_at": "2026-02-10T01:20:01Z",
-      "github_updated_at": "2026-08-25T06:37:25Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "github_updated_at": "2026-08-31T17:53:27Z",
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "1c539730-bfdc-43b6-a16a-d53a8afe6103",
+      "id": "76c2a084-80fd-4bf1-8676-5d56fd76e109",
       "github_id": 1154067785,
       "name": "apexops_i",
       "full_name": "tp-job/apexops_i",
@@ -932,10 +1024,10 @@
       "pushed_at": "2026-08-23T11:55:02Z",
       "github_created_at": "2026-02-10T01:21:55Z",
       "github_updated_at": "2026-08-23T11:55:13Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "5ab27779-a183-4541-9bd5-08863e2d2a67",
+      "id": "be2fd764-f6ac-44a3-94d3-69a6711177be",
       "github_id": 1298289795,
       "name": "kairos_i",
       "full_name": "tp-job/kairos_i",
@@ -956,10 +1048,10 @@
       "pushed_at": "2026-08-20T11:00:52Z",
       "github_created_at": "2026-07-12T13:07:53Z",
       "github_updated_at": "2026-08-20T11:04:20Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "2310e5c8-6e0c-4ec3-8a3b-046bed72f4a4",
+      "id": "e3e4d5c0-2040-4a8e-9572-84d7fa2f5292",
       "github_id": 1330803637,
       "name": "template_html",
       "full_name": "tp-job/template_html",
@@ -982,10 +1074,10 @@
       "pushed_at": "2026-08-11T10:47:22Z",
       "github_created_at": "2026-08-11T10:46:11Z",
       "github_updated_at": "2026-08-11T10:57:58Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "4a770c70-f189-4d91-8cd8-a70c15a92c11",
+      "id": "f4ccaf2d-0b21-4569-bcf8-80168608bc0f",
       "github_id": 1194424313,
       "name": "the_bunko",
       "full_name": "tp-job/the_bunko",
@@ -1008,10 +1100,10 @@
       "pushed_at": "2026-08-02T16:10:09Z",
       "github_created_at": "2026-03-28T10:40:13Z",
       "github_updated_at": "2026-08-02T16:10:16Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "914f5c11-5373-4ca6-b8a8-95d1bf952941",
+      "id": "b27ecbad-e395-4e43-8bdf-bef271fff092",
       "github_id": 1298385577,
       "name": "sushi_restaurant_i",
       "full_name": "tp-job/sushi_restaurant_i",
@@ -1032,10 +1124,10 @@
       "pushed_at": "2026-07-15T15:17:06Z",
       "github_created_at": "2026-07-12T15:15:55Z",
       "github_updated_at": "2026-07-15T15:19:14Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "f0ba7dd6-9489-4a6a-8144-a636a35eac69",
+      "id": "ba90b2a9-5840-4db7-b826-2ff7bee04e95",
       "github_id": 927836269,
       "name": "wedsite_tools",
       "full_name": "tp-job/wedsite_tools",
@@ -1056,10 +1148,10 @@
       "pushed_at": "2026-07-14T01:22:21Z",
       "github_created_at": "2025-02-05T16:15:37Z",
       "github_updated_at": "2026-07-14T01:22:24Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "33a2347c-af64-4359-8136-d2b452120e86",
+      "id": "13284f52-3b9e-4d7d-b56c-d772e2e48227",
       "github_id": 1160764118,
       "name": "random-group-GXX",
       "full_name": "tp-job/random-group-GXX",
@@ -1082,10 +1174,10 @@
       "pushed_at": "2026-02-18T10:48:38Z",
       "github_created_at": "2026-02-18T10:46:21Z",
       "github_updated_at": "2026-02-18T10:48:42Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "e358fb55-5878-4acc-8620-e7cec90a76cc",
+      "id": "5fb34f69-a03c-4834-b1b8-93b88754574f",
       "github_id": 1154259625,
       "name": "comtech-research-infographic",
       "full_name": "tp-job/comtech-research-infographic",
@@ -1108,10 +1200,10 @@
       "pushed_at": "2026-02-10T07:24:43Z",
       "github_created_at": "2026-02-10T07:23:29Z",
       "github_updated_at": "2026-02-10T07:24:46Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "5c23b6be-fd98-458b-aa20-eaad3c49fb46",
+      "id": "c92891cd-5794-4c71-b78c-963006a3e86f",
       "github_id": 910821264,
       "name": "my_profilecard_i",
       "full_name": "tp-job/my_profilecard_i",
@@ -1136,10 +1228,10 @@
       "pushed_at": "2025-01-11T12:04:15Z",
       "github_created_at": "2025-01-01T14:35:28Z",
       "github_updated_at": "2025-09-27T07:11:59Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "203a1652-9aba-45f5-b194-14e99a93e198",
+      "id": "8aaa7b05-55ba-46f6-b6da-adf4bcf07fef",
       "github_id": 913937003,
       "name": "my_protfolio_i",
       "full_name": "tp-job/my_protfolio_i",
@@ -1165,10 +1257,10 @@
       "pushed_at": "2025-05-18T05:30:17Z",
       "github_created_at": "2025-01-08T16:28:57Z",
       "github_updated_at": "2025-09-27T07:11:29Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "35046624-1c01-4f58-a29a-998cfee30373",
+      "id": "a6f7c2f8-492c-4202-9168-a5e7e04457d0",
       "github_id": 1020046062,
       "name": "buildly",
       "full_name": "tp-job/buildly",
@@ -1191,10 +1283,10 @@
       "pushed_at": "2025-07-15T09:03:20Z",
       "github_created_at": "2025-07-15T09:00:33Z",
       "github_updated_at": "2025-09-27T07:10:20Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "240908e7-d9d1-4af9-b66a-7920db94ab3e",
+      "id": "3bdf9e17-ed0c-4fca-9923-9dafd7e0db20",
       "github_id": 1040013515,
       "name": "memonote",
       "full_name": "tp-job/memonote",
@@ -1217,10 +1309,10 @@
       "pushed_at": "2025-09-01T11:44:27Z",
       "github_created_at": "2025-08-18T10:25:57Z",
       "github_updated_at": "2025-09-27T07:08:52Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "8f41fd98-6e74-4424-bab3-ae7f7b642708",
+      "id": "2fefe92b-d9bc-4a01-b852-4be817dc01c2",
       "github_id": 1060625293,
       "name": "my_theme",
       "full_name": "tp-job/my_theme",
@@ -1243,10 +1335,10 @@
       "pushed_at": "2025-09-21T09:10:52Z",
       "github_created_at": "2025-09-20T09:06:41Z",
       "github_updated_at": "2025-09-27T07:08:24Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "aa12b89c-848c-4e46-a3a5-4d48156b4a6d",
+      "id": "a6d58a8b-0d87-4565-b1d3-cae0777e58e5",
       "github_id": 1002927586,
       "name": "project_tailwindcss_ii",
       "full_name": "tp-job/project_tailwindcss_ii",
@@ -1272,10 +1364,10 @@
       "pushed_at": "2025-06-19T09:52:28Z",
       "github_created_at": "2025-06-16T11:05:49Z",
       "github_updated_at": "2025-06-19T09:52:31Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "f6054ff2-7510-4dde-af0d-966c2b5940ca",
+      "id": "ade5d49b-dc32-4adb-8244-af9e24fe5af8",
       "github_id": 1002378404,
       "name": "project_tailwindcss_i",
       "full_name": "tp-job/project_tailwindcss_i",
@@ -1301,10 +1393,10 @@
       "pushed_at": "2025-06-16T12:52:33Z",
       "github_created_at": "2025-06-15T10:49:06Z",
       "github_updated_at": "2025-06-16T12:52:36Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "460a2573-3a43-420b-ae0c-84c9e6ddeeb1",
+      "id": "733a9f9e-ed92-4aa5-a68b-c126ff2ce4e1",
       "github_id": 956958071,
       "name": "restaurant_demo",
       "full_name": "tp-job/restaurant_demo",
@@ -1327,10 +1419,10 @@
       "pushed_at": "2025-03-29T08:04:37Z",
       "github_created_at": "2025-03-29T08:01:02Z",
       "github_updated_at": "2025-03-29T08:04:41Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "90ad6616-f4a9-41db-852f-97616b19c90f",
+      "id": "91e76313-8a97-4330-99aa-1f433e702f08",
       "github_id": 907831559,
       "name": "homepage_i",
       "full_name": "tp-job/homepage_i",
@@ -1353,10 +1445,10 @@
       "pushed_at": "2024-12-24T14:02:10Z",
       "github_created_at": "2024-12-24T13:53:54Z",
       "github_updated_at": "2025-01-01T14:25:27Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "ce91c4fb-2a6c-4995-9107-f235a581ee50",
+      "id": "8e6dbf54-1b94-497e-babe-6b5d39434e67",
       "github_id": 891995124,
       "name": "chessgame",
       "full_name": "tp-job/chessgame",
@@ -1379,10 +1471,10 @@
       "pushed_at": "2024-11-22T04:49:18Z",
       "github_created_at": "2024-11-21T10:28:06Z",
       "github_updated_at": "2024-11-22T04:49:21Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     },
     {
-      "id": "deacbb22-94f9-4645-a062-b6f3d15fe61e",
+      "id": "2b0c7907-149e-40b8-8c73-c86852d2e97f",
       "github_id": 892136296,
       "name": "discovery-piscine-coding-for-all-18-22-nov-Limerreen",
       "full_name": "tp-job/discovery-piscine-coding-for-all-18-22-nov-Limerreen",
@@ -1405,18 +1497,18 @@
       "pushed_at": "2024-11-21T15:15:04Z",
       "github_created_at": "2024-11-21T15:14:20Z",
       "github_updated_at": "2024-11-21T15:14:20Z",
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     }
   ],
   "stats": [
     {
-      "id": "67bc23fe-d582-428d-a5e8-923e7c1a94cd",
+      "id": "5c07efe6-9bc7-422f-a8e3-7213d284ab63",
       "totalStars": 0,
       "totalForks": 1,
       "totalCommits": 0,
-      "totalPRs": 17,
+      "totalPRs": 20,
       "totalIssues": 0,
-      "totalCreateEvents": 9,
+      "totalCreateEvents": 13,
       "repoCount": 21,
       "languageDistribution": {
         "Python": 2,
@@ -1436,16 +1528,17 @@
         {
           "month": "Sep",
           "commits": 0,
-          "prs": 1,
+          "prs": 4,
           "issues": 0
         }
       ],
       "commitsByMonth": {
+        "Sep": 0,
         "Aug": 0
       },
       "dayOfWeekActivity": [
-        5,
-        12,
+        6,
+        19,
         13,
         6,
         16,
@@ -1453,7 +1546,7 @@
         17
       ],
       "hourActivity": [
-        6,
+        12,
         2,
         0,
         0,
@@ -1469,14 +1562,14 @@
         3,
         2,
         7,
-        5,
+        6,
         5,
         12,
         1,
         15,
         6,
         7,
-        4
+        5
       ],
       "projectStatus": {
         "active": 8,
@@ -1509,8 +1602,8 @@
           ],
           "stargazers_count": 0,
           "forks_count": 0,
-          "updated_at": "2026-08-25T13:41:51Z",
-          "pushed_at": "2026-08-25T13:29:28Z"
+          "updated_at": "2026-09-01T08:42:19Z",
+          "pushed_at": "2026-09-01T08:33:08Z"
         },
         {
           "name": "nevinas_p",
@@ -1524,8 +1617,8 @@
           ],
           "stargazers_count": 0,
           "forks_count": 0,
-          "updated_at": "2026-08-25T06:37:25Z",
-          "pushed_at": "2026-08-31T17:28:26Z"
+          "updated_at": "2026-08-31T17:53:27Z",
+          "pushed_at": "2026-09-01T10:52:04Z"
         },
         {
           "name": "apexops_i",
@@ -1577,7 +1670,7 @@
         "followers": 4,
         "following": 1
       },
-      "synced_at": "2026-08-31T17:30:01.120Z"
+      "synced_at": "2026-09-01T11:52:25.009Z"
     }
   ]
 }

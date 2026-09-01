@@ -74,7 +74,11 @@ const OnThisPage: FC = () => {
       data-toc-active={activeId}
       className="sticky top-4 max-h-[calc(100svh-6rem)] overflow-y-auto"
     >
-      <p className="mb-3 text-xs font-medium uppercase tracking-[0.14em] text-light-text-tertiary dark:text-dark-text-muted">
+      {/* Hidden below xl: the disclosure wrapper in Docs.tsx puts the same
+          label on its <summary> there, so this would be a second "On this
+          page" beneath the collapsed toggle. Shown at xl, where there is no
+          summary and this is the only label. */}
+      <p className="mb-3 hidden text-xs font-medium uppercase tracking-[0.14em] text-light-text-tertiary dark:text-dark-text-muted xl:block">
         On this page
       </p>
       <ul className="space-y-1 border-l border-light-border dark:border-dark-border">
