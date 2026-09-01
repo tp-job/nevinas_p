@@ -12,6 +12,9 @@ import ArchitectureGrid from "@/components/docs/ArchitectureGrid";
 import RepoDetailPanel from "@/components/docs/RepoDetailPanel";
 import DesignSystemSection from "@/components/docs/DesignSystemSection";
 import ChangelogSection from "@/components/docs/ChangelogSection";
+import GettingStartedSection from "@/components/docs/GettingStartedSection";
+import ApiReferenceSection from "@/components/docs/ApiReferenceSection";
+import ProjectStructureSection from "@/components/docs/ProjectStructureSection";
 import { TH, cardCls, proseCls } from "@/components/docs/constants";
 import { architecture } from "@/data/docData";
 
@@ -184,7 +187,8 @@ const Docs: FC = () => {
               </ul>
             </DocSection>
 
-            {/* PHASE 4 SLOT — Getting Started goes here */}
+            {/* ========== Getting Started ========== */}
+            <GettingStartedSection />
 
             {/* ========== Architecture ========== */}
             <DocSection
@@ -203,7 +207,11 @@ const Docs: FC = () => {
               </div>
             </DocSection>
 
-            {/* PHASE 4 SLOTS — API Reference, then Project Structure go here */}
+            {/* ========== API Reference ========== */}
+            <ApiReferenceSection />
+
+            {/* ========== Project Structure ========== */}
+            <ProjectStructureSection />
 
             {/* ========== Design System ========== */}
             <DesignSystemSection />
