@@ -127,9 +127,9 @@ const Docs: FC = () => {
             Developer analytics, API reference, and project guides.
           </p>
           <p className="text-base text-light-text dark:text-dark-text leading-relaxed mb-8">
-            This portfolio combines React 19, Express 5, and MongoDB into a
-            full-stack application. The docs cover the project&apos;s
-            architecture and design system.
+            A React 19 front end and an Express 5 API, with no database — the
+            store is a set of JSON files kept in sync with the GitHub API. These
+            docs cover the architecture, the endpoints and the design system.
           </p>
           <Callout title="Design principle">
             Prefer &apos;few, high-quality primitives&apos; over scattered

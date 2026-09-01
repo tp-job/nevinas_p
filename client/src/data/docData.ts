@@ -59,7 +59,38 @@ export const apiEndpoints = [
     method: "GET" as const,
     path: "/api/gallery",
     description: "Get all gallery images — sorted by created_at descending",
-    response: "GalleryImage[]",
+    response: "{ success, count, data: GalleryItem[] }",
+    auth: false,
+  },
+  {
+    method: "POST" as const,
+    path: "/api/gallery/upload",
+    description:
+      "Upload one image (multipart/form-data, field `image`) — stored via Multer and added to the gallery index",
+    response: "{ success, message, data: GalleryItem }",
+    auth: false,
+  },
+  {
+    method: "GET" as const,
+    path: "/api/github/repos/:name/readme",
+    description:
+      "Get a repository's README, base64-decoded to UTF-8 — proxied live from the GitHub API",
+    response: "{ success, data: { content, encoding, name, html_url } }",
+    auth: false,
+  },
+  {
+    method: "POST" as const,
+    path: "/api/github/sync",
+    description:
+      "Trigger a GitHub sync — refreshes repos, events and stats in the JSON store",
+    response: "{ success, message }",
+    auth: false,
+  },
+  {
+    method: "GET" as const,
+    path: "/api/projects",
+    description: "Get the curated project list",
+    response: "{ success, count, data: Project[] }",
     auth: false,
   },
 ];
@@ -277,26 +308,42 @@ export const dataModels = [
 // ============================
 // Architecture Overview
 // ============================
+// Every entry below is checked against the real dependency lists by
+// `client/scripts/check-docs-truth.mjs`. If you change one, run that script.
+//
+// Previously this block claimed MongoDB + Mongoose 8, JWT + bcryptjs, MUI 7,
+// MUI X-Charts and nodemon. None of those are dependencies of this project:
+// there is no database (the store is JSON files), no auth of any kind, and the
+// server's dev script runs ts-node-dev. Meanwhile the genuinely notable parts
+// of the stack — three.js, @xyflow/react, Zod, Helmet — were undocumented.
 export const architecture = {
   frontend: {
     framework: "React 19 + TypeScript",
-    styling: "Tailwind CSS 4 + MUI 7",
+    styling: "Tailwind CSS 4",
     buildTool: "Vite 7 (SWC)",
     routing: "React Router DOM 7",
-    charts: "Recharts + MUI X-Charts",
-    icons: "Remixicon",
+    animation: "Framer Motion 12",
+    charts: "Recharts",
+    graph: "@xyflow/react",
+    threeD: "three.js (raw WebGL, guarded)",
+    markdown: "react-markdown",
+    icons: "Remix Icon (subset)",
   },
   backend: {
     runtime: "Node.js",
     framework: "Express 5",
-    database: "MongoDB + Mongoose 8",
+    dataStore: "JSON files — no database",
+    validation: "Zod 4",
+    security: "Helmet + CORS",
+    uploads: "Multer",
+    scheduling: "node-cron",
     externalApi: "GitHub REST API v3",
-    auth: "JWT + bcryptjs",
   },
   devTools: {
     linter: "ESLint 9 + TypeScript-ESLint",
     compiler: "TypeScript 5.9",
-    hotReload: "Vite HMR + nodemon",
+    clientDev: "Vite HMR",
+    serverDev: "ts-node-dev",
   },
 };
 
@@ -309,34 +356,48 @@ export const projectDetailByRepo: Record<string, typeof architecture> = {
 // ============================
 // Folder Structure
 // ============================
-export const folderStructure = `project/
+export const folderStructure = `nevinas_ka_i/
 ├── client/
 │   ├── src/
-│   │   ├── components/       # Reusable UI components
-│   │   │   ├── card/         # Card components (Blog, Repo, Project, Tool, TechStack)
-│   │   │   ├── charts/       # Data visualization components
-│   │   │   ├── common/       # Loading, Error, NotFound pages
-│   │   │   └── layouts/      # Navbar, Sidebar, Header, Footer
-│   │   ├── context/          # React Context providers
-│   │   ├── data/             # Static data files
-│   │   ├── layouts/          # Page layout wrappers
-│   │   ├── pages/            # Route page components
-│   │   ├── routes/           # Route configuration
-│   │   ├── styles/           # CSS files
-│   │   ├── types/            # TypeScript interfaces
-│   │   └── utils/            # API service, helpers
+│   │   ├── components/       # Feature-organised UI
+│   │   │   ├── card/         # Blog, Repo, Project, Tool, TechStack cards
+│   │   │   ├── charts/       # Recharts wrappers
+│   │   │   ├── common/       # AsyncBoundary, loading, error pages
+│   │   │   ├── dashboard/    # Dashboard sections
+│   │   │   ├── docs/         # This page's building blocks
+│   │   │   ├── effect/       # WebGL / visual effects
+│   │   │   ├── graph/        # @xyflow/react nodes
+│   │   │   ├── homepage/     # Slide stack
+│   │   │   ├── layouts/      # Navbar, Sidebar, Header, Footer
+│   │   │   ├── performance/  # Performance page widgets
+│   │   │   └── ui/           # Toast, ScrollReveal, primitives
+│   │   ├── context/          # Theme, Profile, Error, Notification
+│   │   ├── data/             # Static content (this file)
+│   │   ├── hooks/            # useFetch, useDeviceCapability, ...
+│   │   ├── layouts/          # Route layout wrappers
+│   │   ├── pages/            # One file per route
+│   │   ├── routes/           # AppRoutes
+│   │   ├── styles/           # index.css @theme + modular CSS
+│   │   ├── three/            # webglGuard — the single WebGL gate
+│   │   ├── types/            # Shared TypeScript types
+│   │   └── utils/            # api.ts, formatters, helpers
+│   ├── scripts/              # Icon subset, model optimisation
 │   ├── package.json
 │   └── vite.config.ts
 ├── server/
 │   ├── src/
-│   │   ├── data/             # Seed data (JSON)
-│   │   ├── middleware/       # Auth middleware
-│   │   ├── models/           # Mongoose models
-│   │   ├── routes/           # API routes (auth, github)
-│   │   └── server.js         # Express entry point
-│   ├── .env                  # Environment variables
+│   │   ├── data/             # *.json — the actual data store
+│   │   ├── middleware/       # Zod validation
+│   │   ├── routes/           # github, blogs, gallery, projects
+│   │   ├── schemas/          # Zod schemas
+│   │   ├── services/         # File manager
+│   │   ├── sync/             # GitHub + gallery sync jobs
+│   │   ├── utils/            # Response helpers, asyncHandler
+│   │   ├── seed.ts
+│   │   └── server.ts         # Express entry point
+│   ├── .env
 │   └── package.json
-└── docs/                     # Documentation`;
+└── README.md`;
 
 // ============================
 // Getting Started Steps
@@ -344,45 +405,51 @@ export const folderStructure = `project/
 export const gettingStarted = [
   {
     step: 1,
-    title: "Clone Repository",
-    command: "git clone <repository-url>\ncd <project-name>",
+    title: "Clone the repository",
+    command:
+      "git clone <repository-url>\ncd nevinas_ka_i",
     description:
-      "Clone the project from GitHub and navigate to the project directory.",
+      "Clone the project and enter the directory.",
   },
   {
     step: 2,
-    title: "Install Dependencies",
+    title: "Install dependencies",
     command:
       "# Frontend\ncd client && npm install\n\n# Backend\ncd ../server && npm install",
-    description: "Install npm packages for both client and server.",
+    description:
+      "Client and server have separate package manifests.",
   },
   {
     step: 3,
-    title: "Configure Environment",
+    title: "Configure the environment",
     command:
-      "# server/.env\nMONGODB_URI=mongodb://127.0.0.1:27017/your_db\nPORT=3000\nGITHUB_TOKEN=your_github_personal_access_token",
+      "# server/.env\nPORT=3000\nGITHUB_TOKEN=your_github_personal_access_token",
     description:
-      "Create .env file in the server directory with MongoDB URI and GitHub token.",
+      "Only the port and a GitHub token. There is no database to provision — the data store is JSON files in server/src/data, committed to the repo. The token is optional but raises the GitHub API rate limit.",
   },
   {
     step: 4,
-    title: "Start MongoDB",
-    command: "mongod",
-    description: "Make sure MongoDB is running locally on port 27017.",
+    title: "Seed the data store (optional)",
+    command:
+      "cd server && npm run seed",
+    description:
+      "Writes the starter JSON files. Skip it if server/src/data is already populated.",
   },
   {
     step: 5,
-    title: "Seed Database",
-    command: "cd server && node src/seed.js",
-    description: "Populate the database with initial data.",
+    title: "Run both dev servers",
+    command:
+      "# Terminal 1 — backend on :3000\ncd server && npm run dev\n\n# Terminal 2 — frontend on :10005\ncd client && npm run dev",
+    description:
+      "The client proxies /api and /uploads to the backend, so open http://localhost:10005.",
   },
   {
     step: 6,
-    title: "Run Development Servers",
+    title: "Refresh GitHub data (optional)",
     command:
-      "# Terminal 1 — Backend\ncd server && npm run dev\n\n# Terminal 2 — Frontend\ncd client && npm run dev",
+      "cd server && npm run sync:github",
     description:
-      "Start both development servers. Frontend runs on :5173, backend on :3000.",
+      "Pulls repositories, events and stats from the GitHub API into the JSON store. Also runs automatically on a schedule.",
   },
 ];
 
