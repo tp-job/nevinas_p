@@ -1,57 +1,22 @@
 import type { FC } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Easing } from "framer-motion";
-import {
-  useNotifications,
-  type Notification,
-  type NotificationType,
-} from "@/context/NotificationContext";
+import { useNotifications, type Notification } from "@/context/NotificationContext";
 import { useDeviceProfile } from "@/hooks/useDeviceCapability";
 import { useTheme } from "@/context/ThemeContext";
+import { STATUS_SKIN as SKIN } from "@/styles/statusSkin";
 
 /**
  * Toast — Nocturnal Atelier v3.2 §13.7, extended for dark mode.
  *
- * The DS spec fixes one light-mode palette per type. That is not enough here:
- * the site is dark by default, and #1E233C text on a pale tint is unreadable
- * against a charcoal page. Each type therefore carries BOTH modes, driven off
- * the `.dark` class the rest of the app already switches on, and the accents
- * stay inside the palette — status colours from §1.10 (semantic only, never
- * decorative) and the main palette for `info`.
+ * The palette lives in styles/statusSkin.ts — shared with Callout, so the
+ * verified light/dark pairs have exactly one source instead of two hand-copied
+ * hex sets drifting apart. `NotificationType` and `StatusVariant` are the same
+ * four strings on purpose; see that file for why it does not build on the
+ * shared `--color-success` etc. tokens.
  */
 
 const EASE_SPRING: Easing = [0.22, 1, 0.36, 1];
-
-interface ToastSkin {
-  /** Remixicon class — the subset is regenerated via `npm run icons:subset`. */
-  icon: string;
-  light: { bg: string; border: string; text: string; accent: string };
-  dark: { bg: string; border: string; text: string; accent: string };
-}
-
-const SKIN: Record<NotificationType, ToastSkin> = {
-  info: {
-    icon: "ri-information-line",
-    // Main palette — info reuses cool gray, which §1.10 marks as on-palette.
-    light: { bg: "rgba(200,205,235,0.78)", border: "#A8B0D9", text: "#1E233C", accent: "#465078" },
-    dark: { bg: "rgba(46,53,88,0.82)", border: "rgba(200,205,235,0.28)", text: "#E8EAF5", accent: "#C8CDEB" },
-  },
-  success: {
-    icon: "ri-check-line",
-    light: { bg: "rgba(200,240,210,0.72)", border: "#a5d6a7", text: "#1b5e20", accent: "#2E7D32" },
-    dark: { bg: "rgba(30,50,40,0.85)", border: "rgba(134,239,172,0.34)", text: "#D6F0DD", accent: "#86EFAC" },
-  },
-  warning: {
-    icon: "ri-alert-line",
-    light: { bg: "rgba(255,236,214,0.78)", border: "#ffcc80", text: "#7a3b00", accent: "#E65100" },
-    dark: { bg: "rgba(58,44,26,0.85)", border: "rgba(251,191,36,0.34)", text: "#F6E3C4", accent: "#FBBF24" },
-  },
-  error: {
-    icon: "ri-error-warning-line",
-    light: { bg: "rgba(255,218,214,0.78)", border: "#ef9a9a", text: "#8e1414", accent: "#C62828" },
-    dark: { bg: "rgba(58,30,32,0.85)", border: "rgba(252,165,165,0.34)", text: "#F7DADA", accent: "#FCA5A5" },
-  },
-};
 
 const ToastItem: FC<{
   notification: Notification;
