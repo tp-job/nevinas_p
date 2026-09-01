@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import type { FC } from "react";
 import AsyncBoundary from "@/components/common/AsyncBoundary";
+import EmptyState from "@/components/common/EmptyState";
 import { githubApi } from "@/utils/api";
 import { useFetch } from "@/hooks/useFetch";
 import { filterReposByKeywords } from "@/utils/repoFilters";
@@ -41,7 +42,14 @@ const FlutterPage: FC = () => {
         loading={loading}
         error={error}
         isEmpty={flutterProjects.length === 0}
-        emptyMessage="No Flutter projects found"
+        emptyState={
+          <EmptyState
+            icon="ri-flutter-line"
+            title="No Flutter projects found"
+            description="No repositories tagged Flutter or Dart were returned."
+            hint="They may still be syncing from GitHub."
+          />
+        }
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {flutterProjects.map((repo) => (

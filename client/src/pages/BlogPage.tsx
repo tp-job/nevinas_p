@@ -5,6 +5,7 @@ import { blogsApi } from "@/utils/api";
 import { useFetch } from "@/hooks/useFetch";
 import type { BlogPost } from "@/types/blog";
 import AsyncBoundary from "@/components/common/AsyncBoundary";
+import EmptyState from "@/components/common/EmptyState";
 
 const BlogPage: FC = () => {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
@@ -62,7 +63,14 @@ const BlogPage: FC = () => {
         loading={loading}
         error={error}
         isEmpty={posts.length === 0}
-        emptyMessage="No blog posts found"
+        emptyState={
+          <EmptyState
+            icon="ri-article-line"
+            title="No blog posts found"
+            description="There are no published posts to show right now."
+            hint="Check back soon — new writing lands here first."
+          />
+        }
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {posts.map((post) => (

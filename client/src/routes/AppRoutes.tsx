@@ -30,8 +30,6 @@ const FlutterPage = lazy(() => import("@/pages/FlutterPage"));
 import WorkLayout from "@/layouts/WorkLayout";
 // common
 import LoadingScreen from "@/components/common/loading/LoadingPage";
-// Route transitions get the cheap fallback, not the WebGL HUD — see the file.
-import RouteFallback from "@/components/common/loading/RouteFallback";
 import NotFound from "@/components/common/client-error/NotFound";
 import ServerError from "@/components/common/server-error/ServerError";
 import ServiceUnavailable from "@/components/common/server-error/ServiceUnavailable";
@@ -147,7 +145,15 @@ const AppRoutes: FC = () => (
           above the routes so any page's useFetch can reach it. */}
       <NotificationProvider>
         <ErrorBoundary>
-          <Suspense fallback={<RouteFallback />}>
+          {/* The full Neo-Tokyo HUD, on cold boot AND route transitions.
+              The WebGL hazard that once made this dangerous is handled at the
+              source rather than by downgrading the screen: LoadingPage's
+              `beamBudgetSpent` latch spends the LaserFlow beam exactly once per
+              page load, so the cold boot gets the full treatment and every
+              later route transition renders the same HUD with no WebGL context
+              at all — and three/webglGuard.ts makes a refused context
+              non-fatal regardless. */}
+          <Suspense fallback={<LoadingScreen />}>
             <AppRoutesInner />
           </Suspense>
         </ErrorBoundary>
