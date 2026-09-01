@@ -28,6 +28,13 @@ const Docs: FC = () => {
   const [readmeLoading, setReadmeLoading] = useState(false);
   const [readmeError, setReadmeError] = useState<string | null>(null);
 
+  // Repo index filters — Phase 5's "filterable" requirement. Name search
+  // covers the case that matters most ("I know roughly what it's called");
+  // the language filter reuses data the list already renders (the coloured
+  // dot), so it costs nothing new to derive.
+  const [repoQuery, setRepoQuery] = useState("");
+  const [repoLanguage, setRepoLanguage] = useState("all");
+
   // Repo list is optional here — on failure the section just renders empty.
   const { data: repoData, loading: reposLoading } = useFetch(
     githubApi.getRepos,
@@ -75,6 +82,21 @@ const Docs: FC = () => {
     updatedAt: formatRelativeTime(repo.github_updated_at),
     url: repo.html_url,
   }));
+
+  // Sorted so the dropdown reads alphabetically rather than in whatever
+  // order repos happen to come back from the API.
+  const repoLanguages = [
+    ...new Set(repoCardData.map((r) => r.language)),
+  ].sort((a, b) => a.localeCompare(b));
+
+  const filteredRepoCardData = repoCardData.filter((repo) => {
+    const matchesQuery = repo.name
+      .toLowerCase()
+      .includes(repoQuery.trim().toLowerCase());
+    const matchesLanguage =
+      repoLanguage === "all" || repo.language === repoLanguage;
+    return matchesQuery && matchesLanguage;
+  });
 
   return (
     <div className="w-full">
@@ -233,6 +255,48 @@ const Docs: FC = () => {
                   one. Moved to the end of the page: it is the deepest,
                   least-orienting content here, not what a cold reader needs
                   first. */}
+              {!reposLoading && repos.length > 0 && (
+                <div className="mb-3 flex flex-wrap items-center gap-3">
+                  <div className="relative flex-1 min-w-[12rem]">
+                    <i
+                      aria-hidden="true"
+                      className="ri-search-line pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-light-text-tertiary dark:text-dark-text-muted"
+                    />
+                    <input
+                      type="text"
+                      value={repoQuery}
+                      onChange={(e) => setRepoQuery(e.target.value)}
+                      placeholder="Filter by name…"
+                      aria-label="Filter repositories by name"
+                      className="w-full rounded-lg border border-light-border dark:border-dark-border
+                                 bg-light-surface-2 dark:bg-dark-surface
+                                 py-1.5 pl-8 pr-3 text-sm text-light-text dark:text-dark-text
+                                 placeholder:text-light-text-tertiary dark:placeholder:text-dark-text-muted
+                                 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-matte-azure"
+                    />
+                  </div>
+                  <select
+                    value={repoLanguage}
+                    onChange={(e) => setRepoLanguage(e.target.value)}
+                    aria-label="Filter repositories by language"
+                    className="rounded-lg border border-light-border dark:border-dark-border
+                               bg-light-surface-2 dark:bg-dark-surface
+                               py-1.5 px-3 text-sm text-light-text dark:text-dark-text
+                               focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-matte-azure"
+                  >
+                    <option value="all">All languages</option>
+                    {repoLanguages.map((lang) => (
+                      <option key={lang} value={lang}>
+                        {lang}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="text-xs tabular-nums text-light-text-tertiary dark:text-dark-text-muted">
+                    {filteredRepoCardData.length} of {repoCardData.length}
+                  </span>
+                </div>
+              )}
+
               <div className={`overflow-hidden ${cardCls}`}>
                 {reposLoading ? (
                   <ul className="divide-y divide-light-border dark:divide-dark-border">
@@ -247,9 +311,14 @@ const Docs: FC = () => {
                   <p className="px-4 py-8 text-center text-light-text-secondary dark:text-dark-text-secondary">
                     No repositories found
                   </p>
+                ) : filteredRepoCardData.length === 0 ? (
+                  <p className="px-4 py-8 text-center text-light-text-secondary dark:text-dark-text-secondary">
+                    No repositories match &ldquo;{repoQuery}&rdquo;
+                    {repoLanguage !== "all" && <> in {repoLanguage}</>}.
+                  </p>
                 ) : (
                   <ul className="divide-y divide-light-border dark:divide-dark-border">
-                    {repoCardData.map((repo) => (
+                    {filteredRepoCardData.map((repo) => (
                       <li key={repo.name}>
                         <button
                           type="button"
