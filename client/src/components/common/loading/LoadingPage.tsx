@@ -1,14 +1,16 @@
 /**
- * Loading.tsx — Nocturnal Atelier DS v3.2
+ * LoadingPage — Nocturnal Atelier DS v3.2
  * Aesthetic: Neo-Tokyo Operational
  *            Japan × Sci-Fi × Modern
  *            Ghost in the Shell · NERV HUD · Wabi-Sabi space
  *
- * Fonts (add to next/font in layout.tsx):
- *   Inter 300/400/600 — DS rule (Latin)
- *   Noto Sans JP 300/400 — Japanese text
+ * The router's Suspense fallback (see routes/AppRoutes.tsx) and the `/loading`
+ * debug route.
  *
- * In project: replace inline LaserFlow with import from ./LaserFlow
+ * Fonts: Inter 300/400/600 for Latin, system JP faces for the kana/kanji —
+ * no webfont download, see the note in the keyframes effect below. (The
+ * original header here said "add to next/font in layout.tsx"; this project is
+ * Vite, has never had Next.js, and loads Inter from index.css.)
  */
 
 import { useState, useEffect, useId, useRef, lazy, Suspense } from "react";
@@ -100,7 +102,8 @@ let beamBudgetSpent = false;
 
 /* Corner targeting brackets — classic sci-fi HUD reticle */
 function CornerBrackets({ size = 44, opacity = 0.30, visible = false }) {
-  const id = useId();
+  // No useId() here: unlike WaveformSVG and AuroraBand, these brackets are a
+  // plain stroked path with no <defs> gradient, so there is no id to collide.
   const path = `M2 ${size - 2} L2 2 L${size - 2} 2`;
   const corners = [
     { pos: { top: 22, left: 22 },    sx:  1, sy:  1 },
@@ -613,7 +616,13 @@ export default function LoadingScreen({ onComplete }: { onComplete?: () => void 
         }}
         aria-hidden="true"
       >
-        {["React 19", "Next.js 15", "Three.js r128"].map((label, i) => (
+        {/* Real versions, checked against client/package.json. This strip used
+            to read "Next.js 15" and "Three.js r128": next is not a dependency
+            of this project at all (it is Vite), and three is 0.184, not r128.
+            A loading screen that names the wrong framework is the same
+            credibility defect the Docs page was just corrected for, except
+            this one is on the critical path of every cold visit. */}
+        {["React 19", "Vite 7", "Three.js r184"].map((label, i) => (
           <span key={i} style={{ fontFamily:EN, fontSize:"0.56rem", fontWeight:400,
                                   letterSpacing:"0.14em", textTransform:"uppercase",
                                   color:`rgba(135,140,180,0.22)` }}>
