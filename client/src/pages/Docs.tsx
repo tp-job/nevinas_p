@@ -180,8 +180,9 @@ const Docs: FC = () => {
                 xl+, leaving only its children (summary, content) as direct
                 children of <aside> — so the sticky/top-4 above still applies
                 cleanly. Below xl it is a real, closed-by-default disclosure:
-                native <details>, no JS, matching Disclosure.tsx's visual
-                language without inheriting its fixed non-responsive layout. */}
+                native <details>, no JS. This is the only collapsible left on
+                the page — Disclosure.tsx went with the Design System rewrite,
+                which no longer hides its reference material behind a toggle. */}
           <details className="group xl:contents rounded-xl border border-light-border dark:border-dark-border xl:border-0">
             <summary
               className="flex cursor-pointer list-none items-center gap-2 rounded-xl px-4 py-3
