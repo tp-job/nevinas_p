@@ -12,8 +12,6 @@ import ArchitectureGrid from "@/components/docs/ArchitectureGrid";
 import RepoDetailPanel from "@/components/docs/RepoDetailPanel";
 import DesignSystemSection from "@/components/docs/DesignSystemSection";
 import ChangelogSection from "@/components/docs/ChangelogSection";
-import GettingStartedSection from "@/components/docs/GettingStartedSection";
-import ApiReferenceSection from "@/components/docs/ApiReferenceSection";
 import ProjectStructureSection from "@/components/docs/ProjectStructureSection";
 import { TH, cardCls, proseCls } from "@/components/docs/constants";
 import { architecture } from "@/data/docData";
@@ -148,13 +146,16 @@ const Docs: FC = () => {
       </div>
 
       <div className={proseCls}>
+        {/* Both lines used to advertise an API reference. That section is gone,
+            so the promise is gone with it — a lead that lists a section the
+            page does not have is worse than no lead. */}
         <p className="text-lg text-light-text-secondary dark:text-dark-text-secondary mb-6">
-          Developer analytics, API reference, and project guides.
+          Architecture, design system, and project guides.
         </p>
         <p className="text-base text-light-text dark:text-dark-text leading-relaxed mb-8">
           A React 19 front end and an Express 5 API, with no database — the
           store is a set of JSON files kept in sync with the GitHub API. These
-          docs cover the architecture, the endpoints and the design system.
+          docs cover the architecture, the project layout and the design system.
         </p>
         <Callout title="Design principle">
           Prefer &apos;few, high-quality primitives&apos; over scattered
@@ -203,11 +204,15 @@ const Docs: FC = () => {
         </aside>
 
         <div className="min-w-0 xl:col-start-1 xl:row-start-1">
-          {/* Reader order below: Overview → Getting Started → Architecture →
-                API Reference → Project Structure → Design System → Changelog →
-                Project READMEs. Getting Started, API Reference and Project
-                Structure do not exist yet (Phase 4) — their slots are marked
-                so the order does not get re-litigated when they land. */}
+          {/* Reader order below: Overview → Architecture → Project Structure →
+              Design System → Changelog → Project READMEs.
+
+              Getting Started and API Reference were removed: this is a
+              portfolio, not an onboarding manual for a repo nobody else runs,
+              and the endpoint table was documentation of an internal API with
+              no external consumer. `OnThisPage` scans the DOM for
+              `data-doc-section`, so the rail drops both entries by itself —
+              there is no second list to keep in sync. */}
 
           {/* ========== Overview ("What you can do") ========== */}
           <DocSection
@@ -223,9 +228,6 @@ const Docs: FC = () => {
               <li>Track release history in the changelog.</li>
             </ul>
           </DocSection>
-
-          {/* ========== Getting Started ========== */}
-          <GettingStartedSection />
 
           {/* ========== Architecture ========== */}
           <DocSection
@@ -243,9 +245,6 @@ const Docs: FC = () => {
               <ArchitectureGrid data={architecture} />
             </div>
           </DocSection>
-
-          {/* ========== API Reference ========== */}
-          <ApiReferenceSection />
 
           {/* ========== Project Structure ========== */}
           <ProjectStructureSection />
