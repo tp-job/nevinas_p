@@ -165,28 +165,38 @@ const Docs: FC = () => {
       </div>
 
       {/* ── Sections + rail ────────────────────────────────────────────
-          Two-column from xl: content, then the sticky "On this page" rail.
-          Below xl the rail collapses into a <details> disclosure ABOVE the
+          Two-column from lg: content, then the sticky "On this page" rail.
+          Below lg the rail collapses into a <details> disclosure ABOVE the
           content — a table of contents underneath what it indexes is useless,
           and always-expanded pushed the whole page down on every phone load
-          before the reader had asked for it. */}
-      <div className="mt-10 xl:grid xl:grid-cols-[minmax(0,1fr)_15rem] xl:gap-12 xl:items-start">
-        {/* First in the DOM so that below xl — where the parent is a plain
+          before the reader had asked for it.
+
+          Breakpoint is `lg` (1024px), not `xl` (1280px). It was `xl` originally,
+          which put the rail a full 256px above the point where the rest of the
+          app already commits to desktop chrome — Sidebar.tsx shows the
+          persistent nav at `lg:flex` and hides the mobile hamburger there too.
+          Between 1024 and 1280px the app read as "desktop" everywhere except
+          here, where the rail vanished into a top accordion and the right side
+          of the content column sat empty. Measured main content width at the
+          `lg` floor (1024px viewport): 763px, which fits the 240px rail + 48px
+          gap + a ~475px reading column without forcing anything to wrap badly. */}
+      <div className="mt-10 lg:grid lg:grid-cols-[minmax(0,1fr)_15rem] lg:gap-12 lg:items-start">
+        {/* First in the DOM so that below lg — where the parent is a plain
               block and `order` does nothing — it lands above the content. At
-              xl it is placed explicitly into column 2, so reading order and
+              lg it is placed explicitly into column 2, so reading order and
               visual order agree in both layouts. */}
-        <aside className="mb-6 xl:mb-0 xl:col-start-2 xl:row-start-1 xl:sticky xl:top-4">
-          {/* `xl:contents` drops the <details> box itself from layout at
-                xl+, leaving only its children (summary, content) as direct
+        <aside className="mb-6 lg:mb-0 lg:col-start-2 lg:row-start-1 lg:sticky lg:top-4">
+          {/* `lg:contents` drops the <details> box itself from layout at
+                lg+, leaving only its children (summary, content) as direct
                 children of <aside> — so the sticky/top-4 above still applies
-                cleanly. Below xl it is a real, closed-by-default disclosure:
+                cleanly. Below lg it is a real, closed-by-default disclosure:
                 native <details>, no JS. This is the only collapsible left on
                 the page — Disclosure.tsx went with the Design System rewrite,
                 which no longer hides its reference material behind a toggle. */}
-          <details className="group xl:contents rounded-xl border border-light-border dark:border-dark-border xl:border-0">
+          <details className="group lg:contents rounded-xl border border-light-border dark:border-dark-border lg:border-0">
             <summary
               className="flex cursor-pointer list-none items-center gap-2 rounded-xl px-4 py-3
-                           text-light-text dark:text-dark-text xl:hidden
+                           text-light-text dark:text-dark-text lg:hidden
                            focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-matte-azure
                            hover:bg-light-surface/60 dark:hover:bg-dark-surface/50 transition-colors"
             >
@@ -198,13 +208,13 @@ const Docs: FC = () => {
                 On this page
               </span>
             </summary>
-            <div className="px-4 pb-4 pt-1 xl:contents xl:p-0">
+            <div className="px-4 pb-4 pt-1 lg:contents lg:p-0">
               <OnThisPage />
             </div>
           </details>
         </aside>
 
-        <div className="min-w-0 xl:col-start-1 xl:row-start-1">
+        <div className="min-w-0 lg:col-start-1 lg:row-start-1">
           {/* Reader order below: Overview → Architecture → Project Structure →
               Design System → Changelog → Project READMEs.
 
