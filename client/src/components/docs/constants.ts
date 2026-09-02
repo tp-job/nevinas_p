@@ -13,16 +13,21 @@ export const TH = {
 };
 
 /**
- * The reading column.
+ * The reading column — RUNNING PARAGRAPHS ONLY.
  *
- * Prose was running the full width of the content wrapper — measured at 987 px
- * / ~110 characters per line, roughly double a comfortable measure. Everything
- * that is read as sentences gets this cap; grids and swatch walls opt out via
- * DocSection's `wide` prop.
+ * Sentences at the full content width measure ~110 characters per line, which
+ * is roughly double a comfortable measure, so paragraphs still get a cap.
+ *
+ * Headings, section rules and grids deliberately do NOT get it. At 68ch this
+ * was applied to the page header and every SectionHeading as well, which held
+ * the whole page to a 565 px column while every other /work/* page runs 949 px
+ * at the same viewport — the visible "Docs looks different" defect. 85ch keeps
+ * the readability win without re-introducing the mismatch: measured 727 px at
+ * 1440, so section rules span the full width and only prose is inset.
  *
  * In `ch` so it tracks the font, and applied on a 16 px context.
  */
-export const proseCls = "max-w-[68ch]";
+export const proseCls = "max-w-[85ch]";
 
 export const cardCls =
   "bg-light-surface dark:bg-dark-bg border border-light-border dark:border-dark-border rounded-2xl relative overflow-hidden";
