@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import { designSystem } from "@/data/docData";
 import DocSection from "./DocSection";
+import GroupLabel from "./GroupLabel";
 import { contrastRatio, wcagGrade, isOpaqueHex } from "@/utils/contrast";
 import { useCssTokens } from "@/hooks/useCssTokens";
 
@@ -68,20 +69,6 @@ function resolve(tokens: Token[], live: Record<string, string>): Token[] {
 }
 
 /* ── Primitives ──────────────────────────────────────────────────────────── */
-
-/** A section label: small caps over a hairline. The only structural device here. */
-const GroupLabel: FC<{ label: string; note?: string }> = ({ label, note }) => (
-  <div className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-light-border pb-2 dark:border-dark-border">
-    <h4 className="text-xs font-medium uppercase tracking-[0.14em] text-light-text dark:text-dark-text">
-      {label}
-    </h4>
-    {note && (
-      <span className="text-xs text-light-text-tertiary dark:text-dark-text-muted">
-        {note}
-      </span>
-    )}
-  </div>
-);
 
 /**
  * A colour chip.

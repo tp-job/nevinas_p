@@ -13,7 +13,7 @@ import RepoDetailPanel from "@/components/docs/RepoDetailPanel";
 import DesignSystemSection from "@/components/docs/DesignSystemSection";
 import ChangelogSection from "@/components/docs/ChangelogSection";
 import ProjectStructureSection from "@/components/docs/ProjectStructureSection";
-import { TH, cardCls, proseCls } from "@/components/docs/constants";
+import { cardCls, proseCls } from "@/components/docs/constants";
 import { architecture } from "@/data/docData";
 
 /* ==================== Docs Page ==================== */
@@ -231,20 +231,17 @@ const Docs: FC = () => {
           </DocSection>
 
           {/* ========== Architecture ========== */}
+          {/* The grid renders straight onto the page, like Design System does.
+              It used to sit in a `cardCls` panel with its own gradient top bar,
+              which was the outermost of four nested rounded borders — and the
+              panel added nothing the section heading above it did not already
+              say. */}
           <DocSection
             title="Architecture Overview"
-            subtitle="Technology stack breakdown"
+            subtitle="What this site is built from, by layer."
             wide
           >
-            <div className={`p-6 sm:p-8 mb-8 ${cardCls}`}>
-              <div
-                className="absolute top-0 left-0 right-0 h-[2px]"
-                style={{
-                  background: `linear-gradient(90deg, transparent, ${TH.primary}60, ${TH.secondary}60, transparent)`,
-                }}
-              />
-              <ArchitectureGrid data={architecture} />
-            </div>
+            <ArchitectureGrid data={architecture} />
           </DocSection>
 
           {/* ========== Project Structure ========== */}
