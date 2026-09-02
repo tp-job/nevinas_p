@@ -6,10 +6,15 @@ import SectionHeading from "./SectionHeading";
 /**
  * A titled documentation section.
  *
- * The heading and subtitle ALWAYS sit in the reading column, so every section
- * starts on the same left edge and shares the same measure. Only the body opts
- * out, via `wide` — grids, swatch walls and timelines are looked at rather than
- * read, and cramming them into 68ch would be worse, not better.
+ * The heading spans the FULL content width — its underline is a section rule,
+ * and a rule that stops two thirds of the way across reads as a broken border
+ * rather than a divider. It also kept the whole page in a 565 px column while
+ * every sibling /work/* page runs 949 px, which is the parity defect this
+ * change exists to fix.
+ *
+ * The subtitle and body are read as sentences, so they keep the reading column
+ * unless `wide` opts them out — grids, swatch walls and timelines are looked at
+ * rather than read, and cramming those into a measure would be worse.
  *
  * Rhythm is two-level on purpose: the title and its subtitle are one unit and
  * sit close together; the gap before the body and the gap to the next section
@@ -24,14 +29,14 @@ const DocSection: FC<{
   children: React.ReactNode;
 }> = ({ title, subtitle, wide = false, children }) => (
   <section className="mb-20">
-    <div className={proseCls}>
-      <SectionHeading title={title} />
-      {subtitle && (
-        <p className="text-base text-light-text-secondary dark:text-dark-text-secondary mb-8">
-          {subtitle}
-        </p>
-      )}
-    </div>
+    <SectionHeading title={title} />
+    {subtitle && (
+      <p
+        className={`text-base text-light-text-secondary dark:text-dark-text-secondary mb-8 ${proseCls}`}
+      >
+        {subtitle}
+      </p>
+    )}
     <div
       className={`space-y-6 text-light-text dark:text-dark-text leading-relaxed ${
         wide ? "" : proseCls
