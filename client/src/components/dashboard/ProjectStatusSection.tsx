@@ -1,6 +1,8 @@
 import React, { type FC } from "react";
 import { StaggerItem } from "@/components/ui/StaggerList";
-import { TH, cardCls } from "./constants";
+import { cardCls } from "./constants";
+import SectionHead from "./SectionHead";
+import { useChartPalette } from "@/hooks/useChartPalette";
 import type { GitHubStats } from "@/utils/api";
 
 interface ProjectStatusSectionProps {
@@ -9,39 +11,43 @@ interface ProjectStatusSectionProps {
 
 /** Project Integrity Status — segmented donut + per-status cards. */
 const ProjectStatusSection: FC<ProjectStatusSectionProps> = ({ status }) => {
+  const c = useChartPalette();
   const projectStatus = [
     {
       label: "Active",
       count: status?.active || 0,
-      color: TH.green,
+      color: c.positive,
       icon: "ri-checkbox-circle-fill",
     },
     {
       label: "Inactive",
       count: status?.inactive || 0,
-      color: TH.azure,
+      color: c.muted,
       icon: "ri-time-line",
     },
     {
       label: "Archived",
       count: status?.archived || 0,
-      color: TH.yellow,
+      color: c.accent,
       icon: "ri-archive-line",
     },
   ];
   const totalProjects = projectStatus.reduce((a, b) => a + b.count, 0);
 
   return (
-    <StaggerItem className={`p-8 lg:col-span-12 ${cardCls}`}>
-      <div
-        className="absolute top-0 left-0 right-0 h-[2px]"
-        style={{
-          background: `linear-gradient(90deg, transparent, ${TH.royal}60, ${TH.flamingo}60, transparent)`,
-        }}
+    <StaggerItem className={`lg:col-span-12 ${cardCls}`}>
+      {/* "Project Integrity Status" claimed something this does not measure —
+          nothing here inspects integrity, it counts repositories by recency of
+          activity. Renamed to what it is. */}
+      <SectionHead
+        title="Repository Status"
+        subtitle="Public repositories by recent activity"
+        meta={
+          <span className="text-xs tabular-nums text-light-text-tertiary dark:text-dark-text-muted">
+            {totalProjects} total
+          </span>
+        }
       />
-      <h3 className="text-xl font-medium text-light-text dark:text-dark-text mb-8">
-        Project Integrity Status
-      </h3>
       <div className="flex flex-col md:flex-row items-center gap-12">
         <div className="relative w-44 h-44 shrink-0">
           <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
@@ -85,19 +91,16 @@ const ProjectStatusSection: FC<ProjectStatusSectionProps> = ({ status }) => {
         </div>
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-6 w-full">
           {projectStatus.map((item) => (
-            <div
-              key={item.label}
-              className="flex items-center gap-4 p-5 rounded-2xl bg-light-surface-2 dark:bg-dark-surface border border-light-border dark:border-dark-border/30 hover:border-global-blue/30 transition-colors"
-            >
-              <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center"
-                style={{ backgroundColor: `${item.color}20` }}
-              >
-                <i
-                  className={`${item.icon} text-xl`}
-                  style={{ color: item.color }}
-                ></i>
-              </div>
+            /* Flat row, not a card. This was a bordered, rounded, filled
+               tile holding a second rounded tile behind its icon — inside a
+               section card that is itself bordered and rounded. Three nested
+               radii, all repeating the same treatment. */
+            <div key={item.label} className="flex items-baseline gap-3">
+              <i
+                aria-hidden="true"
+                className={`${item.icon} text-base`}
+                style={{ color: item.color }}
+              ></i>
               <div>
                 <div className="flex items-center gap-2">
                   <span className="text-3xl font-medium text-light-text dark:text-dark-text">

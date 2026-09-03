@@ -93,11 +93,33 @@ export interface GitHubStats {
 
 export interface GitHubEvent {
   id: string;
+  /** GitHub's own event id, as a string. */
+  github_id: string;
+  /** "PushEvent" | "PullRequestEvent" | "CreateEvent" | … */
   type: string;
+  /** "owner/name". */
   repo: string;
-  created_at: string;
+  /**
+   * When the event happened, ISO 8601.
+   *
+   * This field was declared `created_at` here while the server has always sent
+   * `event_at` (see server/src/sync/syncGitHub.ts, which maps GitHub's
+   * `created_at` onto `event_at` at store time). Any date read through this
+   * type would have been `undefined`. It never bit because `getEvents` had no
+   * consumers; ActivityCalendar is the first, so it is corrected now.
+   */
+  event_at: string;
+  synced_at?: string;
   payload: {
     action?: string;
+    /**
+     * Present only in theory. GitHub's PUBLIC events feed omits per-push commit
+     * data — a PushEvent payload carries only
+     * `before / head / push_id / ref / repository_id`, with no `commits`, `size`
+     * or `distinct_size`. Verified against the live API. That is why
+     * `stats.totalCommits` is 0 despite 53 push events, and why anything
+     * counting pushes must say "pushes" rather than "commits".
+     */
     commits?: { sha: string; message: string }[];
     ref?: string;
     ref_type?: string;

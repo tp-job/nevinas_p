@@ -1,32 +1,51 @@
 import { type FC } from "react";
-import StatsCard from "@/components/card/StatsCard";
-import ContributionHeatmap from "@/components/dashboard/ContributionHeatmap";
+import { Link } from "react-router-dom";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import ContributionActivitySection from "@/components/dashboard/ContributionActivitySection";
 import WeeklyActivitySection from "@/components/dashboard/WeeklyActivitySection";
-import SkillsMatrixSection from "@/components/dashboard/SkillsMatrixSection";
 import LanguagesSection from "@/components/dashboard/LanguagesSection";
-import ArchitectureStackSection from "@/components/dashboard/ArchitectureStackSection";
-import ToolingSection from "@/components/dashboard/ToolingSection";
 import ProjectStatusSection from "@/components/dashboard/ProjectStatusSection";
-import PopularReposSection from "@/components/dashboard/PopularReposSection";
-import { SKILL_ICONS, TH, cardCls } from "@/components/dashboard/constants";
+import WorkRhythm from "@/components/dashboard/WorkRhythm";
+import ActivityCalendar from "@/components/dashboard/ActivityCalendar";
+import StatStrip from "@/components/dashboard/StatStrip";
 import { githubApi } from "@/utils/api";
 import { useFetch } from "@/hooks/useFetch";
 import { getLangColor } from "@/utils/constants";
-import { formatRelativeTime } from "@/utils/date";
 import AsyncBoundary from "@/components/common/AsyncBoundary";
-
-import { StaggerList, StaggerItem } from "@/components/ui/StaggerList";
+import { StaggerList } from "@/components/ui/StaggerList";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import PageHeader from "@/components/common/PageHeader";
 import { useRepos } from "@/context/RepoContext";
 
-/* ==================== DASHBOARD ==================== */
+/**
+ * DASHBOARD
+ *
+ * Rearranged around one question: what does this page know that no other page
+ * on the site knows?
+ *
+ * It previously answered "not much" at considerable length — thirteen
+ * equal-weight cards across 3641px (4.0 screens), of which three duplicated
+ * other pages outright: Workflow Tooling reproduced /work/tooling, Architecture
+ * Stack reproduced the Docs "Architecture Overview" section, and Popular
+ * Repositories reproduced /work/repository. A dashboard that restates the rest
+ * of the site is a table of contents wearing charts.
+ *
+ * What it uniquely holds is the shape of the work over time. So it now leads
+ * with Work Rhythm — the 24-hour distribution showing 60% of this project being
+ * built between 20:00 and 06:00 — then the activity and composition it alone
+ * can show, and links out for anything another page already owns properly.
+ *
+ * Two sections were deleted rather than moved:
+ *
+ * - "Activity Pulse" (ContributionHeatmap) fabricated its data. The API holds
+ *   no day-by-hour matrix, only two independent marginals, and the component
+ *   invented every cell as `((dayVal + hourVal) / 2) * 4` while rendering as a
+ *   GitHub-style contribution grid — a form that reads as per-cell
+ *   measurement. WorkRhythm shows the same hourActivity honestly.
+ * - "Skills Matrix" ranked technologies from repo topics, which
+ *   /work/tech-stack already presents from better inputs.
+ */
 const Dashboard: FC = () => {
-  // The repos half of this used to be bundled into the Promise.all below. It
-  // now comes from the shared provider, so navigating here from any other
-  // /work page reuses the list instead of refetching it.
   const { repos: allRepos, loading: reposLoading } = useRepos();
 
   // `fatal` because this IS the page — Dashboard renders nothing but the error
@@ -42,20 +61,23 @@ const Dashboard: FC = () => {
     severity: "fatal",
   });
 
-  // Both halves gate the same chrome, as they did when they were one fetch —
-  // otherwise the repo-derived panels below would flash empty while the list
-  // is still in flight.
+  // Events power the activity calendar. Transient and non-blocking on purpose:
+  // the calendar is one section, so a failure here should cost that section,
+  // not the page. It also must not gate `loading` — doing so would hold the
+  // whole dashboard behind a secondary request.
+  const { data: eventData } = useFetch(githubApi.getEvents, [], {
+    errorMessage: "Failed to fetch GitHub events",
+    notifyOnError: false,
+  });
+  const events = eventData ?? [];
+
   const loading = statsLoading || reposLoading;
 
-  /* --- Derived Data --- */
+  /* --- Derived data --- */
   const monthlyActivity = stats?.monthlyActivity || [];
-  const commitActivity = Object.entries(stats?.commitsByMonth || {}).map(
-    ([month, commits]) => ({ month, commits }),
-  );
   const dayActivity = stats?.dayOfWeekActivity || [0, 0, 0, 0, 0, 0, 0];
   const hourActivity = stats?.hourActivity || new Array(24).fill(0);
 
-  // Language data
   const langDist = stats?.languageDistribution || {};
   const totalLangRepos =
     Object.values(langDist).reduce((a, b) => a + b, 0) || 1;
@@ -69,39 +91,21 @@ const Dashboard: FC = () => {
       color: getLangColor(name),
     }));
 
-  // Skills from all repos topics (aggregated)
-  const skillMap = new Map<string, number>();
-  allRepos.forEach((r) => {
-    (r.topics || []).forEach((t) => {
-      const key = t.toLowerCase();
-      skillMap.set(key, (skillMap.get(key) || 0) + 1);
-    });
-  });
-  const skillData = Array.from(skillMap.entries())
-    .filter(([key]) => SKILL_ICONS[key])
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 10);
-
-  // Repos for cards
-  const repositories = (stats?.topRepos || []).map((r) => ({
-    name: r.name,
-    description: r.description || "No description available",
-    language: r.language || "Unknown",
-    languageColor: getLangColor(r.language),
-    stars: r.stargazers_count,
-    forks: r.forks_count,
-    updatedAt: formatRelativeTime(r.updated_at),
-    url: r.html_url,
-  }));
-
-  const repoActivity = stats
-    ? Math.round(
-        (stats.projectStatus.active / Math.max(stats.repoCount, 1)) * 100,
-      )
-    : 0;
-  const commitFrequency = stats
-    ? Math.min(Math.round((stats.totalCommits / 100) * 100), 100)
-    : 0;
+  /* --- The opening figures ---
+     Only quantities that are actually non-zero. totalCommits, totalStars and
+     totalIssues all read 0 from the Events API, and three zeros at 48px was the
+     worst thing about the old hero row. They are stated in the footnote
+     instead — visible, just not shouted. */
+  const heroStats = [
+    { label: "Repositories", value: stats?.repoCount ?? 0 },
+    { label: "Pull Requests", value: stats?.totalPRs ?? 0 },
+    { label: "Languages", value: Object.keys(langDist).length },
+    {
+      label: "Active",
+      value: stats?.projectStatus.active ?? 0,
+      note: `of ${stats?.repoCount ?? 0}`,
+    },
+  ];
 
   /* ---- Loading / error share the page chrome ---- */
   if (loading || error) {
@@ -117,8 +121,7 @@ const Dashboard: FC = () => {
 
   return (
     <>
-      {/* Header */}
-      <div className="w-full mb-10">
+      <div className="w-full mb-8">
         <ScrollReveal>
           <PageHeader
             eyebrow="Developer Analytics"
@@ -129,121 +132,85 @@ const Dashboard: FC = () => {
         </ScrollReveal>
       </div>
 
-      {/* ========== 1. STATS CARDS (BENTO) ========== */}
-      <StaggerList className="grid grid-cols-1 md:grid-cols-12 gap-5 mb-10">
-        <StaggerItem className="md:col-span-6 xl:col-span-3">
-          <StatsCard
-            title="TOTAL COMMITS"
-            value={stats?.totalCommits || 0}
-            subtitle={`${stats?.repoCount || 0} repos`}
-            description="Recent push events"
-            data={commitActivity}
-            dataKey="commits"
-            color={TH.azure}
-            percentage={commitFrequency}
-          />
-        </StaggerItem>
-        <StaggerItem className="md:col-span-6 xl:col-span-3">
-          <StatsCard
-            title="REPOSITORIES"
-            value={stats?.repoCount || 0}
-            subtitle={`${stats?.totalStars || 0} stars`}
-            description="Public repositories"
-            data={commitActivity}
-            dataKey="commits"
-            color={TH.royal}
-            percentage={repoActivity}
-          />
-        </StaggerItem>
-        <StaggerItem className="md:col-span-6 xl:col-span-3">
-          <StatsCard
-            title="FOLLOWERS"
-            value={stats?.profile.followers || 0}
-            subtitle={`Following ${stats?.profile.following || 0}`}
-            description="GitHub followers"
-            data={commitActivity}
-            dataKey="commits"
-            color={TH.orchid}
-            percentage={50}
-          />
-        </StaggerItem>
-        <StaggerItem className="md:col-span-6 xl:col-span-3">
-          <StatsCard
-            title="TOTAL STARS"
-            value={stats?.totalStars || 0}
-            subtitle={`${stats?.totalForks || 0} forks`}
-            description="Across all repos"
-            data={commitActivity}
-            dataKey="commits"
-            color={TH.flamingo}
-            percentage={Math.min(
-              ((stats?.totalStars || 0) / Math.max(stats?.repoCount || 1, 1)) *
-                50,
-              100,
-            )}
-          />
-        </StaggerItem>
-      </StaggerList>
+      <StatStrip
+        stats={heroStats}
+        footnote={`Counted from ${allRepos.length} public repositories and the GitHub events feed. Stars and forks read ${stats?.totalStars ?? 0} and ${stats?.totalForks ?? 0}. Commits read ${stats?.totalCommits ?? 0} because GitHub's public events feed omits the commit list inside each push — the pushes themselves are counted in the calendar below.`}
+      />
 
-      {/* ========== BENTO GRID (ULTRA-MINIMALIST SAAS) ========== */}
+      {/* The lead. See WorkRhythm for why this is the centrepiece rather than a
+          decorative flourish. */}
+      <WorkRhythm hourActivity={hourActivity} />
+
+      {/* Per-day counts, bucketed from individual event timestamps. This is the
+          time-series axis neither Work Rhythm (hour of day) nor Weekly (day of
+          week) shows, so it adds a dimension rather than restating one. */}
+      <ActivityCalendar events={events} />
+
+      {/* What this page uniquely holds: activity over time, and composition. */}
       <StaggerList className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
-        {/* 1. Contribution Activity (Featured Line Graph) */}
         {monthlyActivity.length > 0 && (
           <ContributionActivitySection
             stats={stats}
             monthlyActivity={monthlyActivity}
           />
         )}
-
-        {/* 2. Weekly Activity (Minimalist Bar Chart) */}
         <WeeklyActivitySection dayActivity={dayActivity} />
-
-        {/* 3. Detected Skills */}
-        <SkillsMatrixSection
-          skillData={skillData}
-          repoTotal={allRepos.length}
-        />
-
-        {/* 4. Language Distribution */}
         <LanguagesSection
           langData={langData}
           repoCount={stats?.repoCount || 0}
         />
-
-        {/* 5. Heatmap (Square Activity Heatmap Module) */}
-        <StaggerItem className={`p-8 lg:col-span-5 ${cardCls}`}>
-          <div
-            className="absolute top-0 left-0 right-0 h-[2px]"
-            style={{
-              background: `linear-gradient(90deg, transparent, ${TH.azure}60, transparent)`,
-            }}
-          />
-          <h3 className="text-lg font-medium text-light-text dark:text-dark-text mb-1">
-            Activity Pulse
-          </h3>
-          <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-6">
-            Interaction intensity by time
-          </p>
-          <div className="flex items-center justify-center">
-            <ContributionHeatmap
-              dayActivity={dayActivity}
-              hourActivity={hourActivity}
-            />
-          </div>
-        </StaggerItem>
-
-        {/* 6. Tech Stack */}
-        <ArchitectureStackSection />
-
-        {/* 7. Tooling */}
-        <ToolingSection />
-
-        {/* 8. Project Status */}
         <ProjectStatusSection status={stats?.projectStatus} />
-
-        {/* 9. Popular Repositories */}
-        <PopularReposSection repositories={repositories} />
       </StaggerList>
+
+      {/* Three sections used to sit here as full copies of pages that already
+          exist. A link is the honest form of a duplicate: four lines instead of
+          four hundred, and it cannot drift out of sync with what it points at. */}
+      <section>
+        <div className="mb-4 border-b border-light-border pb-2 dark:border-dark-border">
+          <h2 className="text-xs font-medium uppercase tracking-[0.14em] text-light-text dark:text-dark-text">
+            Elsewhere on this site
+          </h2>
+        </div>
+        <ul className="grid grid-cols-1 gap-x-8 sm:grid-cols-3">
+          {[
+            {
+              to: "/work/repository",
+              title: "Repositories",
+              desc: `All ${stats?.repoCount ?? 0}, filterable by language`,
+            },
+            {
+              to: "/work/tech-stack",
+              title: "Tech Stack",
+              desc: "Languages and tools in use",
+            },
+            {
+              to: "/work/tooling",
+              title: "Tooling",
+              desc: "The working environment",
+            },
+          ].map((l) => (
+            <li key={l.to}>
+              <Link
+                to={l.to}
+                className="group flex items-baseline justify-between gap-3 border-b border-light-border/60 py-3 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-matte-azure dark:border-dark-border/60"
+              >
+                <span className="min-w-0">
+                  <span className="block text-sm text-light-text transition-colors group-hover:text-matte-azure dark:text-dark-text">
+                    {l.title}
+                  </span>
+                  <span className="block text-xs text-light-text-secondary dark:text-dark-text-secondary">
+                    {l.desc}
+                  </span>
+                </span>
+                <i
+                  aria-hidden="true"
+                  className="ri-arrow-right-line shrink-0 text-light-text-tertiary transition-transform group-hover:translate-x-0.5 group-hover:text-matte-azure dark:text-dark-text-muted"
+                />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
     </>
   );
 };

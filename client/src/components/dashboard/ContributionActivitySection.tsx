@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import {
-  AreaChart,
-  Area,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -9,9 +9,11 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import KpiBadge from "./KpiBadge";
+import SectionHead from "./SectionHead";
 import ChartTooltip from "@/components/charts/ChartTooltip";
 import { StaggerItem } from "@/components/ui/StaggerList";
-import { TH, cardBg, cardCls, gridColor, tickColor } from "./constants";
+import { cardCls, gridColor, tickColor } from "./constants";
+import { useChartPalette } from "@/hooks/useChartPalette";
 import type { GitHubStats } from "@/utils/api";
 
 interface ContributionActivitySectionProps {
@@ -19,151 +21,118 @@ interface ContributionActivitySectionProps {
   monthlyActivity: GitHubStats["monthlyActivity"];
 }
 
-/** Contribution Activity — featured line graph with KPI badges. */
+/**
+ * Contribution Activity.
+ *
+ * TWO THINGS CHANGED BEYOND COLOUR
+ *
+ * 1. AREA CHART -> BARS. With only two months in the payload (Aug, Sep) and two
+ *    of the three series flat at zero, the stacked areas rendered as a solid
+ *    filled slab across the full width — the single least readable element on
+ *    the page. `type="monotone"` also drew a smooth curve between two discrete
+ *    monthly buckets, implying a continuous trend that the data cannot
+ *    support. Months are discrete counts, so they are bars.
+ * 2. THE LEGEND DOTS LOST THEIR GLOW. They carried `boxShadow: 0 0 6px` in
+ *    off-palette green, blue and magenta — three accent colours competing with
+ *    a chart that only needed to distinguish three series.
+ *
+ * Colours now come from useChartPalette, which resolves them from index.css.
+ * The `TH` map this used to import held ten hardcoded values, none of them in
+ * the Nocturnal Atelier palette.
+ */
 const ContributionActivitySection: FC<ContributionActivitySectionProps> = ({
   stats,
   monthlyActivity,
-}) => (
-  <StaggerItem className={`p-8 lg:col-span-8 ${cardCls}`}>
-    <div
-      className="absolute top-0 left-0 right-0 h-[2px]"
-      style={{
-        background: `linear-gradient(90deg, transparent, ${TH.azure}80, ${TH.orchid}80, transparent)`,
-      }}
-    />
+}) => {
+  const c = useChartPalette();
 
-    <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-6 gap-4">
-      <div>
-        <h3 className="text-xl font-medium text-light-text dark:text-dark-text">
-          Contribution Activity
-        </h3>
-        <p className="text-sm mt-0.5 text-light-text-secondary dark:text-dark-text-secondary">
-          Commits, PRs & Issues from GitHub Events
-        </p>
-      </div>
-      <div className="flex items-center gap-5 text-xs">
-        {[
-          { label: "Commits", color: TH.green },
-          { label: "PRs", color: TH.azure },
-          { label: "Issues", color: TH.orchid },
-        ].map((l) => (
-          <span
-            key={l.label}
-            className="flex items-center gap-1.5 text-light-text-secondary dark:text-dark-text-secondary"
-          >
-            <span
-              className="w-2 h-2 rounded-full"
-              style={{
-                backgroundColor: l.color,
-                boxShadow: `0 0 6px ${l.color}60`,
-              }}
-            />
-            {l.label}
-          </span>
-        ))}
-      </div>
-    </div>
+  const series = [
+    { key: "commits", label: "Commits", color: c.tertiary },
+    { key: "prs", label: "PRs", color: c.primary },
+    { key: "issues", label: "Issues", color: c.accent },
+  ];
 
-    <div className="grid grid-cols-3 gap-4 mb-8">
-      <KpiBadge
-        icon="ri-git-commit-line"
-        value={stats?.totalCommits || 0}
-        label="Commits"
-        color={TH.green}
-      />
-      <KpiBadge
-        icon="ri-git-pull-request-line"
-        value={stats?.totalPRs || 0}
-        label="Pull Requests"
-        color={TH.azure}
-      />
-      <KpiBadge
-        icon="ri-error-warning-line"
-        value={stats?.totalIssues || 0}
-        label="Issues"
-        color={TH.orchid}
-      />
-    </div>
-
-    <div className="h-[300px]">
-      <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={monthlyActivity}>
-          <defs>
-            {[
-              { id: "gC", c: TH.green },
-              { id: "gP", c: TH.azure },
-              { id: "gI", c: TH.orchid },
-            ].map((g) => (
-              <linearGradient key={g.id} id={g.id} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={g.c} stopOpacity={0.4} />
-                <stop offset="100%" stopColor={g.c} stopOpacity={0.02} />
-              </linearGradient>
+  return (
+    <StaggerItem className={`lg:col-span-8 ${cardCls}`}>
+      <SectionHead
+        title="Contribution Activity"
+        subtitle="Commits, PRs and issues from GitHub events"
+        meta={
+          <span className="flex flex-wrap items-center gap-4 text-xs text-light-text-secondary dark:text-dark-text-secondary">
+            {series.map((s) => (
+              <span key={s.key} className="flex items-center gap-1.5">
+                <span
+                  aria-hidden="true"
+                  className="inline-block h-2 w-2 rounded-sm"
+                  style={{ backgroundColor: s.color }}
+                />
+                {s.label}
+              </span>
             ))}
-          </defs>
-          <CartesianGrid
-            strokeDasharray="3 3"
-            stroke={gridColor}
-            vertical={false}
-          />
-          <XAxis
-            dataKey="month"
-            axisLine={false}
-            tickLine={false}
-            tick={{ fill: tickColor, fontSize: 12 }}
-          />
-          <YAxis
-            axisLine={false}
-            tickLine={false}
-            tick={{ fill: tickColor, fontSize: 12 }}
-            width={35}
-          />
-          <RTooltip content={<ChartTooltip />} />
-          <Area
-            type="monotone"
-            dataKey="commits"
-            stroke={TH.green}
-            fill="url(#gC)"
-            strokeWidth={2.5}
-            dot={false}
-            activeDot={{
-              r: 5,
-              stroke: TH.green,
-              strokeWidth: 2,
-              fill: cardBg,
-            }}
-          />
-          <Area
-            type="monotone"
-            dataKey="prs"
-            stroke={TH.azure}
-            fill="url(#gP)"
-            strokeWidth={2.5}
-            dot={false}
-            activeDot={{
-              r: 5,
-              stroke: TH.azure,
-              strokeWidth: 2,
-              fill: cardBg,
-            }}
-          />
-          <Area
-            type="monotone"
-            dataKey="issues"
-            stroke={TH.orchid}
-            fill="url(#gI)"
-            strokeWidth={2.5}
-            dot={false}
-            activeDot={{
-              r: 5,
-              stroke: TH.orchid,
-              strokeWidth: 2,
-              fill: cardBg,
-            }}
-          />
-        </AreaChart>
-      </ResponsiveContainer>
-    </div>
-  </StaggerItem>
-);
+          </span>
+        }
+      />
+
+      <div className="mb-6 flex flex-wrap gap-x-8 gap-y-2">
+        <KpiBadge
+          icon="ri-git-commit-line"
+          value={stats?.totalCommits ?? 0}
+          label="Commits"
+          color={c.tertiary}
+        />
+        <KpiBadge
+          icon="ri-git-pull-request-line"
+          value={stats?.totalPRs ?? 0}
+          label="Pull Requests"
+          color={c.primary}
+        />
+        <KpiBadge
+          icon="ri-error-warning-line"
+          value={stats?.totalIssues ?? 0}
+          label="Issues"
+          color={c.accent}
+        />
+      </div>
+
+      <div className="h-[260px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={monthlyActivity} barGap={4}>
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke={gridColor}
+              vertical={false}
+            />
+            <XAxis
+              dataKey="month"
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: tickColor, fontSize: 12 }}
+            />
+            <YAxis
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: tickColor, fontSize: 12 }}
+              width={32}
+              allowDecimals={false}
+            />
+            <RTooltip
+              content={<ChartTooltip />}
+              cursor={{ fill: gridColor, opacity: 0.4 }}
+            />
+            {series.map((s) => (
+              <Bar
+                key={s.key}
+                dataKey={s.key}
+                fill={s.color}
+                radius={[2, 2, 0, 0]}
+                maxBarSize={28}
+              />
+            ))}
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </StaggerItem>
+  );
+};
 
 export default ContributionActivitySection;

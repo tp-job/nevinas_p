@@ -2,7 +2,8 @@ import type { FC } from "react";
 import { PieChart, Pie, Cell, Tooltip as RTooltip } from "recharts";
 import ChartTooltip from "@/components/charts/ChartTooltip";
 import { StaggerItem } from "@/components/ui/StaggerList";
-import { TH, cardCls } from "./constants";
+import { cardCls } from "./constants";
+import SectionHead from "./SectionHead";
 
 /**
  * Recharts v3 types `<Pie data>` as `ChartDataInput[]`, which requires a string
@@ -28,26 +29,20 @@ const LanguagesSection: FC<LanguagesSectionProps> = ({
   langData,
   repoCount,
 }) => (
-  <StaggerItem className={`p-8 lg:col-span-8 ${cardCls}`}>
-    <div
-      className="absolute top-0 left-0 right-0 h-[2px]"
-      style={{
-        background: `linear-gradient(90deg, transparent, ${TH.azure}60, ${TH.orchid}60, transparent)`,
-      }}
+  <StaggerItem className={`lg:col-span-8 ${cardCls}`}>
+    {/* Language colours are kept: here the colour IS the identity of the thing
+        being measured, which is the one case DS v3.2 allows a palette outside
+        the main ramp. The gradient accent bar and the azure pill were chrome
+        and are gone. */}
+    <SectionHead
+      title="Languages"
+      subtitle="Project composition by language"
+      meta={
+        <span className="text-xs tabular-nums text-light-text-tertiary dark:text-dark-text-muted">
+          {langData.length} across {repoCount} repositories
+        </span>
+      }
     />
-    <div className="flex items-center justify-between mb-6">
-      <div>
-        <h3 className="text-lg font-medium text-light-text dark:text-dark-text">
-          Languages
-        </h3>
-        <p className="text-sm mt-0.5 text-light-text-secondary dark:text-dark-text-secondary">
-          Project composition by language
-        </p>
-      </div>
-      <span className="text-xs font-medium px-2.5 py-1 rounded-lg bg-matte-azure/10 text-matte-azure">
-        {langData.length} active
-      </span>
-    </div>
 
     <div className="flex flex-col sm:flex-row items-center gap-8">
       <div className="shrink-0 relative">
