@@ -41,7 +41,7 @@ const ScoreRing: FC<ScoreRingProps> = ({ score, label, color, size = 120 }) => {
         </svg>{" "}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           {" "}
-          <span className="text-2xl font-extrabold text-light-text dark:text-dark-text">
+          <span className="text-2xl font-medium text-light-text dark:text-dark-text">
             {score}
           </span>{" "}
         </div>{" "}

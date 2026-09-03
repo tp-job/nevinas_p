@@ -38,10 +38,10 @@ const WeeklyActivitySection: FC<WeeklyActivitySectionProps> = ({
         }}
       />
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xl font-bold text-light-text dark:text-dark-text">
+        <h3 className="text-xl font-medium text-light-text dark:text-dark-text">
           Weekly
         </h3>
-        <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-global-yellow/10 text-global-yellow">
+        <span className="text-xs font-medium px-2.5 py-1 rounded-lg bg-global-yellow/10 text-global-yellow">
           {dayActivity.reduce((a, b) => a + b, 0)} total
         </span>
       </div>
@@ -75,9 +75,7 @@ const WeeklyActivitySection: FC<WeeklyActivitySectionProps> = ({
                 <Cell
                   key={i}
                   fill={
-                    entry.isPeak
-                      ? TH.yellow
-                      : "var(--color-surface-tertiary)"
+                    entry.isPeak ? TH.yellow : "var(--color-surface-tertiary)"
                   }
                 />
               ))}
@@ -87,7 +85,8 @@ const WeeklyActivitySection: FC<WeeklyActivitySectionProps> = ({
       </div>
       <div className="mt-6 pt-4 border-t border-light-border dark:border-dark-border/50">
         <p className="text-xs text-center text-light-text-secondary dark:text-dark-text-secondary">
-          Peak performance on <strong className="text-global-yellow">{dayNames[peakDayIdx]}</strong>
+          Peak performance on{" "}
+          <strong className="text-global-yellow">{dayNames[peakDayIdx]}</strong>
         </p>
       </div>
     </StaggerItem>

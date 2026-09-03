@@ -218,7 +218,7 @@ const Dashboard: FC = () => {
               background: `linear-gradient(90deg, transparent, ${TH.azure}60, transparent)`,
             }}
           />
-          <h3 className="text-lg font-bold text-light-text dark:text-dark-text mb-1">
+          <h3 className="text-lg font-medium text-light-text dark:text-dark-text mb-1">
             Activity Pulse
           </h3>
           <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-6">

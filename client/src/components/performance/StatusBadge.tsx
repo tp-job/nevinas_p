@@ -11,7 +11,7 @@ const StatusBadge: FC<StatusBadgeProps> = ({ status }) => {
         : "bg-global-red/10 text-global-red";
   return (
     <span
-      className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${cls}`}
+      className={`text-[10px] font-medium uppercase px-2 py-0.5 rounded-full ${cls}`}
     >
       {status}
     </span>

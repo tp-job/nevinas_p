@@ -39,7 +39,7 @@ const ContributionHeatmap: FC<ContributionHeatmapProps> = ({
       {" "}
       <div className="flex items-center gap-3 mb-4 flex-wrap">
         {" "}
-        <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-matte-azure/10 text-matte-azure">
+        <span className="text-xs font-medium px-2.5 py-1 rounded-lg bg-matte-azure/10 text-matte-azure">
           {totalEvents} events
         </span>{" "}
         <span className="text-xs text-light-text-secondary dark:text-dark-text-secondary">

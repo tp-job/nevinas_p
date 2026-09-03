@@ -7,7 +7,11 @@ const ToolCard: FC<ToolCardProps> = ({ tool }) => {
       href={tool.link}
       target="_blank"
       rel="noopener noreferrer"
-      className="neu-card group flex flex-col bg-light-bg dark:bg-dark-bg border border-light-border dark:border-dark-border rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
+      // Root is a real <a href>, so the hover lift is honest here and stays.
+      // `neu-card` is gone: it is a competing visual language AND it applied
+      // its own translateY(-3px) on top of this utility, so the card moved
+      // twice — the same double-lift ProjectCard had.
+      className="group flex flex-col overflow-hidden rounded-2xl border border-light-border bg-light-bg transition-all duration-300 hover:-translate-y-1 hover:border-cool/40 hover:shadow-lg dark:border-dark-border dark:bg-dark-bg dark:hover:border-cool/40"
     >
       {/* Hero section (like BlogCard image) */}
       <div className={`relative h-56 overflow-hidden ${tool.color}`}>

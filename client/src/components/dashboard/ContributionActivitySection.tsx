@@ -34,7 +34,7 @@ const ContributionActivitySection: FC<ContributionActivitySectionProps> = ({
 
     <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-6 gap-4">
       <div>
-        <h3 className="text-xl font-bold text-light-text dark:text-dark-text">
+        <h3 className="text-xl font-medium text-light-text dark:text-dark-text">
           Contribution Activity
         </h3>
         <p className="text-sm mt-0.5 text-light-text-secondary dark:text-dark-text-secondary">
@@ -94,14 +94,7 @@ const ContributionActivitySection: FC<ContributionActivitySectionProps> = ({
               { id: "gP", c: TH.azure },
               { id: "gI", c: TH.orchid },
             ].map((g) => (
-              <linearGradient
-                key={g.id}
-                id={g.id}
-                x1="0"
-                y1="0"
-                x2="0"
-                y2="1"
-              >
+              <linearGradient key={g.id} id={g.id} x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor={g.c} stopOpacity={0.4} />
                 <stop offset="100%" stopColor={g.c} stopOpacity={0.02} />
               </linearGradient>

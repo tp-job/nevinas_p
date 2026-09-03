@@ -17,7 +17,7 @@ const KpiBadge: FC<KpiBadgeProps> = ({ icon, value, label, color }) => (
     </div>{" "}
     <div>
       {" "}
-      <p className="text-lg font-extrabold leading-none text-light-text dark:text-dark-text">
+      <p className="text-lg font-medium leading-none text-light-text dark:text-dark-text">
         {value}
       </p>{" "}
       <p className="text-[10px] text-light-text-secondary dark:text-dark-text-secondary">

@@ -21,7 +21,7 @@ const SkillsMatrixSection: FC<SkillsMatrixSectionProps> = ({
       }}
     />
     <div className="mb-6">
-      <h3 className="text-lg font-bold text-light-text dark:text-dark-text">
+      <h3 className="text-lg font-medium text-light-text dark:text-dark-text">
         Skills Matrix
       </h3>
       <p className="text-sm mt-0.5 text-light-text-secondary dark:text-dark-text-secondary">
@@ -51,7 +51,7 @@ const SkillsMatrixSection: FC<SkillsMatrixSectionProps> = ({
                   </span>
                 </div>
                 <span
-                  className="text-xs font-bold"
+                  className="text-xs font-medium"
                   style={{ color: meta.color }}
                 >
                   {pct}%
