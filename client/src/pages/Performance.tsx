@@ -22,59 +22,36 @@ import StatusBadge from "@/components/performance/StatusBadge";
 import ChartTooltip from "@/components/charts/ChartTooltip";
 import PageHeader from "@/components/common/PageHeader";
 import { useRepos } from "@/context/RepoContext";
-import { useCssTokens } from "@/hooks/useCssTokens";
+import { useChartPalette } from "@/hooks/useChartPalette";
 
 /**
- * Chart colours, resolved from the live stylesheet rather than hardcoded here.
+ * Chart colours come from the one shared palette hook.
  *
- * This was a six-entry hex map — #0f9d58, #5983FC, #964EC2, #f4b400, #FF7BBF,
- * #3E60C1 — and not one of those values is in the Nocturnal Atelier palette;
- * they were Google-brand greens and yellows. So this page rendered a second,
- * off-palette colour system that a palette change could never reach, which is
- * precisely what CLAUDE.md's "token classes, not raw hex" rule exists to stop.
- *
- * The Design System docs page hit the identical problem — its hand-kept hex
- * copy had drifted to four wrong values — and the fix there was to read
- * `--color-*` off the live document. Same fix, same hook.
- *
- * Charts need real colour VALUES (recharts takes strings, not classes), which
- * is the legitimate case for reading tokens at runtime instead of using
- * utility classes. DS v3.2 designates the sub-palette for exactly this:
- * effects, SVG gradients and data visualisation.
+ * This page used to hold its own six-entry hex map — #0f9d58, #5983FC,
+ * #964EC2, #f4b400, #FF7BBF, #3E60C1 — none of which are Nocturnal Atelier
+ * values; they were Google-brand greens and yellows that a palette change
+ * could never reach. It was replaced with a local `useCssTokens` read, which
+ * fixed the values but left this page as one of three files each resolving its
+ * own chart palette. Three local fixes is how a fourth copy gets written, so
+ * the resolution now lives in hooks/useChartPalette and every chart on the
+ * site shares it.
  */
-const CHART_TOKENS = [
-  "--color-success",
-  "--color-warning",
-  "--color-cool",
-  "--color-sub-ev1",
-  "--color-sub-mount",
-  "--color-haze",
-] as const;
-
-/**
- * One neutral fallback, not a second palette.
- *
- * The first draft of this change listed a per-role fallback hex for all six
- * roles — which quietly recreated the hand-kept palette copy it was removing.
- * Every one of these variables is defined in index.css, so a miss is a bug
- * worth seeing rather than papering over with a plausible colour: the charts
- * render in one flat neutral and the cause is obvious.
- */
-const CHART_FALLBACK = "#878CB4";
 
 /* ==================== Performance Page ==================== */
 const Performance: FC = () => {
-  const live = useCssTokens([...CHART_TOKENS]);
+  const c = useChartPalette();
+  // Local aliases keep this page's existing chart call sites readable; the
+  // values all come from the shared hook.
   const TH = useMemo(
     () => ({
-      green: live["--color-success"] || CHART_FALLBACK,
-      yellow: live["--color-warning"] || CHART_FALLBACK,
-      azure: live["--color-cool"] || CHART_FALLBACK,
-      orchid: live["--color-sub-ev1"] || CHART_FALLBACK,
-      flamingo: live["--color-sub-mount"] || CHART_FALLBACK,
-      royal: live["--color-haze"] || CHART_FALLBACK,
+      green: c.positive,
+      yellow: c.warning,
+      azure: c.secondary,
+      orchid: c.muted,
+      flamingo: c.accent,
+      royal: c.tertiary,
     }),
-    [live],
+    [c],
   );
 
   const gridColor = "var(--color-border-primary)";

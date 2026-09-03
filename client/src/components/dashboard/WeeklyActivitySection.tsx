@@ -10,19 +10,36 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import ChartTooltip from "@/components/charts/ChartTooltip";
+import SectionHead from "./SectionHead";
 import { StaggerItem } from "@/components/ui/StaggerList";
-import { TH, cardCls, gridColor, tickColor } from "./constants";
+import { cardCls, gridColor, tickColor } from "./constants";
+import { useChartPalette } from "@/hooks/useChartPalette";
 
 interface WeeklyActivitySectionProps {
   dayActivity: number[];
 }
 
-/** Weekly — minimalist bar chart of activity by day of week. */
+/**
+ * Weekly — activity by day of week.
+ *
+ * The peak day was drawn in `TH.yellow` (#f4b400) with a matching amber pill
+ * and an amber gradient bar across the top of the card. Three amber accents on
+ * a blue-purple palette, on the smallest panel on the page — it pulled the eye
+ * to the least important chart. The peak is now marked the same way Work
+ * Rhythm marks night: periwinkle against haze, one step of emphasis inside the
+ * palette rather than a colour imported from outside it.
+ *
+ * "Peak performance on Tue" also became "Most active day" — this measures event
+ * counts, and calling a count "performance" claims something it does not
+ * measure.
+ */
 const WeeklyActivitySection: FC<WeeklyActivitySectionProps> = ({
   dayActivity,
 }) => {
+  const c = useChartPalette();
   const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const peakDayIdx = dayActivity.indexOf(Math.max(...dayActivity, 1));
+  const total = dayActivity.reduce((a, b) => a + b, 0);
   const weeklyData = dayNames.map((day, i) => ({
     day,
     events: dayActivity[i],
@@ -30,28 +47,20 @@ const WeeklyActivitySection: FC<WeeklyActivitySectionProps> = ({
   }));
 
   return (
-    <StaggerItem className={`p-8 lg:col-span-4 ${cardCls}`}>
-      <div
-        className="absolute top-0 left-0 right-0 h-[2px]"
-        style={{
-          background: `linear-gradient(90deg, transparent, ${TH.yellow}60, transparent)`,
-        }}
+    <StaggerItem className={`lg:col-span-4 ${cardCls}`}>
+      <SectionHead
+        title="Weekly"
+        subtitle="Activity by day of week"
+        meta={
+          <span className="text-xs tabular-nums text-light-text-tertiary dark:text-dark-text-muted">
+            {total} events
+          </span>
+        }
       />
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xl font-medium text-light-text dark:text-dark-text">
-          Weekly
-        </h3>
-        <span className="text-xs font-medium px-2.5 py-1 rounded-lg bg-global-yellow/10 text-global-yellow">
-          {dayActivity.reduce((a, b) => a + b, 0)} total
-        </span>
-      </div>
-      <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-6">
-        Activity by day of week
-      </p>
 
-      <div className="h-[360px]">
+      <div className="h-[260px]">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={weeklyData} barCategoryGap="20%">
+          <BarChart data={weeklyData} barCategoryGap="24%">
             <CartesianGrid
               strokeDasharray="3 3"
               stroke={gridColor}
@@ -67,34 +76,30 @@ const WeeklyActivitySection: FC<WeeklyActivitySectionProps> = ({
               axisLine={false}
               tickLine={false}
               tick={{ fill: tickColor, fontSize: 11 }}
-              width={30}
+              width={28}
+              allowDecimals={false}
             />
-            <RTooltip content={<ChartTooltip />} />
-            <Bar dataKey="events" name="Events" radius={[4, 4, 0, 0]}>
+            <RTooltip
+              content={<ChartTooltip />}
+              cursor={{ fill: gridColor, opacity: 0.4 }}
+            />
+            <Bar dataKey="events" name="Events" radius={[2, 2, 0, 0]}>
               {weeklyData.map((entry, i) => (
-                <Cell
-                  key={i}
-                  fill={
-                    entry.isPeak ? TH.yellow : "var(--color-surface-tertiary)"
-                  }
-                />
+                <Cell key={i} fill={entry.isPeak ? c.primary : c.muted} />
               ))}
             </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>
-      <div className="mt-6 pt-4 border-t border-light-border dark:border-dark-border/50">
-        <p className="text-xs text-center text-light-text-secondary dark:text-dark-text-secondary">
-          Peak performance on{" "}
-          {/* A <span> rather than <strong>: Tailwind preflight leaves <strong> at
-              the browser default `bolder` (700), which is the last thing on this
-              page above the DS ceiling of 600. Emphasis here is colour, not
-              weight. */}
-          <span className="font-medium text-light-text dark:text-dark-text">
-            {dayNames[peakDayIdx]}
-          </span>
-        </p>
-      </div>
+
+      <p className="mt-4 text-xs text-light-text-secondary dark:text-dark-text-secondary">
+        Most active day{" "}
+        {/* A <span>, not <strong>: Tailwind preflight leaves <strong> at the
+            browser default `bolder` (700), above the DS ceiling of 600. */}
+        <span className="font-medium text-light-text dark:text-dark-text">
+          {dayNames[peakDayIdx]}
+        </span>
+      </p>
     </StaggerItem>
   );
 };
