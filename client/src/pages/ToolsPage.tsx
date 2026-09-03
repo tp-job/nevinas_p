@@ -1,22 +1,13 @@
 import type { FC } from "react";
 import ToolCard from "@/components/card/ToolCard";
 import { toolsData, toolSections } from "@/data/toolsData";
+import PageHeader from "@/components/common/PageHeader";
 
 const ToolsPage: FC = () => {
   return (
     <section className="w-full">
       {/* Header */}
-      <div className="mb-6">
-        <h4 className="mb-1 text-lg text-light-text dark:text-dark-text">
-          Developer Analytics
-        </h4>
-        <h2 className="mb-1 text-4xl sm:text-5xl text-light-text dark:text-dark-text">
-          Tooling
-        </h2>
-        <h3 className="text-xl font-zen text-light-text-secondary dark:text-dark-text-secondary">
-          ツール
-        </h3>
-      </div>
+      <PageHeader eyebrow="Developer Analytics" title="Tooling" jp="ツール" />
 
       {/* Main Tool Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">

@@ -4,6 +4,7 @@ import TechStackCard from "@/components/card/TechStackCard";
 import { githubApi } from "@/utils/api";
 import { useFetch } from "@/hooks/useFetch";
 import { getLangColor } from "@/utils/constants";
+import PageHeader from "@/components/common/PageHeader";
 
 const TechStack: FC = () => {
   // error intentionally unused — the GitHub section is optional and simply
@@ -17,17 +18,11 @@ const TechStack: FC = () => {
 
   return (
     <div className="w-full">
-      <div className="mb-4">
-        <h4 className="mb-1 text-lg text-light-text dark:text-dark-text">
-          Developer Analytics
-        </h4>
-        <h2 className="mb-1 text-4xl sm:text-5xl text-light-text dark:text-dark-text">
-          Tech Stack
-        </h2>
-        <h3 className="text-xl font-zen text-light-text-secondary dark:text-dark-text-secondary">
-          技術スタック
-        </h3>
-      </div>
+      <PageHeader
+        eyebrow="Developer Analytics"
+        title="Tech Stack"
+        jp="技術スタック"
+      />
 
       {/* GitHub Language Distribution */}
       {!loadingGH && sortedLangs.length > 0 && (

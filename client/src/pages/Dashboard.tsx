@@ -19,6 +19,7 @@ import AsyncBoundary from "@/components/common/AsyncBoundary";
 
 import { StaggerList, StaggerItem } from "@/components/ui/StaggerList";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import PageHeader from "@/components/common/PageHeader";
 
 /* ==================== DASHBOARD ==================== */
 const Dashboard: FC = () => {
@@ -81,8 +82,8 @@ const Dashboard: FC = () => {
 
   const repoActivity = stats
     ? Math.round(
-      (stats.projectStatus.active / Math.max(stats.repoCount, 1)) * 100,
-    )
+        (stats.projectStatus.active / Math.max(stats.repoCount, 1)) * 100,
+      )
     : 0;
   const commitFrequency = stats
     ? Math.min(Math.round((stats.totalCommits / 100) * 100), 100)
@@ -105,17 +106,12 @@ const Dashboard: FC = () => {
       {/* Header */}
       <div className="w-full mb-10">
         <ScrollReveal>
-          <div className="flex flex-col">
-            <h4 className="mb-1 text-lg text-light-text dark:text-dark-text">
-              Developer Analytics
-            </h4>
-            <h2 className="mb-1 text-4xl sm:text-5xl text-light-text dark:text-dark-text">
-              Dashboard
-            </h2>
-            <p className="font-zen text-[0.72rem] font-light tracking-[0.04em] text-light-text-secondary dark:text-dark-text-secondary mt-1">
-              概要 · 開発分析
-            </p>
-          </div>
+          <PageHeader
+            eyebrow="Developer Analytics"
+            title="Dashboard"
+            jp="概要 · 開発分析"
+            className="mb-0"
+          />
         </ScrollReveal>
       </div>
 
@@ -168,7 +164,7 @@ const Dashboard: FC = () => {
             color={TH.flamingo}
             percentage={Math.min(
               ((stats?.totalStars || 0) / Math.max(stats?.repoCount || 1, 1)) *
-              50,
+                50,
               100,
             )}
           />
@@ -189,10 +185,16 @@ const Dashboard: FC = () => {
         <WeeklyActivitySection dayActivity={dayActivity} />
 
         {/* 3. Detected Skills */}
-        <SkillsMatrixSection skillData={skillData} repoTotal={allRepos.length} />
+        <SkillsMatrixSection
+          skillData={skillData}
+          repoTotal={allRepos.length}
+        />
 
         {/* 4. Language Distribution */}
-        <LanguagesSection langData={langData} repoCount={stats?.repoCount || 0} />
+        <LanguagesSection
+          langData={langData}
+          repoCount={stats?.repoCount || 0}
+        />
 
         {/* 5. Heatmap (Square Activity Heatmap Module) */}
         <StaggerItem className={`p-8 lg:col-span-5 ${cardCls}`}>

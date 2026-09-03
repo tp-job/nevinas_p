@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import AsyncBoundary from "@/components/common/AsyncBoundary";
 import { galleryApi } from "@/utils/api";
 import { useFetch } from "@/hooks/useFetch";
+import PageHeader from "@/components/common/PageHeader";
 
 // Category menu items
 const categories = [
@@ -121,24 +122,17 @@ const Gallery: FC = () => {
 
   return (
     <div className="w-full">
-      <div className="mb-6">
-        <h4 className="mb-1 text-lg text-light-text dark:text-dark-text">
-          Image Collection
-        </h4>
-        <h2 className="mb-1 text-4xl sm:text-5xl text-light-text dark:text-dark-text">
-          Gallery
-        </h2>
-        <h3 className="text-xl font-zen text-light-text-secondary dark:text-dark-text-secondary">
-          写真ライブラリ
-        </h3>
-      </div>
+      <PageHeader
+        eyebrow="Image Collection"
+        title="Gallery"
+        jp="写真ライブラリ"
+      />
 
       {/* ── Category Menu — Modern Japanese editorial ─────────────────────────
            Design language: ma (間) breathing room · ink-stroke tab underline
            · mixed script EN + JP · thin rule separators · no heavy boxes
       ─────────────────────────────────────────────────────────────────────── */}
       <div className="mb-8">
-
         {/* Eyebrow row — label + item count */}
         <div className="flex items-center justify-between mb-3 px-0.5">
           <div className="flex items-center gap-2.5">
@@ -152,8 +146,10 @@ const Gallery: FC = () => {
                          bg-[rgba(30,35,60,0.20)] dark:bg-[rgba(200,205,235,0.20)]"
             />
             {/* JP label — Zen Kaku Gothic New, DS §2.1 JP font */}
-            <span className="font-zen text-[11px] font-light tracking-wide
-                             text-[#878CB4]/50 dark:text-[#878CB4]/40">
+            <span
+              className="font-zen text-[11px] font-light tracking-wide
+                             text-[#878CB4]/50 dark:text-[#878CB4]/40"
+            >
               カテゴリ
             </span>
           </div>
@@ -220,7 +216,11 @@ const Gallery: FC = () => {
                         background:
                           "linear-gradient(90deg, #C8CDEB 0%, #85758F 50%, #465078 100%)",
                       }}
-                      transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 35,
+                      }}
                     />
                   )}
                 </button>
@@ -240,7 +240,6 @@ const Gallery: FC = () => {
 
         {/* Bottom rule — subtle mono border §1.11 */}
         <div className="w-full h-px bg-[rgba(30,35,60,0.08)] dark:bg-[rgba(200,205,235,0.08)]" />
-
       </div>
 
       <AsyncBoundary
@@ -256,29 +255,29 @@ const Gallery: FC = () => {
           </div>
         }
       >
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {filteredGallery.map((item, index) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => openLightbox(index)}
-                  className="aspect-square relative group overflow-hidden rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-global-blue"
-                >
-                  <img
-                    src={item.img}
-                    alt={item.name || "Gallery Item"}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src =
-                        "https://placehold.co/400x400?text=Image+Not+Found";
-                      target.onerror = null;
-                    }}
-                  />
-                </button>
-              ))}
-            </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {filteredGallery.map((item, index) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => openLightbox(index)}
+              className="aspect-square relative group overflow-hidden rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-global-blue"
+            >
+              <img
+                src={item.img}
+                alt={item.name || "Gallery Item"}
+                loading="lazy"
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src =
+                    "https://placehold.co/400x400?text=Image+Not+Found";
+                  target.onerror = null;
+                }}
+              />
+            </button>
+          ))}
+        </div>
       </AsyncBoundary>
 
       {isLightboxOpen &&

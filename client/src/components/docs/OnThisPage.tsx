@@ -1,30 +1,9 @@
 import { useEffect, useState, type FC } from "react";
-import GroupLabel from "./GroupLabel";
 
 interface Entry {
   id: string;
   label: string;
 }
-
-/**
- * Icon per section, keyed by the slug SectionHeading derives from its title.
- *
- * Unlike ArchitectureGrid's old FIELD_ICONS map (13 keys against 22 data
- * entries, so most rows fell through to one generic glyph and the icons
- * carried no information), this page has exactly six sections and all six are
- * mapped — an icon here actually distinguishes its row. `checkboxBlank` is
- * the fallback for a section nobody has mapped yet, same convention as the
- * rest of the docs components.
- */
-const SECTION_ICONS: Record<string, string> = {
-  "what-you-can-do": "ri-flashlight-line",
-  "architecture-overview": "ri-stack-line",
-  "project-structure": "ri-folder-3-line",
-  "design-system": "ri-palette-line",
-  changelog: "ri-git-commit-line",
-  "project-docs": "ri-book-open-line",
-};
-const FALLBACK_ICON = "ri-checkbox-blank-circle-line";
 
 /**
  * "On this page" — the spine.
@@ -42,25 +21,6 @@ const FALLBACK_ICON = "ri-checkbox-blank-circle-line";
  * 2. Sections are discovered from the DOM via `data-doc-section` rather than
  *    passed in, because Design System and Changelog render their own
  *    DocSection from inside separate components.
- *
- * VISUAL TREATMENT
- *
- * This used to be a bare hairline-and-text list with no box of its own — at
- * the `lg` breakpoint the rail sat in open space with nothing marking it as a
- * distinct piece of UI, which read as "the right side is empty" even though
- * it had content.
- *
- * It's now a bordered surface with an icon and an active-state pill per row —
- * the same recipe Sidebar.tsx already uses for the app's own primary nav
- * (`bg-matte-azure/10 text-matte-azure` on the active NavLink, inside its own
- * bordered `glass-premium` aside). Reusing that recipe rather than inventing a
- * new one is what keeps this looking like part of the same app.
- *
- * The box classes are gated to `lg:` ONLY. Below `lg`, Docs.tsx already wraps
- * this component in a bordered `<details>` — a second border here would be a
- * card inside a card, exactly what the Design System and Architecture
- * sections were rebuilt to stop doing. Icons and the active pill still apply
- * at every width; only the outer border/background/padding is lg-only.
  */
 const OnThisPage: FC = () => {
   const [entries, setEntries] = useState<Entry[]>([]);
@@ -112,48 +72,31 @@ const OnThisPage: FC = () => {
     <nav
       aria-label="On this page"
       data-toc-active={activeId}
-      className="sticky top-4 max-h-[calc(100svh-6rem)] overflow-y-auto
-                 lg:rounded-2xl lg:border lg:border-light-border lg:bg-light-surface lg:p-4 lg:shadow-sm
-                 lg:dark:border-dark-border lg:dark:bg-dark-bg"
+      className="sticky top-4 max-h-[calc(100svh-6rem)] overflow-y-auto"
     >
       {/* Hidden below lg: the disclosure wrapper in Docs.tsx puts the same
           label on its <summary> there, so this would be a second "On this
           page" beneath the collapsed toggle. Shown at lg, where there is no
           summary and this is the only label. Matches the `lg:grid` rail
-          breakpoint in Docs.tsx — the two must move together.
-
-          Reuses GroupLabel rather than a one-off <p> so the rail's header
-          reads as the same device as every group heading in the Design
-          System and Architecture sections, instead of a fourth label style
-          on one page. GroupLabel's own bottom margin/rule stands in for what
-          was previously a separate `mb-3`. */}
-      <div className="hidden lg:block">
-        <GroupLabel label="On this page" />
-      </div>
-      <ul className="space-y-0.5">
+          breakpoint in Docs.tsx — the two must move together. */}
+      <p className="mb-3 hidden text-xs font-medium uppercase tracking-[0.14em] text-light-text-tertiary dark:text-dark-text-muted lg:block">
+        On this page
+      </p>
+      <ul className="space-y-1 border-l border-light-border dark:border-dark-border">
         {entries.map((e) => {
           const active = e.id === activeId;
-          const icon = SECTION_ICONS[e.id] ?? FALLBACK_ICON;
           return (
             <li key={e.id}>
               <a
                 href={`#${e.id}`}
                 aria-current={active ? "true" : undefined}
-                className={`flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm transition-colors ${
+                className={`-ml-px block border-l py-1.5 pl-4 text-sm transition-colors ${
                   active
-                    ? "bg-matte-azure/10 font-medium text-matte-azure"
-                    : "text-light-text-secondary hover:bg-light-surface/50 hover:text-light-text dark:text-dark-text-secondary dark:hover:bg-dark-surface/50 dark:hover:text-dark-text"
+                    ? "border-matte-azure font-medium text-matte-azure"
+                    : "border-transparent text-light-text-secondary dark:text-dark-text-secondary hover:border-light-border dark:hover:border-dark-border hover:text-light-text dark:hover:text-dark-text"
                 }`}
               >
-                <i
-                  aria-hidden="true"
-                  className={`${icon} shrink-0 text-base ${
-                    active
-                      ? "text-matte-azure"
-                      : "text-light-text-tertiary dark:text-dark-text-muted"
-                  }`}
-                />
-                <span className="truncate">{e.label}</span>
+                {e.label}
               </a>
             </li>
           );
