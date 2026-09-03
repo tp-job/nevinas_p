@@ -86,7 +86,13 @@ const WeeklyActivitySection: FC<WeeklyActivitySectionProps> = ({
       <div className="mt-6 pt-4 border-t border-light-border dark:border-dark-border/50">
         <p className="text-xs text-center text-light-text-secondary dark:text-dark-text-secondary">
           Peak performance on{" "}
-          <strong className="text-global-yellow">{dayNames[peakDayIdx]}</strong>
+          {/* A <span> rather than <strong>: Tailwind preflight leaves <strong> at
+              the browser default `bolder` (700), which is the last thing on this
+              page above the DS ceiling of 600. Emphasis here is colour, not
+              weight. */}
+          <span className="font-medium text-light-text dark:text-dark-text">
+            {dayNames[peakDayIdx]}
+          </span>
         </p>
       </div>
     </StaggerItem>

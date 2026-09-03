@@ -85,19 +85,16 @@ const ProjectStatusSection: FC<ProjectStatusSectionProps> = ({ status }) => {
         </div>
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-6 w-full">
           {projectStatus.map((item) => (
-            <div
-              key={item.label}
-              className="flex items-center gap-4 p-5 rounded-2xl bg-light-surface-2 dark:bg-dark-surface border border-light-border dark:border-dark-border/30 hover:border-global-blue/30 transition-colors"
-            >
-              <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center"
-                style={{ backgroundColor: `${item.color}20` }}
-              >
-                <i
-                  className={`${item.icon} text-xl`}
-                  style={{ color: item.color }}
-                ></i>
-              </div>
+            /* Flat row, not a card. This was a bordered, rounded, filled
+               tile holding a second rounded tile behind its icon — inside a
+               section card that is itself bordered and rounded. Three nested
+               radii, all repeating the same treatment. */
+            <div key={item.label} className="flex items-baseline gap-3">
+              <i
+                aria-hidden="true"
+                className={`${item.icon} text-base`}
+                style={{ color: item.color }}
+              ></i>
               <div>
                 <div className="flex items-center gap-2">
                   <span className="text-3xl font-medium text-light-text dark:text-dark-text">
