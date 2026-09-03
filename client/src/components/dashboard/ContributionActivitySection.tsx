@@ -9,7 +9,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import KpiBadge from "./KpiBadge";
-import SectionHead from "./SectionHead";
+import SectionHead from "@/components/common/SectionHead";
 import ChartTooltip from "@/components/charts/ChartTooltip";
 import { StaggerItem } from "@/components/ui/StaggerList";
 import { cardCls, gridColor, tickColor } from "./constants";

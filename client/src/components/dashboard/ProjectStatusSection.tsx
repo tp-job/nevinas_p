@@ -1,7 +1,7 @@
 import React, { type FC } from "react";
 import { StaggerItem } from "@/components/ui/StaggerList";
 import { cardCls } from "./constants";
-import SectionHead from "./SectionHead";
+import SectionHead from "@/components/common/SectionHead";
 import { useChartPalette } from "@/hooks/useChartPalette";
 import type { GitHubStats } from "@/utils/api";
 

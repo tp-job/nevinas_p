@@ -10,10 +10,13 @@ import type { FC, ReactNode } from "react";
  * cards — the visual language the rest of the page had just left behind, so
  * the page read as two designs stacked.
  *
- * Same device as `docs/GroupLabel`, kept as a separate component because this
- * one carries a `meta` slot (event counts, totals) that the docs one has no
- * use for, and importing across feature folders to save nine lines would
- * couple two unrelated pages.
+ * Same device as `docs/GroupLabel`, kept separate because this one carries a
+ * `meta` slot (counts, totals, legends) that the docs one has no use for.
+ *
+ * Lives in `common/` rather than `dashboard/` because the Performance page
+ * adopted the same language. Importing a `dashboard/` component into
+ * Performance would couple two unrelated pages through a folder that claims to
+ * own only one of them.
  */
 const SectionHead: FC<{
   title: string;

@@ -1,5 +1,5 @@
 import { useMemo, useState, type FC } from "react";
-import SectionHead from "./SectionHead";
+import SectionHead from "@/components/common/SectionHead";
 import type { GitHubEvent } from "@/utils/api";
 
 /**

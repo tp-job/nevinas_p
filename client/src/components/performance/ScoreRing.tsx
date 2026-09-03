@@ -1,11 +1,33 @@
 import type { FC } from "react";
+import { useChartPalette } from "@/hooks/useChartPalette";
+
+/**
+ * A Lighthouse score as a ring.
+ *
+ * The colour used to arrive as a prop, from a hardcoded hex on each entry in
+ * `data/performance.ts` — four fixed category hues (#0f9d58, #5983FC, #964EC2,
+ * #f4b400), off-palette, and a second label for categories the text beside them
+ * already names.
+ *
+ * It is derived from the score now, on Lighthouse's own banding: >=90 passes,
+ * 50-89 needs work, below 50 fails. That makes the colour say something the
+ * number alone does not read at a glance, and it comes from semantic tokens, so
+ * a palette change reaches it.
+ */
 interface ScoreRingProps {
   score: number;
   label: string;
-  color: string;
   size?: number;
 }
-const ScoreRing: FC<ScoreRingProps> = ({ score, label, color, size = 120 }) => {
+const ScoreRing: FC<ScoreRingProps> = ({ score, label, size = 120 }) => {
+  const palette = useChartPalette();
+  // Lighthouse's own thresholds, not invented ones.
+  const color =
+    score >= 90
+      ? palette.positive
+      : score >= 50
+        ? palette.warning
+        : palette.accent;
   const strokeWidth = 10;
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;

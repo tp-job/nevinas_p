@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import ChartTooltip from "@/components/charts/ChartTooltip";
-import SectionHead from "./SectionHead";
+import SectionHead from "@/components/common/SectionHead";
 import { StaggerItem } from "@/components/ui/StaggerList";
 import { cardCls, gridColor, tickColor } from "./constants";
 import { useChartPalette } from "@/hooks/useChartPalette";

@@ -1,11 +1,25 @@
 // ============================
 // Lighthouse Scores
 // ============================
+/**
+ * Lighthouse category scores.
+ *
+ * No `color` field any more. Each entry used to carry a hardcoded hex —
+ * #0f9d58, #5983FC, #964EC2, #f4b400 — which was a fourth copy of the same
+ * off-palette Google-brand set already removed from Performance.tsx and the
+ * dashboard constants, and it survived those passes because it lives in
+ * `data/` rather than a component.
+ *
+ * Colour is now derived from the score itself, in ScoreRing, using Lighthouse's
+ * own banding (>=90 pass, 50-89 needs work, <50 fail). That is a real signal
+ * about the number, where four fixed category hues were a second label for
+ * categories the text already names.
+ */
 export const lighthouseScores = [
-  { label: "Performance", score: 92, color: "#0f9d58" },
-  { label: "Accessibility", score: 88, color: "#5983FC" },
-  { label: "Best Practices", score: 95, color: "#964EC2" },
-  { label: "SEO", score: 90, color: "#f4b400" },
+  { label: "Performance", score: 92 },
+  { label: "Accessibility", score: 88 },
+  { label: "Best Practices", score: 95 },
+  { label: "SEO", score: 90 },
 ];
 
 // ============================
