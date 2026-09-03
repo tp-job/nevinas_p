@@ -22,6 +22,7 @@ import { useFetch } from "@/hooks/useFetch";
 import ScoreRing from "@/components/performance/ScoreRing";
 import StatusBadge from "@/components/performance/StatusBadge";
 import ChartTooltip from "@/components/charts/ChartTooltip";
+import PageHeader from "@/components/common/PageHeader";
 
 // Theme colors
 const TH = {
@@ -51,17 +52,11 @@ const Performance: FC = () => {
   return (
     <div className="w-full">
       {/* Header */}
-      <div className="mb-6">
-        <h4 className="mb-1 text-lg text-light-text dark:text-dark-text">
-          Developer Analytics
-        </h4>
-        <h2 className="mb-1 text-4xl sm:text-5xl text-light-text dark:text-dark-text">
-          Performance
-        </h2>
-        <h3 className="text-xl font-zen text-light-text-secondary dark:text-dark-text-secondary">
-          パフォーマンス
-        </h3>
-      </div>
+      <PageHeader
+        eyebrow="Developer Analytics"
+        title="Performance"
+        jp="パフォーマンス"
+      />
 
       {/* ========== GitHub Repo Sizes ========== */}
       {!loadingGH && repos.length > 0 && (

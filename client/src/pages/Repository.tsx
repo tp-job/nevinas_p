@@ -6,19 +6,16 @@ import { useFetch } from "@/hooks/useFetch";
 import { getLangColor } from "@/utils/constants";
 import { formatRelativeTimeLong } from "@/utils/date";
 import AsyncBoundary from "@/components/common/AsyncBoundary";
+import PageHeader from "@/components/common/PageHeader";
 
 const Repository: FC = () => {
   const [filter, setFilter] = useState<string>("all");
 
-  const { data, loading, error } = useFetch(
-    githubApi.getRepos,
-    [],
-    {
+  const { data, loading, error } = useFetch(githubApi.getRepos, [], {
     // notifyOnError: false — this page renders <ErrorDisplay> inline already.
     errorMessage: "Failed to fetch repositories from GitHub",
     notifyOnError: false,
-  },
-  );
+  });
   const repos = data ?? [];
 
   // Get unique languages for filter
@@ -48,26 +45,20 @@ const Repository: FC = () => {
   return (
     <div>
       <div className="w-full">
-        <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <h4 className="mb-1 text-lg text-light-text dark:text-dark-text">
-              Skill Showcase
-            </h4>
-            <h2 className="mb-1 text-4xl sm:text-5xl text-light-text dark:text-dark-text">
-              Repository
-            </h2>
-            <h3 className="text-xl font-zen text-light-text-secondary dark:text-dark-text-secondary">
-              リポジトリ
-            </h3>
-          </div>
-          <Link
-            to="/work/repository/graph-view"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium bg-surface-secondary border border-border-primary/60 text-text-secondary hover:bg-surface-primary hover:text-text-primary transition-all"
-          >
-            <i className="ri-node-tree"></i>
-            Graph View
-          </Link>
-        </div>
+        <PageHeader
+          eyebrow="Skill Showcase"
+          title="Repository"
+          jp="リポジトリ"
+          actions={
+            <Link
+              to="/work/repository/graph-view"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium bg-surface-secondary border border-border-primary/60 text-text-secondary hover:bg-surface-primary hover:text-text-primary transition-all"
+            >
+              <i className="ri-node-tree"></i>
+              Graph View
+            </Link>
+          }
+        />
       </div>
 
       <AsyncBoundary

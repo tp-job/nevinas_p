@@ -6,19 +6,16 @@ import { useFetch } from "@/hooks/useFetch";
 import type { BlogPost } from "@/types/blog";
 import AsyncBoundary from "@/components/common/AsyncBoundary";
 import EmptyState from "@/components/common/EmptyState";
+import PageHeader from "@/components/common/PageHeader";
 
 const BlogPage: FC = () => {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
-  const { data, loading, error } = useFetch(
-    blogsApi.getAll,
-    [],
-    {
+  const { data, loading, error } = useFetch(blogsApi.getAll, [], {
     // notifyOnError: false — this page renders <ErrorDisplay> inline already.
     errorMessage: "Failed to load blog posts",
     notifyOnError: false,
-  },
-  );
+  });
   // Map server data to BlogPost type
   const posts: BlogPost[] = useMemo(
     () =>
@@ -47,17 +44,11 @@ const BlogPage: FC = () => {
 
   return (
     <div className="w-full">
-      <div className="mb-4">
-        <h4 className="mb-1 text-lg text-light-text dark:text-dark-text">
-          Developer Analytics
-        </h4>
-        <h2 className="mb-1 text-4xl sm:text-5xl text-light-text dark:text-dark-text">
-          Blog
-        </h2>
-        <h3 className="text-xl font-zen text-light-text-secondary dark:text-dark-text-secondary">
-          ドキュメント
-        </h3>
-      </div>
+      <PageHeader
+        eyebrow="Developer Analytics"
+        title="Blog"
+        jp="ドキュメント"
+      />
 
       <AsyncBoundary
         loading={loading}

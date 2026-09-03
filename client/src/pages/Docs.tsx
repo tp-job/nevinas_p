@@ -15,6 +15,7 @@ import ChangelogSection from "@/components/docs/ChangelogSection";
 import ProjectStructureSection from "@/components/docs/ProjectStructureSection";
 import { cardCls, proseCls } from "@/components/docs/constants";
 import { architecture } from "@/data/docData";
+import PageHeader from "@/components/common/PageHeader";
 
 /* ==================== Docs Page ==================== */
 const Docs: FC = () => {
@@ -118,32 +119,11 @@ const Docs: FC = () => {
         items={[{ label: "Work", href: "/work" }, { label: "Docs" }]}
       />
 
-      {/* Type scale is the canonical /work/* page header, matched exactly:
-          18px/400 eyebrow · text-4xl sm:text-5xl (48px) /400 title · 20px/400
-          Japanese subtitle, in a `mb-6` block. Docs previously ran its own
-          scale — a 14px uppercase-tracked eyebrow, a 300-weight title and an
-          18px 300-weight subtitle — which is the "font size is not the same"
-          complaint, measurable at every one of the three lines.
-
-          Tags differ from the siblings on purpose and cost nothing visually:
-          they render the title as <h2> with no <h1> anywhere in main, so the
-          page never announces what it is. Here the title is the page's only
-          <h1> and the two labels are paragraphs, because a label is not a
-          section. There are no global heading styles in this codebase
-          (Tailwind preflight resets them), so <p class="text-lg"> and
-          <h4 class="text-lg"> paint identically — the tag choice is a pure
-          accessibility win with zero pixel difference. */}
-      <div className="mb-6">
-        <p className="mb-1 text-lg text-light-text dark:text-dark-text">
-          Developer Analytics
-        </p>
-        <h1 className="mb-1 text-4xl sm:text-5xl text-light-text dark:text-dark-text">
-          Document
-        </h1>
-        <p className="text-xl font-zen text-light-text-secondary dark:text-dark-text-secondary">
-          ドキュメント
-        </p>
-      </div>
+      <PageHeader
+        eyebrow="Developer Analytics"
+        title="Document"
+        jp="ドキュメント"
+      />
 
       <div className={proseCls}>
         {/* Both lines used to advertise an API reference. That section is gone,
