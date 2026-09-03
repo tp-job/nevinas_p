@@ -1,4 +1,4 @@
-import { type FC } from "react";
+import { useMemo, type FC } from "react";
 import {
   AreaChart,
   Area,
@@ -17,12 +17,11 @@ import {
   codeQuality,
   performanceHistory,
 } from "@/data/performance";
-import { githubApi } from "@/utils/api";
-import { useFetch } from "@/hooks/useFetch";
 import ScoreRing from "@/components/performance/ScoreRing";
 import StatusBadge from "@/components/performance/StatusBadge";
 import ChartTooltip from "@/components/charts/ChartTooltip";
 import PageHeader from "@/components/common/PageHeader";
+import { useRepos } from "@/context/RepoContext";
 
 // Theme colors
 const TH = {
@@ -42,8 +41,11 @@ const Performance: FC = () => {
     "bg-surface-primary border border-border-primary rounded-2xl relative overflow-hidden transition-all duration-300";
 
   // Repo sizes are optional — section is hidden if the fetch fails.
-  const { data: repoData, loading: loadingGH } = useFetch(githubApi.getRepos);
-  const repos = (repoData ?? []).slice().sort((a, b) => b.size - a.size);
+  const { repos: allRepos, loading: loadingGH } = useRepos();
+  const repos = useMemo(
+    () => allRepos.slice().sort((a, b) => b.size - a.size),
+    [allRepos],
+  );
 
   const totalSize = repos.reduce((sum, r) => sum + r.size, 0);
   const formatSize = (kb: number) =>

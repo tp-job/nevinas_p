@@ -20,18 +20,32 @@ import AsyncBoundary from "@/components/common/AsyncBoundary";
 import { StaggerList, StaggerItem } from "@/components/ui/StaggerList";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import PageHeader from "@/components/common/PageHeader";
+import { useRepos } from "@/context/RepoContext";
 
 /* ==================== DASHBOARD ==================== */
 const Dashboard: FC = () => {
+  // The repos half of this used to be bundled into the Promise.all below. It
+  // now comes from the shared provider, so navigating here from any other
+  // /work page reuses the list instead of refetching it.
+  const { repos: allRepos, loading: reposLoading } = useRepos();
+
   // `fatal` because this IS the page — Dashboard renders nothing but the error
-  // state without it, so a 5xx here earns the full-page screen. Every other
-  // page's fetch stays transient and reports inline.
-  const { data, loading, error } = useFetch(
-    (o) => Promise.all([githubApi.getStats(o), githubApi.getRepos(o)]),
-    [],
-    { errorMessage: "Failed to fetch GitHub data", severity: "fatal" },
-  );
-  const [stats, allRepos] = data ?? [null, []];
+  // state without stats, so a 5xx here earns the full-page screen. The shared
+  // repo fetch deliberately stays transient (see context/RepoContext): a fatal
+  // shared fetch would blank every /work page, not just this one.
+  const {
+    data: stats,
+    loading: statsLoading,
+    error,
+  } = useFetch(githubApi.getStats, [], {
+    errorMessage: "Failed to fetch GitHub data",
+    severity: "fatal",
+  });
+
+  // Both halves gate the same chrome, as they did when they were one fetch —
+  // otherwise the repo-derived panels below would flash empty while the list
+  // is still in flight.
+  const loading = statsLoading || reposLoading;
 
   /* --- Derived Data --- */
   const monthlyActivity = stats?.monthlyActivity || [];

@@ -1,7 +1,6 @@
 import { useState, type FC } from "react";
 import { Link } from "react-router-dom";
 import { githubApi, ApiError, type GitHubRepo } from "@/utils/api";
-import { useFetch } from "@/hooks/useFetch";
 import { getLangColor } from "@/utils/constants";
 import { formatRelativeTime } from "@/utils/date";
 import Breadcrumb from "@/components/docs/Breadcrumb";
@@ -16,6 +15,7 @@ import ProjectStructureSection from "@/components/docs/ProjectStructureSection";
 import { cardCls, proseCls } from "@/components/docs/constants";
 import { architecture } from "@/data/docData";
 import PageHeader from "@/components/common/PageHeader";
+import { useRepos } from "@/context/RepoContext";
 
 /* ==================== Docs Page ==================== */
 const Docs: FC = () => {
@@ -35,10 +35,8 @@ const Docs: FC = () => {
   const [repoLanguage, setRepoLanguage] = useState("all");
 
   // Repo list is optional here — on failure the section just renders empty.
-  const { data: repoData, loading: reposLoading } = useFetch(
-    githubApi.getRepos,
-  );
-  const repos = repoData ?? [];
+  // Shared across the /work section, see context/RepoContext.
+  const { repos, loading: reposLoading } = useRepos();
 
   const handleRepoClick = async (name: string) => {
     const repoData = repos.find((r) => r.name === name) || null;
