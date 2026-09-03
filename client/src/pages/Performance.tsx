@@ -1,4 +1,4 @@
-import { type FC } from "react";
+import { useMemo, type FC } from "react";
 import {
   AreaChart,
   Area,
@@ -17,33 +17,77 @@ import {
   codeQuality,
   performanceHistory,
 } from "@/data/performance";
-import { githubApi } from "@/utils/api";
-import { useFetch } from "@/hooks/useFetch";
 import ScoreRing from "@/components/performance/ScoreRing";
 import StatusBadge from "@/components/performance/StatusBadge";
 import ChartTooltip from "@/components/charts/ChartTooltip";
 import PageHeader from "@/components/common/PageHeader";
+import { useRepos } from "@/context/RepoContext";
+import { useCssTokens } from "@/hooks/useCssTokens";
 
-// Theme colors
-const TH = {
-  green: "#0f9d58",
-  azure: "#5983FC",
-  orchid: "#964EC2",
-  yellow: "#f4b400",
-  flamingo: "#FF7BBF",
-  royal: "#3E60C1",
-};
+/**
+ * Chart colours, resolved from the live stylesheet rather than hardcoded here.
+ *
+ * This was a six-entry hex map — #0f9d58, #5983FC, #964EC2, #f4b400, #FF7BBF,
+ * #3E60C1 — and not one of those values is in the Nocturnal Atelier palette;
+ * they were Google-brand greens and yellows. So this page rendered a second,
+ * off-palette colour system that a palette change could never reach, which is
+ * precisely what CLAUDE.md's "token classes, not raw hex" rule exists to stop.
+ *
+ * The Design System docs page hit the identical problem — its hand-kept hex
+ * copy had drifted to four wrong values — and the fix there was to read
+ * `--color-*` off the live document. Same fix, same hook.
+ *
+ * Charts need real colour VALUES (recharts takes strings, not classes), which
+ * is the legitimate case for reading tokens at runtime instead of using
+ * utility classes. DS v3.2 designates the sub-palette for exactly this:
+ * effects, SVG gradients and data visualisation.
+ */
+const CHART_TOKENS = [
+  "--color-success",
+  "--color-warning",
+  "--color-cool",
+  "--color-sub-ev1",
+  "--color-sub-mount",
+  "--color-haze",
+] as const;
+
+/**
+ * One neutral fallback, not a second palette.
+ *
+ * The first draft of this change listed a per-role fallback hex for all six
+ * roles — which quietly recreated the hand-kept palette copy it was removing.
+ * Every one of these variables is defined in index.css, so a miss is a bug
+ * worth seeing rather than papering over with a plausible colour: the charts
+ * render in one flat neutral and the cause is obvious.
+ */
+const CHART_FALLBACK = "#878CB4";
 
 /* ==================== Performance Page ==================== */
 const Performance: FC = () => {
+  const live = useCssTokens([...CHART_TOKENS]);
+  const TH = useMemo(
+    () => ({
+      green: live["--color-success"] || CHART_FALLBACK,
+      yellow: live["--color-warning"] || CHART_FALLBACK,
+      azure: live["--color-cool"] || CHART_FALLBACK,
+      orchid: live["--color-sub-ev1"] || CHART_FALLBACK,
+      flamingo: live["--color-sub-mount"] || CHART_FALLBACK,
+      royal: live["--color-haze"] || CHART_FALLBACK,
+    }),
+    [live],
+  );
+
   const gridColor = "var(--color-border-primary)";
   const tickColor = "var(--color-text-secondary)";
   const cardCls =
     "bg-surface-primary border border-border-primary rounded-2xl relative overflow-hidden transition-all duration-300";
 
   // Repo sizes are optional — section is hidden if the fetch fails.
-  const { data: repoData, loading: loadingGH } = useFetch(githubApi.getRepos);
-  const repos = (repoData ?? []).slice().sort((a, b) => b.size - a.size);
+  const { repos: allRepos, loading: loadingGH } = useRepos();
+  const repos = useMemo(
+    () => allRepos.slice().sort((a, b) => b.size - a.size),
+    [allRepos],
+  );
 
   const totalSize = repos.reduce((sum, r) => sum + r.size, 0);
   const formatSize = (kb: number) =>
@@ -69,14 +113,14 @@ const Performance: FC = () => {
           />
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="text-lg font-bold text-light-text dark:text-dark-text">
+              <h3 className="text-lg font-medium text-light-text dark:text-dark-text">
                 Repository Sizes
               </h3>
               <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary">
                 Storage usage across GitHub repositories
               </p>
             </div>
-            <span className="px-3 py-1.5 rounded-lg text-xs font-bold bg-global-blue/10 text-global-blue">
+            <span className="px-3 py-1.5 rounded-lg text-xs font-medium bg-global-blue/10 text-global-blue">
               Total: {formatSize(totalSize)}
             </span>
           </div>
@@ -100,7 +144,7 @@ const Performance: FC = () => {
                       }}
                     />
                   </div>
-                  <span className="w-20 text-right text-sm font-bold text-light-text dark:text-dark-text">
+                  <span className="w-20 text-right text-sm font-medium text-light-text dark:text-dark-text">
                     {formatSize(repo.size)}
                   </span>
                 </div>
@@ -118,7 +162,7 @@ const Performance: FC = () => {
             background: `linear-gradient(90deg, transparent, ${TH.green}60, ${TH.azure}60, transparent)`,
           }}
         />
-        <h3 className="text-lg font-bold text-light-text dark:text-dark-text mb-1">
+        <h3 className="text-lg font-medium text-light-text dark:text-dark-text mb-1">
           Lighthouse Scores
         </h3>
         <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-8">
@@ -144,7 +188,7 @@ const Performance: FC = () => {
             background: `linear-gradient(90deg, transparent, ${TH.azure}60, ${TH.orchid}60, transparent)`,
           }}
         />
-        <h3 className="text-lg font-bold text-light-text dark:text-dark-text mb-1">
+        <h3 className="text-lg font-medium text-light-text dark:text-dark-text mb-1">
           Core Web Vitals
         </h3>
         <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-6">
@@ -159,7 +203,7 @@ const Performance: FC = () => {
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <i className={`${v.icon} text-lg text-matte-azure`}></i>
-                  <span className="text-sm font-bold text-light-text dark:text-dark-text">
+                  <span className="text-sm font-medium text-light-text dark:text-dark-text">
                     {v.metric}
                   </span>
                 </div>
@@ -169,7 +213,7 @@ const Performance: FC = () => {
                 {v.fullName}
               </p>
               <div className="flex items-end justify-between">
-                <span className="text-2xl font-extrabold text-light-text dark:text-dark-text">
+                <span className="text-2xl font-medium text-light-text dark:text-dark-text">
                   {v.value}
                 </span>
                 <span className="text-[10px] font-medium text-light-text-secondary dark:text-dark-text-secondary">
@@ -192,7 +236,7 @@ const Performance: FC = () => {
             background: `linear-gradient(90deg, transparent, ${TH.green}60, transparent)`,
           }}
         />
-        <h3 className="text-lg font-bold text-light-text dark:text-dark-text mb-1">
+        <h3 className="text-lg font-medium text-light-text dark:text-dark-text mb-1">
           Performance Trend
         </h3>
         <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-6">
@@ -289,7 +333,7 @@ const Performance: FC = () => {
             background: `linear-gradient(90deg, transparent, ${TH.orchid}60, ${TH.flamingo}60, transparent)`,
           }}
         />
-        <h3 className="text-lg font-bold text-light-text dark:text-dark-text mb-1">
+        <h3 className="text-lg font-medium text-light-text dark:text-dark-text mb-1">
           Bundle Analysis
         </h3>
         <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-6">
@@ -310,7 +354,7 @@ const Performance: FC = () => {
                 ].map((h) => (
                   <th
                     key={h}
-                    className="text-left py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary"
+                    className="text-left py-3 px-4 text-[11px] font-medium uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary"
                   >
                     {h}
                   </th>
@@ -335,14 +379,14 @@ const Performance: FC = () => {
                   <td className="py-3 px-4 font-inter text-velvet-orchid">
                     {b.cssSize}
                   </td>
-                  <td className="py-3 px-4 font-bold text-light-text dark:text-dark-text">
+                  <td className="py-3 px-4 font-medium text-light-text dark:text-dark-text">
                     {b.totalSize}
                   </td>
                   <td className="py-3 px-4 text-light-text-secondary dark:text-dark-text-secondary">
                     {b.chunks}
                   </td>
                   <td className="py-3 px-4">
-                    <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-global-green/10 text-global-green">
+                    <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-global-green/10 text-global-green">
                       {b.treeShaking}
                     </span>
                   </td>
@@ -361,7 +405,7 @@ const Performance: FC = () => {
             background: `linear-gradient(90deg, transparent, ${TH.yellow}60, transparent)`,
           }}
         />
-        <h3 className="text-lg font-bold text-light-text dark:text-dark-text mb-1">
+        <h3 className="text-lg font-medium text-light-text dark:text-dark-text mb-1">
           API Response Times
         </h3>
         <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-6">
@@ -376,7 +420,7 @@ const Performance: FC = () => {
               <div key={api.endpoint} className="flex items-center gap-4">
                 <div className="w-8 shrink-0">
                   <span
-                    className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${api.method === "GET" ? "bg-global-green/10 text-global-green" : "bg-global-yellow/10 text-global-yellow"}`}
+                    className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${api.method === "GET" ? "bg-global-green/10 text-global-green" : "bg-global-yellow/10 text-global-yellow"}`}
                   >
                     {api.method}
                   </span>
@@ -393,7 +437,7 @@ const Performance: FC = () => {
                     }}
                   />
                 </div>
-                <span className="w-16 text-right text-sm font-bold text-light-text dark:text-dark-text">
+                <span className="w-16 text-right text-sm font-medium text-light-text dark:text-dark-text">
                   {api.avgMs}ms
                 </span>
                 <StatusBadge status={api.status} />
@@ -415,11 +459,11 @@ const Performance: FC = () => {
           />
           <div className="flex items-center gap-2 mb-3">
             <i className="ri-code-s-slash-line text-matte-azure"></i>
-            <span className="text-xs font-bold uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary">
+            <span className="text-xs font-medium uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary">
               TypeScript
             </span>
           </div>
-          <div className="text-3xl font-extrabold text-light-text dark:text-dark-text mb-1">
+          <div className="text-3xl font-medium text-light-text dark:text-dark-text mb-1">
             {codeQuality.typescript.coverage}%
           </div>
           <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary">
@@ -444,11 +488,11 @@ const Performance: FC = () => {
           />
           <div className="flex items-center gap-2 mb-3">
             <i className="ri-shield-check-line text-global-green"></i>
-            <span className="text-xs font-bold uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary">
+            <span className="text-xs font-medium uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary">
               ESLint
             </span>
           </div>
-          <div className="text-3xl font-extrabold text-light-text dark:text-dark-text mb-1">
+          <div className="text-3xl font-medium text-light-text dark:text-dark-text mb-1">
             {codeQuality.eslint.errors}
           </div>
           <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary">
@@ -474,11 +518,11 @@ const Performance: FC = () => {
           />
           <div className="flex items-center gap-2 mb-3">
             <i className="ri-box-3-line text-velvet-orchid"></i>
-            <span className="text-xs font-bold uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary">
+            <span className="text-xs font-medium uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary">
               Dependencies
             </span>
           </div>
-          <div className="text-3xl font-extrabold text-light-text dark:text-dark-text mb-1">
+          <div className="text-3xl font-medium text-light-text dark:text-dark-text mb-1">
             {codeQuality.dependencies.total}
           </div>
           <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary">
@@ -503,11 +547,11 @@ const Performance: FC = () => {
           />
           <div className="flex items-center gap-2 mb-3">
             <i className="ri-file-code-line text-velvet-flamingo"></i>
-            <span className="text-xs font-bold uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary">
+            <span className="text-xs font-medium uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary">
               Code Lines
             </span>
           </div>
-          <div className="text-3xl font-extrabold text-light-text dark:text-dark-text mb-1">
+          <div className="text-3xl font-medium text-light-text dark:text-dark-text mb-1">
             {codeQuality.codeLines.total.toLocaleString()}
           </div>
           <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary">

@@ -14,7 +14,7 @@ const ToolingSection: FC = () => (
     />
     <div className="flex items-center justify-between mb-8">
       <div>
-        <h3 className="text-xl font-bold text-light-text dark:text-dark-text">
+        <h3 className="text-xl font-medium text-light-text dark:text-dark-text">
           Workflow Tooling
         </h3>
         <p className="text-sm mt-0.5 text-light-text-secondary dark:text-dark-text-secondary">
@@ -44,7 +44,7 @@ const ToolingSection: FC = () => (
             <i className={`${tool.icon} text-2xl text-white`}></i>
           </div>
           <div>
-            <h4 className="text-sm font-bold text-light-text dark:text-dark-text group-hover:text-global-blue transition-colors">
+            <h4 className="text-sm font-medium text-light-text dark:text-dark-text group-hover:text-global-blue transition-colors">
               {tool.name}
             </h4>
             <p className="text-[10px] text-light-text-secondary dark:text-dark-text-secondary mt-1 uppercase tracking-tighter opacity-70">
@@ -67,7 +67,7 @@ const ToolingSection: FC = () => (
               <i className={`${section.icon} text-lg text-global-blue`}></i>
             </div>
             <div className="min-w-0">
-              <p className="text-xs font-bold text-light-text dark:text-dark-text truncate">
+              <p className="text-xs font-medium text-light-text dark:text-dark-text truncate">
                 {section.title}
               </p>
               <p className="text-[10px] text-light-text-secondary dark:text-dark-text-secondary">

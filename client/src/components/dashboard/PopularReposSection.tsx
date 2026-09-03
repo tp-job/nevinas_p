@@ -24,7 +24,7 @@ const PopularReposSection: FC<PopularReposSectionProps> = ({
   <StaggerItem className="lg:col-span-12 mb-12">
     <div className="flex items-center justify-between mb-8">
       <div>
-        <h3 className="text-2xl font-bold text-light-text dark:text-dark-text">
+        <h3 className="text-2xl font-medium text-light-text dark:text-dark-text">
           Popular Repositories
         </h3>
         <p className="text-sm mt-1 text-light-text-secondary dark:text-dark-text-secondary">

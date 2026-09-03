@@ -17,7 +17,6 @@ import {
   githubApi,
   UPSTREAM_TIMEOUT_MS,
   type GitHubProfile,
-  type GitHubRepo,
 } from "@/utils/api";
 import AsyncBoundary from "@/components/common/AsyncBoundary";
 import RepoCardNode from "@/components/graph/nodes/RepoCardNode";
@@ -26,6 +25,7 @@ import TechStackNode from "@/components/graph/nodes/TechStackNode";
 import LanguagesNode from "@/components/graph/nodes/LanguagesNode";
 import LastCommitNode from "@/components/graph/nodes/LastCommitNode";
 import { buildFlow, type RepoDetails } from "@/components/graph/buildFlow";
+import { useRepos } from "@/context/RepoContext";
 
 const nodeTypes: NodeTypes = {
   repoCard: RepoCardNode,
@@ -43,29 +43,44 @@ interface GhContributor {
 }
 
 const GraphView: FC = () => {
-  const [repos, setRepos] = useState<GitHubRepo[]>([]);
+  // Repos come from the shared /work provider; only the profile and the
+  // per-repo enrichment are fetched here. This page used to fetch the repo
+  // list itself, which meant arriving from /work/repository (where it was
+  // already loaded) paid for it a second time.
+  const { repos, loading: reposLoading, error: reposError } = useRepos();
+
   const [profile, setProfile] = useState<GitHubProfile | null>(null);
   const [details, setDetails] = useState<Record<string, RepoDetails>>({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [profileLoading, setProfileLoading] = useState(true);
+  const [profileError, setProfileError] = useState<string | null>(null);
+
+  // Either half failing leaves the graph undrawable, so both surface through
+  // the one AsyncBoundary below. The repo half reports through the shared
+  // provider now, so its message is worded there rather than here.
+  const error = reposError ?? profileError;
+
+  // The graph can draw as soon as repos and profile are in. Enrichment below
+  // fills in progressively rather than blocking on 2xN rate-limited requests.
+  const loading = reposLoading || profileLoading;
+
+  // Keyed on the repo list: the enrichment pass needs the list, which now
+  // arrives asynchronously from context rather than being fetched in here.
+  // `repoKey` rather than `repos` so a new array identity carrying the same
+  // repositories does not re-run 2xN upstream requests.
+  const repoKey = repos.map((r) => r.name).join(",");
 
   useEffect(() => {
     let cancelled = false;
 
     (async () => {
       try {
-        setLoading(true);
-        const [repoData, profileData] = await Promise.all([
-          githubApi.getRepos(),
-          githubApi.getProfile(),
-        ]);
+        const profileData = await githubApi.getProfile();
         if (cancelled) return;
-        setRepos(repoData);
         setProfile(profileData);
-        // Nodes can render as soon as repos + profile are in — language and
-        // contributor details enrich the graph progressively below instead
-        // of blocking the whole page behind 2×N slow/rate-limited requests.
-        setLoading(false);
+        setProfileLoading(false);
+
+        if (repos.length === 0) return;
+        const repoData = repos;
 
         const detailResults = await Promise.allSettled(
           repoData.map(async (r) => {
@@ -112,15 +127,17 @@ const GraphView: FC = () => {
         }
         setDetails(detailMap);
       } catch {
-        if (!cancelled) setError("Failed to fetch repositories from GitHub");
-        setLoading(false);
+        if (!cancelled)
+          setProfileError("Failed to fetch profile data from GitHub");
+        setProfileLoading(false);
       }
     })();
 
     return () => {
       cancelled = true;
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [repoKey]);
 
   const { nodes: initialNodes, edges: initialEdges } = useMemo(() => {
     if (!profile || repos.length === 0) return { nodes: [], edges: [] };

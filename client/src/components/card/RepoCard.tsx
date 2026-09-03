@@ -40,8 +40,9 @@ const RepoCard: FC<RepoCardProps> = ({
           </div>
           <div className="min-w-0 overflow-hidden">
             <h3
-              className={`text-lg font-medium text-light-text dark:text-matte-azure group-hover:text-global-blue transition-colors ${name.length > 18 ? "" : "truncate"
-                }`}
+              className={`text-lg font-medium text-light-text dark:text-matte-azure group-hover:text-global-blue transition-colors ${
+                name.length > 18 ? "" : "truncate"
+              }`}
               title={name}
             >
               {name.length > 18 ? (

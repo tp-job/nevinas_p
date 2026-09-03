@@ -29,7 +29,7 @@ const ChartTooltip: FC<ChartTooltipProps> = ({ active, payload, label }) => {
             />
           )}{" "}
           <span className="opacity-70">{entry.name}:</span>{" "}
-          <span className="font-bold">{entry.value}</span>{" "}
+          <span className="font-medium">{entry.value}</span>{" "}
         </div>
       ))}{" "}
     </div>

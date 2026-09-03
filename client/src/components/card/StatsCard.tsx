@@ -65,7 +65,7 @@ const ArcGauge: FC<{ percentage: number; color: string; size?: number }> = ({
         />
       </svg>
       <div className="absolute inset-0 flex items-end justify-center pb-0">
-        <span className="text-sm font-bold" style={{ color }}>
+        <span className="text-sm font-medium" style={{ color }}>
           {percentage}%
         </span>
       </div>
@@ -87,7 +87,7 @@ const StatsCard: FC<StatsCardProps> = ({
   return (
     <div
       className={`
-            group relative overflow-hidden rounded-2xl p-6 transition-all duration-500 hover:-translate-y-1
+            group relative overflow-hidden rounded-2xl p-6 transition-colors duration-300
             bg-light-surface dark:bg-dark-bg border border-light-border dark:border-dark-border
             shadow-[0_4px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)]
             hover:shadow-[0_8px_40px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_12px_48px_rgba(0,0,0,0.5)]
@@ -117,12 +117,12 @@ const StatsCard: FC<StatsCardProps> = ({
       </div>
 
       <div className="relative z-10">
-        <div className="text-[2.5rem] font-extrabold leading-none mb-3 tracking-tight text-light-text dark:text-dark-text">
+        <div className="text-[2.5rem] font-medium leading-none mb-3 tracking-tight text-light-text dark:text-dark-text">
           {value.toLocaleString()}
         </div>
         <div className="flex items-center gap-2 mb-1.5">
           <span
-            className="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-lg"
+            className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-lg"
             style={{ backgroundColor: `${color}15`, color }}
           >
             <i className="ri-arrow-up-s-fill text-sm"></i>

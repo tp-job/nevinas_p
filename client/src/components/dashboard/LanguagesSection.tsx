@@ -37,14 +37,14 @@ const LanguagesSection: FC<LanguagesSectionProps> = ({
     />
     <div className="flex items-center justify-between mb-6">
       <div>
-        <h3 className="text-lg font-bold text-light-text dark:text-dark-text">
+        <h3 className="text-lg font-medium text-light-text dark:text-dark-text">
           Languages
         </h3>
         <p className="text-sm mt-0.5 text-light-text-secondary dark:text-dark-text-secondary">
           Project composition by language
         </p>
       </div>
-      <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-matte-azure/10 text-matte-azure">
+      <span className="text-xs font-medium px-2.5 py-1 rounded-lg bg-matte-azure/10 text-matte-azure">
         {langData.length} active
       </span>
     </div>
@@ -70,7 +70,7 @@ const LanguagesSection: FC<LanguagesSectionProps> = ({
           <RTooltip content={<ChartTooltip />} />
         </PieChart>
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-          <span className="text-2xl font-extrabold text-light-text dark:text-dark-text">
+          <span className="text-2xl font-medium text-light-text dark:text-dark-text">
             {repoCount}
           </span>
           <span className="text-[10px] text-light-text-secondary dark:text-dark-text-secondary uppercase tracking-wider">
@@ -93,7 +93,7 @@ const LanguagesSection: FC<LanguagesSectionProps> = ({
                 </span>
               </div>
               <span
-                className="text-xs font-bold"
+                className="text-xs font-medium"
                 style={{ color: lang.color }}
               >
                 {lang.pct}%

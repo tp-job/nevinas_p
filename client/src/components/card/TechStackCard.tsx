@@ -2,8 +2,11 @@ import type { FC } from "react";
 import type { TechStackCardProps } from "@/types/techStack";
 
 const TechStackCard: FC<TechStackCardProps> = ({ techStack }) => {
+  // Not interactive: no onClick, no href. It previously carried
+  // `cursor-pointer` and a hover lift, which promised a click that does not
+  // exist. Border tint only now, matching ProjectCard.
   return (
-    <div className="group flex flex-col bg-light-bg dark:bg-dark-bg border border-light-border dark:border-dark-border rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1">
+    <div className="group flex flex-col overflow-hidden rounded-2xl border border-light-border bg-light-bg transition-colors hover:border-cool/40 dark:border-dark-border dark:bg-dark-bg dark:hover:border-cool/40">
       {/* Hero section (like BlogCard image) */}
       <div className={`relative h-56 overflow-hidden ${techStack.color}`}>
         {/* Watermark icon */}

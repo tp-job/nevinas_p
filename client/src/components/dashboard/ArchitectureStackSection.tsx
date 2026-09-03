@@ -14,7 +14,7 @@ const ArchitectureStackSection: FC = () => (
     />
     <div className="flex items-center justify-between mb-6">
       <div>
-        <h3 className="text-xl font-bold text-light-text dark:text-dark-text">
+        <h3 className="text-xl font-medium text-light-text dark:text-dark-text">
           Architecture Stack
         </h3>
         <p className="text-sm mt-0.5 text-light-text-secondary dark:text-dark-text-secondary">
@@ -45,7 +45,7 @@ const ArchitectureStackSection: FC = () => (
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 mb-1">
-              <h4 className="text-sm font-bold text-light-text dark:text-dark-text group-hover:text-global-blue transition-colors truncate">
+              <h4 className="text-sm font-medium text-light-text dark:text-dark-text group-hover:text-global-blue transition-colors truncate">
                 {tech.name}
               </h4>
             </div>

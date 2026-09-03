@@ -1,12 +1,11 @@
 import { useMemo, type FC } from "react";
-import { githubApi } from "@/utils/api";
-import { useFetch } from "@/hooks/useFetch";
 import { filterReposByKeywords } from "@/utils/repoFilters";
 import ProjectCard from "@/components/card/ProjectCard";
 import PageHeader from "@/components/common/PageHeader";
 import AsyncBoundary from "@/components/common/AsyncBoundary";
 import EmptyState from "@/components/common/EmptyState";
 import type { SkillShowcase as Config } from "@/data/skillShowcases";
+import { useRepos } from "@/context/RepoContext";
 
 /**
  * One page, four routes.
@@ -31,21 +30,14 @@ import type { SkillShowcase as Config } from "@/data/skillShowcases";
  * the copies. All four now render EmptyState.
  */
 const SkillShowcase: FC<{ config: Config }> = ({ config }) => {
-  const { data, loading, error } = useFetch(githubApi.getRepos, [], {
-    // notifyOnError: false — AsyncBoundary renders <ErrorDisplay> inline, so a
-    // toast on top of it would report the same failure twice.
-    errorMessage: `Failed to fetch ${config.title} projects from GitHub`,
-    notifyOnError: false,
-  });
+  // One shared fetch for the whole /work section — see context/RepoContext.
+  // This used to be four independent useFetch calls (one per showcase route)
+  // for the same payload.
+  const { repos, loading, error } = useRepos();
 
   const projects = useMemo(
-    () =>
-      filterReposByKeywords(
-        data ?? [],
-        config.keywords,
-        config.languages ?? [],
-      ),
-    [data, config.keywords, config.languages],
+    () => filterReposByKeywords(repos, config.keywords, config.languages ?? []),
+    [repos, config.keywords, config.languages],
   );
 
   return (

@@ -1,22 +1,18 @@
 import { useState, type FC } from "react";
 import { Link } from "react-router-dom";
 import RepoCard from "@/components/card/RepoCard";
-import { githubApi } from "@/utils/api";
-import { useFetch } from "@/hooks/useFetch";
 import { getLangColor } from "@/utils/constants";
 import { formatRelativeTimeLong } from "@/utils/date";
 import AsyncBoundary from "@/components/common/AsyncBoundary";
 import PageHeader from "@/components/common/PageHeader";
+import { useRepos } from "@/context/RepoContext";
 
 const Repository: FC = () => {
   const [filter, setFilter] = useState<string>("all");
 
-  const { data, loading, error } = useFetch(githubApi.getRepos, [], {
-    // notifyOnError: false — this page renders <ErrorDisplay> inline already.
-    errorMessage: "Failed to fetch repositories from GitHub",
-    notifyOnError: false,
-  });
-  const repos = data ?? [];
+  // Shared across the /work section — see context/RepoContext. The inline
+  // <ErrorDisplay> below is why the shared fetch stays notifyOnError: false.
+  const { repos, loading, error } = useRepos();
 
   // Get unique languages for filter
   const languages = [

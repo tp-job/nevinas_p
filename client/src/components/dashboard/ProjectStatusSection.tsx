@@ -39,7 +39,7 @@ const ProjectStatusSection: FC<ProjectStatusSectionProps> = ({ status }) => {
           background: `linear-gradient(90deg, transparent, ${TH.royal}60, ${TH.flamingo}60, transparent)`,
         }}
       />
-      <h3 className="text-xl font-bold text-light-text dark:text-dark-text mb-8">
+      <h3 className="text-xl font-medium text-light-text dark:text-dark-text mb-8">
         Project Integrity Status
       </h3>
       <div className="flex flex-col md:flex-row items-center gap-12">
@@ -49,9 +49,7 @@ const ProjectStatusSection: FC<ProjectStatusSectionProps> = ({ status }) => {
               projectStatus.reduce(
                 (acc, item, i) => {
                   const pct =
-                    totalProjects > 0
-                      ? (item.count / totalProjects) * 100
-                      : 0;
+                    totalProjects > 0 ? (item.count / totalProjects) * 100 : 0;
                   const circ = 2 * Math.PI * 48;
                   const dash = (pct / 100) * circ;
                   acc.elements.push(
@@ -77,10 +75,10 @@ const ProjectStatusSection: FC<ProjectStatusSectionProps> = ({ status }) => {
             }
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-4xl font-extrabold text-light-text dark:text-dark-text">
+            <span className="text-4xl font-medium text-light-text dark:text-dark-text">
               {totalProjects}
             </span>
-            <span className="text-[11px] text-light-text-secondary dark:text-dark-text-secondary uppercase font-bold tracking-widest">
+            <span className="text-[11px] text-light-text-secondary dark:text-dark-text-secondary uppercase font-medium tracking-widest">
               Total
             </span>
           </div>
@@ -102,11 +100,11 @@ const ProjectStatusSection: FC<ProjectStatusSectionProps> = ({ status }) => {
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-3xl font-extrabold text-light-text dark:text-dark-text">
+                  <span className="text-3xl font-medium text-light-text dark:text-dark-text">
                     {item.count}
                   </span>
                   <span
-                    className="text-[11px] font-bold px-2 py-0.5 rounded-full"
+                    className="text-[11px] font-medium px-2 py-0.5 rounded-full"
                     style={{
                       backgroundColor: `${item.color}15`,
                       color: item.color,
@@ -114,7 +112,8 @@ const ProjectStatusSection: FC<ProjectStatusSectionProps> = ({ status }) => {
                   >
                     {totalProjects > 0
                       ? Math.round((item.count / totalProjects) * 100)
-                      : 0}%
+                      : 0}
+                    %
                   </span>
                 </div>
                 <p className="text-xs font-medium text-light-text-secondary dark:text-dark-text-secondary uppercase tracking-tighter">
