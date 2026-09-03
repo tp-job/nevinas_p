@@ -6,6 +6,7 @@ import WeeklyActivitySection from "@/components/dashboard/WeeklyActivitySection"
 import LanguagesSection from "@/components/dashboard/LanguagesSection";
 import ProjectStatusSection from "@/components/dashboard/ProjectStatusSection";
 import WorkRhythm from "@/components/dashboard/WorkRhythm";
+import ActivityCalendar from "@/components/dashboard/ActivityCalendar";
 import StatStrip from "@/components/dashboard/StatStrip";
 import { githubApi } from "@/utils/api";
 import { useFetch } from "@/hooks/useFetch";
@@ -59,6 +60,16 @@ const Dashboard: FC = () => {
     errorMessage: "Failed to fetch GitHub data",
     severity: "fatal",
   });
+
+  // Events power the activity calendar. Transient and non-blocking on purpose:
+  // the calendar is one section, so a failure here should cost that section,
+  // not the page. It also must not gate `loading` — doing so would hold the
+  // whole dashboard behind a secondary request.
+  const { data: eventData } = useFetch(githubApi.getEvents, [], {
+    errorMessage: "Failed to fetch GitHub events",
+    notifyOnError: false,
+  });
+  const events = eventData ?? [];
 
   const loading = statsLoading || reposLoading;
 
@@ -123,12 +134,17 @@ const Dashboard: FC = () => {
 
       <StatStrip
         stats={heroStats}
-        footnote={`Counted from ${allRepos.length} public repositories and the last 90 days of GitHub events. Stars, forks and pushed commits read ${stats?.totalStars ?? 0}, ${stats?.totalForks ?? 0} and ${stats?.totalCommits ?? 0} — the Events API does not surface pushes for this account, so those are a limit of the source rather than a measure of the work.`}
+        footnote={`Counted from ${allRepos.length} public repositories and the GitHub events feed. Stars and forks read ${stats?.totalStars ?? 0} and ${stats?.totalForks ?? 0}. Commits read ${stats?.totalCommits ?? 0} because GitHub's public events feed omits the commit list inside each push — the pushes themselves are counted in the calendar below.`}
       />
 
       {/* The lead. See WorkRhythm for why this is the centrepiece rather than a
           decorative flourish. */}
       <WorkRhythm hourActivity={hourActivity} />
+
+      {/* Per-day counts, bucketed from individual event timestamps. This is the
+          time-series axis neither Work Rhythm (hour of day) nor Weekly (day of
+          week) shows, so it adds a dimension rather than restating one. */}
+      <ActivityCalendar events={events} />
 
       {/* What this page uniquely holds: activity over time, and composition. */}
       <StaggerList className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
