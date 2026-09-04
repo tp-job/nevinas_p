@@ -3,7 +3,7 @@ import { PieChart, Pie, Cell, Tooltip as RTooltip } from "recharts";
 import ChartTooltip from "@/components/charts/ChartTooltip";
 import { StaggerItem } from "@/components/ui/StaggerList";
 import { cardCls } from "./constants";
-import SectionHead from "./SectionHead";
+import SectionHead from "@/components/common/SectionHead";
 
 /**
  * Recharts v3 types `<Pie data>` as `ChartDataInput[]`, which requires a string

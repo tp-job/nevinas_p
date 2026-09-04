@@ -21,6 +21,7 @@ import ScoreRing from "@/components/performance/ScoreRing";
 import StatusBadge from "@/components/performance/StatusBadge";
 import ChartTooltip from "@/components/charts/ChartTooltip";
 import PageHeader from "@/components/common/PageHeader";
+import SectionHead from "@/components/common/SectionHead";
 import { useRepos } from "@/context/RepoContext";
 import { useChartPalette } from "@/hooks/useChartPalette";
 
@@ -56,8 +57,11 @@ const Performance: FC = () => {
 
   const gridColor = "var(--color-border-primary)";
   const tickColor = "var(--color-text-secondary)";
-  const cardCls =
-    "bg-surface-primary border border-border-primary rounded-2xl relative overflow-hidden transition-all duration-300";
+  // No card class. Every section on this page used to be a bordered, rounded,
+  // filled panel with a 2px gradient strip across its top — the language the
+  // Dashboard was rebuilt away from. Sections are separated by their
+  // SectionHead rule and by whitespace now, so the two pages read as one site.
+  const sectionCls = "mb-12";
 
   // Repo sizes are optional — section is hidden if the fetch fails.
   const { repos: allRepos, loading: loadingGH } = useRepos();
@@ -81,26 +85,16 @@ const Performance: FC = () => {
 
       {/* ========== GitHub Repo Sizes ========== */}
       {!loadingGH && repos.length > 0 && (
-        <div className={`p-6 sm:p-8 mb-8 ${cardCls}`}>
-          <div
-            className="absolute top-0 left-0 right-0 h-[2px]"
-            style={{
-              background: `linear-gradient(90deg, transparent, ${TH.royal}60, ${TH.flamingo}60, transparent)`,
-            }}
+        <div className={sectionCls}>
+          <SectionHead
+            title="Repository Sizes"
+            subtitle="Storage usage across GitHub repositories"
+            meta={
+              <span className="text-xs tabular-nums text-light-text-tertiary dark:text-dark-text-muted">
+                {formatSize(totalSize)} across {repos.length} repositories
+              </span>
+            }
           />
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h3 className="text-lg font-medium text-light-text dark:text-dark-text">
-                Repository Sizes
-              </h3>
-              <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary">
-                Storage usage across GitHub repositories
-              </p>
-            </div>
-            <span className="px-3 py-1.5 rounded-lg text-xs font-medium bg-global-blue/10 text-global-blue">
-              Total: {formatSize(totalSize)}
-            </span>
-          </div>
           <div className="space-y-3">
             {repos.slice(0, 8).map((repo) => {
               const pct = Math.max(
@@ -132,45 +126,24 @@ const Performance: FC = () => {
       )}
 
       {/* ========== Lighthouse Scores ========== */}
-      <div className={`p-6 sm:p-8 mb-8 ${cardCls}`}>
-        <div
-          className="absolute top-0 left-0 right-0 h-[2px]"
-          style={{
-            background: `linear-gradient(90deg, transparent, ${TH.green}60, ${TH.azure}60, transparent)`,
-          }}
+      <div className={sectionCls}>
+        <SectionHead
+          title="Lighthouse Scores"
+          subtitle="Google Lighthouse audit results for nevinas_ka_i"
         />
-        <h3 className="text-lg font-medium text-light-text dark:text-dark-text mb-1">
-          Lighthouse Scores
-        </h3>
-        <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-8">
-          Google Lighthouse audit results for nevinas_ka_i
-        </p>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 justify-items-center">
           {lighthouseScores.map((s) => (
-            <ScoreRing
-              key={s.label}
-              score={s.score}
-              label={s.label}
-              color={s.color}
-            />
+            <ScoreRing key={s.label} score={s.score} label={s.label} />
           ))}
         </div>
       </div>
 
       {/* ========== Core Web Vitals ========== */}
-      <div className={`p-6 sm:p-8 mb-8 ${cardCls}`}>
-        <div
-          className="absolute top-0 left-0 right-0 h-[2px]"
-          style={{
-            background: `linear-gradient(90deg, transparent, ${TH.azure}60, ${TH.orchid}60, transparent)`,
-          }}
+      <div className={sectionCls}>
+        <SectionHead
+          title="Core Web Vitals"
+          subtitle="Real user experience metrics"
         />
-        <h3 className="text-lg font-medium text-light-text dark:text-dark-text mb-1">
-          Core Web Vitals
-        </h3>
-        <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-6">
-          Real user experience metrics
-        </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {coreWebVitals.map((v) => (
             <div
@@ -206,19 +179,11 @@ const Performance: FC = () => {
       </div>
 
       {/* ========== Performance History (Area Chart) ========== */}
-      <div className={`p-6 sm:p-8 mb-8 ${cardCls}`}>
-        <div
-          className="absolute top-0 left-0 right-0 h-[2px]"
-          style={{
-            background: `linear-gradient(90deg, transparent, ${TH.green}60, transparent)`,
-          }}
+      <div className={sectionCls}>
+        <SectionHead
+          title="Performance Trend"
+          subtitle="Lighthouse scores over time"
         />
-        <h3 className="text-lg font-medium text-light-text dark:text-dark-text mb-1">
-          Performance Trend
-        </h3>
-        <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-6">
-          Lighthouse scores over time
-        </p>
         <div className="h-[300px]">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={performanceHistory}>
@@ -303,19 +268,11 @@ const Performance: FC = () => {
       </div>
 
       {/* ========== Bundle Analysis ========== */}
-      <div className={`p-6 sm:p-8 mb-8 ${cardCls}`}>
-        <div
-          className="absolute top-0 left-0 right-0 h-[2px]"
-          style={{
-            background: `linear-gradient(90deg, transparent, ${TH.orchid}60, ${TH.flamingo}60, transparent)`,
-          }}
+      <div className={sectionCls}>
+        <SectionHead
+          title="Bundle Analysis"
+          subtitle="Build output comparison across projects"
         />
-        <h3 className="text-lg font-medium text-light-text dark:text-dark-text mb-1">
-          Bundle Analysis
-        </h3>
-        <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-6">
-          Build output comparison across projects
-        </p>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -375,37 +332,38 @@ const Performance: FC = () => {
       </div>
 
       {/* ========== API Response Times ========== */}
-      <div className={`p-6 sm:p-8 mb-8 ${cardCls}`}>
-        <div
-          className="absolute top-0 left-0 right-0 h-[2px]"
-          style={{
-            background: `linear-gradient(90deg, transparent, ${TH.yellow}60, transparent)`,
-          }}
+      <div className={sectionCls}>
+        <SectionHead
+          title="API Response Times"
+          subtitle="Average latency per endpoint"
         />
-        <h3 className="text-lg font-medium text-light-text dark:text-dark-text mb-1">
-          API Response Times
-        </h3>
-        <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary mb-6">
-          Average latency per endpoint
-        </p>
         <div className="space-y-3">
           {apiResponseTimes.map((api) => {
             const maxMs = 400;
             const pct = Math.min((api.avgMs / maxMs) * 100, 100);
             const barColor = api.status === "healthy" ? TH.green : TH.yellow;
             return (
-              <div key={api.endpoint} className="flex items-center gap-4">
-                <div className="w-8 shrink-0">
+              /* Wraps on mobile. This was a rigid single-line flex — a w-8
+                 badge, a w-44 endpoint, a flexible bar, a w-16 latency and a
+                 status pill — needing ~396px of a 330px column at 375px
+                 viewport, so it overflowed its container by 47px and got
+                 clipped by an ancestor rather than scrolling. The bar drops to
+                 its own line below sm; everything else stays on one. */
+              <div
+                key={api.endpoint}
+                className="flex flex-wrap items-center gap-x-4 gap-y-2"
+              >
+                <div className="shrink-0">
                   <span
                     className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${api.method === "GET" ? "bg-global-green/10 text-global-green" : "bg-global-yellow/10 text-global-yellow"}`}
                   >
                     {api.method}
                   </span>
                 </div>
-                <span className="w-44 shrink-0 text-sm font-inter text-light-text dark:text-dark-text truncate">
+                <span className="min-w-0 flex-1 truncate text-sm font-inter text-light-text dark:text-dark-text sm:w-44 sm:flex-none">
                   {api.endpoint}
                 </span>
-                <div className="flex-1 h-2 rounded-full overflow-hidden bg-light-surface-2 dark:bg-dark-surface">
+                <div className="order-last h-2 basis-full overflow-hidden rounded-full bg-light-surface-2 sm:order-none sm:flex-1 sm:basis-auto dark:bg-dark-surface">
                   <div
                     className="h-full rounded-full transition-all duration-700"
                     style={{
@@ -425,22 +383,25 @@ const Performance: FC = () => {
       </div>
 
       {/* ========== Code Quality ========== */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+      {/* Code quality figures. Same treatment as the Dashboard's StatStrip —
+          small-caps label, 36px/300 tabular figure — rather than four bordered
+          cards. The meters stay: each one encodes a proportion the number alone
+          does not carry, which is why this is not routed through StatStrip
+          itself. */}
+      <SectionHead
+        title="Code Quality"
+        subtitle="Static analysis of this repository"
+      />
+      <div className="mb-12 grid grid-cols-2 gap-x-8 gap-y-6 lg:grid-cols-4">
         {/* TypeScript */}
-        <div className={`p-5 ${cardCls}`}>
-          <div
-            className="absolute top-0 left-0 right-0 h-[2px]"
-            style={{
-              background: `linear-gradient(90deg, transparent, ${TH.azure}60, transparent)`,
-            }}
-          />
-          <div className="flex items-center gap-2 mb-3">
+        <div>
+          <div className="mb-1.5 flex items-center gap-2">
             <i className="ri-code-s-slash-line text-matte-azure"></i>
-            <span className="text-xs font-medium uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary">
+            <span className="text-xs font-medium uppercase tracking-[0.14em] text-light-text-tertiary dark:text-dark-text-muted">
               TypeScript
             </span>
           </div>
-          <div className="text-3xl font-medium text-light-text dark:text-dark-text mb-1">
+          <div className="mb-1 text-4xl font-light tabular-nums text-light-text dark:text-dark-text">
             {codeQuality.typescript.coverage}%
           </div>
           <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary">
@@ -456,20 +417,14 @@ const Performance: FC = () => {
         </div>
 
         {/* ESLint */}
-        <div className={`p-5 ${cardCls}`}>
-          <div
-            className="absolute top-0 left-0 right-0 h-[2px]"
-            style={{
-              background: `linear-gradient(90deg, transparent, ${TH.green}60, transparent)`,
-            }}
-          />
-          <div className="flex items-center gap-2 mb-3">
+        <div>
+          <div className="mb-1.5 flex items-center gap-2">
             <i className="ri-shield-check-line text-global-green"></i>
-            <span className="text-xs font-medium uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary">
+            <span className="text-xs font-medium uppercase tracking-[0.14em] text-light-text-tertiary dark:text-dark-text-muted">
               ESLint
             </span>
           </div>
-          <div className="text-3xl font-medium text-light-text dark:text-dark-text mb-1">
+          <div className="mb-1 text-4xl font-light tabular-nums text-light-text dark:text-dark-text">
             {codeQuality.eslint.errors}
           </div>
           <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary">
@@ -486,20 +441,14 @@ const Performance: FC = () => {
         </div>
 
         {/* Dependencies */}
-        <div className={`p-5 ${cardCls}`}>
-          <div
-            className="absolute top-0 left-0 right-0 h-[2px]"
-            style={{
-              background: `linear-gradient(90deg, transparent, ${TH.orchid}60, transparent)`,
-            }}
-          />
-          <div className="flex items-center gap-2 mb-3">
+        <div>
+          <div className="mb-1.5 flex items-center gap-2">
             <i className="ri-box-3-line text-velvet-orchid"></i>
-            <span className="text-xs font-medium uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary">
+            <span className="text-xs font-medium uppercase tracking-[0.14em] text-light-text-tertiary dark:text-dark-text-muted">
               Dependencies
             </span>
           </div>
-          <div className="text-3xl font-medium text-light-text dark:text-dark-text mb-1">
+          <div className="mb-1 text-4xl font-light tabular-nums text-light-text dark:text-dark-text">
             {codeQuality.dependencies.total}
           </div>
           <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary">
@@ -515,20 +464,14 @@ const Performance: FC = () => {
         </div>
 
         {/* Lines of Code */}
-        <div className={`p-5 ${cardCls}`}>
-          <div
-            className="absolute top-0 left-0 right-0 h-[2px]"
-            style={{
-              background: `linear-gradient(90deg, transparent, ${TH.flamingo}60, transparent)`,
-            }}
-          />
-          <div className="flex items-center gap-2 mb-3">
+        <div>
+          <div className="mb-1.5 flex items-center gap-2">
             <i className="ri-file-code-line text-velvet-flamingo"></i>
-            <span className="text-xs font-medium uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary">
+            <span className="text-xs font-medium uppercase tracking-[0.14em] text-light-text-tertiary dark:text-dark-text-muted">
               Code Lines
             </span>
           </div>
-          <div className="text-3xl font-medium text-light-text dark:text-dark-text mb-1">
+          <div className="mb-1 text-4xl font-light tabular-nums text-light-text dark:text-dark-text">
             {codeQuality.codeLines.total.toLocaleString()}
           </div>
           <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary">
