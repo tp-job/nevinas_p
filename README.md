@@ -7,6 +7,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-7-646cff?logo=vite&logoColor=white)](https://vite.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38bdf8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Express](https://img.shields.io/badge/Express-5-000000?logo=express&logoColor=white)](https://expressjs.com/)
 
 **Experience it live →** https://nevinas-p.onrender.com/
 
@@ -16,6 +17,7 @@
 
 - [Design Philosophy](#design-philosophy)
 - [The Experience](#the-experience)
+- [The Work Section](#the-work-section)
 - [Design System](#design-system)
   - [Color](#color)
   - [Typography](#typography)
@@ -23,7 +25,7 @@
   - [Motion](#motion)
 - [Architecture of the System](#architecture-of-the-system)
 - [Signature Craft](#signature-craft)
-- [Explore Locally](#explore-locally)
+- [Run It Locally](#run-it-locally)
 
 ---
 
@@ -42,10 +44,21 @@ otherworldly. A portfolio that doesn't ask to be admired so much as inhabited.
 
 ## The Experience
 
-The site is not a set of pages but a **single continuous journey**. Content is
-staged as a stack of full-viewport slides — hero, statements, timeline,
-services, work, testimonials, contact — that the visitor moves through by
-scroll, each transition deliberate and snap-aligned.
+The landing route is not a set of pages but a **single continuous journey**.
+Content is staged as a stack of fourteen full-viewport slides — hero,
+statements, timeline, bento, node map, services, work, testimonial, FAQ,
+contact — that the visitor moves through by scroll, each transition deliberate
+and snap-aligned.
+
+Four statements carry the spine of it, each doubled in English and Japanese so
+the two voices arrive together rather than one translating the other:
+
+```
+I design.    デザインする
+I develop.   開発する
+I think.     考える
+And listen…  そして、聴く
+```
 
 - **Bilingual by design** — English carries the message; Japanese (異世界 /
   ネヴィナス) carries the mood. The two typographic voices are woven together,
@@ -55,6 +68,28 @@ scroll, each transition deliberate and snap-aligned.
 - **Light and dark as equals** — the entire system is authored twice over, so
   neither theme is an afterthought. Switching is a smooth, deliberate
   cross-fade, not a jarring flip.
+
+## The Work Section
+
+Behind the landing journey sits `/work` — a thirteen-route application with its
+own persistent navigation, where the portfolio stops performing and starts
+showing its instruments.
+
+| Route | What it holds |
+|---|---|
+| `/work/dashboard` | Activity analytics — a 24-hour work-rhythm distribution, a per-day activity calendar, contribution and language breakdowns |
+| `/work/docs` | Architecture, project structure, the live design-system reference, changelog, and per-repo READMEs |
+| `/work/repository` | Every public repository, filterable by language |
+| `/work/repository/graph-view` | The same repositories as an interactive node graph |
+| `/work/performance` | Lighthouse scores, Core Web Vitals, bundle analysis, API latency, code-quality metrics |
+| `/work/tech-stack` · `/work/tooling` | The stack in use, and the working environment |
+| `/work/gallery` · `/work/blog` | Image collection and written posts |
+| `/work/website` · `/work/react` · `/work/tailwindcss` · `/work/flutter` | Project showcases, filtered by skill |
+
+The data behind these is real: an Express API syncs from the GitHub REST API
+into a set of JSON files, and the front end reads them through a single shared
+provider so the repository list is fetched once per visit rather than once per
+page.
 
 ## Design System
 
@@ -66,7 +101,7 @@ surface consumes. Change a token, and the whole world shifts in step.
 
 A disciplined palette anchors the mood in cool twilight blues.
 
-**Primary scale — fourteen steps from mist to midnight**
+**Primary scale — from mist to midnight**
 
 ```
 Periwinkle  #E8EAF5 → #C8CDEB → #A8B0D9      (light, airy highs)
@@ -80,32 +115,29 @@ Pink, and English Violet, reserved for effects, gradients, and glass so accents
 never feel bolted on.
 
 **Accent set** — matte and velvet tones (Royal, Azure, Indigo, Orchid,
-Flamingo) power the statement gradients, one signature blend per idea:
-
-```
-I design.   → rose → coral → amber
-I develop.  → cyan → blue → indigo
-I think.    → violet → fuchsia → rose
-And listen. → emerald → cyan → blue
-```
+Flamingo), each an alias onto the palette rather than a colour of its own, so
+the accents cannot drift away from the scale they sit on.
 
 Every hue is mapped to a **semantic layer** (`text-primary`, `surface-elevated`,
 `border-subtle`, `focus-ring`…) so components speak in meaning, not raw values —
-and the light/dark inversion happens in one place.
+and the light/dark inversion happens in one place. Charts read the same tokens
+at runtime, so a palette change reaches the data visualisations too.
 
 ### Typography
 
-Four voices, each with a clear role:
+**Two typefaces. No weight above 600.**
 
 | Token | Typeface | Role |
 |---|---|---|
-| Display | **Bricolage Grotesque** | Oversized headlines, expressive character |
-| Body | **Inter** (variable) | Clarity at every size |
-| Mono | **DM Mono** | Labels, metadata, the "engineered" voice |
-| Japanese | **Noto Serif JP** · **Zen Kaku Gothic New** | Mood, atmosphere, 異世界 |
+| `--font-inter` | **Inter** (variable, 300–600) | Everything — headings, body, UI, numerals |
+| `--font-zen` | **Zen Kaku Gothic New** | Japanese captions and subtitles |
 
-Headlines lean into tight tracking and generous scale (`clamp()`-driven, up to
-`13vw`) so type becomes composition, not just words.
+The discipline is deliberate: hierarchy is carried by **size and spacing, not
+weight**, so a page title is a large light face rather than a small heavy one.
+Nothing on the site is bolder than 600, and the two families are self-hosted and
+subset — the Japanese face ships Latin-only, with the ~151 Japanese glyphs the
+site actually uses requested separately, rather than pulling a 24 MB CJK family
+into the render path.
 
 ### Surface & Depth
 
@@ -114,16 +146,21 @@ shadows:
 
 - **Glassmorphism** — layered blur, saturation, and inset highlights tuned per
   theme, so panels feel like frosted glass floating over the backdrop.
-- **Neumorphism** — soft, periwinkle-tinted dual shadows for tactile,
-  pressed-from-the-surface controls.
 - **Elevation shadows** — a midnight-tinted `sm → md → lg → glow` ramp for
   consistent, calm layering.
+- **Hairlines and whitespace** — the newer surfaces carry no box at all:
+  sections are separated by a one-pixel rule and the space around them, which
+  is what keeps dense, data-heavy pages from reading as a wall of cards.
+
+A fourth system, **neumorphism** — soft periwinkle-tinted dual shadows — is
+being retired. It now survives on a single component and is not the direction
+new surfaces follow.
 
 ### Motion
 
-Movement follows a single easing philosophy — a confident
-`cubic-bezier(0.16, 1, 0.3, 1)` that decelerates into place — applied through
-shared duration and timing tokens. Animation is choreographed, never random:
+Movement follows one easing family — confident curves that decelerate into
+place, led by `cubic-bezier(0.22, 1, 0.36, 1)` — applied through shared duration
+and timing tokens. Animation is choreographed, never random:
 elements enter to lead the eye and exit to release it. All motion respects
 `prefers-reduced-motion`.
 
@@ -143,6 +180,10 @@ tokens → reset → base → components → layouts → theme
 - **One source of truth for dark mode** — a single semantic override block
   re-points every meaning-level token, so the whole product themes in lockstep.
 
+Beneath the styles, the shape is a small MERN-adjacent stack: React 19 + Vite on
+the front, Express 5 + Zod on the back, and **JSON files as the store** — no
+database. Global state is React Context only.
+
 ## Signature Craft
 
 - **One shared WebGL backdrop, not many.** The fluid field behind the slides is
@@ -152,17 +193,40 @@ tokens → reset → base → components → layouts → theme
 - **Scroll as the primary instrument.** A precise, snap-aligned scroll model
   drives every transition and the active-slide state, with animations bound to
   `requestAnimationFrame` and passive listeners to keep frames buttery.
+- **Only the active slide computes.** Scroll-linked work runs for the slide in
+  view; the rest render as inert placeholders, which is what keeps fourteen
+  full-viewport slides from costing fourteen slides' worth of layout.
 - **Composable, token-driven components** — cards, timelines, charts, and
   navigation all draw from the same vocabulary, so the system stays coherent as
   it grows.
 
-## Explore Locally
+## Run It Locally
+
+The front end reads its data from the API, so **start both**. With the server
+down, every data-backed route renders the error screen rather than content.
 
 ```bash
-# Frontend
+# 1. API — http://localhost:3000
+cd server
+npm install
+npm run dev
+
+# 2. Front end — http://localhost:10005
 cd client
 npm install
 npm run dev
+```
+
+Vite proxies `/api` to port 3000, so no extra configuration is needed. Open
+http://localhost:10005.
+
+Useful extras:
+
+```bash
+npm run build            # client: production build
+npm run icons:subset     # client: regenerate the icon subset after adding ri-* classes
+npm run sync:github      # server: refresh the JSON store from the GitHub API
+npm run seed             # server: seed projects and blog posts
 ```
 
 The experience is best viewed full-screen, in both light and dark, with the

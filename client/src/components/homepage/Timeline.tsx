@@ -1,12 +1,44 @@
 import { useEffect, useRef, useState } from "react";
 import { DataTimeline } from "@/data/homeData";
-import "@/styles/module/Timeline.module.css";
 
-// ─── Hooks — logic unchanged ─────────────────────────────────────
+/**
+ * "My Journey" — a capability index, rendered as one.
+ *
+ * WHY THE OLD FORM READ AS DECORATION
+ *
+ * This was an alternating two-column timeline: a vertical spine, a dot that
+ * tracked the scroll position, and glass cards badged STEP 1 through STEP 5.
+ * Every one of those devices asserts a sequence.
+ *
+ * The data has no sequence. The five entries are Languages, Education,
+ * Projects, Tools I Use and Future Goals — parallel facets of a profile, not
+ * stages of anything. Their `date` field is not a date either; it holds
+ * "Core Skills", "Learning Journey", "Portfolio Work", "Tech Stack", "Vision".
+ * So the layout was claiming a progression the content cannot support, and a
+ * reader who looks closely finds the claim empty. That is what makes a section
+ * feel decorative rather than engineered: the form is doing work the data
+ * is not backing.
+ *
+ * Now it is an indexed reference table — the thing it always was. Index,
+ * category, subject, detail, one row each, on a hairline grid.
+ *
+ * A NOTE ON APPLYING THE DATA-PAGE LANGUAGE HERE
+ *
+ * The homepage review argued against carrying the dashboard's chrome onto this
+ * page, and this is not a reversal of that. The rule was that chrome should
+ * follow content type: atmosphere for the hero and the statements, structure
+ * for reference material. This slide is the most reference-like content on the
+ * homepage — a list of capabilities someone reads to find a fact — so it earns
+ * the structured treatment where a hero slide would not.
+ *
+ * The scroll-tracking hook is kept: it still drives which row reads as active,
+ * which is genuine feedback about where the reader is. Only the sequence
+ * claims were removed.
+ */
 
 const useActiveIndex = (
-  sectionRefs: React.MutableRefObject<HTMLDivElement[]>,
-  containerRef: React.RefObject<HTMLDivElement | null>
+  rowRefs: React.MutableRefObject<HTMLDivElement[]>,
+  containerRef: React.RefObject<HTMLDivElement | null>,
 ) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -17,181 +49,102 @@ const useActiveIndex = (
       window;
 
     const handleScroll = () => {
-      if (!sectionRefs.current.length) return;
-
+      if (!rowRefs.current.length) return;
       const viewportCenter = window.innerHeight / 2;
       let closestIndex = 0;
       let minDistance = Infinity;
 
-      sectionRefs.current.forEach((section, index) => {
-        if (!section) return;
-        const rect = section.getBoundingClientRect();
-        const sectionCenter = rect.top + rect.height / 2;
-        const distance = Math.abs(sectionCenter - viewportCenter);
-
+      rowRefs.current.forEach((row, index) => {
+        if (!row) return;
+        const rect = row.getBoundingClientRect();
+        const rowCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(rowCenter - viewportCenter);
         if (distance < minDistance) {
           minDistance = distance;
           closestIndex = index;
         }
       });
-
       setActiveIndex(closestIndex);
     };
 
     scrollContainer.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-
     return () => scrollContainer.removeEventListener("scroll", handleScroll);
-  }, [sectionRefs, containerRef]);
+  }, [rowRefs, containerRef]);
 
   return activeIndex;
 };
 
-const TimelineDot = ({
-  activeIndex,
-  sectionRefs,
-  containerRef,
-}: {
-  activeIndex: number;
-  sectionRefs: React.MutableRefObject<HTMLDivElement[]>;
-  containerRef: React.MutableRefObject<HTMLDivElement | null>;
-}) => {
-  const [top, setTop] = useState(0);
-
-  useEffect(() => {
-    const scrollContainer =
-      containerRef.current?.closest(".overflow-y-auto") ||
-      document.getElementById("homepage-scroll") ||
-      window;
-
-    let rafId = 0;
-
-    const updatePosition = () => {
-      const activeSection = sectionRefs.current[activeIndex];
-      const container = containerRef.current;
-      if (!activeSection || !container) return;
-
-      const sectionRect = activeSection.getBoundingClientRect();
-      const containerRect = container.getBoundingClientRect();
-      const nextTop =
-        sectionRect.top - containerRect.top + sectionRect.height / 2;
-      setTop(nextTop);
-    };
-
-    const scheduleUpdate = () => {
-      cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(updatePosition);
-    };
-
-    scheduleUpdate();
-    scrollContainer.addEventListener("scroll", scheduleUpdate, { passive: true });
-    window.addEventListener("resize", scheduleUpdate);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      scrollContainer.removeEventListener("scroll", scheduleUpdate);
-      window.removeEventListener("resize", scheduleUpdate);
-    };
-  }, [activeIndex, containerRef, sectionRefs]);
-
-  return <div className="tl-dot" style={{ top }} />;
-};
-
-// ─── Section ──────────────────────────────────────────────────────
-
-const TimelineSection = () => {
+const Timeline = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const sectionRefs = useRef<HTMLDivElement[]>([]);
-  const activeIndex = useActiveIndex(sectionRefs, containerRef);
+  const rowRefs = useRef<HTMLDivElement[]>([]);
+  const activeIndex = useActiveIndex(rowRefs, containerRef);
 
   return (
-    <section
-      id="timeline-content"
-      className="tl-root transition-colors duration-500 py-20"
-    >
-      {/*
-        ── Header block — DS §2.4 canonical pattern ──────────────────
-        Eyebrow : text-xs font-semibold tracking-widest uppercase   (DS §2.3 label token)
-                  color: text-haze (light) / dark:text-cool (dark)
-        h2      : font-normal (400) — DS §2.2 h2 headline max weight
-                  text-4xl sm:text-5xl matches DS headline-lg token
-        JP sub  : font-zen font-light — Zen Kaku Gothic New 300, JP only (DS §2.1)
-        Divider : from-haze to-cool — main palette gradient, opacity-60 per DS §2.5
-      */}
-      <div className="mb-16 flex flex-col items-center text-center px-[8%]">
-        <p className="text-xs font-semibold tracking-widest uppercase mb-2 text-haze dark:text-cool">
-          {/* ↑ font-semibold (was font-medium) — DS §2.4 canonical eyebrow */}
-          Experience
-        </p>
-        <h2 className="text-4xl sm:text-5xl font-normal tracking-tight text-light-text dark:text-dark-text mb-1">
-          My Journey
-        </h2>
-        <h3 className="font-zen text-xl font-light tracking-wide text-haze dark:text-cool">
-          私の歩み
-        </h3>
-        <div className="w-12 h-1 bg-gradient-to-r from-haze to-cool rounded-full mt-6 opacity-60" />
+    <section className="w-full px-[8%] py-20 transition-colors duration-500">
+      {/* Header. Left-aligned over a hairline, matching the section headers on
+          the data pages — a centred block with a gradient divider underneath
+          reads as a marketing beat, which is the opposite of the ask. */}
+      <div className="mb-10 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-light-border pb-3 dark:border-dark-border">
+        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+          <h2 className="text-xs font-medium uppercase tracking-[0.14em] text-light-text dark:text-dark-text">
+            My Journey
+          </h2>
+          <span className="font-zen text-xs text-light-text-tertiary dark:text-dark-text-muted">
+            私の歩み
+          </span>
+        </div>
+        <span className="text-xs tabular-nums text-light-text-tertiary dark:text-dark-text-muted">
+          {DataTimeline.length} areas
+        </span>
       </div>
 
-      {/* ── Two-column timeline ────────────────────────────────────── */}
-      <div className="tl-wrapper" ref={containerRef}>
-        {/* Atmospheric spine — French Gray → Cool Gray Sub gradient (DS §1.7 sub-palette) */}
-        <div className="tl-line" />
-
-        {/* Periwinkle tracking dot — main palette accent (DS §1.1) */}
-        <TimelineDot
-          activeIndex={activeIndex}
-          sectionRefs={sectionRefs}
-          containerRef={containerRef}
-        />
-
-        {DataTimeline.map((item, index) => (
-          <div
-            key={item.id}
-            data-index={index}
-            ref={(el) => {
-              if (el) sectionRefs.current[index] = el;
-            }}
-            className="tl-section"
-          >
-            <div className="tl-container">
+      <div ref={containerRef}>
+        <dl className="text-sm">
+          {DataTimeline.map((item, index) => {
+            const active = index === activeIndex;
+            return (
               <div
-                className="tl-card-wrap"
-                style={{
-                  justifyContent: index % 2 === 0 ? "flex-start" : "flex-end",
-                  gridColumn: index % 2 === 0 ? "1" : "2",
+                key={item.id}
+                ref={(el) => {
+                  if (el) rowRefs.current[index] = el;
                 }}
+                className={`grid grid-cols-[2.5rem_1fr] gap-x-4 border-b border-light-border/60 py-5 transition-colors last:border-0 sm:grid-cols-[3rem_10rem_1fr] dark:border-dark-border/60 ${
+                  active ? "" : "opacity-70"
+                }`}
               >
-                {/*
-                  tl-card: DS §5.2 glass surface
-                  active:  Surface-2 elevation + French Gray specular (DS §5.1)
-                  Hover:   translateY(-2px) — DS §20 rule, never scale()
-                */}
-                <article
-                  className={`tl-card ${index === activeIndex ? "active" : ""}`}
-                  tabIndex={0}
+                {/* Index, not a step. Zero-padded and tabular so the column is
+                    a fixed rail the eye can run down. */}
+                <span
+                  className={`tabular-nums ${
+                    active
+                      ? "text-matte-azure"
+                      : "text-light-text-tertiary dark:text-dark-text-muted"
+                  }`}
                 >
-                  {/*
-                    Badge: DS §13.2 chip "primary" recipe
-                    font-semibold (600) label exception — DS §2.2
-                  */}
-                  <span className="tl-badge">STEP {index + 1}</span>
+                  {String(index + 1).padStart(2, "0")}
+                </span>
 
-                  {/* Date: DS caption token — Cool Gray #878CB4 */}
-                  <p className="tl-meta">{item.date}</p>
+                {/* The category — what `date` actually holds. */}
+                <dt className="col-start-2 text-xs font-medium uppercase tracking-[0.12em] text-light-text-tertiary sm:col-start-2 dark:text-dark-text-muted">
+                  {item.date}
+                </dt>
 
-                  {/* Title: DS headline-sm — font-normal (400), Midnight / dark-text */}
-                  <h3 className="tl-title">{item.title}</h3>
-
-                  {/* Description: font-light (300) — Haze light / Cool Gray dark */}
-                  <p className="tl-desc">{item.description}</p>
-                </article>
+                <dd className="col-start-2 sm:col-start-3 sm:row-start-1">
+                  <p className="mb-1 text-base text-light-text dark:text-dark-text">
+                    {item.title}
+                  </p>
+                  <p className="max-w-[68ch] text-sm leading-relaxed text-light-text-secondary dark:text-dark-text-secondary">
+                    {item.description}
+                  </p>
+                </dd>
               </div>
-            </div>
-          </div>
-        ))}
+            );
+          })}
+        </dl>
       </div>
     </section>
   );
 };
 
-export default TimelineSection;
+export default Timeline;

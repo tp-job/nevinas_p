@@ -110,7 +110,7 @@ const Testimonials: React.FC = () => {
       {/* Decorative large quote mark */}
       <div
         aria-hidden="true"
-        className="absolute -top-8 left-6 text-[260px] font-bold leading-none text-shadow-sm pointer-events-none select-none"
+        className="absolute -top-8 left-6 text-[260px] font-medium leading-none text-shadow-sm pointer-events-none select-none"
       >
         "
       </div>
@@ -139,7 +139,7 @@ const Testimonials: React.FC = () => {
         {/* Controls row */}
         <div className="flex items-center justify-between mb-10">
           <button
-            className={`${styles.neuBtn} text-xs font-bold tracking-[0.16em] uppercase text-haze dark:text-cool py-2.5 px-5`}
+            className={`${styles.neuBtn} text-xs font-medium tracking-[0.16em] uppercase text-haze dark:text-cool py-2.5 px-5`}
             onClick={() => handleNav(-1)}
             aria-label="Previous testimonial"
           >
@@ -151,7 +151,7 @@ const Testimonials: React.FC = () => {
           </span>
 
           <button
-            className={`${styles.neuBtn} text-xs font-bold tracking-[0.16em] uppercase text-haze dark:text-cool py-2.5 px-5`}
+            className={`${styles.neuBtn} text-xs font-medium tracking-[0.16em] uppercase text-haze dark:text-cool py-2.5 px-5`}
             onClick={() => handleNav(1)}
             aria-label="Next testimonial"
           >
@@ -183,7 +183,7 @@ const Testimonials: React.FC = () => {
             className={`${styles.glassCard} inline-flex items-center gap-3.5 rounded-full py-2.5 pl-2.5 pr-5.5`}
           >
             <div
-              className={`${styles.neuCircle} w-11 h-11 flex items-center justify-center text-[13px] font-bold text-light-text dark:text-dark-text shrink-0`}
+              className={`${styles.neuCircle} w-11 h-11 flex items-center justify-center text-[13px] font-medium text-light-text dark:text-dark-text shrink-0`}
             >
               {t.initials}
             </div>
@@ -196,10 +196,10 @@ const Testimonials: React.FC = () => {
 
         {/* Source row */}
         <div className="flex items-center justify-end gap-3 mt-8 pt-6 border-t border-cool-pale dark:border-haze-deep">
-          <span className="text-[10px] font-bold tracking-[0.16em] uppercase text-cool dark:text-haze-light">
+          <span className="text-[10px] font-medium tracking-[0.16em] uppercase text-cool dark:text-haze-light">
             Source
           </span>
-          <span className="text-[22px] font-bold text-haze dark:text-cool">{t.source}</span>
+          <span className="text-[22px] font-medium text-haze dark:text-cool">{t.source}</span>
         </div>
 
         {/* Dot indicators */}

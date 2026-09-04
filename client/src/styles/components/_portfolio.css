@@ -153,7 +153,23 @@
     align-items: stretch;
   }
 
+  /* Cards fill their box.
+   *
+   * The grid stretches every card to its row height (`align-items: stretch`,
+   * `grid-template-rows: repeat(3, minmax(180px, 1fr))`) but the content was
+   * plain block flow from the top, so a tall row left dead space underneath —
+   * visible as half-empty cards across the whole grid.
+   *
+   * `space-between` pins the first child to the top and the last to the
+   * bottom, which is the structure the content already has: an eyebrow label,
+   * then a headline or figure. Two cards had solved this individually
+   * (`bc--3` with justify-end, `bc--11` with justify-center); those still win,
+   * because Tailwind utilities sit in a later cascade layer than this one. */
   .bc {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.5rem;
     background: var(--color-glass-bg);
     backdrop-filter: blur(var(--color-glass-blur)) saturate(var(--color-glass-saturate));
     -webkit-backdrop-filter: blur(var(--color-glass-blur)) saturate(var(--color-glass-saturate));
@@ -195,6 +211,19 @@
     padding: 0;
   }
 
+  /* Graphic cards centre rather than spread.
+   *
+   * `space-between` is right for the text cards, whose content is an eyebrow
+   * label and a headline — pinning one to each edge is the structure they
+   * already have. These two hold a glyph or a chart plus one short caption,
+   * and spreading two small items to opposite edges opens a hole in the middle
+   * and pushes the caption against the bottom border. Centring reads as a
+   * composed card instead of a stretched one. */
+  .bc--9,
+  .bc--10 {
+    justify-content: center;
+  }
+
   @media (min-width: 640px) {
     .bento {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -224,6 +253,9 @@
     .bc--9 { grid-column: 1; grid-row: 3; }
     .bc--10 { grid-column: 2 / 4; grid-row: 3; }
     .bc--11 { grid-column: 4; grid-row: 3; }
+    /* Column 5 of row 3 was the grid's one empty cell — 11 cards across 15
+       cells, and the hole sat in the bottom-right corner where the eye ends. */
+    .bc--12 { grid-column: 5; grid-row: 3; }
   }
 
   @media (pointer: coarse) {

@@ -227,7 +227,7 @@ const ContactSplit: React.FC = () => {
                     viewport={{ once: true }}
                     className="mb-12"
                 >
-                    <div className="font-[var(--fd)] text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-none mb-4">
+                    <div className="font-[var(--fd)] text-5xl sm:text-6xl lg:text-7xl font-medium tracking-tight leading-none mb-4">
                         Nocturnal<br />Contact<span className="text-matte-azure">.</span>
                     </div>
                     <div className="font-[var(--fj)] text-lg text-haze dark:text-cool tracking-widest">
@@ -425,7 +425,7 @@ const ContactSplit: React.FC = () => {
                             type="submit"
                             disabled={isLocked}
                             aria-disabled={isLocked}
-                            className={`hover:opacity-90 px-8 py-4 rounded-full font-[var(--fm)] text-xs font-bold tracking-widest uppercase transition-all duration-300 whitespace-nowrap disabled:cursor-not-allowed relative overflow-hidden ${submitBtnClass(status)}`}
+                            className={`hover:opacity-90 px-8 py-4 rounded-full font-[var(--fm)] text-xs font-medium tracking-widest uppercase transition-all duration-300 whitespace-nowrap disabled:cursor-not-allowed relative overflow-hidden ${submitBtnClass(status)}`}
                             whileTap={!isLocked ? { scale: 0.97 } : {}}
                             animate={status === 'sending' ? { opacity: [1, 0.7, 1] } : { opacity: 1 }}
                             transition={status === 'sending' ? { duration: 1.2, repeat: Infinity } : { duration: 0.3 }}
