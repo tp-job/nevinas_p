@@ -159,7 +159,7 @@ const BentoGrid: React.FC = () => {
             </div>
         </AnimatedCard>
 
-        <AnimatedCard style={{ opacity: c8_opacity, scale: c8_scale }} className="bc bc--8 overflow-hidden py-4 flex items-center" delay={0.2}>
+        <AnimatedCard style={{ opacity: c8_opacity, scale: c8_scale }} className="bc bc--8 overflow-hidden py-4 flex flex-row items-center" delay={0.2}>
             <div className="whitespace-nowrap text-sm font-medium tracking-[0.2em] text-[var(--color-text-secondary)] w-[200%] animate-[mq_10s_linear_infinite] flex">
               <span>FOR &nbsp;&nbsp;&nbsp; DEVELOPERS &nbsp;&nbsp;&nbsp; &amp; &nbsp;&nbsp;&nbsp; DESIGNERS &nbsp;&nbsp;&nbsp; · &nbsp;&nbsp;&nbsp; </span>
               <span>FOR &nbsp;&nbsp;&nbsp; DEVELOPERS &nbsp;&nbsp;&nbsp; &amp; &nbsp;&nbsp;&nbsp; DESIGNERS &nbsp;&nbsp;&nbsp; · &nbsp;&nbsp;&nbsp; </span>

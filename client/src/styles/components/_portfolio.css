@@ -153,7 +153,23 @@
     align-items: stretch;
   }
 
+  /* Cards fill their box.
+   *
+   * The grid stretches every card to its row height (`align-items: stretch`,
+   * `grid-template-rows: repeat(3, minmax(180px, 1fr))`) but the content was
+   * plain block flow from the top, so a tall row left dead space underneath —
+   * visible as half-empty cards across the whole grid.
+   *
+   * `space-between` pins the first child to the top and the last to the
+   * bottom, which is the structure the content already has: an eyebrow label,
+   * then a headline or figure. Two cards had solved this individually
+   * (`bc--3` with justify-end, `bc--11` with justify-center); those still win,
+   * because Tailwind utilities sit in a later cascade layer than this one. */
   .bc {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.5rem;
     background: var(--color-glass-bg);
     backdrop-filter: blur(var(--color-glass-blur)) saturate(var(--color-glass-saturate));
     -webkit-backdrop-filter: blur(var(--color-glass-blur)) saturate(var(--color-glass-saturate));
@@ -193,6 +209,19 @@
   .bc--3,
   .bc--9 {
     padding: 0;
+  }
+
+  /* Graphic cards centre rather than spread.
+   *
+   * `space-between` is right for the text cards, whose content is an eyebrow
+   * label and a headline — pinning one to each edge is the structure they
+   * already have. These two hold a glyph or a chart plus one short caption,
+   * and spreading two small items to opposite edges opens a hole in the middle
+   * and pushes the caption against the bottom border. Centring reads as a
+   * composed card instead of a stretched one. */
+  .bc--9,
+  .bc--10 {
+    justify-content: center;
   }
 
   @media (min-width: 640px) {

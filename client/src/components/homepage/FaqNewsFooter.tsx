@@ -2,37 +2,10 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Assets } from '@/data/homeData';
 
-interface FooterLink {
-  label: string;
-  href: string;
-  ext: boolean;
-  download?: string;
-}
-
-const FOOTER_LINK_COLUMNS: { title: string; links: FooterLink[] }[] = [
-  {
-    title: 'Connect',
-    links: [
-      { label: 'GitHub', href: 'https://github.com/tp-job', ext: true },
-      { label: 'Instagram', href: 'https://www.instagram.com/tp_job_th/?hl=en', ext: true },
-      { label: 'Twitter / X', href: 'https://x.com/nevinas_ka', ext: true },
-      { label: 'Email', href: 'mailto:nevinasv@gmail.com', ext: true },
-    ],
-  },
-  {
-    title: 'Quick Links',
-    links: [
-      { label: 'Home', href: '#top', ext: false },
-      { label: 'About', href: '#about', ext: false },
-      { label: 'Timeline', href: '#timeline', ext: false },
-      { label: 'Contact', href: '#contact', ext: false },
-    ],
-  },
-  {
-    title: 'Download',
-    links: [{ label: 'Resume PDF', href: Assets.resume, ext: true, download: 'resume-nevinas-ka.pdf' }],
-  },
-];
+/* FooterLink and FOOTER_LINK_COLUMNS were removed with the link columns.
+   Nothing became unreachable: GitHub, Instagram, X and the resume are all in
+   ContactSplit, layouts/Footer and layouts/Header, and the in-page anchors
+   (Home / About / Timeline / Contact) are the primary nav two rows above. */
 
 const faqData = [
   { q: "What technologies do you work with?", a: "I work with React, Next.js, TypeScript, TailwindCSS, Three.js, Flask, Python, and Node.js. I'm comfortable across the full stack but my passion is creating exceptional frontend experiences with performant, clean architecture." },
@@ -179,69 +152,15 @@ const FaqNewsFooter: React.FC = () => {
         </div>
       </div>
 
-      {/* NEWSLETTER */}
-      <div className="grid grid-cols-1 md:grid-cols-[0.75fr_1.5fr_0.4fr_0.65fr] border-b border-midnight/10 dark:border-periwinkle/10 min-h-[52px] items-stretch">
-        <div className="p-4 md:p-6 border-b md:border-b-0 md:border-r border-midnight/10 dark:border-periwinkle/10 flex items-center">
-          <div className="font-[var(--fd)] text-sm font-semibold tracking-tight flex items-center gap-2">
-            <div className="w-5 h-5 bg-gradient-to-br from-matte-midnight to-matte-royal rounded flex items-center justify-center shrink-0">
-              <svg viewBox="0 0 16 16" fill="none" className="w-2.5 h-2.5 text-dark-text-primary">
-                <rect x="1" y="1" width="6" height="6" fill="currentColor"/>
-                <rect x="9" y="9" width="6" height="6" fill="currentColor"/>
-                <rect x="9" y="1" width="6" height="6" fill="currentColor" opacity="0.3"/>
-              </svg>
-            </div>
-            Nevinas<sup className="text-[0.45em] opacity-50 ml-px">©</sup>
-          </div>
-        </div>
-        
-        <div className="p-4 md:p-6 border-b md:border-b-0 md:border-r border-midnight/10 dark:border-periwinkle/10 flex items-center w-full">
-          <div className="flex flex-col gap-1 w-full">
-            <div className="font-[var(--fm)] text-[11px] text-light-text-muted dark:text-dark-text-muted tracking-[0.14em] uppercase">Subscribe to be in touch*</div>
-            <input type="email" placeholder="Your e-mail" className="w-full bg-transparent border-b border-light-border dark:border-dark-border py-1 font-[var(--fm)] text-sm text-light-text dark:text-dark-text focus:outline-none focus:border-periwinkle-mid dark:focus:border-periwinkle transition-colors placeholder:text-light-text-muted dark:placeholder:text-dark-text-muted" />
-          </div>
-        </div>
-        
-        <div className="p-4 md:p-6 border-b md:border-b-0 md:border-r border-midnight/10 dark:border-periwinkle/10 items-center hidden md:flex">
-          <div className="font-[var(--fm)] text-[11px] text-light-text-muted dark:text-dark-text-muted tracking-[0.12em] uppercase leading-relaxed">
-            *Only valuable<br/>resources &amp; updates
-          </div>
-        </div>
-        
-        <button className="hover:opacity-90 transition-colors flex items-center justify-center bg-matte-royal text-dark-text-primary font-[var(--fm)] text-[0.65rem] font-medium tracking-[0.12em] uppercase p-4 md:p-0 w-full h-full">
-          SUBSCRIBE
-        </button>
-      </div>
+      {/* NEWSLETTER and FOOTER LINKS were removed here.
 
-      {/* FOOTER LINKS */}
-      <div className="grid grid-cols-2 md:grid-cols-3 border-b border-midnight/10 dark:border-periwinkle/10">
-        {FOOTER_LINK_COLUMNS.map((col, i) => (
-          <div key={i} className="p-4 md:p-6 md:border-r border-midnight/5 dark:border-periwinkle/5 last:border-r-0">
-            <div className="font-[var(--fm)] text-[11px] tracking-[0.22em] uppercase text-light-text-muted dark:text-dark-text-muted mb-3">{col.title}</div>
-            <div className="flex flex-col gap-1">
-              {col.links.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  {...(link.download ? { download: link.download } : {})}
-                  {...(link.ext && !link.download ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                  onClick={
-                    link.href.startsWith('#')
-                      ? (e) => {
-                          e.preventDefault();
-                          document.getElementById(link.href.slice(1))?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }
-                      : undefined
-                  }
-                  className="flex justify-between items-center font-[var(--fm)] text-[0.65rem] text-light-text-secondary dark:text-dark-text-secondary hover:text-matte-azure transition-colors py-0.5 group"
-                >
-                  {link.label}
-                  {link.ext && <span className="opacity-30 text-[0.5em] ml-1 group-hover:opacity-100 transition-opacity">↗</span>}
-                </a>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
+          The newsletter row asked for an e-mail behind a SUBSCRIBE button with
+          nothing on the other end — a solo portfolio has no list to join, so it
+          collected an address and promised something it could not deliver.
+
+          The three link columns (Connect / Quick Links / Download) duplicated
+          the primary navigation two rows above them and the contact slide, so
+          the page ended by restating its own menu. */}
 
       {/* COPYRIGHT */}
       <div className="flex flex-col sm:flex-row justify-between items-center px-4 md:px-6 py-3 border-b border-midnight/5 dark:border-periwinkle/5 font-[var(--fm)] text-[11px] tracking-[0.12em] text-light-text-muted dark:text-dark-text-muted uppercase gap-2">
