@@ -187,6 +187,20 @@ const BentoGrid: React.FC = () => {
             <div className="text-base font-medium tracking-tight text-[var(--color-text-primary)]">Position Sticky?</div>
             <div className="text-xs text-[var(--color-text-secondary)] mt-1">Of course</div>
         </AnimatedCard>
+
+        {/* Fills the grid's one empty cell (column 5, row 3).
+            Both claims are true of this page rather than generic copy: the
+            fourteen slides share a single WebGL context — see the
+            LiquidEtherBackdrop mounted once in HomePage.tsx — and the motion
+            layer honours prefers-reduced-motion. Inventing a filler card would
+            have completed the grid while making the section say less. */}
+        <AnimatedCard style={{ opacity: c11_opacity, y: c11_y }} className="bc bc--12" delay={0.3}>
+            <div className="text-[11px] text-[var(--color-text-secondary)] uppercase tracking-widest">Rendering</div>
+            <div>
+              <div className="text-xl font-medium tracking-tight text-[var(--color-text-primary)]">One WebGL<br/>context</div>
+              <div className="text-xs text-[var(--color-text-secondary)] mt-2">Shared by every slide — and it yields to reduced-motion.</div>
+            </div>
+        </AnimatedCard>
       </div>
     </section>
   );

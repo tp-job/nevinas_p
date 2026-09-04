@@ -18,13 +18,18 @@
 /* ── SECTION BG ──
    Light: periwinkle-family gradient using index.css @theme tokens.
    Dark:  midnight-family gradient for theme consistency. ── */
+/* Light mode used a lavender gradient — cool-pale to periwinkle to
+   sub-french — while every neighbouring slide sits on `--color-light-bg`.
+   Against the bento and contact slides it read as a different page rather than
+   a different section: more saturated, and a visible seam at both edges.
+   Dark mode had already been reconciled (see the rule below, whose comment
+   says "matches statement / timeline slides"); this is light mode catching up.
+
+   The gradient is not lost, only demoted: the decorative blob and the quote
+   mark still carry the colour, so the slide keeps its atmosphere without
+   owning a different ground. */
 .testimonialsBg {
-  background: linear-gradient(
-    145deg,
-    var(--color-cool-pale)  0%,    /* was #DDDFF0 */
-    var(--color-periwinkle) 45%,   /* was #C8CDEB */
-    var(--color-sub-french) 100%   /* was #B8BEE0 — nearest index.css token */
-  );
+  background: var(--color-light-bg);
   position: relative;
   overflow: hidden;
 }
