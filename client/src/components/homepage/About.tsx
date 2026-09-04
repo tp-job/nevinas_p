@@ -37,7 +37,7 @@ const About: FC = () => {
               {DataAbout.map((items) => (
                 <li
                   key={items.id}
-                  className="border-[.5px] card-glass p-6 cursor-pointer hover:-translate-y-1 duration-500"
+                  className="border-[.5px] card-glass p-6 duration-500"
                   tabIndex={0}
                 >
                   <i
@@ -59,7 +59,7 @@ const About: FC = () => {
               {DataTools.map((items) => (
                 <li
                   key={items.id}
-                  className="flex items-center justify-center w-12 duration-500 border border-light-border dark:border-dark-border rounded-lg cursor-pointer sm:w-14 aspect-square hover:-translate-y-1 bg-light-surface-2/50 dark:bg-dark-surface-2/50 backdrop-blur-sm"
+                  className="flex items-center justify-center w-12 duration-500 border border-light-border dark:border-dark-border rounded-lg sm:w-14 aspect-square bg-light-surface-2/50 dark:bg-dark-surface-2/50 backdrop-blur-sm"
                 >
                   <i
                     className={`${items.icon} text-2xl`}

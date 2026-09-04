@@ -65,7 +65,7 @@ const FaqNewsFooter: React.FC = () => {
       {/* HERO ROW */}
       <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1.7fr_1fr] border-b border-midnight/10 dark:border-periwinkle/10 min-h-[105px]">
         <div className="p-6 md:p-8 border-b md:border-b-0 md:border-r border-midnight/10 dark:border-periwinkle/10 flex items-center">
-          <div className="font-[var(--fd)] text-4xl sm:text-5xl font-bold tracking-tight">FAQ</div>
+          <div className="font-[var(--fd)] text-4xl sm:text-5xl font-medium tracking-tight">FAQ</div>
         </div>
         <div className="p-6 border-b md:border-b-0 md:border-r border-light-border dark:border-dark-border flex items-center justify-center bg-light-surface dark:bg-dark-surface">
           <div className="relative w-12 h-12 rounded-full border-[3px] border-light-border dark:border-dark-border flex items-center justify-center">
@@ -137,7 +137,7 @@ const FaqNewsFooter: React.FC = () => {
       {/* LATEST NEWS */}
       <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.35fr_1fr_1fr] border-b border-midnight/10 dark:border-periwinkle/10">
         <div className="p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-midnight/10 dark:border-periwinkle/10 flex flex-col justify-between">
-          <div className="font-[var(--fd)] text-3xl sm:text-4xl font-bold tracking-tight uppercase leading-none">
+          <div className="font-[var(--fd)] text-3xl sm:text-4xl font-medium tracking-tight uppercase leading-none">
             Latest<br/>News<sup className="text-[0.28em] font-normal text-light-text-muted dark:text-dark-text-muted tracking-[0.06em] ml-1">NEW</sup>
           </div>
           <button className="w-8 h-8 rounded-full border-[1.5px] border-light-border dark:border-dark-border flex items-center justify-center text-sm hover:bg-matte-royal hover:border-matte-royal hover:text-dark-text-primary transition-colors mt-4">
@@ -207,7 +207,7 @@ const FaqNewsFooter: React.FC = () => {
           </div>
         </div>
         
-        <button className="hover:opacity-90 transition-colors flex items-center justify-center bg-matte-royal text-dark-text-primary font-[var(--fm)] text-[0.65rem] font-bold tracking-[0.12em] uppercase p-4 md:p-0 w-full h-full">
+        <button className="hover:opacity-90 transition-colors flex items-center justify-center bg-matte-royal text-dark-text-primary font-[var(--fm)] text-[0.65rem] font-medium tracking-[0.12em] uppercase p-4 md:p-0 w-full h-full">
           SUBSCRIBE
         </button>
       </div>
@@ -258,7 +258,7 @@ const FaqNewsFooter: React.FC = () => {
         <div className="absolute bottom-0 right-6 w-3 h-3 border-b-2 border-r-2 border-matte-royal hidden sm:block" />
         
         <div 
-          className="font-[var(--fd)] font-black tracking-[-0.06em] leading-[0.88] uppercase text-light-text dark:text-dark-text text-[clamp(4.5rem,14vw,13rem)]"
+          className="font-[var(--fd)] font-semibold tracking-[-0.06em] leading-[0.88] uppercase text-light-text dark:text-dark-text text-[clamp(4.5rem,14vw,13rem)]"
         >
           ネヴィ<span className="text-matte-royal">ナス</span>
         </div>

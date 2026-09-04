@@ -176,7 +176,7 @@ const NodeMap: React.FC = () => {
           >
             <HubIcon />
           </div>
-          <h2 className="text-[clamp(1.5rem,7vw,2.25rem)] font-bold tracking-[-0.02em] leading-tight text-light-text dark:text-dark-text text-balance">
+          <h2 className="text-[clamp(1.5rem,7vw,2.25rem)] font-medium tracking-[-0.02em] leading-tight text-light-text dark:text-dark-text text-balance">
             Fix. Learn. Prevent.
           </h2>
           <ul className="flex flex-wrap justify-center gap-2 list-none p-0 m-0">
@@ -292,7 +292,7 @@ const NodeMap: React.FC = () => {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
               <BarIcon />
-              <span className="text-xs font-bold tracking-[0.1em] uppercase text-light-text dark:text-dark-text">
+              <span className="text-xs font-medium tracking-[0.1em] uppercase text-light-text dark:text-dark-text">
                 EXPERIENCE
               </span>
             </div>
@@ -302,7 +302,7 @@ const NodeMap: React.FC = () => {
 
           {/* Quote */}
           <div>
-            <p className="text-xl font-bold tracking-[-0.02em] text-light-text dark:text-dark-text mb-2.5">kmitl</p>
+            <p className="text-xl font-medium tracking-[-0.02em] text-light-text dark:text-dark-text mb-2.5">kmitl</p>
             <p className="text-[13px] font-normal leading-[1.7] text-haze dark:text-cool">
               "Studying Industrial Education and Technology, blending design with robust coding standards." — <em>Nevinas Ka.</em>
             </p>
@@ -312,7 +312,7 @@ const NodeMap: React.FC = () => {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
               <EyeIcon />
-              <span className="text-[13px] font-bold tracking-[0.04em] text-light-text dark:text-dark-text">TECH STACK</span>
+              <span className="text-[13px] font-medium tracking-[0.04em] text-light-text dark:text-dark-text">TECH STACK</span>
             </div>
             <p className="text-[28px] font-light tracking-[-0.02em] text-light-text dark:text-dark-text mb-1">100%</p>
             <p className="text-xs font-medium text-haze dark:text-cool">Dedicated to pixel-perfect performance</p>

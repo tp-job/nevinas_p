@@ -128,7 +128,7 @@ function ContributorCard({ contributor }: { contributor: Contributor }) {
       className="rounded-[24px] border border-[rgba(200,205,235,0.10)]
                  bg-[rgba(30,35,60,0.50)] p-6 text-left backdrop-blur-[16px]
                  transition-all duration-300
-                 hover:-translate-y-1 hover:border-[rgba(200,205,235,0.18)]
+                 hover:border-[rgba(200,205,235,0.18)]
                  hover:bg-[rgba(46,53,88,0.60)]"
     >
       <div className="flex items-center gap-3">
