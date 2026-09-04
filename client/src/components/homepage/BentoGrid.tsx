@@ -80,7 +80,7 @@ const BentoGrid: React.FC = () => {
     <section className="bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text w-full py-10 px-4 sm:py-14 sm:px-6 lg:py-16 lg:px-10 flex justify-center items-center overflow-hidden">
       <div className="max-w-[1400px] w-full mx-auto bento" aria-label="Feature bento grid">
         <AnimatedCard style={{ opacity: c1_opacity, y: c1_y }} className="bc bc--1 pb-9">
-            <div className="text-[0.45rem] tracking-[0.2em] mb-4 text-[var(--color-text-secondary)] font-medium uppercase">SCROLL SMOOTHLY</div>
+            <div className="text-[11px] tracking-[0.2em] mb-4 text-[var(--color-text-secondary)] font-medium uppercase">SCROLL SMOOTHLY</div>
             <div className="w-7 h-7 bg-[var(--color-surface-secondary)] border border-[var(--color-border-primary)] shadow-sm flex items-center justify-center rounded-md mb-3">
               <svg viewBox="0 0 14 14" fill="none" className="w-[13px] h-[13px]">
                 <rect x="1" y="1" width="5" height="5" fill="var(--color-text-primary)"/>
@@ -88,12 +88,12 @@ const BentoGrid: React.FC = () => {
                 <rect x="7.5" y="1" width="5" height="5" fill="var(--color-text-muted)"/>
               </svg>
             </div>
-            <div className="text-[0.5rem] text-[var(--color-text-secondary)] uppercase tracking-widest mb-1">Performance</div>
+            <div className="text-[11px] text-[var(--color-text-secondary)] uppercase tracking-widest mb-1">Performance</div>
             <div className="text-xl font-medium tracking-tight text-[var(--color-text-primary)]">Supervision</div>
         </AnimatedCard>
 
         <AnimatedCard style={{ opacity: c2_opacity, y: c2_y }} className="bc bc--2" delay={0.1}>
-            <div className="text-[0.5rem] text-[var(--color-text-secondary)] uppercase tracking-widest mb-1">Identity</div>
+            <div className="text-[11px] text-[var(--color-text-secondary)] uppercase tracking-widest mb-1">Identity</div>
             <div className="text-xl font-medium tracking-tight mb-2 text-[var(--color-text-primary)]">About Nevinas</div>
             <div className="font-[var(--fj)] text-lg mb-1 text-[var(--color-text-primary)]">ネヴィナス</div>
             <div className="text-xs text-[var(--color-text-secondary)] mt-1">異世界 — Isekai</div>
@@ -111,25 +111,25 @@ const BentoGrid: React.FC = () => {
               style={{ backgroundImage: `url(${heroArt})` }}
             />
             <div className="relative z-10 text-white">
-              <div className="text-[0.5rem] text-white/50 uppercase tracking-widest mb-2 border border-white/20 inline-block px-2 py-0.5 rounded-full">Control your Progress Data</div>
+              <div className="text-[11px] text-white/50 uppercase tracking-widest mb-2 border border-white/20 inline-block px-2 py-0.5 rounded-full">Control your Progress Data</div>
               <div className="text-3xl sm:text-4xl font-light tracking-tight leading-tight mb-3">Full-Stack<br/>Developer</div>
               <div className="text-sm text-white/70 leading-relaxed mb-4">Scroll-driven experiences. Break it apart, apply to any element across the page.</div>
               <div className="flex items-center gap-1 text-sm">
                 <span className="text-white/40">(</span>
-                <span className="text-[0.55rem] uppercase tracking-widest text-white/60">Scroll → Explore</span>
+                <span className="text-[11px] uppercase tracking-widest text-white/60">Scroll → Explore</span>
                 <span className="text-white/40">)</span>
               </div>
             </div>
         </AnimatedCard>
 
         <AnimatedCard style={{ opacity: c4_opacity, y: c4_y }} className="bc bc--4" delay={0.1}>
-            <div className="text-[0.5rem] text-[var(--color-text-secondary)] uppercase tracking-widest mb-1">Navigation</div>
+            <div className="text-[11px] text-[var(--color-text-secondary)] uppercase tracking-widest mb-1">Navigation</div>
             <div className="text-xl font-medium tracking-tight mb-2 text-[var(--color-text-primary)]">Use Scroll.<br/>Control all.</div>
             <div className="text-xs text-[var(--color-text-secondary)] mt-2">Wheel up / down drives every transition.</div>
         </AnimatedCard>
 
         <AnimatedCard style={{ opacity: c5_opacity, y: c5_y }} className="bc bc--5" delay={0.2}>
-            <div className="text-[0.5rem] text-[var(--color-text-secondary)] uppercase tracking-widest mb-1">Typography</div>
+            <div className="text-[11px] text-[var(--color-text-secondary)] uppercase tracking-widest mb-1">Typography</div>
             <div className="text-[0.92rem] font-medium tracking-tight mb-2 text-[var(--color-text-primary)]">Safe natural kerning when splitting</div>
             <div className="text-[2.2rem] font-light text-[var(--color-matte-royal)] tracking-[-0.03em] leading-none mt-2">Tu</div>
         </AnimatedCard>
@@ -140,7 +140,7 @@ const BentoGrid: React.FC = () => {
               style={{ backgroundImage: `url(${aiSolution})` }}
             />
             <div className="relative z-10">
-              <div className="text-[0.5rem] text-white/40 uppercase tracking-widest mb-1">Performance</div>
+              <div className="text-[11px] text-white/40 uppercase tracking-widest mb-1">Performance</div>
               <div className="text-xl font-medium tracking-tight mb-2 text-white">Ultra<br/>Optimized</div>
               <div className="mt-2 text-white/30">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
@@ -151,10 +151,10 @@ const BentoGrid: React.FC = () => {
         </AnimatedCard>
 
         <AnimatedCard style={{ opacity: c7_opacity, y: c7_y }} className="bc bc--7 navy" delay={0.1}>
-            <div className="text-[0.5rem] text-white/40 uppercase tracking-widest mb-1">Projects</div>
+            <div className="text-[11px] text-white/40 uppercase tracking-widest mb-1">Projects</div>
             <div className="text-xl font-medium tracking-tight mb-3">Smart Learning Hub</div>
             <div className="mt-2 p-2 bg-[var(--color-matte-azure)]/10 rounded-md border border-[var(--color-matte-azure)]/20">
-              <div className="text-[0.5rem] text-white/40 uppercase tracking-[0.12em]">LMS SYSTEM</div>
+              <div className="text-[11px] text-white/40 uppercase tracking-[0.12em]">LMS SYSTEM</div>
               <div className="text-[0.85rem] text-white/70 font-light mt-1">Project Alpha</div>
             </div>
         </AnimatedCard>
@@ -169,7 +169,7 @@ const BentoGrid: React.FC = () => {
 
         <AnimatedCard style={{ opacity: c9_opacity, y: c9_y }} className="bc bc--9">
             <div className="text-xl mb-2 text-[var(--color-text-primary)]">▶</div>
-            <div className="text-[0.55rem] font-medium tracking-widest text-[var(--color-text-primary)] border border-[var(--color-border-secondary)] inline-block px-2 py-0.5 bg-[var(--color-surface-secondary)] shadow-sm rounded-sm">CURSOR CONTENT</div>
+            <div className="text-[11px] font-medium tracking-widest text-[var(--color-text-primary)] border border-[var(--color-border-secondary)] inline-block px-2 py-0.5 bg-[var(--color-surface-secondary)] shadow-sm rounded-sm">CURSOR CONTENT</div>
             <div className="text-xs text-[var(--color-text-secondary)] mt-2">Cursor Tracking of any kind</div>
         </AnimatedCard>
 
