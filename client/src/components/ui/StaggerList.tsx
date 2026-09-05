@@ -1,4 +1,5 @@
 import { motion }           from 'framer-motion'
+import type { Variants }    from 'framer-motion'
 import { useScrollReveal }  from '@/hooks/useScrollReveal'
 import { staggerContainer, fadeUp } from '@/lib/scrollVariants'
 import type { ReactNode }   from 'react'
@@ -25,7 +26,7 @@ export function StaggerList({ children, className }: Props) {
 }
 
 /** ใช้คู่กับ StaggerList เสมอ */
-export function StaggerItem({ children, className, variants = fadeUp }: { children: ReactNode; className?: string, variants?: any }) {
+export function StaggerItem({ children, className, variants = fadeUp }: { children: ReactNode; className?: string; variants?: Variants }) {
   return (
     <motion.div variants={variants} className={className}>
       {children}
