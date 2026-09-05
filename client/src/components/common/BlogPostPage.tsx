@@ -25,10 +25,10 @@ const BlogPostPage: FC<{ post: BlogPost; onBack: () => void }> = ({
             <i className="ri-arrow-left-s-line"></i>
             Back to Articles
           </button>
-          <span className="text-global-blue font-bold tracking-wider uppercase mb-4 text-sm">
+          <span className="text-global-blue font-medium tracking-wider uppercase mb-4 text-sm">
             {post.category}
           </span>
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-light-bg mb-6 leading-tight">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-light text-light-bg mb-6 leading-tight">
             {post.title}
           </h1>
           <div className="flex flex-wrap items-center gap-6 text-light-bg/90">
