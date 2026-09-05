@@ -19,7 +19,7 @@ import ParticleScroll from "@/components/effect/ParticleScroll";
 import ParticleScrollLazy from "@/components/effect/ParticleScrollLazy";
 import CodeWithClarity from "@/components/homepage/CodeWithClarity";
 import { supportsHtmlInCanvas } from "@/components/effect/particle-scroll/createParticleScroll";
-import { SlideScrollContext } from "@/components/homepage/SlideWrapper";
+import { SlideScrollContext } from "@/components/homepage/slideScroll";
 import { useDeviceProfile } from "@/hooks/useDeviceCapability";
 
 const SampleCopy: FC<{ title: string }> = ({ title }) => (

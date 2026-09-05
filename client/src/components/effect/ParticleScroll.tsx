@@ -6,7 +6,7 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from "react";
-import { useSlideScroll } from "@/components/homepage/SlideWrapper";
+import { useSlideScroll } from "@/components/homepage/slideScroll";
 import { useDeviceProfile } from "@/hooks/useDeviceCapability";
 import {
   createParticleScroll,

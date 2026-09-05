@@ -1,12 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
-export const statements: { en: string; jp: string }[] = [
-  { en: 'I design.',      jp: 'デザインする' },
-  { en: 'I develop.',     jp: '開発する' },
-  { en: 'I think.',       jp: '考える' },
-  { en: 'And listen...', jp: 'そして、聴く' },
-];
+import { statements } from '@/data/statements';
 
 export const StatementSlide: React.FC<{ index: number }> = ({ index }) => {
   const stmt = statements[index];
