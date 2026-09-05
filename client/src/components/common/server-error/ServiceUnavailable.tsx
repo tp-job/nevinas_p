@@ -30,7 +30,7 @@ const ServiceUnavailable: FC = () => {
       <div className="relative z-10 text-center px-6 max-w-2xl mx-auto">
         {/* Error code */}
         <div className="relative mb-6">
-          <h1 className="text-[160px] sm:text-[200px] font-bold leading-none tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-global-blue via-global-purple to-global-pink select-none">
+          <h1 className="text-[160px] sm:text-[200px] font-light leading-none tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-global-blue via-global-purple to-global-pink select-none">
             503
           </h1>
           {/* Spinning dashed ring */}
@@ -73,7 +73,7 @@ const ServiceUnavailable: FC = () => {
             <p className="text-xs uppercase tracking-wider text-light-text-secondary dark:text-dark-text-secondary mb-1">
               Auto-retry in
             </p>
-            <p className="text-4xl font-bold font-inter text-global-blue">
+            <p className="text-4xl font-normal font-inter tabular-nums text-global-blue">
               {countdown}
               <span className="text-lg text-light-text-secondary dark:text-dark-text-secondary">
                 s

@@ -49,7 +49,7 @@ const ServerError: FC = () => {
             <p className="text-sm lg:text-lg font-light tracking-wide opacity-90">
               Server Connection Failed
             </p>
-            <h1 className="text-7xl lg:text-[10rem] font-bold leading-none tracking-tight">
+            <h1 className="text-7xl lg:text-[10rem] font-light leading-none tracking-tight">
               500
             </h1>
             <p className="text-sm lg:text-lg font-light tracking-wide opacity-90">
