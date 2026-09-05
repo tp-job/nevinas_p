@@ -10,7 +10,8 @@
     "models:optimize": "node scripts/optimize-models.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
-    "docs:check": "node scripts/check-docs-truth.mjs"
+    "docs:check": "node scripts/check-docs-truth.mjs",
+    "typecheck": "tsc -p tsconfig.app.json --noEmit"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.2.8",

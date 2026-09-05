@@ -9,7 +9,9 @@
     "start": "node dist/server.js",
     "seed": "ts-node-dev --transpile-only src/seed.ts",
     "sync:github": "ts-node-dev --transpile-only src/sync/syncGitHub.ts",
-    "sync:gallery": "ts-node-dev --transpile-only src/sync/syncGallery.ts"
+    "sync:gallery": "ts-node-dev --transpile-only src/sync/syncGallery.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -29,12 +31,16 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.5",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/multer": "^2.0.0",
     "@types/node": "^25.2.2",
     "@types/node-cron": "^3.0.11",
     "@types/uuid": "^10.0.0",
-    "nodemon": "^3.1.10"
+    "eslint": "^9.39.5",
+    "globals": "^17.12.0",
+    "nodemon": "^3.1.10",
+    "typescript-eslint": "^8.69.0"
   }
 }
