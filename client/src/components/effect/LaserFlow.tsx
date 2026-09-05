@@ -613,6 +613,13 @@ export const LaserFlow: React.FC<Props> = ({
             rendererRef.current = null;
             if (mount.contains(canvas)) mount.removeChild(canvas);
         };
+        // The shader props are READ here to seed the uniforms, but they must not
+        // be dependencies: a change to any of them would tear down and rebuild
+        // the WebGL context, which is the exact context churn the cleanup note
+        // above says got the deployed page blacklisted. The effect below syncs
+        // those props into the live uniforms instead, which is why they are
+        // listed there and not here. Only `dpr` genuinely requires a rebuild.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dpr]);
 
     useEffect(() => {
