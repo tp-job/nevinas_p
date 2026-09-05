@@ -92,9 +92,8 @@ const Testimonials: React.FC = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleNav = (dir: -1 | 1) => {
-    if (autoRef.current) clearInterval(autoRef.current);
     goTo(current + dir);
-    autoRef.current = setInterval(() => goTo(current + 1), AUTO_INTERVAL_MS);
+    resetAuto();
   };
 
   const t = TESTIMONIALS[current];
@@ -210,9 +209,8 @@ const Testimonials: React.FC = () => {
               className={`${styles.dotBtn} w-2 h-2 rounded-full ${i === current ? 'bg-light-text dark:bg-dark-text scale-[1.4]' : 'bg-cool-pale dark:bg-haze-deep scale-100'}`}
               aria-label={`Go to testimonial ${i + 1}`}
               onClick={() => {
-                if (autoRef.current) clearInterval(autoRef.current);
                 goTo(i);
-                autoRef.current = setInterval(() => goTo(current + 1), AUTO_INTERVAL_MS);
+                resetAuto();
               }}
             />
           ))}

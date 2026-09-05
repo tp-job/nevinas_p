@@ -77,11 +77,6 @@ const DEFAULT_PANELS: ServicePanel[] = [
   },
 ];
 
-// ─── Helpers ───────────────────────────────────────────────
-/** Clamps a value between min and max. */
-const clamp = (v: number, min: number, max: number) =>
-  Math.max(min, Math.min(v, max));
-
 // ─── Component ─────────────────────────────────────────────
 const HorizontalServices: React.FC<HorizontalServicesProps> = ({
   panels       = DEFAULT_PANELS,

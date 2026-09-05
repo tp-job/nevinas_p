@@ -6,10 +6,9 @@ import type { ReactNode }   from 'react'
 interface Props {
   children:  ReactNode
   className?: string
-  itemVariants?: any
 }
 
-export function StaggerList({ children, className, itemVariants = fadeUp }: Props) {
+export function StaggerList({ children, className }: Props) {
   const { ref, isInView } = useScrollReveal({ amount: 0.1 })
 
   return (

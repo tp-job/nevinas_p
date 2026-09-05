@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, createRef, type FC, type RefObject } from 'react';
+import { useEffect, useMemo, useRef, useState, createRef, type FC } from 'react';
 import Navbar from '@/components/layouts/Navbar';
 import Header from '@/components/layouts/Header';
 import About from '@/components/homepage/About';
@@ -21,7 +21,7 @@ import ParticleScrollLazy from '@/components/effect/ParticleScrollLazy';
 import HorizontalServices from '@/components/homepage/HorizontalServices';
 // import ContributorTimeline from '@/components/homepage/ContributorTimeline';
 
-const getSlidesList = (scrollContainerRef: RefObject<HTMLElement | null>) => {
+const getSlidesList = () => {
   const list = [
     { id: 'top', content: <Header />, variant: 'center' as const, scrollable: false }, ...statements.map((_, i) => ({ id: `statement-${i}`, content: <StatementSlide index={i} />, variant: 'center' as const, scrollable: false })),
     { id: 'about', content: <ScrollReveal><About /></ScrollReveal>, variant: 'content' as const, scrollable: true },
@@ -50,7 +50,7 @@ const HomePage: FC = () => {
   // Memoized: scrollRef's identity is stable for the component's lifetime, and
   // rebuilding this 15-element array (mounting/elements) on every activeSlide
   // change is unnecessary work.
-  const slidesList = useMemo(() => getSlidesList(scrollRef), []);
+  const slidesList = useMemo(() => getSlidesList(), []);
   // Create refs for each sentinel
   const sentinelRefs = useRef(slidesList.map(() => createRef<HTMLDivElement>())).current;
 

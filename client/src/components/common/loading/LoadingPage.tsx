@@ -193,7 +193,7 @@ function AuroraBand() {
 }
 
 /* Progress bar — DS aurora gradient, 1.5px */
-function ProgressBar({ progress }) {
+function ProgressBar({ progress }: { progress: number }) {
   return (
     <div role="progressbar" aria-valuenow={Math.round(progress)}
          aria-valuemin={0} aria-valuemax={100} aria-label="Loading progress"
@@ -234,7 +234,7 @@ export default function LoadingScreen({ onComplete }: { onComplete?: () => void 
   const [progress, setProgress] = useState(0);
   const [ready,    setReady   ] = useState(false);
   const [done,     setDone    ] = useState(false);
-  const timerRef = useRef(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const tier = useDeviceCapability();
 
   /* Claim the one-per-page-load beam slot, if it's still available.

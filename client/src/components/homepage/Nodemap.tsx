@@ -4,15 +4,6 @@ import styles from '@/styles/module/Nodemap.module.css';
 /* ─────────────────────────────────────────────
    Types
  ───────────────────────────────────────────── */
-interface SocialProofItem {
-  type: 'stat' | 'quote' | 'cta';
-  logo?: string;
-  metric?: string;
-  label?: string;
-  quote?: string;
-  attribution?: string;
-  icon?: React.ReactNode;
-}
 
 /* ─────────────────────────────────────────────
    Sub-components

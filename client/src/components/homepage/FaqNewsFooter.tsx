@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Assets } from '@/data/homeData';
 
 /* FooterLink and FOOTER_LINK_COLUMNS were removed with the link columns.
    Nothing became unreachable: GitHub, Instagram, X and the resume are all in
