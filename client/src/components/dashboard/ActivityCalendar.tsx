@@ -1,6 +1,7 @@
 import { useMemo, useState, type FC } from "react";
 import SectionHead from "@/components/common/SectionHead";
 import type { GitHubEvent } from "@/utils/api";
+import { dayKey, mondayIndex } from "./calendarDates";
 
 /**
  * Activity Calendar — events per day, bucketed from real timestamps.
@@ -46,14 +47,7 @@ const FILTERS: { id: Filter; label: string; match: (t: string) => boolean }[] =
     { id: "pr", label: "PRs", match: (t) => t === "PullRequestEvent" },
   ];
 
-/** Local YYYY-MM-DD. `toISOString()` would bucket by UTC and shift late-night
- *  events into the next day — which on this project is most of them. */
-const dayKey = (d: Date) =>
-  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-/** Monday-first index, matching the rest of the dashboard's day ordering. */
-const mondayIndex = (d: Date) => (d.getDay() === 0 ? 6 : d.getDay() - 1);
 
 const ActivityCalendar: FC<{ events: GitHubEvent[] }> = ({ events }) => {
   const [filter, setFilter] = useState<Filter>("all");
