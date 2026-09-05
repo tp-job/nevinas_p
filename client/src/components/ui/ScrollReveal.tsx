@@ -2,7 +2,7 @@ import { motion, useTransform, MotionValue, type Variants } from 'framer-motion'
 import { useScrollReveal }  from '@/hooks/useScrollReveal'
 import { fadeUp }           from '@/lib/scrollVariants'
 import { type ReactNode }   from 'react'
-import { useSlideScroll }   from '../homepage/SlideWrapper'
+import { useSlideScroll }   from '../homepage/slideScroll'
 
 interface Props {
   children:  ReactNode

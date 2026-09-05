@@ -290,6 +290,10 @@ export default function LoadingScreen({ onComplete }: { onComplete?: () => void 
     };
     timerRef.current = setTimeout(tick, 580);
     return () => { clearTimeout(rt); if(timerRef.current) clearTimeout(timerRef.current); };
+    // Runs once per mount by design. `onComplete` is called, not depended on:
+    // parents pass it inline, so a new identity each render would restart the
+    // progress simulation from zero on every parent re-render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const phase = PHASES.reduce((acc,ph) => progress>=ph.min ? ph : acc, PHASES[0]);

@@ -52,6 +52,21 @@ export default defineConfig([
         'error',
         { patterns: RESTRICTED_ASYNC_STATE_IMPORTS },
       ],
+      /**
+       * A leading underscore marks a binding that exists for its position, not
+       * its value — the base ShaderPass in createLiquidEther declares
+       * `init(..._args)` so subclasses can override with a real payload, and
+       * deleting the parameter would change the signature it exists to publish.
+       * Everything without the underscore is still an error.
+       */
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
     },
   },
   {
@@ -59,5 +74,26 @@ export default defineConfig([
     // the abstraction the rule above points everyone at.
     files: ['**/components/common/AsyncBoundary.tsx'],
     rules: { 'no-restricted-imports': 'off' },
+  },
+  {
+    /**
+     * Context files export a Provider component AND the `use*` hook that reads
+     * it. `react-refresh/only-export-components` flags that, and for ordinary
+     * component files it is right to — a stray constant or helper next to a
+     * component costs you Fast Refresh for the whole module.
+     *
+     * Here it is the idiom, not a mistake. Co-locating the hook with its
+     * provider is what keeps the context object itself unexported and therefore
+     * unusable without the hook's null check. Splitting each of these into two
+     * files to satisfy the rule would trade that guarantee for a dev-server
+     * nicety on five files that change about once a year.
+     *
+     * This is scoped to `src/context/` only. Every other react-refresh
+     * violation in the repo was real and was fixed by moving the code:
+     * SlideWrapper's context went to `homepage/slideScroll.ts`, and the
+     * homepage statement copy went to `data/statements.ts`.
+     */
+    files: ['**/src/context/*.tsx'],
+    rules: { 'react-refresh/only-export-components': 'off' },
   },
 ])

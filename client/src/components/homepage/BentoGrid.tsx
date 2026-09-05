@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useMotionValue, useReducedMotion, useTransform, type MotionStyle } from 'framer-motion';
-import { useSlideScroll } from './SlideWrapper';
+import { useSlideScroll } from './slideScroll';
 
 import { Assets } from '@/data/homeData';
 

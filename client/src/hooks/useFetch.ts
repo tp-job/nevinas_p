@@ -154,6 +154,14 @@ export function useFetch<T>(
     doFetch();
     return () => {
       // Invalidate AND cancel the in-flight request on unmount / deps change.
+      //
+      // eslint warns that requestIdRef.current will have changed by the time
+      // this runs and suggests snapshotting it. That advice inverts the intent:
+      // incrementing the CURRENT id is what makes the in-flight response fail
+      // its `requestId === requestIdRef.current` check and get dropped. A
+      // snapshot taken at effect time would bump a stale value and let a
+      // late response through.
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       requestIdRef.current++;
       abortRef.current?.abort();
     };

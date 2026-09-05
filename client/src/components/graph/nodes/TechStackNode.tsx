@@ -2,9 +2,10 @@ import { memo } from "react";
 import { Handle, Position } from "@xyflow/react";
 import styles from "@/styles/module/GraphView.module.css";
 import { TOOL_ICONS } from "@/components/graph/techIcons";
+import type { IconMeta } from "@/components/graph/techIcons";
 
 export interface TechStackNodeData {
-  stack: { label: string; color: string; Icon: any }[];
+  stack: IconMeta[];
   repoName: string;
 }
 

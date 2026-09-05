@@ -89,7 +89,7 @@ const Testimonials: React.FC = () => {
       });
     }, AUTO_INTERVAL_MS);
     return () => { if (autoRef.current) clearInterval(autoRef.current); };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleNav = (dir: -1 | 1) => {
     goTo(current + dir);

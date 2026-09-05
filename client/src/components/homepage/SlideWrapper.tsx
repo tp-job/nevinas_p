@@ -1,8 +1,6 @@
-import { createContext, useContext, useEffect, useRef, type FC, type ReactNode } from 'react';
-import { motion, useScroll, useTransform, MotionValue } from 'framer-motion';
-
-export const SlideScrollContext = createContext<MotionValue<number> | null>(null);
-export const useSlideScroll = () => useContext(SlideScrollContext);
+import { useEffect, useRef, type FC, type ReactNode } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { SlideScrollContext } from './slideScroll';
 
 export type SlideVariant = 'fill' | 'center' | 'content';
 
