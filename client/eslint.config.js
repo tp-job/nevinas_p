@@ -52,6 +52,21 @@ export default defineConfig([
         'error',
         { patterns: RESTRICTED_ASYNC_STATE_IMPORTS },
       ],
+      /**
+       * A leading underscore marks a binding that exists for its position, not
+       * its value — the base ShaderPass in createLiquidEther declares
+       * `init(..._args)` so subclasses can override with a real payload, and
+       * deleting the parameter would change the signature it exists to publish.
+       * Everything without the underscore is still an error.
+       */
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
     },
   },
   {

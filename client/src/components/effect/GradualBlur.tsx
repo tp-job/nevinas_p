@@ -115,29 +115,39 @@ const getGradientDirection = (position: string): string => {
     return directions[position] || 'to bottom';
 };
 
-const debounce = <T extends (...a: any[]) => void>(fn: T, wait: number) => {
+const debounce = <T extends (...a: never[]) => void>(fn: T, wait: number) => {
     let t: ReturnType<typeof setTimeout>;
     return (...a: Parameters<T>) => {
         clearTimeout(t);
         t = setTimeout(() => fn(...a), wait);
     };
 };
+/**
+ * Only height and width have breakpoint overrides, and the props type spells all
+ * six of them out (mobileHeight, tabletWidth, ...). Constraining the key to those
+ * two lets the `${breakpoint}${Key}` lookups resolve against real prop names, so
+ * a renamed prop breaks the build instead of silently resolving to undefined at
+ * runtime — which is what the previous `(config as any)[...]` allowed.
+ */
+type ResponsiveDimension = 'height' | 'width';
+type Breakpoint = 'mobile' | 'tablet' | 'desktop';
+
 const useResponsiveDimension = (
     responsive: boolean | undefined,
     config: Partial<GradualBlurProps>,
-    key: keyof GradualBlurProps
+    key: ResponsiveDimension
 ) => {
-    const [val, setVal] = useState<any>(config[key]);
+    const [val, setVal] = useState<string | undefined>(config[key]);
     useEffect(() => {
         if (!responsive) return;
         const calc = () => {
             const w = window.innerWidth;
-            let v: any = config[key];
-            const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
-            const k = cap(key as string);
-            if (w <= 480 && (config as any)['mobile' + k]) v = (config as any)['mobile' + k];
-            else if (w <= 768 && (config as any)['tablet' + k]) v = (config as any)['tablet' + k];
-            else if (w <= 1024 && (config as any)['desktop' + k]) v = (config as any)['desktop' + k];
+            let v: string | undefined = config[key];
+            const k = (key.charAt(0).toUpperCase() + key.slice(1)) as Capitalize<ResponsiveDimension>;
+            const at = (bp: Breakpoint) => config[`${bp}${k}` as const];
+            if (w <= 480 && at('mobile')) v = at('mobile');
+            else if (w <= 768 && at('tablet')) v = at('tablet');
+            else if (w <= 1024 && at('desktop')) v = at('desktop');
             setVal(v);
         };
         const deb = debounce(calc, 100);
@@ -145,7 +155,7 @@ const useResponsiveDimension = (
         window.addEventListener('resize', deb);
         return () => window.removeEventListener('resize', deb);
     }, [responsive, config, key]);
-    return responsive ? val : (config as any)[key];
+    return responsive ? val : config[key];
 };
 
 const useIntersectionObserver = (ref: React.RefObject<HTMLDivElement>, shouldObserve: boolean = false) => {
@@ -255,7 +265,7 @@ const GradualBlur: React.FC<GradualBlurProps> = props => {
         return baseStyle;
     }, [config, responsiveHeight, responsiveWidth, isVisible]);
 
-    const { hoverIntensity, animated, onAnimationComplete, duration } = config as any;
+    const { hoverIntensity, animated, onAnimationComplete, duration } = config;
     useEffect(() => {
         if (isVisible && animated === 'scroll' && onAnimationComplete) {
             const t = setTimeout(() => onAnimationComplete(), parseFloat(duration) * 1000);
@@ -277,10 +287,20 @@ const GradualBlur: React.FC<GradualBlurProps> = props => {
     );
 };
 
-const GradualBlurMemo = React.memo(GradualBlur);
+/**
+ * PRESETS and CURVE_FUNCTIONS ride on the component as statics (the upstream
+ * component's API). Declaring the shape means callers get them typed instead of
+ * reaching through `any`.
+ */
+type GradualBlurComponent = React.NamedExoticComponent<GradualBlurProps> & {
+    PRESETS: typeof PRESETS;
+    CURVE_FUNCTIONS: typeof CURVE_FUNCTIONS;
+};
+
+const GradualBlurMemo = React.memo(GradualBlur) as GradualBlurComponent;
 GradualBlurMemo.displayName = 'GradualBlur';
-(GradualBlurMemo as any).PRESETS = PRESETS;
-(GradualBlurMemo as any).CURVE_FUNCTIONS = CURVE_FUNCTIONS;
+GradualBlurMemo.PRESETS = PRESETS;
+GradualBlurMemo.CURVE_FUNCTIONS = CURVE_FUNCTIONS;
 export default GradualBlurMemo;
 
 const injectStyles = () => {
