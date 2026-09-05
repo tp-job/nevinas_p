@@ -1,18 +1,8 @@
 import type { FC } from "react";
-import {
-  BarChart,
-  Bar,
-  Cell,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip as RTooltip,
-  ResponsiveContainer,
-} from "recharts";
-import ChartTooltip from "@/components/charts/ChartTooltip";
+import BarChart from "@/components/charts/BarChart";
 import SectionHead from "@/components/common/SectionHead";
 import { StaggerItem } from "@/components/ui/StaggerList";
-import { cardCls, gridColor, tickColor } from "./constants";
+import { cardCls } from "./constants";
 import { useChartPalette } from "@/hooks/useChartPalette";
 
 interface WeeklyActivitySectionProps {
@@ -58,39 +48,19 @@ const WeeklyActivitySection: FC<WeeklyActivitySectionProps> = ({
         }
       />
 
-      <div className="h-[260px]">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={weeklyData} barCategoryGap="24%">
-            <CartesianGrid
-              strokeDasharray="3 3"
-              stroke={gridColor}
-              vertical={false}
-            />
-            <XAxis
-              dataKey="day"
-              axisLine={false}
-              tickLine={false}
-              tick={{ fill: tickColor, fontSize: 11 }}
-            />
-            <YAxis
-              axisLine={false}
-              tickLine={false}
-              tick={{ fill: tickColor, fontSize: 11 }}
-              width={28}
-              allowDecimals={false}
-            />
-            <RTooltip
-              content={<ChartTooltip />}
-              cursor={{ fill: gridColor, opacity: 0.4 }}
-            />
-            <Bar dataKey="events" name="Events" radius={[2, 2, 0, 0]}>
-              {weeklyData.map((entry, i) => (
-                <Cell key={i} fill={entry.isPeak ? c.primary : c.muted} />
-              ))}
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
+      <BarChart
+        data={weeklyData}
+        xKey="day"
+        series={[{ key: "events", label: "events", color: c.muted }]}
+        height={260}
+        maxBarSize={40}
+        // The peak day is marked the same way Work Rhythm marks night:
+        // periwinkle against haze, one step of emphasis inside the palette.
+        colorFor={(row) => (row.isPeak ? c.primary : c.muted)}
+        ariaLabel={`Activity by day of week, ${total} events total. ${weeklyData
+          .map((d) => `${d.day}: ${d.events}`)
+          .join(", ")}. Most active day ${dayNames[peakDayIdx]}.`}
+      />
 
       <p className="mt-4 text-xs text-light-text-secondary dark:text-dark-text-secondary">
         Most active day{" "}

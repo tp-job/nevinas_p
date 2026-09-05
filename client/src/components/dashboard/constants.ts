@@ -12,9 +12,10 @@
  * Colours now come from `hooks/useChartPalette`, which resolves `--color-*` at
  * runtime. Nothing here holds a colour value any more.
  */
-export const gridColor = "var(--color-border-primary)";
-export const tickColor = "var(--color-text-secondary)";
-export const cardBg = "var(--color-surface-primary)";
+/* gridColor/tickColor/cardBg were consumed only by the recharts charts on this
+   route. Those charts are now plain SVG/flexbox (components/charts/) and read
+   their colours from the same CSS variables directly, so the re-exports here
+   had no callers left. */
 
 /**
  * A dashboard section: spacing only, no surface.
