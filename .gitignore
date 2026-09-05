@@ -90,3 +90,10 @@ coverage/
 # =============================================
 .agent/
 .claude/
+# =============================================
+# Sync scratch — server/src/data/*.json.bak is written by the GitHub/gallery
+# sync on every run. It was tracked for 29 commits and dirtied the working
+# tree each time; it is regenerated, never read.
+# =============================================
+*.bak
+*.tmp
