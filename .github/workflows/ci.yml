@@ -46,6 +46,13 @@ jobs:
       - name: Lint (zero tolerance)
         run: npm run lint -- --max-warnings 0
 
+      # Pure-logic tests only, by design. The homepage is an animation-heavy
+      # scroll experience where component tests are expensive and brittle; the
+      # functions covered here (contrast ratios, repo filtering, calendar date
+      # bucketing, chart token resolution) are where a regression is SILENT.
+      - name: Test
+        run: npm run test
+
       - name: Build
         run: npm run build
 
