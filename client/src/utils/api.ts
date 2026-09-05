@@ -226,7 +226,7 @@ export function escalateToErrorPage(status: number): void {
  * Sized for endpoints served straight from the JSON store, which answer in
  * milliseconds. Endpoints that proxy to GitHub need UPSTREAM_TIMEOUT_MS.
  */
-export const DEFAULT_TIMEOUT_MS = 8000;
+const DEFAULT_TIMEOUT_MS = 8000;
 
 /**
  * Timeout for endpoints that proxy to api.github.com on the request path.

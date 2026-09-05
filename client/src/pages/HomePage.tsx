@@ -20,7 +20,6 @@ import LiquidEtherBackdrop from '@/components/layouts/LiquidEtherBackdrop';
 import Testimonials from '@/components/homepage/Testimonials';
 import ParticleScrollLazy from '@/components/effect/ParticleScrollLazy';
 import HorizontalServices from '@/components/homepage/HorizontalServices';
-// import ContributorTimeline from '@/components/homepage/ContributorTimeline';
 
 const getSlidesList = () => {
   const list = [

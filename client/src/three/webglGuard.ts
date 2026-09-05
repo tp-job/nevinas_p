@@ -62,11 +62,6 @@ function refuse(what: string): null {
   return null
 }
 
-/** True once the browser has refused us a context. */
-export function isWebGLBlocked(): boolean {
-  return blocked
-}
-
 /**
  * Cheap pre-flight check for gating UI *before* paying for three.js.
  *

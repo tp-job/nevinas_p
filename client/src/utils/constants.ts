@@ -22,7 +22,7 @@ export const LANG_COLORS: Record<string, string> = {
   Dockerfile: "#384d54",
   Makefile: "#427819",
 }; /** Default color when language is not in LANG_COLORS */
-export const LANG_COLOR_DEFAULT = "#6e7681";
+const LANG_COLOR_DEFAULT = "#6e7681";
 
 /** Look up a language color with the shared fallback baked in. */
 export const getLangColor = (lang?: string | null): string =>

@@ -50,7 +50,7 @@ export interface ParticleScrollProps extends ParticleScrollOptions {
 
 const emptySubscribe = () => () => {};
 
-export function ParticleScroll({
+function ParticleScroll({
   children,
   className,
   style,

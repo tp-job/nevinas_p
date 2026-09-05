@@ -307,7 +307,7 @@ interface LaserUniforms {
     uFade:          Uniform<number>;
 }
 
-export const LaserFlow: React.FC<Props> = ({
+const LaserFlow: React.FC<Props> = ({
     className,
     style,
     wispDensity = 1,

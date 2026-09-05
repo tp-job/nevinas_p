@@ -34,7 +34,7 @@ export interface ParticleScrollLazyProps extends ParticleScrollOptions {
   useSlideProgress?: boolean;
 }
 
-export function ParticleScrollLazy({
+function ParticleScrollLazy({
   children,
   className,
   style,

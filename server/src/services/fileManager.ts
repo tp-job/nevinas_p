@@ -42,7 +42,7 @@ class WriteLock {
 // FileManager<T> — generic CRUD over a JSON file
 // ---------------------------------------------------------------------------
 
-export class FileManager<T> {
+class FileManager<T> {
     private filePath: string;
     private cache: T | null = null;
     private lock = new WriteLock();
@@ -129,7 +129,7 @@ interface HasId {
     id: string;
 }
 
-export class ArrayFileManager<T extends HasId> extends FileManager<T[]> {
+class ArrayFileManager<T extends HasId> extends FileManager<T[]> {
     /** Find a single record by id. */
     findById(id: string): T | undefined {
         return this.readAll().find((item) => item.id === id);

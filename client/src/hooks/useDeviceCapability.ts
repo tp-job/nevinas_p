@@ -135,4 +135,3 @@ export function useDeviceCapability(): DeviceTier {
   return useDeviceProfile().tier
 }
 
-export default useDeviceCapability

@@ -39,7 +39,7 @@ export interface IconMeta {
   label: string;
 }
 
-export const LANG_ICONS: Record<string, IconMeta> = {
+const LANG_ICONS: Record<string, IconMeta> = {
   TypeScript: { Icon: BsTypescript, color: "#3178c6", label: "TypeScript" },
   JavaScript: { Icon: BsJavascript, color: "#f1e05a", label: "JavaScript" },
   Python: { Icon: FaPython, color: "#3572A5", label: "Python" },
@@ -64,7 +64,7 @@ export const TOOL_ICONS = {
   design: { Icon: FaPalette, color: "#f472b6", label: "Design" },
 } as const;
 
-export const STACK_ICONS: Record<string, IconMeta> = {
+const STACK_ICONS: Record<string, IconMeta> = {
   ...LANG_ICONS,
   Node: { Icon: FaNodeJs, color: "#3c873a", label: "Node" },
   MongoDB: { Icon: SiMongodb, color: "#4DB33D", label: "MongoDB" },
