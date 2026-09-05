@@ -1,18 +1,9 @@
 import type { FC } from "react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip as RTooltip,
-  ResponsiveContainer,
-} from "recharts";
+import BarChart from "@/components/charts/BarChart";
 import KpiBadge from "./KpiBadge";
 import SectionHead from "@/components/common/SectionHead";
-import ChartTooltip from "@/components/charts/ChartTooltip";
 import { StaggerItem } from "@/components/ui/StaggerList";
-import { cardCls, gridColor, tickColor } from "./constants";
+import { cardCls } from "./constants";
 import { useChartPalette } from "@/hooks/useChartPalette";
 import type { GitHubStats } from "@/utils/api";
 
@@ -94,43 +85,18 @@ const ContributionActivitySection: FC<ContributionActivitySectionProps> = ({
         />
       </div>
 
-      <div className="h-[260px]">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={monthlyActivity} barGap={4}>
-            <CartesianGrid
-              strokeDasharray="3 3"
-              stroke={gridColor}
-              vertical={false}
-            />
-            <XAxis
-              dataKey="month"
-              axisLine={false}
-              tickLine={false}
-              tick={{ fill: tickColor, fontSize: 12 }}
-            />
-            <YAxis
-              axisLine={false}
-              tickLine={false}
-              tick={{ fill: tickColor, fontSize: 12 }}
-              width={32}
-              allowDecimals={false}
-            />
-            <RTooltip
-              content={<ChartTooltip />}
-              cursor={{ fill: gridColor, opacity: 0.4 }}
-            />
-            {series.map((s) => (
-              <Bar
-                key={s.key}
-                dataKey={s.key}
-                fill={s.color}
-                radius={[2, 2, 0, 0]}
-                maxBarSize={28}
-              />
-            ))}
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
+      <BarChart
+        data={monthlyActivity}
+        xKey="month"
+        series={series}
+        height={260}
+        ariaLabel={`Commits, pull requests and issues by month. ${monthlyActivity
+          .map(
+            (m) =>
+              `${m.month}: ${m.commits} commits, ${m.prs} pull requests, ${m.issues} issues`,
+          )
+          .join("; ")}.`}
+      />
     </StaggerItem>
   );
 };

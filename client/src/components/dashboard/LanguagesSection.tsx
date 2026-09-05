@@ -1,22 +1,20 @@
 import type { FC } from "react";
-import { PieChart, Pie, Cell, Tooltip as RTooltip } from "recharts";
-import ChartTooltip from "@/components/charts/ChartTooltip";
+import Donut from "@/components/charts/Donut";
 import { StaggerItem } from "@/components/ui/StaggerList";
 import { cardCls } from "./constants";
 import SectionHead from "@/components/common/SectionHead";
 
 /**
- * Recharts v3 types `<Pie data>` as `ChartDataInput[]`, which requires a string
- * index signature — a plain interface is rejected with "Index signature for
- * type 'string' is missing". The extra member is a type-level requirement only;
- * the four named fields are still the contract callers write against.
+ * The index signature here was a recharts v3 requirement — `<Pie data>` was
+ * typed as ChartDataInput[] and rejected a plain interface. recharts is gone
+ * from this route, so the type is now just the four fields callers actually
+ * write.
  */
 export interface LangDatum {
   name: string;
   count: number;
   pct: number;
   color: string;
-  [key: string]: string | number;
 }
 
 interface LanguagesSectionProps {
@@ -46,24 +44,20 @@ const LanguagesSection: FC<LanguagesSectionProps> = ({
 
     <div className="flex flex-col sm:flex-row items-center gap-8">
       <div className="shrink-0 relative">
-        <PieChart width={160} height={160}>
-          <Pie
-            data={langData}
-            dataKey="count"
-            nameKey="name"
-            cx={80}
-            cy={80}
-            innerRadius={50}
-            outerRadius={75}
-            paddingAngle={3}
-            strokeWidth={0}
-          >
-            {langData.map((entry, i) => (
-              <Cell key={i} fill={entry.color} />
-            ))}
-          </Pie>
-          <RTooltip content={<ChartTooltip />} />
-        </PieChart>
+        <Donut
+          segments={langData.map((l) => ({
+            name: l.name,
+            value: l.count,
+            color: l.color,
+          }))}
+          size={160}
+          innerRadius={50}
+          outerRadius={75}
+          padAngle={3}
+          ariaLabel={`Project composition by language: ${langData
+            .map((l) => `${l.name} ${l.pct}%`)
+            .join(", ")}.`}
+        />
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
           <span className="text-2xl font-medium text-light-text dark:text-dark-text">
             {repoCount}
